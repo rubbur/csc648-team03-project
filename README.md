@@ -15,7 +15,7 @@
 
 | Student Name | Student Email | GitHub Username |
 |    :---:     |     :---:     |     :---:       |
-| Ava Albert     |     aalbert@sfsu.edu          |                 |
+| Ava Albert     |     aalbert@sfsu.edu          |      Tangeyo           |
 | Griffin Evans      |       gevans3@sfsu.edu        |                 |
 | Bryan Maldonado     |       bmaldonado@sfsu.edu        |      bmaldonado6434           |
 | Cleveland Plonsey     |       cplonsey1@sfsu.edu        |                 |
