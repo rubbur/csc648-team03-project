@@ -4,14 +4,15 @@
 
 let express  = require('express');
 let bodyParser = require('body-parser');
-
 const cors = require('cors');   
 const bcrypt = require('bcrypt');  //npm password hashing module
 const path = require("path");
+const db = require("./config/dbConnection"); //mysql connection object
+const userRouter = require("./routes/userRouter");
+
 
 
 let app = express();
-
 const router = express.Router();
 
 app.use(bodyParser.json({limit: '1mb'})); //more data than we ever need to send over http
@@ -33,12 +34,16 @@ app.use(cors({
 
 //test route. If after executing node app.js from ./server folder,
 // when visiting http://localhost:8080 should see hello test! displayed in the browser
+
+
+
 app.get("/", (req, res) =>{
 	res.send("hello test!!!");
 })
 
+//app.use("/user", userRouter);
 
-
+//application listens on port 8080 which means to visit the server, go to http://localhost:8080
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, function(){
 	console.log(`Server started on port: ${PORT}`);
