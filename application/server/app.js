@@ -1,4 +1,6 @@
-//everything that the server has to do is right here
+//Author: Cleveland Plonsey
+//Description: Node server that connects to port 8080
+//uses express Router to route requests from the client/frontend to the endpoint's controller functions 
 
 let express  = require('express');
 let bodyParser = require('body-parser');
@@ -29,6 +31,8 @@ app.use(cors({
 // });
 
 
+//test route. If after executing node app.js from ./server folder,
+// when visiting http://localhost:8080 should see hello test! displayed in the browser
 app.get("/", (req, res) =>{
 	res.send("hello test!!!");
 })
@@ -38,4 +42,8 @@ app.get("/", (req, res) =>{
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, function(){
 	console.log(`Server started on port: ${PORT}`);
-})
+});
+
+
+//path to github: 
+//https://github.com/CSC-648-SFSU/csc648-03-fa23-team03/
