@@ -7,7 +7,7 @@ let bodyParser = require('body-parser');
 const cors = require('cors');   
 const bcrypt = require('bcrypt');  //npm password hashing module
 const path = require("path");
-const db = require("./config/dbConnection"); //mysql connection object
+const db = require("./config/database/dbConnection"); //mysql connection object
 const userRouter = require("./routes/userRouter");
 
 
