@@ -18,7 +18,7 @@
 | Ava Albert     |     aalbert@sfsu.edu          |      Tangeyo           |
 | Griffin Evans      |       gevans3@sfsu.edu        |                 |
 | Bryan Maldonado     |       bmaldonado@sfsu.edu        |      bmaldonado6434           |
-| Cleveland Plonsey     |       cplonsey1@sfsu.edu        |                 |
+| Cleveland Plonsey     |       cplonsey1@sfsu.edu        |    CleveyP             |
 | Danial Tahir     |       dtahir@sfsu.edu        |                 |
 | Michael Mathews      |       mmathews1@sfsu.edu        |      rubbur           |
 
