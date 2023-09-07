@@ -1,47 +1,47 @@
-// const mysql = require('mysql2/promise');
+const mysql = require('mysql2/promise');
 
-// const DATABASE_NAME = "SFSUtutors";
+const DATABASE_NAME = "SFSUtutors";
 
-// // Create a connection pool
-// const pool = mysql.createPool({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'CleveM3bby!',
-//   database: 'mysql', // This is the default database used for administrative tasks
-//   waitForConnections: true,
-//   connectionLimit: 100,
-//   queueLimit: 0
-// });
+// Create a connection pool
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'CleveM3bby!',
+  database: 'mysql', // This is the default database used for administrative tasks
+  waitForConnections: true,
+  connectionLimit: 100,
+  queueLimit: 0
+});
 
-// //creates the database if it does not exist and creates the user table as well 
-// const createDatabaseAndTable = async () => {
-//     try {
-//       // Create the database if it doesn't exist
-//       await pool.query(`CREATE DATABASE IF NOT EXISTS ${DATABASE_NAME}`);
+//creates the database if it does not exist and creates the user table as well 
+const createDatabaseAndTable = async () => {
+    try {
+      // Create the database if it doesn't exist
+      await pool.query(`CREATE DATABASE IF NOT EXISTS ${DATABASE_NAME}`);
   
-//       // Switch to the newly created/existing database
-//       await pool.query(`USE ${DATABASE_NAME}`);
+      // Switch to the newly created/existing database
+      await pool.query(`USE ${DATABASE_NAME}`);
   
-//       // Create the "users" table if it doesn't exist
-//       await pool.query(`
-//         CREATE TABLE IF NOT EXISTS users (
-//           id INT AUTO_INCREMENT PRIMARY KEY,
-//           username VARCHAR(255) NOT NULL,
-//           email VARCHAR(255) NOT NULL,
-//           passwordhash BINARY(60) NOT NULL
-//         )
-//       `);
+      // Create the "users" table if it doesn't exist
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS users (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          username VARCHAR(255) NOT NULL,
+          email VARCHAR(255) NOT NULL,
+          passwordhash BINARY(60) NOT NULL
+        )
+      `);
 
-//       console.log('Database and table created successfully!');
-//     } catch (error) {
-//       console.error('Error:', error);
-//     } finally {
-//       //This connection pool's only purpose was to setup the database schema. we are done with this pool.
-//       pool.end();
-//     }
-//   }
+      console.log('Database and table created successfully!');
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      //This connection pool's only purpose was to setup the database schema. we are done with this pool.
+      pool.end();
+    }
+  }
 
-//   createDatabaseAndTable();
+  createDatabaseAndTable();
 
 
-// module.exports = {createDatabaseAndTable};
+module.exports = {createDatabaseAndTable};

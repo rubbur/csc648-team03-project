@@ -14,9 +14,7 @@ const DATABASE_NAME = "SFSUtutors";
     database: DATABASE_NAME
    });
 
-
-  
-
+ 
 
   module.exports = {db};
 

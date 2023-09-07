@@ -3,7 +3,9 @@
 //uses express Router to route requests from the client/frontend to the endpoint's controller functions 
 
 let express  = require('express');
-let bodyParser = require('body-parser');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+const bodyParser = require('body-parser');
 const cors = require('cors');   
 const bcrypt = require('bcrypt');  //npm password hashing module
 const path = require("path");
@@ -13,6 +15,21 @@ const userRouter = require("./routes/userRouter");
 
 
 let app = express();
+
+
+//setup express session
+const sessionStore = new MySQLStore({}, db);
+//console.log("made it here!");
+
+app.use(session({
+	key: 'session_cookie_name',
+	secret: 'session_cookie_secret',
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false
+}));
+
+
 const router = express.Router();
 
 app.use(bodyParser.json({limit: '1mb'})); //more data than we ever need to send over http
@@ -34,7 +51,6 @@ app.use(cors({
 
 //test route. If after executing node app.js from ./server folder,
 // when visiting http://localhost:8080 should see hello test! displayed in the browser
-
 
 
 app.get("/", (req, res) =>{
