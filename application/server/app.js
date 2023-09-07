@@ -4,22 +4,35 @@
 
 let express  = require('express');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
+let MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const cors = require('cors');   
 const bcrypt = require('bcrypt');  //npm password hashing module
 const path = require("path");
-const db = require("./config/database/dbConnection"); //mysql connection object
+// const db = require("./config/database/dbConnection"); //mysql connection object
 const userRouter = require("./routes/userRouter");
-
-
-
 let app = express();
 
+const router = express.Router();
+
+app.use(bodyParser.json({limit: '1mb'})); //more data than we ever need to send over http
+app.use(cors({
+	origin: true,
+	credentials: true  //for express session
+}));
 
 //setup express session
-const sessionStore = new MySQLStore({}, db);
-//console.log("made it here!");
+const options ={
+    connectionLimit: 10,
+    password: "CleveM3bby!",
+    user: "root",
+    database: "SFSUtutors",
+    host: "localhost",
+    port: 3306,
+    createDatabaseTable: true
+}
+ 
+const  sessionStore = new MySQLStore(options);
 
 app.use(session({
 	key: 'session_cookie_name',
@@ -30,13 +43,6 @@ app.use(session({
 }));
 
 
-const router = express.Router();
-
-app.use(bodyParser.json({limit: '1mb'})); //more data than we ever need to send over http
-app.use(cors({
-	origin: true,
-	credentials: true  //for express session
-}));
 
 
 // Serve static files from the React build directory
@@ -50,10 +56,10 @@ app.use(cors({
 
 
 //test route. If after executing node app.js from ./server folder,
-// when visiting http://localhost:8080 should see hello test! displayed in the browser
-
-
+// when visiting http://localhost:8080 should see hello test! displayed in the browser and the session object printed in the terminal.
 app.get("/", (req, res) =>{
+   req.session.isLoggedIn = true;
+    console.log(req.session);
 	res.send("hello test!!!");
 })
 
