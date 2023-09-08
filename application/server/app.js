@@ -21,18 +21,8 @@ app.use(cors({
 	credentials: true  //for express session
 }));
 
-//setup express session
-const options ={
-    connectionLimit: 10,
-    password: "CleveM3bby!",
-    user: "root",
-    database: "SFSUtutors",
-    host: "localhost",
-    port: 3306,
-    createDatabaseTable: true
-}
- 
-const  sessionStore = new MySQLStore(options);
+//setup express session 
+const sessionStore = new MySQLStore({}, require("./config/database/dbConnection.js"));
 
 app.use(session({
 	key: 'session_cookie_name',

@@ -16,7 +16,7 @@ const DATABASE_NAME = "SFSUtutors";
 
  
 
-  module.exports = {db};
+  module.exports = db;
 
   //to interact with our mysql database, require the above db object into the file that needs it.
   //then follow this syntax: 
