@@ -1,17 +1,17 @@
 const mysql = require('mysql2/promise');
-
-const DATABASE_NAME = "SFSUtutors";
+require('dotenv').config();
+;
 
 
   // Create a connection pool after the database setup
    const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'CleveM3bby!',
-    port: 3306,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
     connectionLimit: 100,
     waitForConnections: true,
-    database: DATABASE_NAME
+    database: process.env.DB_DATABASE_NAME
    });
 
  
