@@ -22,12 +22,12 @@ function App() {
         <Route path='/AboutUs' element={<AboutUs />} />
         <Route path='/SignIn' element={<SignIn />} />
         <Route path='/SignUp' element={<SignUp />} />
-        <Route path="/pages/profiles/MichaelMathews" element={<MichaelMathews />} />
-        <Route path="/pages/profiles/DanialTahir" element={<DanialTahir />} />
-        <Route path="/pages/profiles/AvaAlbert" element={<AvaAlbert />} />
-        <Route path="/pages/profiles/GriffinEvans" element={<GriffinEvans />} />
-        <Route path="/pages/profiles/BryanMaldonado" element={<BryanMaldonado />} />
-        <Route path="/pages/profiles/ClevelandPlonsey" element={<ClevelandPlonsey />} />
+        <Route path="/profiles/MichaelMathews" element={<MichaelMathews />} />
+        <Route path="/profiles/DanialTahir" element={<DanialTahir />} />
+        <Route path="/profiles/AvaAlbert" element={<AvaAlbert />} />
+        <Route path="/profiles/GriffinEvans" element={<GriffinEvans />} />
+        <Route path="/profiles/BryanMaldonado" element={<BryanMaldonado />} />
+        <Route path="/profiles/ClevelandPlonsey" element={<ClevelandPlonsey />} />
       </Routes>
     </Router>
   );
