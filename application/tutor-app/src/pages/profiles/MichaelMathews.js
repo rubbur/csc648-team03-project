@@ -1,10 +1,10 @@
 import React from 'react';
-import '../index.css';
+import '../../index.css';
 
 function MichaelMathews() {
   return (
     <div>
-      <h1 className='header'>Michael Mathews</h1>
+      <h1 className='header'>Michael Mathews' Profile</h1>
     </div>
   );
 }

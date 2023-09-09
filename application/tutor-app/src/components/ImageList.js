@@ -2,7 +2,7 @@ import React from 'react';
 import '../index.css';
 
 const ImageWithHeader = ({ imagePath, headerText }) => {
-  const pageUrl = `./pages/${headerText.replace(' ', '')}`;
+  const pageUrl = `./pages/profiles/${headerText.replace(' ', '')}`;
 
   const linkStyle = {
     color: 'white', 
