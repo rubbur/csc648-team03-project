@@ -2,7 +2,7 @@ import React from 'react';
 import '../index.css';
 
 function AboutUs() {
-  return <div className='header'>About Us Page</div>;
+  return <h1 className='header'>About Us Page</h1>;
 }
 
 export default AboutUs;
