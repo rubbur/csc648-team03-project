@@ -10,10 +10,39 @@ body {
 
 .header {
   text-align: center;
+  color: white;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.image-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-list-item {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.image-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header-column {
+  flex: 2;
+  text-align: center;
+  width: 500px;
+}
+
+.about-color {
+  background-color: rgb(42, 64, 83);
 }

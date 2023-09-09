@@ -5,7 +5,7 @@ import ImageList from '../components/ImageList';
 function AboutUs() {
   return (
     <div>
-      <h1 className='header'>About Us Page</h1>
+      <h1 className='header'>About Us</h1>
       <ImageList /> 
     </div>
   );

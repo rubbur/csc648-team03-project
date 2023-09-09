@@ -6,6 +6,7 @@ import AboutUs from './pages/AboutUs';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Home from './pages';
+import MichaelMathews from './pages/MichaelMathews';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/AboutUs' element={<AboutUs />} />
         <Route path='/SignIn' element={<SignIn />} />
         <Route path='/SignUp' element={<SignUp />} />
+        <Route path="/MichaelMathews" element={<MichaelMathews />} />
       </Routes>
     </Router>
   );
