@@ -3,7 +3,7 @@ import '../index.css';
 
 const Home = () => {
 	useEffect(() => {
-        document.title = "Tutors.tech";
+        document.title = "Tutors.tech: Home";
       }, []);
 	return (
 		<div>

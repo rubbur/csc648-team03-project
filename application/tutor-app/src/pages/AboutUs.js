@@ -4,7 +4,7 @@ import ImageList from '../components/ImageList';
 
 function AboutUs() {
   useEffect(() => {
-    document.title = "Tutors.tech";
+    document.title = "Tutors.tech: About Us";
   }, []);
   return (
     <div>

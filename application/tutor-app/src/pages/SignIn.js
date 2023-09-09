@@ -3,7 +3,7 @@ import '../index.css';
 
 function SignIn() {
   useEffect(() => {
-    document.title = "Tutors.tech";
+    document.title = "Tutors.tech: Sign In";
   }, []);
   return <h1 className='header'>Sign In</h1>;
 
