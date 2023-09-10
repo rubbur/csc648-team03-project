@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../index.css';
+import axios from "axios";
 
 function SignUp() {
   useEffect(() => {
@@ -22,11 +23,14 @@ function SignUp() {
     setRememberMe(e.target.checked);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     console.log("Email:", email);
     console.log("Password:", password);
     console.log("Remember Me:", rememberMe);
+    
+    // send email and password to backend
+    const response = await axios.post(process.env.REACT_APP_BACKEND_URL,{email:email,password:password});
+    console.log(response.data);
   };
 
   return (
@@ -68,7 +72,7 @@ function SignUp() {
           </label>
         </div>
         <div className="center-button">
-          <button type="submit">Sign Up</button>
+          <button onClick={handleSubmit}>Sign Up</button>
         </div>
         <div className="center-button">
           <button type="submit">Forgot Password?</button>
