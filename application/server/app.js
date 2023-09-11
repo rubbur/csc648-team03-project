@@ -6,11 +6,9 @@ let express  = require('express');
 const session = require('express-session');
 let MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
-const cors = require('cors');   
-const bcrypt = require('bcrypt');  //npm password hashing module
-const path = require("path");
-// const db = require("./config/database/dbConnection"); //mysql connection object
 const userRouter = require("./routes/userRouter");
+const cors = require('cors');   
+const path = require("path");
 let app = express();
 
 const router = express.Router();
@@ -32,7 +30,9 @@ app.use(session({
 	saveUninitialized: false
 }));
 
+//routes: 
 
+app.use("/user", userRouter);
 
 
 // Serve static files from the React build directory
@@ -53,7 +53,7 @@ app.get("/", (req, res) =>{
 	res.send("hello test!!!");
 })
 
-//app.use("/user", userRouter);
+
 
 //application listens on port 8080 which means to visit the server, go to http://localhost:8080
 const PORT = process.env.PORT || 8080;
