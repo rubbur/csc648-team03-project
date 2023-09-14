@@ -6,12 +6,12 @@ function SignIn() {
     document.title = "Tutors.tech: Sign In";
   }, []);
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -24,7 +24,7 @@ function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Email:", email);
+    console.log("Username:", username);
     console.log("Password:", password);
     console.log("Remember Me:", rememberMe);
   };
@@ -34,13 +34,13 @@ function SignIn() {
       <h1 className='header'>Sign In</h1>
       <form onSubmit={handleSubmit} className='form-color'>
         <div className="form-group">
-          <label htmlFor="email" className='no-select'>Email: </label>
+          <label htmlFor="email" className='no-select'>username: </label>
           <input
             type="email"
             id="email"
             name="email"
-            value={email}
-            onChange={handleEmailChange}
+            value={username}
+            onChange={handleUsernameChange}
             required
           />
         </div>
