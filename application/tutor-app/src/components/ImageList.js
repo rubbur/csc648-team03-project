@@ -28,12 +28,12 @@ const ImageWithHeader = ({ imagePath, headerText }) => {
 
 const ImageList = () => {
   const images = [
-    { imagePath: '../../images/favicon.png', headerText: 'Ava Albert' },
+    { imagePath: '../../images/Ava_Albert.png', headerText: 'Ava Albert' },
     { imagePath: '../../images/Griffin_Evans.jpg', headerText: 'Griffin Evans' },
     { imagePath: '../../images/Bryan_Maldonado.jpg', headerText: 'Bryan Maldonado' },
     { imagePath: '../../images/Cleveland_Plonsey.png', headerText: 'Cleveland Plonsey' },
     { imagePath: '../../images/Danial_Tahir.jpg', headerText: 'Danial Tahir' },
-    { imagePath: '../../images/favicon.png', headerText: 'Michael Mathews' },
+    { imagePath: '../../images/Michael_Mathews.jpg', headerText: 'Michael Mathews' },
   ];
 
   return (
