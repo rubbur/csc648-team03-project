@@ -14,10 +14,9 @@ const login = async (req, res) => {
   const q = "SELECT * FROM users WHERE username = ?";
   //find the user in the user table by email.
   try {
-    const result = await db.query(q, [username]);
-
+    const results = await db.query(q, [username]);
     //check if the hashed password matches the passwordhash in the row from the first query.
-    bcrypt.compare(password, result[0][0].hashed_password, function (err, result) {
+    bcrypt.compare(password, results[0][0].hashed_password, function (err, result) {
         if (err) {
           console.log("error occurred during bcrypt comparing " + err );
           res.send({ success: false, error: err });
@@ -29,16 +28,22 @@ const login = async (req, res) => {
             error: "The password for this user is incorrect!",
           });
         } else {
-          //the user is verified
-          //add to the session that the user is loggedIn
-          req.session.isLoggedIn = true;
-
-          res.send({ success: true });
+          if(results[0]){
+            //the user is verified
+            //add to the session that the user is loggedIn
+            req.session.isLoggedIn = true;
+            req.session.isAuthenticated = true;
+            
+            req.session.isAdmin = results[0][0].isAdmin;
+            res.send({ success: true });
+          }
         }
       }
     );
   } catch (err) {
-    res.send({ success: false, error: err });
+    console.log("error occurred in the try block" + err);
+    
+    res.send({ success: false, error:  "" +err });
   }
 };
 
