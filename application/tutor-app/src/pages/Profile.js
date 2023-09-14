@@ -7,7 +7,7 @@ function Profile({img,name,bio}) {
   return (
     <div>
       <h1 className='header'>{updateName}</h1>
-      <div className='bio'><img src={img} alt={name} /></div>
+      <div className='bio'><img src={img} alt={name} width={256} height={256}/></div>
       <p className='bio'>{bio}</p>
     </div>
   );
