@@ -83,7 +83,62 @@ const register = async (req, res) =>{
     }
 }
 
+const logout = async (req, res) =>{
+  req.session.destroy((error) => {
+    if (error) {
+      console.log(error);
+      res.send({success: false});
+    }
+    else {
+      console.log("logged out successfully");
+      //TODO: clear cookies
+      //for example 
+      res.clearCookie("sfsuCookies");
+      res.send({success: true});
+    }
+  });
+}
+
+
+//given a name or a fragment of a name, if nothing goes wrong returns object that looks like: 
+/*{
+    "success": true,
+    "searchResults": [
+        {
+            "id": 1,
+            "isadmin": 0,
+            "istutor": 0,
+            "username": "Cleveland"
+        },
+        {
+            "id": 6,
+            "isadmin": 0,
+            "istutor": 0,
+            "username": "Flea"
+        }
+    ]
+}*/
+//if something does go wrong, then will return {success: false, error: err}
+const searchByName = async (req, res) =>{
+  //get the name to search by
+  const searchName = `%${req.body.name}%`;
+  //create the query string. The % wildcard matches to 0 or more characters.
+  const q = "SELECT * FROM users WHERE username LIKE ?";
+
+  try{
+    const result = await db.query(q, [searchName]);
+    let userList = result[0];
+    //do not give the hashed_passwords of any of the users to the client
+    for(let i =0; i< userList.length; i++){
+     delete userList[i].hashed_password;
+    }
+    res.send({success: true, searchResults: userList});
+  }catch(err){
+    console.log(err);
+    res.send({success: false, error: err});
+  }
+}
 
 
 
-module.exports = {login, register};
+module.exports = {login, register, logout, searchByName};

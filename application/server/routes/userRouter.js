@@ -1,7 +1,7 @@
 //Author: Cleveland Plonsey
 
 const express = require("express");
-const {login, register} = require("../controllers/userControllers");
+const {login, register, logout, searchByName} = require("../controllers/userControllers");
 
 const userRouter = express.Router();
 
@@ -9,9 +9,9 @@ userRouter.post("/login", login);
 
 userRouter.post("/register", register);
 
-// userRouter.get("/logout", logout);
+userRouter.get("/logout", logout);
 
-
+userRouter.post("/searchByName", searchByName);
 
 
 module.exports = userRouter;
