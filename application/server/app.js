@@ -41,7 +41,7 @@ app.use(express.static(path.join(__dirname, '../tutor-app/build')));
 
 // Handle requests that don't match any routes by serving the index.html file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../tutor-app/build', 'index.html'));
 });
 
 
