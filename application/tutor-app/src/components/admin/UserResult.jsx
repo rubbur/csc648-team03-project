@@ -1,3 +1,8 @@
+//Author: Cleveland Plonsey
+//UserResult is a component that represents a user in the MySQL database.
+//The component provides buttons that allow the admin to either delete a user
+//or an edit button which opens a dialogue box wherein the admin can edit whatever columns they please on that particular row
+
 const UserResult = ({username, userId}) =>{
 
     const handleDelete = async () =>{
@@ -11,7 +16,8 @@ const UserResult = ({username, userId}) =>{
     }
 
     const handleEdit = () =>{
-        //open up a react modal
+        //TODO: install react-modal, setup the react modal with all the fields that should be editable, add the apply changes button to modal
+        //open up the modal
     }
 
     const handleApplyChanges = async () =>{

@@ -1,3 +1,4 @@
+//Author: Cleveland Plonsey
 //admin should be able to get all users
 //delete a user
 //modify a user
@@ -35,6 +36,7 @@ const Admin = () =>{
         const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/searchByName`, {searchTerm: searchTerm}, {withCredentials: true});
         if(res.data.success){
             setUserList([...res.searchResults]);
+            setSearchTerm("");
         }
     }
 
