@@ -9,6 +9,7 @@ function AboutUs() {
   return (
     <div>
       <h1 className='header'>About Us</h1>
+      <h1 classname='header'>Software Engineering 648 Team 3</h1>
       <ImageList /> 
     </div>
   );
