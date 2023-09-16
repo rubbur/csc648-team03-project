@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../index.css';
 import axios from "axios";
 import {cookie} from "../App"
-import  { redirect } from 'react-router-dom'
+import  { Navigate } from 'react-router-dom'
 
 function SignIn() {
   useEffect(() => {
@@ -42,11 +42,12 @@ function SignIn() {
       cookie.set("userName",response.data.username);
       cookie.set("isTutor",response.data.isTutor);
 
+      
       if(cookie.get("isTutor")){
-        return <redirect to='/TutorView'  />
+        return <Navigate to='/TutorView'  />
       }
       else{
-        return <redirect to='/StudentView'  />  
+        return <Navigate to='/StudentView'  />  
       }
       
 
