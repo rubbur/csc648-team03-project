@@ -34,6 +34,8 @@ function SignUp() {
     // send email and password to backend
     const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,{username:username,password:password,isTutor:isTutor});
     console.log(response.data);
+    setUsername("");
+    setPassword("");
     if (response.data.success){
       //user successfully registered
       cookie.set("isLoggedIn",true);
@@ -49,8 +51,7 @@ function SignUp() {
       
 
     }
-    setUsername("");
-    setPassword("");
+
   };
 
   return (
