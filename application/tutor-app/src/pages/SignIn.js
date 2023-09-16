@@ -70,6 +70,9 @@ function SignIn() {
         <div className="center-button">
           <button type="submit">Sign In</button>
         </div>
+        <div className="center-button">
+          <button type="submit">Forgot Password?</button>
+        </div>
       </form>
     </div>
   );

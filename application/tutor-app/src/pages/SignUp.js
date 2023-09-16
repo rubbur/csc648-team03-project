@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import '../index.css';
 import axios from "axios";
+import {cookie} from "../App"
+import  { redirect } from 'react-router-dom'
 
 function SignUp() {
   useEffect(() => {
     document.title = "Tutors.tech: Sign Up";
   }, []);
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [isTutor, setIsTutor] = useState(false);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -23,28 +26,45 @@ function SignUp() {
     setRememberMe(e.target.checked);
   };
 
-  const handleSubmit = async () => {
-    console.log("Email:", email);
+  const handleRegistration = async () => {
+    console.log("Username:", username);
     console.log("Password:", password);
     console.log("Remember Me:", rememberMe);
     
     // send email and password to backend
-    const response = await axios.post(process.env.REACT_APP_BACKEND_URL,{email:email,password:password});
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,{username:username,password:password,isTutor:isTutor});
     console.log(response.data);
+    if (response.data.success){
+      //user successfully registered
+      cookie.set("isLoggedIn",true);
+      cookie.set("userName",response.data.username);
+      cookie.set("isTutor",response.data.isTutor);
+
+      if(cookie.get("isTutor")){
+        return <redirect to='/TutorView'  />
+      }
+      else{
+        return <redirect to='/StudentView'  />  
+      }
+      
+
+    }
+    setUsername("");
+    setPassword("");
   };
 
   return (
     <div>
       <h1 className='header'>Sign Up</h1>
-      <form onSubmit={handleSubmit} className='form-color'>
+      <div className="form-set">
         <div className="form-group">
-          <label htmlFor="email" className='no-select'>Email: </label>
+          <label htmlFor="username" className='no-select'>Username: </label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={handleEmailChange}
+            type="username"
+            id="username"
+            name="username"
+            value={username}
+            onChange={handleUsernameChange}
             required
           />
         </div>
@@ -60,6 +80,14 @@ function SignUp() {
           />
         </div>
         <div className="form-group">
+          
+            student<input value="student" type="radio" checked={!isTutor} onChange={() => setIsTutor(false)} />
+            tutor<input value="tutor" type="radio" checked={isTutor} onChange={() => setIsTutor(true)}/>
+          
+
+
+        </div>
+        <div className="form-group">
           <label htmlFor="rememberMe" className='no-select'>
             Remember me: 
             <input
@@ -72,12 +100,11 @@ function SignUp() {
           </label>
         </div>
         <div className="center-button">
-          <button onClick={handleSubmit}>Sign Up</button>
+          <button onClick={handleRegistration}>Sign Up</button>
         </div>
-        <div className="center-button">
-          <button type="submit">Forgot Password?</button>
-        </div>
-      </form>
+        
+
+      </div>
     </div>
   );
 }
