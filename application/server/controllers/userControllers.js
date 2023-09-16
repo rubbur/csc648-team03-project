@@ -72,8 +72,8 @@ const register = async (req, res) =>{
             }
             try{
                 //store the new user in the database
-                q = "INSERT INTO users (username, hashed_password) VALUES (?, ?)";
-                const result = await db.query(q, [username, hash]);
+                q = "INSERT INTO users (username, hashed_password, istutor) VALUES (?, ?, ?)";
+                const result = await db.query(q, [username, hash, isTutor]);
                 console.log("User inserted successfully!");
                 res.send({success: true, username: username, isTutor: isTutor});
             }
