@@ -35,7 +35,7 @@ const login = async (req, res) => {
             req.session.isAuthenticated = true;
             
             req.session.isAdmin = results[0][0].isAdmin;
-            res.send({ success: true });
+            res.send({ success: true, username: results[0][0].username, isTutor: results[0][0].isTutor  });
           }
         }
       }
@@ -51,7 +51,8 @@ const register = async (req, res) =>{
     //get the username and password out of the request
     const username = req.body.username;
     const password = req.body.password;
-    console.log(username, password);
+    const isTutor = req.body.isTutor;
+    console.log(username, password, isTutor);
     const saltRounds = 10; //for password hashing
     let q = "SELECT * FROM users WHERE username = ?";
     //verify that the username is available
@@ -74,7 +75,7 @@ const register = async (req, res) =>{
                 q = "INSERT INTO users (username, hashed_password) VALUES (?, ?)";
                 const result = await db.query(q, [username, hash]);
                 console.log("User inserted successfully!");
-                res.send({success: true});
+                res.send({success: true, username: username, isTutor: isTutor});
             }
             catch(err){
                 console.log("error inserting user");
