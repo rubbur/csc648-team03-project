@@ -36,10 +36,9 @@ app.use("/user", userRouter);
 
 
 //Serve static files from the React build directory
-//uncomment when we need to serve the static frontend files
 app.use(express.static(path.join(__dirname, '../tutor-app/build')));
 
-// Handle requests that don't match any routes by serving the index.html file
+//Handle requests that don't match any routes by serving the index.html file (the App.js component AKA the landing page)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../tutor-app/build', 'index.html'));
 });
