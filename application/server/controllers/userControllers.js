@@ -35,7 +35,7 @@ const login = async (req, res) => {
             req.session.isAuthenticated = true;
             
             req.session.isAdmin = results[0][0].isAdmin;
-            res.send({ success: true, username: results[0][0].username, isTutor: results[0][0].isTutor  });
+            res.send({ success: true, username: results[0][0].username, isTutor: results[0][0].istutor  });
           }
         }
       }
