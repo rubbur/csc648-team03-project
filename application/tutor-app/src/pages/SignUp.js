@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../index.css';
 import axios from "axios";
 import {cookie} from "../App"
-import  { useNavigate } from 'react-router-dom'
+import  { redirect } from 'react-router-dom'
 
 function SignUp() {
   useEffect(() => {
@@ -30,7 +30,7 @@ function SignUp() {
     console.log("Username:", username);
     console.log("Password:", password);
     console.log("Remember Me:", rememberMe);
-    const navigate = useNavigate();
+    
     // send email and password to backend
     const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,{username:username,password:password,isTutor:isTutor});
     console.log(response.data);
@@ -49,10 +49,10 @@ function SignUp() {
       
 
       if(cookie.get("isTutor")){
-        navigate("/TutorView");
+        return redirect("/TutorView");
       }
       else{
-        navigate("/StudentView");  
+        return redirect("/StudentView");  
       }
       
 
