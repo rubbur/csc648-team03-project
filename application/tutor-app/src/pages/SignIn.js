@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../index.css';
 import axios from "axios";
 import {cookie} from "../App"
-import  { Navigate } from 'react-router-dom'
+import  { useNavigate } from 'react-router-dom'
 
 function SignIn() {
   useEffect(() => {
@@ -25,6 +25,8 @@ function SignIn() {
     setRememberMe(e.target.checked);
   };
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log("Username:", username);
@@ -42,12 +44,13 @@ function SignIn() {
       cookie.set("userName",response.data.username);
       cookie.set("isTutor",response.data.isTutor);
 
-      
       if(cookie.get("isTutor")){
-        return <Navigate to='/TutorView'  />
+        navigate("/TutorView");
+        navigate(0);
       }
       else{
-        return <Navigate to='/StudentView'  />  
+        navigate("/StudentView");
+        navigate(0);  
       }
       
 

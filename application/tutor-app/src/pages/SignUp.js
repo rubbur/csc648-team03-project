@@ -48,8 +48,6 @@ function SignUp() {
       console.log(cookie.get("isLoggedIn"));
       console.log(cookie.get("isTutor"));
 
-      
-
       if(cookie.get("isTutor")){
         navigate("/TutorView");
         navigate(0);
