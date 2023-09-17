@@ -9,7 +9,7 @@ function StudentView() {
   }, []);
   return (
     <div>
-      <h1 className='header'>Welcome Student{cookie.get("userName")}</h1>
+      <h1 className='header'>Welcome Student {cookie.get("userName")}</h1>
       
     </div>
   );
