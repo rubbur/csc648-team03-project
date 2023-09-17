@@ -52,9 +52,11 @@ function SignUp() {
 
       if(cookie.get("isTutor")){
         navigate("/TutorView");
+        navigate(0);
       }
       else{
-        navigate("/StudentView");  
+        navigate("/StudentView");
+        navigate(0);  
       }
       
 
