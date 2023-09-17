@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../index.css';
 import axios from "axios";
 import {cookie} from "../App"
-import  { redirect } from 'react-router-dom'
+import  { useNavigate } from 'react-router-dom'
 
 function SignUp() {
   useEffect(() => {
@@ -25,6 +25,8 @@ function SignUp() {
   const handleRememberMeChange = (e) => {
     setRememberMe(e.target.checked);
   };
+
+  const navigate = useNavigate();
 
   const HandleRegistration = async () => {
     console.log("Username:", username);
@@ -49,10 +51,10 @@ function SignUp() {
       
 
       if(cookie.get("isTutor")){
-        return redirect("/TutorView");
+        navigate("/TutorView");
       }
       else{
-        return redirect("/StudentView");  
+        navigate("/StudentView");  
       }
       
 
