@@ -9,6 +9,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Home from './pages';
 import Profile from './pages/Profile';
+import Logout from './pages/Logout';
 
 import bios from './data/Bios';
 import Cookie from 'universal-cookie';
@@ -26,6 +27,7 @@ function App() {
         <Route path='/AboutUs' element={<AboutUs />} />
         {!cookie.get("isLoggedIn") && <Route path='/SignIn' element={<SignIn />} />}
         {!cookie.get("isLoggedIn") && <Route path='/SignUp' element={<SignUp />} />}
+        {cookie.get("isLoggedIn") && <Route path='/Logout' element={<Logout />} />}
         <Route path="/profiles/MichaelMathews" element={<Profile img="/images/Michael_Mathews.jpg" name="Michael Mathews" bio={bios.Michael_Mathews}/>} />
         <Route path="/profiles/DanialTahir" element={<Profile img="/images/Danial_Tahir.jpg" name="Danial Tahir" bio={bios.Danial_Tahir}/>} />
         <Route path="/profiles/AvaAlbert" element={<Profile img="/images/Ava_Albert.png" name="Ava Albert" bio={bios.Ava_Albert}/>} />
