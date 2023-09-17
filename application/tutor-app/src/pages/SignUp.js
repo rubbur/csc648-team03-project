@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../index.css';
 import axios from "axios";
 import {cookie} from "../App"
-import  { Navigate } from 'react-router-dom'
+import  { useNavigate } from 'react-router-dom'
 
 function SignUp() {
   useEffect(() => {
@@ -26,11 +26,11 @@ function SignUp() {
     setRememberMe(e.target.checked);
   };
 
-  const handleRegistration = async () => {
+  const HandleRegistration = async () => {
     console.log("Username:", username);
     console.log("Password:", password);
     console.log("Remember Me:", rememberMe);
-    
+    const navigate = useNavigate();
     // send email and password to backend
     const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,{username:username,password:password,isTutor:isTutor});
     console.log(response.data);
@@ -46,11 +46,13 @@ function SignUp() {
       console.log(cookie.get("isLoggedIn"));
       console.log(cookie.get("isTutor"));
 
+      
+
       if(cookie.get("isTutor")){
-        return <Navigate to='/TutorView'  />
+        navigate("/TutorView");
       }
       else{
-        return <Navigate to='/StudentView'  />  
+        navigate("/StudentView");  
       }
       
 
@@ -105,7 +107,7 @@ function SignUp() {
           </label>
         </div>
         <div className="center-button">
-          <button onClick={handleRegistration}>Sign Up</button>
+          <button onClick={HandleRegistration}>Sign Up</button>
         </div>
         
 
