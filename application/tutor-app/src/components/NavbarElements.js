@@ -58,7 +58,7 @@ const Navbar = () => {
         <NavMenu>
           <NavLink to="/"><h1>Home</h1></NavLink>
           {cookie.get("isLoggedIn") && cookie.get("isTutor") && <NavLink to="/TutorView"><h1>Tutors</h1></NavLink>}
-          {cookie.get("isLoggedIn") && !cookie.get("isTutor") && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
+          {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
           <NavLink to="/AboutUs"><h1>About Us</h1></NavLink>
           {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
