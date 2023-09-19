@@ -36,10 +36,11 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
         //TODO: should pass all fields from the modal to the second argument. Also need to create the route in the backend
         const res =  await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/EditUser`, {
             userId: userId,
-            username: newUsername,
-            password: newPassword,
-            imgUrl: newImgUrl,
-            isTutor: newIsTutor
+            newUsername: newUsername,
+            oldUsername: username,
+            newPassword: newPassword,
+            newImgUrl: newImgUrl,
+            newIsTutor: newIsTutor
             }, {withCredentials: true});
             if(res.data.success){
                 setIsOpen(false);
@@ -49,7 +50,7 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
 
     return (
         
-        <div className = "user-result">
+        <div className = {` ${isVisible ? "" : "hidden"} user-result `}>
         {    
            isVisible &&
             <div>

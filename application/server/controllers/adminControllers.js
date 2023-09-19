@@ -1,7 +1,7 @@
 //Author: Cleveland Plonsey
 
 const db = require("../config/database/dbConnection");
-
+const bcrypt = require("bcrypt");
 
 const verifyAdmin = async (req, res) =>{
     //check if the user has the admin authentication
@@ -30,13 +30,63 @@ const deleteUser = async (req, res) =>{
 
 const editUser = async (req, res) =>{
 
-   const {userId, newPassword, newUsername, newIsTutor} = req.body;
-   const q = "UPDATE";
+   const {userId, newPassword, newUsername, oldUsername, newIsTutor, newImgUrl} = req.body;
+   let updateResult;
+   const saltRounds = 10;
+   //if the admin is trying to update the username
+   if(oldUsername != newUsername){
+        //make sure that the new username is available
+        let q = "SELECT * FROM users WHERE username = ?";
+        try{
+            const usernameQuery = await db.query(q, [newUsername]);
+            //if there already exists a user in the table then this username is not available
+            if(usernameQuery[0].length != 0){
+                res.send({success: false, error: "username is taken already"});
+                return;
+            }
+        }
+        catch(err){
+            console.log("error when trying to execute find user by username query: " + err);
+        }
+    }
+
+   //if the admin is trying to change the password:
+   if(newPassword != undefined){
+    //hash the new password
+    bcrypt.hash(newPassword, saltRounds, async function(err, hash) {
+        // Store hash in your password DB.
+        if(err){
+            console.log("error when trying to hash the password" + password);
+            res.send({success: false, error: err});
+        }
+        try{
+            //update the user
+            q = "UPDATE users SET username = ?, hashed_password = ?, isTutor = ? WHERE id = ?";
+            updateResult = await db.query(q, [newUsername, hash,  newIsTutor, userId]);
+            res.send({success: true});
+        }
+        catch(err){
+            console.log("error updating user:" + err);
+        }
+    });
+   
+   }
+
+   else{
+    q = "UPDATE users SET username = ?, isTutor = ? WHERE id = ?";
+    try{
+        updateResult = await db.query(q, [newUsername, newIsTutor, userId]);
+        res.send({success: true});
+    }catch(err){
+        console.log("error updating user:" + err);
+        res.send({success: false});
+    }
+    
+   }
 
 }
 
 const getAllUsers = async (req, res) =>{
-    console.log("inside all users");
     const q = "SELECT * FROM users";
 
     try{
