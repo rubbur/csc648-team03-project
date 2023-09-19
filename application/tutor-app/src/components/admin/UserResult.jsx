@@ -5,11 +5,16 @@
 import axios from "axios";
 import { useState } from "react";
 import "./admin.css";
+import Modal from 'react-modal';
 
 
-const UserResult = ({username, userId}) =>{
+const UserResult = ({username, userId, isTutor, imgUrl }) =>{
     const [isVisible, setIsVisible] = useState(true);
-
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [newUsername, setUsername] = useState(username);
+    const [newPassword, setPassword] = useState(undefined);
+    const [newIsTutor, setIsTutor] = useState(isTutor);
+    const [newImgUrl, setImgUrl] = useState(imgUrl);
     const handleDelete = async () =>{
         //delete the user by their username
         const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/deleteUser`, {userId: userId}, {withCredentials: true});
@@ -24,11 +29,22 @@ const UserResult = ({username, userId}) =>{
     const handleEdit = () =>{
         //TODO: install react-modal, setup the react modal with all the fields that should be editable, add the apply changes button to modal
         //open up the modal
+        setIsOpen(true);
     }
 
     const handleApplyChanges = async () =>{
         //TODO: should pass all fields from the modal to the second argument. Also need to create the route in the backend
-        const res =  await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/EditUser`, {userId: userId}, {withCredentials: true});
+        const res =  await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/EditUser`, {
+            userId: userId,
+            username: newUsername,
+            password: newPassword,
+            imgUrl: newImgUrl,
+            isTutor: newIsTutor
+            }, {withCredentials: true});
+            if(res.data.success){
+                setIsOpen(false);
+                alert("Succesfully Edited user: " + username);
+            }
     }
 
     return (
@@ -42,9 +58,25 @@ const UserResult = ({username, userId}) =>{
                 <button className="user-edit-button" onClick={handleEdit}>Edit</button>
             </div>
         }
-        </div>
         
-    )
+      {/*--------------------------------------Modal---------------------------------------------------------------------------------- */}
+        <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() =>setIsOpen(false)}
+        >
+        <h2>Edit Mode</h2>
+        <button onClick={() =>setIsOpen(false)}>close</button>
+        <div className="edit-options">
+            Username: <input type="text" value={newUsername} onChange={ e => setUsername(e.target.value)} />
+            Tutor/Student: <input type="checkbox" checked={newIsTutor} onChange={() =>setIsTutor(!newIsTutor)}/>
+            {/* //if this field is left undefined then no password update will be applied */}
+            Password: <input type="password" value={undefined} onChange={ e => setPassword(e.target.value)}/> 
+            image Url: <input type="text" value={newImgUrl} onChange={ e => setImgUrl(e.target.value)}/>
+        </div>
+        <button className="apply-changes-button" onClick={handleApplyChanges}>Apply Changes</button>
+        </Modal> 
+    </div> 
+    );
 }
 
 export default UserResult;

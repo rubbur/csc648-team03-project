@@ -99,6 +99,10 @@
     color: white;
 }
 
+.user-delete-button:hover{
+    background-color: rgb(143, 6, 6);
+}
+
 .user-edit-button{
     background-color: rgb(205, 241, 24);
     height: fit-content;
