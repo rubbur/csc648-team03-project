@@ -62,17 +62,18 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
         
       {/*--------------------------------------Modal---------------------------------------------------------------------------------- */}
         <Modal
+        className="custom-modal"
         isOpen={modalIsOpen}
         onRequestClose={() =>setIsOpen(false)}
         >
         <h2>Edit Mode</h2>
-        <button onClick={() =>setIsOpen(false)}>close</button>
+        <button className = "close-modal-button" onClick={() =>setIsOpen(false)}>X</button>
         <div className="edit-options">
-            Username: <input type="text" value={newUsername} onChange={ e => setUsername(e.target.value)} />
-            Tutor/Student: <input type="checkbox" checked={newIsTutor} onChange={() =>setIsTutor(!newIsTutor)}/>
+            New Username: <input type="text" value={newUsername} onChange={ e => setUsername(e.target.value)} />
+            Tutor: <input type="checkbox" checked={newIsTutor} onChange={() =>setIsTutor(!newIsTutor)}/>
             {/* //if this field is left undefined then no password update will be applied */}
-            Password: <input type="password" value={undefined} onChange={ e => setPassword(e.target.value)}/> 
-            image Url: <input type="text" value={newImgUrl} onChange={ e => setImgUrl(e.target.value)}/>
+            New Password: <input type="password" value={undefined} onChange={ e => setPassword(e.target.value)}/> 
+            New image Url: <input type="text" value={newImgUrl} onChange={ e => setImgUrl(e.target.value)}/>
         </div>
         <button className="apply-changes-button" onClick={handleApplyChanges}>Apply Changes</button>
         </Modal> 

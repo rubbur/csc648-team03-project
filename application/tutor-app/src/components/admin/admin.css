@@ -116,3 +116,55 @@
 .user-edit-button:hover {
     background-color: rgb(215, 215, 29);
 }
+
+.custom-modal{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    outline: none;
+    max-width: 80%;
+    height: 50%;
+    width: 30%;
+}
+
+.custom-modal .close-modal-button{
+    height: fit-content;
+    width: fit-content;
+    background-color: red;
+    color: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.custom-modal .close-modal-button:hover{
+    background-color: rgb(153, 33, 33);
+}
+.custom-modal .apply-changes-button{
+    color: black;
+    height: fit-content;
+    width: fit-content;
+    background-color: yellow;
+}
+.custom-modal .apply-changes-button:hover{
+    background-color: rgb(169, 169, 39);
+}
+
+.edit-options{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    width: fit-content;
+    padding: 10px;
+}
+.edit-options input{
+    border: solid 3px black;
+}
