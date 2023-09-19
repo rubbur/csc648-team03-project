@@ -7,7 +7,7 @@
 
 import { useState, useEffect } from "react";
 import  {useNavigate} from "react-router-dom";
-import {axios} from "axios";
+import axios from "axios";
 import UserResult from "./UserResult";
 import "./admin.css";
 
@@ -19,8 +19,8 @@ const Admin = () =>{
     //if the user is not an admin then reroute them to the home page
     useEffect( () =>{
         const verifyAdmin = async () =>{
-           const res = await axios.post("/admin/verify", {}, {withCredentials: true});
-           if(!res.success){
+           const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/verify`, {}, {withCredentials: true});
+           if(res.success){ //TODO: make it if(!res.success) once testing is done.
             //they are not the admin so redirect them back to the landing page
             navigate(`${process.env.REACT_APP_BACKEND_URL}/`);
            }
@@ -33,9 +33,10 @@ const Admin = () =>{
     }
 
     const handleSearch = async () =>{
-        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/searchByName`, {searchTerm: searchTerm}, {withCredentials: true});
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/searchByName`, {name: searchTerm}, {withCredentials: true});
         if(res.data.success){
-            setUserList([...res.searchResults]);
+            console.log(res.data)
+            setUserList([...res.data.searchResults]);
             setSearchTerm("");
         }
     }

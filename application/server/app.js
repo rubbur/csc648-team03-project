@@ -3,15 +3,22 @@
 //uses express Router to route requests from the client/frontend to the endpoint's controller functions 
 
 let express  = require('express');
-const session = require('express-session');
-let MySQLStore = require('express-mysql-session')(session);
-const bodyParser = require('body-parser');
-const userRouter = require("./routes/userRouter");
-const cors = require('cors');   
-const path = require("path");
 let app = express();
 
-const router = express.Router();
+//session modules
+const session = require('express-session');
+let MySQLStore = require('express-mysql-session')(session);
+
+//http  stuff
+const bodyParser = require('body-parser');
+const cors = require('cors');   
+
+const path = require("path"); //used for generating static frontend file paths so we can serve them to clients.
+
+//routes
+const userRouter = require("./routes/userRouter");
+const adminRouter = require('./routes/adminRoutes');
+
 
 app.use(bodyParser.json({limit: '1mb'})); //more data than we ever need to send over http
 app.use(cors({
@@ -33,7 +40,7 @@ app.use(session({
 //routes: 
 
 app.use("/user", userRouter);
-
+app.use("/admin", adminRouter);
 
 //Serve static files from the React build directory
 app.use(express.static(path.join(__dirname, '../tutor-app/build')));

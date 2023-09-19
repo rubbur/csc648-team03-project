@@ -13,6 +13,7 @@ import Logout from './pages/Logout';
 
 import bios from './data/Bios';
 import Cookie from 'universal-cookie';
+import Admin from './components/admin/Admin';
 
 export const cookie=new Cookie();
 
@@ -22,6 +23,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/AdminPanel' element={< Admin/>} />
         {cookie.get("isLoggedIn") && cookie.get("isTutor") && <Route path='/TutorView' element={<TutorView />} />}
         {cookie.get("isLoggedIn") && !cookie.get("isTutor") && <Route path='/StudentView' element={<StudentView />} />}
         <Route path='/AboutUs' element={<AboutUs />} />

@@ -33,7 +33,7 @@ const login = async (req, res) => {
             //add to the session that the user is loggedIn
             req.session.isLoggedIn = true;
             req.session.isAuthenticated = true;
-            
+            console.log(req.session);
             req.session.isAdmin = results[0][0].isAdmin;
             res.send({ success: true, username: results[0][0].username, isTutor: results[0][0].istutor  });
           }

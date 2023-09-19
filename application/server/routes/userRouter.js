@@ -12,7 +12,7 @@ userRouter.post("/register", register);
 
 userRouter.get("/logout", logout);
 
-userRouter.post("/searchByName", isLoggedIn, searchByName);
+userRouter.post("/searchByName", searchByName);
 
 
 module.exports = userRouter;
