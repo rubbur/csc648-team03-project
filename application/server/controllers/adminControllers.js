@@ -32,6 +32,7 @@ const editUser = async (req, res) =>{
 
    const {userId, newPassword, newUsername, oldUsername, newIsTutor, newImgUrl} = req.body;
    let updateResult;
+
    const saltRounds = 10;
    //if the admin is trying to update the username
    if(oldUsername != newUsername){

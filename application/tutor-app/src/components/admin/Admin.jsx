@@ -88,6 +88,7 @@ const Admin = () => {
             return (
               <UserResult
                 username={user.username}
+                isTutor={user.isTutor}
                 userId={user.id}
                 key={index}
               />

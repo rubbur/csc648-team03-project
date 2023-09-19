@@ -33,6 +33,7 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
     }
 
     const handleApplyChanges = async () =>{
+        console.log(newIsTutor);
         //TODO: should pass all fields from the modal to the second argument. Also need to create the route in the backend
         const res =  await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/EditUser`, {
             userId: userId,
@@ -40,7 +41,7 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
             oldUsername: username,
             newPassword: newPassword,
             newImgUrl: newImgUrl,
-            newIsTutor: newIsTutor
+            newIsTutor: (newIsTutor) ? 0 : 1
             }, {withCredentials: true});
             if(res.data.success){
                 setIsOpen(false);
