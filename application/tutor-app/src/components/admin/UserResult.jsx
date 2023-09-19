@@ -4,6 +4,8 @@
 //or an edit button which opens a dialogue box wherein the admin can edit whatever columns they please on that particular row
 import axios from "axios";
 import { useState } from "react";
+import "./admin.css";
+
 
 const UserResult = ({username, userId}) =>{
     const [isVisible, setIsVisible] = useState(true);
@@ -36,8 +38,8 @@ const UserResult = ({username, userId}) =>{
            isVisible &&
             <div>
                 <p>{username}</p>
-                <button onClick={handleDelete}>X</button>
-                <button onClick={handleEdit}>Edit</button>
+                <button className="user-delete-button" onClick={handleDelete}>X</button>
+                <button className="user-edit-button" onClick={handleEdit}>Edit</button>
             </div>
         }
         </div>

@@ -1,0 +1,110 @@
+.admin-box {
+    font-family: "Roboto";
+    font-size: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.admin-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.search-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 50%;
+    margin: 15px;
+}
+
+.search-box input {
+    width: 50%;
+    border: none;
+    padding: 15px;
+    font-family: "Roboto";
+    font-weight: bold;
+    font-size: 15px;
+
+
+}
+
+#admin-search-button{
+    margin-right: 15px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: none;
+    background-color: rgb(160, 212, 250);
+
+}
+
+#admin-search-button:hover, #admin-all-button:hover {
+    background-color: rgb(81, 95, 228);
+}
+
+#admin-all-button{
+    width: fit-content;
+    padding: 10px;
+    border: none;
+    background-color: rgb(160, 212, 250);
+
+}
+
+.user-list {
+  margin: auto;
+  height: 50%;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  border: solid black 3px;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: bisque;
+}
+
+
+
+/*******************************************/
+.user-result {
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-color: white;
+  border: 3px solid bisque;
+  margin: 10px;
+  border-radius: 10px;
+  text-align: center;
+  width: 23%;
+  padding-bottom: 10px;
+}
+
+.user-result:hover {
+  border: solid 3px rgb(0, 0, 0);
+}
+
+.user-delete-button{
+    background-color: rgb(234, 64, 64);
+    width: fit-content;
+    height: fit-content;
+    color: white;
+}
+
+.user-edit-button{
+    background-color: rgb(205, 241, 24);
+    height: fit-content;
+    color: rgb(0, 0, 0);
+}
+
+.user-edit-button:hover {
+    background-color: rgb(215, 215, 29);
+}

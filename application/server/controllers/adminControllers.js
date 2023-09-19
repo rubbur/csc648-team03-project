@@ -28,6 +28,26 @@ const deleteUser = async (req, res) =>{
     }
 }
 
+const editUser = async (req, res) =>{
+
+   const {userId, newPassword, newUsername, newIsTutor} = req.body;
+   const q = "UPDATE";
+
+}
+
+const getAllUsers = async (req, res) =>{
+    console.log("inside all users");
+    const q = "SELECT * FROM users";
+
+    try{
+        const result = await db.query(q);
+        res.send({success: true, allUsers: result[0]});
+    }
+    catch(err){
+        console.log("error in get All Users " + err);
+        res.send({success: false, errorMessage: err});
+    }
+}
 
 
-module.exports = {verifyAdmin, deleteUser};
+module.exports = {verifyAdmin, deleteUser, editUser, getAllUsers};
