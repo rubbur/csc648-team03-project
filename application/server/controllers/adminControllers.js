@@ -5,14 +5,13 @@ const bcrypt = require("bcrypt");
 
 const verifyAdmin = async (req, res) =>{
     //check if the user has the admin authentication
-    if(!req.session.isAdmin){
+    if(!req.session.isAdmin)
         res.send({success: false});
-    }
-    else {
+    else 
         res.send({success:true});
-    }
 }
 
+//delete a user by their id
 const deleteUser = async (req, res) =>{
     //get the userId
     const id = req.body.userId;
@@ -28,12 +27,17 @@ const deleteUser = async (req, res) =>{
     }
 }
 
+//edit a user. If the username is going to be edited, checks if the new username is available and rejects if it isn't
+//if the password is to be updated, hashes the password first
+//TODO: once image urls are implemented, update this function to allow updating of this new column
 const editUser = async (req, res) =>{
-
+   
    const {userId, newPassword, newUsername, oldUsername, newIsTutor, newImgUrl} = req.body;
+   console.log(newIsTutor);
+   console.log(req.body);
    let updateResult;
-
    const saltRounds = 10;
+
    //if the admin is trying to update the username
    if(oldUsername != newUsername){
         //make sure that the new username is available
@@ -50,7 +54,6 @@ const editUser = async (req, res) =>{
             console.log("error when trying to execute find user by username query: " + err);
         }
     }
-
    //if the admin is trying to change the password:
    if(newPassword != undefined){
     //hash the new password
@@ -70,9 +73,7 @@ const editUser = async (req, res) =>{
             console.log("error updating user:" + err);
         }
     });
-   
    }
-
    else{
     q = "UPDATE users SET username = ?, isTutor = ? WHERE id = ?";
     try{
@@ -82,11 +83,10 @@ const editUser = async (req, res) =>{
         console.log("error updating user:" + err);
         res.send({success: false});
     }
-    
    }
-
 }
 
+//returns all users in the database (including BOTH tutors and students and the admin)
 const getAllUsers = async (req, res) =>{
     const q = "SELECT * FROM users";
 

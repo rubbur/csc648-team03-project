@@ -41,7 +41,7 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
             oldUsername: username,
             newPassword: newPassword,
             newImgUrl: newImgUrl,
-            newIsTutor: (newIsTutor) ? 0 : 1
+            newIsTutor: newIsTutor,
             }, {withCredentials: true});
             if(res.data.success){
                 setIsOpen(false);
@@ -71,7 +71,7 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
         <button className = "close-modal-button" onClick={() =>setIsOpen(false)}>X</button>
         <div className="edit-options">
             New Username: <input type="text" value={newUsername} onChange={ e => setUsername(e.target.value)} />
-            Tutor: <input type="checkbox" checked={newIsTutor} onChange={() =>setIsTutor(!newIsTutor)}/>
+            Tutor: <input type="checkbox" checked={newIsTutor} onChange={() =>setIsTutor(prevIsTutor => prevIsTutor === 0 ? 1 : 0)}/>
             {/* //if this field is left undefined then no password update will be applied */}
             New Password: <input type="password" value={undefined} onChange={ e => setPassword(e.target.value)}/> 
             New image Url: <input type="text" value={newImgUrl} onChange={ e => setImgUrl(e.target.value)}/>
