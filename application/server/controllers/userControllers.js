@@ -90,12 +90,15 @@ const register = async (req, res) =>{
 }
 
 const logout = async (req, res) =>{
+  console.log("logging out");
+  
   req.session.destroy((error) => {
     if (error) {
       console.log(error);
       res.send({success: false});
     }
     else {
+      
       console.log("logged out successfully");
       //TODO: clear cookies
       //for example 

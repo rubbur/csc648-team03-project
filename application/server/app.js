@@ -36,7 +36,8 @@ app.use(session({
 	saveUninitialized: false,
 	cookie: {
 		secure: process.env.PRODUCTION === "true" ? true : false,
-		maxAge: 1000 * 60 * 60 * 24 * 365
+		maxAge: 1000 * 60 * 60 * 24 * 365,
+		name: "sfsuCookies"
 	}
 }));
 

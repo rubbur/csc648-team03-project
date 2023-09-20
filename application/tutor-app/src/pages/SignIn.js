@@ -34,7 +34,7 @@ function SignIn() {
     console.log("Remember Me:", rememberMe);
 
     // send email and password to backend
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`,{username:username,password:password});
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`,{username:username,password:password}, {withCredentials: true});
     console.log(response.data);
     setUsername("");
     setPassword("");
