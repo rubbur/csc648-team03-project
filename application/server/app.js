@@ -22,7 +22,7 @@ const adminRouter = require('./routes/adminRoutes');
 
 app.use(bodyParser.json({limit: '1mb'})); //more data than we ever need to send over http
 app.use(cors({
-	origin: true,
+	origin: "http://localhost:3000",
 	credentials: true  //for express session
 }));
 
@@ -30,11 +30,14 @@ app.use(cors({
 const sessionStore = new MySQLStore({}, require("./config/database/dbConnection.js"));
 
 app.use(session({
-	key: 'session_cookie_name',
 	secret: 'session_cookie_secret',
 	store: sessionStore,
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	cookie: {
+		secure: process.env.PRODUCTION === "true" ? true : false,
+		maxAge: 1000 * 60 * 60 * 24 * 365
+	}
 }));
 
 //routes: 
