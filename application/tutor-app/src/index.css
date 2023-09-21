@@ -105,3 +105,21 @@ button:hover {
   margin: auto;
   width: 50%;
 }
+
+.image-container {
+  max-width: 256px;
+  max-height: 256px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  margin: auto;
+  display: block;
+}

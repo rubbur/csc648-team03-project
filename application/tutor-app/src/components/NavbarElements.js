@@ -10,7 +10,7 @@ export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   padding: 0.2rem calc((100vw - 1000px) / 2);
-  z-index: 10; 
+  z-index: 10;
 `;
 
 export const NavLink = styled(Link)`
@@ -54,6 +54,7 @@ export const NavMenu = styled.div`
 
 const MobileMenu = styled.div`
   display: none;
+  z-index: 9;
   @media screen and (max-width: 768px) {
     display: flex;
     flex-direction: column;

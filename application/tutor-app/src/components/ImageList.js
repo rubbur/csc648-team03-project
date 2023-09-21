@@ -11,15 +11,21 @@ const ImageWithHeader = ({ imagePath, headerText }) => {
 
   const containerStyle = {
     position: 'relative',
-    width: '256px', 
-    height: '256px', 
-    overflow: 'hidden', 
+    width: '100%', 
+    maxWidth: '256px', 
+    height: '100%',
+    maxHeight: '256px', 
+    overflow: 'hidden',
   };
 
   const imgStyle = {
     width: '100%',
-    height: '100%', 
-    objectFit: 'cover', 
+    height: '100%',
+    objectFit: 'cover',
+  };
+
+  const headerStyle = {
+    fontSize: '1.4rem', 
   };
 
   return (
@@ -28,7 +34,7 @@ const ImageWithHeader = ({ imagePath, headerText }) => {
         <img src={imagePath} style={imgStyle} alt="Profile Pic" />
       </div>
       <div className="header-column">
-        <h2>{headerText}</h2>
+        <h2 style={headerStyle}>{headerText}</h2>
       </div>
     </a>
   );
