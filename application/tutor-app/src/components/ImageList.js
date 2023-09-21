@@ -5,18 +5,26 @@ const ImageWithHeader = ({ imagePath, headerText }) => {
   const pageUrl = `./profiles/${headerText.replace(' ', '')}`;
 
   const linkStyle = {
-    color: 'white', 
-    textDecoration: 'none', 
+    color: 'white',
+    textDecoration: 'none',
+  };
+
+  const containerStyle = {
+    position: 'relative',
+    width: '256px', 
+    height: '256px', 
+    overflow: 'hidden', 
   };
 
   const imgStyle = {
-    width:"256px",
-    height:"256px",
+    width: '100%',
+    height: '100%', 
+    objectFit: 'cover', 
   };
 
   return (
     <a href={pageUrl} target="_blank" className="image-list-item about-color" rel="noreferrer" style={linkStyle}>
-      <div className="image-column">
+      <div className="image-column" style={containerStyle}>
         <img src={imagePath} style={imgStyle} alt="Profile Pic" />
       </div>
       <div className="header-column">
