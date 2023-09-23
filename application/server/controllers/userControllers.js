@@ -4,7 +4,7 @@
 
 const db = require("../config/database/dbConnection");
 const bcrypt = require("bcrypt"); //npm password hashing module
-
+const fs = require('fs'); //for moving image and video files around.
 
 
 const login = async (req, res) => {
@@ -150,4 +150,43 @@ const searchByName = async (req, res) =>{
 
 
 
-module.exports = {login, register, logout, searchByName};
+
+const moveFile = (oldPath, newPath) => {
+  fs.rename(oldPath, newPath, (err) => {
+    if (err) throw err;
+    console.log('File moved successfully');
+  });
+};
+
+
+
+const uploadImage = async (req, res) =>{
+  const {file}  = req.files;
+  
+  const username = req.body.username;
+  console.log(file.mimetype)
+  console.log(username);
+  const newFileName = username + "." + file.mimetype.substring(6); 
+  //move the file into the userImages folder
+  file.mv( `../tutor-app/public/userImages/${newFileName}`, async (err) => {
+    console.log(err);
+    if (err){ return res.status(500).send(err)
+    }
+
+    //update the user table so that the relative path of the image is stored in the database
+    const q = "UPDATE users SET img_url = ? WHERE username = ?";
+    try{
+      const insertRes =  await db.query(q, [`/userImages/${newFileName}`, username]);
+    }
+    catch(err){
+      console.log("error doing insert query" + err);
+      res.send({success: false, errorMessage: err});
+    }
+
+    res.send({ success: true});
+  });
+}
+
+
+
+module.exports = {login, register, logout, searchByName, uploadImage};

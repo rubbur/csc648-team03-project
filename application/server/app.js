@@ -5,6 +5,9 @@
 let express  = require('express');
 let app = express();
 
+//file stuff
+const fileUpload = require('express-fileupload');
+
 //session modules
 const session = require('express-session');
 let MySQLStore = require('express-mysql-session')(session);
@@ -19,7 +22,7 @@ const path = require("path"); //used for generating static frontend file paths s
 const userRouter = require("./routes/userRouter");
 const adminRouter = require('./routes/adminRoutes');
 
-
+app.use(fileUpload()); //middleware that allows all routes access to file upload functions.
 app.use(bodyParser.json({limit: '1mb'})); //more data than we ever need to send over http
 app.use(cors({
 	origin: "http://localhost:3000",
