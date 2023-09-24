@@ -32,7 +32,7 @@ const deleteUser = async (req, res) =>{
 //TODO: once image urls are implemented, update this function to allow updating of this new column
 const editUser = async (req, res) =>{
    
-   const {userId, newPassword, newUsername, oldUsername, newIsTutor, newImgUrl} = req.body;
+   const {userId, newPassword, newUsername, oldUsername, newIsTutor, newImgUrl, newIsPending} = req.body;
    console.log(newIsTutor);
    console.log(newImgUrl);
    console.log(req.body);
@@ -47,7 +47,7 @@ const editUser = async (req, res) =>{
             const usernameQuery = await db.query(q, [newUsername]);
             //if there already exists a user in the table then this username is not available
             if(usernameQuery[0].length != 0){
-                res.send({success: false, error: "username is taken already"});
+                res.send({success: false, errorMessage: "username is taken already"});
                 return;
             }
         }
@@ -66,8 +66,8 @@ const editUser = async (req, res) =>{
         }
         try{
             //update the user
-            q = "UPDATE users SET username = ?, hashed_password = ?, isTutor = ?, img_url = ? WHERE id = ?";
-            updateResult = await db.query(q, [newUsername, hash,  newIsTutor, newImgUrl, userId]);
+            q = "UPDATE users SET username = ?, hashed_password = ?, isTutor = ?, img_url = ?, ispending = ? WHERE id = ?";
+            updateResult = await db.query(q, [newUsername, hash,  newIsTutor, newImgUrl, newIsPending, userId]);
             res.send({success: true});
         }
         catch(err){
@@ -76,9 +76,9 @@ const editUser = async (req, res) =>{
     });
    }
    else{
-    q = "UPDATE users SET username = ?, isTutor = ?, img_url = ? WHERE id = ?";
+    q = "UPDATE users SET username = ?, isTutor = ?, img_url = ?, ispending = ? WHERE id = ?";
     try{
-        updateResult = await db.query(q, [newUsername, newIsTutor, newImgUrl, userId]);
+        updateResult = await db.query(q, [newUsername, newIsTutor, newImgUrl, newIsPending, userId]);
         res.send({success: true});
     }catch(err){
         console.log("error updating user:" + err);

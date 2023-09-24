@@ -155,7 +155,7 @@ const searchByName = async (req, res) =>{
   //get the name to search by
   const searchName = `%${req.body.name}%`;
   //create the query string. The % wildcard matches to 0 or more characters.
-  const q = "SELECT * FROM users WHERE username LIKE ?";
+  const q = "SELECT * FROM users WHERE username LIKE ? AND ispending = 0";
 
   try{
     const result = await db.query(q, [searchName]);
@@ -191,7 +191,7 @@ const uploadImage = async (req, res) =>{
     }
 
     //update the user table so that the relative path of the image is stored in the database
-    const q = "UPDATE users SET img_url = ? WHERE username = ?";
+    const q = "UPDATE users SET img_url = ?, ispending = 1 WHERE username = ?";
     try{
       const updateRes =  await db.query(q, [`/userImages/${newFileName}`, username]);
       res.send({ success: true});
