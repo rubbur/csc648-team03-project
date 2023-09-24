@@ -24,7 +24,7 @@ const Admin = () => {
         {},
         { withCredentials: true }
       );
-      if (res.success) {
+      if (res.data.success) {
         //TODO: make it if(!res.success) once testing is done.
         //they are not the admin so redirect them back to the landing page
         navigate(`${process.env.REACT_APP_BACKEND_URL}/`);

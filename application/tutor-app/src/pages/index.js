@@ -9,7 +9,6 @@ const Home = () => {
 	return (
 		<div>
 			<h1 className='header'>Welcome to Tutors.tech at SFSU</h1>
-			<ImageUpload/>
 		</div>
 	);
 };

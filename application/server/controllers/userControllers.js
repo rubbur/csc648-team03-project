@@ -109,6 +109,29 @@ const logout = async (req, res) =>{
 }
 
 
+const getUserData = async (req, res) =>{
+  const username = req.body.username;
+  console.log("in get user data");
+  //get the user from the database
+  try{
+    const q = "SELECT * FROM users WHERE username = ?";
+    const userData = await db.query(q, [username]);
+    if(userData[0].length == 0){
+      res.send({success: false, error: "user does not exist in database"});
+      return;
+  }
+  else{
+    res.send({success: true, userData: userData[0]});
+  }
+  
+  } catch(err){
+    console.log("error getting user data: " + err);
+    res.send({success:false, errorMessage: err});
+  }
+}
+
+
+
 //given a name or a fragment of a name, if nothing goes wrong returns object that looks like: 
 /*{
     "success": true,
@@ -184,4 +207,4 @@ const uploadImage = async (req, res) =>{
 
 
 
-module.exports = {login, register, logout, searchByName, uploadImage};
+module.exports = {login, register, logout, searchByName, uploadImage, getUserData};
