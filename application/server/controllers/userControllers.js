@@ -150,40 +150,35 @@ const searchByName = async (req, res) =>{
 
 
 
-
-const moveFile = (oldPath, newPath) => {
-  fs.rename(oldPath, newPath, (err) => {
-    if (err) throw err;
-    console.log('File moved successfully');
-  });
-};
-
-
-
+//TODO: if the file is already in the userImages folder, then delete that old file. 
+//should check the userImages folder to see if a file that starts with username exists.
+//could also theoretically name every file a jpeg file.
 const uploadImage = async (req, res) =>{
   const {file}  = req.files;
-  
   const username = req.body.username;
-  console.log(file.mimetype)
-  console.log(username);
+  if(file.mimetype.substring(0, 5) !== "image"){ //should be ex: image/jpg or image/png 
+    res.send({success: false, errorMessage: "cannot upload a non image file here."})
+  }
   const newFileName = username + "." + file.mimetype.substring(6); 
   //move the file into the userImages folder
   file.mv( `../tutor-app/public/userImages/${newFileName}`, async (err) => {
     console.log(err);
-    if (err){ return res.status(500).send(err)
+    if (err){ 
+      res.send({success: false, errorMessage: err})
     }
 
     //update the user table so that the relative path of the image is stored in the database
     const q = "UPDATE users SET img_url = ? WHERE username = ?";
     try{
-      const insertRes =  await db.query(q, [`/userImages/${newFileName}`, username]);
+      const updateRes =  await db.query(q, [`/userImages/${newFileName}`, username]);
+      res.send({ success: true});
     }
     catch(err){
       console.log("error doing insert query" + err);
-      res.send({success: false, errorMessage: err});
+     // res.send({success: false, errorMessage: err});
     }
 
-    res.send({ success: true});
+   
   });
 }
 

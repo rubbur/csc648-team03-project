@@ -88,6 +88,14 @@
   padding-bottom: 10px;
 }
 
+.user-img{
+    margin-top: 20px;
+    height: 65px;
+    width: 65px;
+    border-radius: 20%;
+
+}
+
 .hidden{
     display: none;
 }

@@ -55,6 +55,7 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
         {    
            isVisible &&
             <div>
+                <img className="user-img" src={imgUrl} alt="pic"/>
                 <p>{username}</p>
                 <button className="user-delete-button" onClick={handleDelete}>X</button>
                 <button className="user-edit-button" onClick={handleEdit}>Edit</button>

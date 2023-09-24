@@ -91,6 +91,7 @@ const Admin = () => {
                 isTutor={user.istutor}
                 userId={user.id}
                 key={index}
+                imgUrl={user.img_url}
               />
             );
           })}{" "}

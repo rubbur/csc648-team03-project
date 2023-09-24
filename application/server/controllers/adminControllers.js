@@ -34,6 +34,7 @@ const editUser = async (req, res) =>{
    
    const {userId, newPassword, newUsername, oldUsername, newIsTutor, newImgUrl} = req.body;
    console.log(newIsTutor);
+   console.log(newImgUrl);
    console.log(req.body);
    let updateResult;
    const saltRounds = 10;
@@ -65,8 +66,8 @@ const editUser = async (req, res) =>{
         }
         try{
             //update the user
-            q = "UPDATE users SET username = ?, hashed_password = ?, isTutor = ? WHERE id = ?";
-            updateResult = await db.query(q, [newUsername, hash,  newIsTutor, userId]);
+            q = "UPDATE users SET username = ?, hashed_password = ?, isTutor = ?, img_url = ? WHERE id = ?";
+            updateResult = await db.query(q, [newUsername, hash,  newIsTutor, newImgUrl, userId]);
             res.send({success: true});
         }
         catch(err){
@@ -75,9 +76,9 @@ const editUser = async (req, res) =>{
     });
    }
    else{
-    q = "UPDATE users SET username = ?, isTutor = ? WHERE id = ?";
+    q = "UPDATE users SET username = ?, isTutor = ?, img_url = ? WHERE id = ?";
     try{
-        updateResult = await db.query(q, [newUsername, newIsTutor, userId]);
+        updateResult = await db.query(q, [newUsername, newIsTutor, newImgUrl, userId]);
         res.send({success: true});
     }catch(err){
         console.log("error updating user:" + err);
