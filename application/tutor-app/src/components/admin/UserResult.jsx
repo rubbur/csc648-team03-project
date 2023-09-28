@@ -8,13 +8,14 @@ import "./admin.css";
 import Modal from 'react-modal';
 
 
-const UserResult = ({username, userId, isTutor, imgUrl }) =>{
+const UserResult = ({username, userId, isTutor, imgUrl, isPending }) =>{
     const [isVisible, setIsVisible] = useState(true);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [newUsername, setUsername] = useState(username);
     const [newPassword, setPassword] = useState(undefined);
     const [newIsTutor, setIsTutor] = useState(isTutor);
     const [newImgUrl, setImgUrl] = useState(imgUrl);
+    const [newIsPending, setIsPending] = useState(isPending);
     const handleDelete = async () =>{
         //delete the user by their username
         const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/deleteUser`, {userId: userId}, {withCredentials: true});
@@ -42,10 +43,14 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
             newPassword: newPassword,
             newImgUrl: newImgUrl,
             newIsTutor: newIsTutor,
+            newIsPending: newIsPending
             }, {withCredentials: true});
             if(res.data.success){
                 setIsOpen(false);
                 alert("Succesfully Edited user: " + username);
+            }
+            else{
+                alert("Was not able to Edit user: " + res.data.errorMessage);
             }
     }
 
@@ -55,6 +60,7 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
         {    
            isVisible &&
             <div>
+                <img className="user-img" src={imgUrl} alt="pic"/>
                 <p>{username}</p>
                 <button className="user-delete-button" onClick={handleDelete}>X</button>
                 <button className="user-edit-button" onClick={handleEdit}>Edit</button>
@@ -75,6 +81,7 @@ const UserResult = ({username, userId, isTutor, imgUrl }) =>{
             {/* //if this field is left undefined then no password update will be applied */}
             New Password: <input type="password" value={undefined} onChange={ e => setPassword(e.target.value)}/> 
             New image Url: <input type="text" value={newImgUrl} onChange={ e => setImgUrl(e.target.value)}/>
+            New isPending:  <input type="checkbox" checked={newIsPending} onChange={() =>setIsPending(prevIsPending => prevIsPending === 0 ? 1 : 0)}/>
         </div>
         <button className="apply-changes-button" onClick={handleApplyChanges}>Apply Changes</button>
         </Modal> 
