@@ -44,7 +44,6 @@ const Admin = () => {
     return userList.filter((user) =>{
       for(let i =0; i< filters.length; i++){
         if( filters[i].isChecked && !filters[i].test(user)){
-          console.log("failed.");
           return false;
         }
       }
@@ -80,10 +79,9 @@ const Admin = () => {
   };
 
   const handleFilterChange = (index) =>{
-    console.log("the index is: " + index);
-    console.log(filters[index].isChecked);
     filters[index].isChecked = !filters[index].isChecked;
     setFilters([...filters]);
+    setUserList([...applyFilters(userList)]);
   }
 
   return (
@@ -95,7 +93,14 @@ const Admin = () => {
               return (
               <div>
                  <label htmlFor={filter.name}>{filter.name}</label>
-                 <input type="checkbox" name={filter.name} checked={filter.isChecked} index={index} key={index} onClick={() => {handleFilterChange(index)}}/>
+                 <input 
+                  type="checkbox" 
+                  name={filter.name}
+                  checked={filter.isChecked}
+                  index={index}
+                  key={index}
+                  onChange={() => {handleFilterChange(index)}}
+                  />
               </div>
               );
             })

@@ -16,7 +16,10 @@ const ImageUpload = () =>{
             alert("must be logged in to upload a file");
             return;
         }
-
+        if(!imageFile){
+            alert("No file selected!");
+            return;
+        }
         const formData = new FormData();
         formData.append('file', imageFile);
         formData.append('username', cookie.get("userName"));

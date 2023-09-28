@@ -182,7 +182,8 @@ const uploadImage = async (req, res) =>{
   if(file.mimetype.substring(0, 5) !== "image"){ //should be ex: image/jpg or image/png 
     res.send({success: false, errorMessage: "cannot upload a non image file here."})
   }
-  const newFileName = username + "." + file.mimetype.substring(6); 
+  // const newFileName = username + "." + file.mimetype.substring(6); 
+  const newFileName = username + ".png" ; 
   //move the file into the userImages folder
   file.mv( `../tutor-app/public/userImages/${newFileName}`, async (err) => {
     console.log(err);
