@@ -1,7 +1,7 @@
 //Author: Cleveland Plonsey
 
 const express = require("express");
-const {login, register, logout, searchByName, uploadImage, getUserData, editUsername} = require("../controllers/userControllers");
+const {login, register, logout, searchByName, uploadImage, getUserData, editUsername, editPassword} = require("../controllers/userControllers");
 const {isLoggedIn} = require("../middleware/authMiddleware");
 
 const userRouter = express.Router();
@@ -19,6 +19,8 @@ userRouter.post("/uploadImage", isLoggedIn, uploadImage);
 //takes in the username from body
 userRouter.post("/getUserData", isLoggedIn, getUserData);
 
-userRouter.post("/editUsername", isLoggedIn, editUsername)
+userRouter.post("/editUsername", isLoggedIn, editUsername);
+
+userRouter.post("/editPassword", isLoggedIn, editPassword);
 
 module.exports = userRouter;

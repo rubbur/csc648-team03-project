@@ -6,7 +6,7 @@ import { cookie } from "../../../App";
 const  PasswordEdit = () =>{
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
+    const [currentPassword, setCurrentPassword] = useState("");
     const handlePasswordChange = async () =>{
         if(password !== confirmPassword){
             alert("passwords do not match!");
@@ -14,8 +14,9 @@ const  PasswordEdit = () =>{
         }
         const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/editPassword`,
          {
-            user: cookie.get("userName"),
-             newPassword: password
+            username: cookie.get("userName"),
+             newPassword: password,
+             password: currentPassword
         }, {withCredentials: true});
        
         if(!result.data.success){
@@ -29,8 +30,9 @@ const  PasswordEdit = () =>{
     return (
         <div className="password-edit edit-form">
             <h2>Editting Password...</h2>
-New Password: <input value={password} onChange={e => setPassword(e.target.value)}/>
-Confirm Password: <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>  
+            Enter Current Password: <input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)}/> 
+New Password: <input type="password" value={password} onChange={e => setPassword(e.target.value)}/>
+Confirm Password: <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>  
 <button className="submit-edit-button" onClick={handlePasswordChange}>update password</button>          
         </div>
     );

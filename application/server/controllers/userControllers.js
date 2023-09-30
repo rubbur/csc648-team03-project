@@ -89,6 +89,61 @@ const register = async (req, res) =>{
     }
 }
 
+
+const editPassword = async (req, res) =>{
+  
+  const {password, newPassword, username} = req.body;
+  console.log("updating password with newPassword: ", newPassword, username);
+  const saltRounds = 10;
+  //make sure that the user has the correct username and password
+  let q = "SELECT * FROM users WHERE username = ?";
+  
+  try {
+    const results = await db.query(q, [username]);
+    if(results[0].length == 0){
+      res.send({success: false, errorMessage: "Your username or password are incorrect"});
+    }
+    //check if the hashed password matches the passwordhash in the row from the first query.
+    bcrypt.compare(password, results[0][0].hashed_password, function (err, result) {
+        if (err) {
+          console.log("error occurred during bcrypt comparing " + err );
+          res.send({ success: false, error: err });
+        }
+        if (!result) { //password does not match
+          console.log("the password does not match our records")
+          res.send({
+            success: false,
+            errorMessage: "The password for this user is incorrect!",
+          });
+        } else {
+          if(results[0]){
+            //the user is verified
+            //hash the new password
+            bcrypt.hash(newPassword, saltRounds, async function(err, hash) {
+              // Store hash in your password DB.
+              if(err){
+                  console.log("error when trying to hash the password" + err);
+                  res.send({success: false, error: err});
+              }
+              q = "UPDATE users SET hashed_password = ? WHERE username = ?";
+
+              try{
+                db.query(q, [hash, username]);
+                res.send({success: true});
+              } catch (e) {
+                console.log("error updating password");
+                res.send({success: false, errorMessage: e+""});
+              }
+          });
+        }
+      }
+    });
+  } catch (err) {
+    console.log("error occurred in the try block" + err);
+   // res.send({ success: false, error:  "" +err });
+  }
+}
+
 const logout = async (req, res) =>{
   console.log("logging out");
   
@@ -237,4 +292,4 @@ const uploadImage = async (req, res) =>{
 
 
 
-module.exports = {login, register, logout, searchByName, uploadImage, getUserData, editUsername};
+module.exports = {login, register, logout, searchByName, uploadImage, getUserData, editUsername, editPassword};
