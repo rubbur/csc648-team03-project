@@ -9,16 +9,18 @@ const NameEdit = () =>{
     const handleNameChange = async () =>{
         const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/editUsername`,
          {
-            user: cookie.get("userName"),
+            username: cookie.get("userName"),
              newUserName: username
         }, {withCredentials: true});
         if(result.data.success){
             cookie.set("userName", username);
+            setUsername("");
         }
         else{
             console.log(result.data.errorMessage);
             alert("Could not update username. Try again later.");
         }
+        
     }
     return (
         <div className="name-edit edit-form">
