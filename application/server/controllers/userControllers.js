@@ -171,11 +171,40 @@ const searchByName = async (req, res) =>{
   }
 }
 
+const editUsername = async (req, res) =>{
+  
+  const username = req.body.username;
+  const newName = req.body.newUserName;
+  console.log("editing user: " + username)
+  //check to see if the new username is available
+  let q = "SELECT * FROM users WHERE username = ?";
+  //verify that the username is available
+  try{
+      const usernameQuery = await db.query(q, [newName]);
+      //if there already exists a user in the table then this username is not available
+      if(usernameQuery[0].length !== 0){
+          res.send({success: false, error: "username is taken already"});
+          console.log("got here");
+          return;
+      }
+    } catch(error){
+      console.log("error trying to check the username for uniqueness: " + error);
+      res.send({success:false, errorMessage: error + ""});
+    }
+   
+
+  q = "UPDATE users SET username = ? WHERE username = ?";
+
+  try{
+    await db.query(q, [newName, username]);
+    res.send({success:true});
+  } catch(error) {
+    console.log("error trying to update username: " + error);
+    res.send({success: false, errorMessage: error + ""});
+  }
+}
 
 
-//TODO: if the file is already in the userImages folder, then delete that old file. 
-//should check the userImages folder to see if a file that starts with username exists.
-//could also theoretically name every file a jpeg file.
 const uploadImage = async (req, res) =>{
   const {file}  = req.files;
   const username = req.body.username;
@@ -208,4 +237,4 @@ const uploadImage = async (req, res) =>{
 
 
 
-module.exports = {login, register, logout, searchByName, uploadImage, getUserData};
+module.exports = {login, register, logout, searchByName, uploadImage, getUserData, editUsername};
