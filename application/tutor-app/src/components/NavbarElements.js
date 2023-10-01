@@ -104,7 +104,7 @@ const Navbar = () => {
         </MobileMenuItem>
         {cookie.get('isLoggedIn') && !cookie.get('isTutor') && (
           <MobileMenuItem to="/StudentView" onClick={toggleMobileMenu}>
-            Students
+            <h1>Students</h1>
           </MobileMenuItem>
         )}
         <MobileMenuItem to="/AboutUs" onClick={toggleMobileMenu}>
