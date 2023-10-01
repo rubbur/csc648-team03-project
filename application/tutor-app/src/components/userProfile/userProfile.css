@@ -6,6 +6,8 @@
 }
 
 .user-image{
+    min-width: 100px;
+    min-height: 100px;
     height: 20%;
     width: 20%;
     margin-right: 50px;
