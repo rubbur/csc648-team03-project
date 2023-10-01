@@ -130,6 +130,11 @@ const Navbar = () => {
             <h1>Log Out</h1>
           </MobileMenuItem>
         )}
+        {cookie.get('isLoggedIn') && (
+          <MobileMenuItem to="/Profile" onClick={toggleMobileMenu}>
+            <h1>{cookie.get("userName")}</h1>
+          </MobileMenuItem>
+        )}
       </MobileMenu>
     </div>
   );
