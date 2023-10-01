@@ -5,13 +5,27 @@ const ImageWithHeader = ({ imagePath, headerText }) => {
   const pageUrl = `./profiles/${headerText.replace(' ', '')}`;
 
   const linkStyle = {
-    color: 'white', 
-    textDecoration: 'none', 
+    color: 'white',
+    textDecoration: 'none',
+  };
+
+  const containerStyle = {
+    position: 'relative',
+    width: '100%', 
+    maxWidth: '256px', 
+    height: '100%',
+    maxHeight: '256px', 
+    overflow: 'hidden',
   };
 
   const imgStyle = {
-    width:"256px",
-    height:"256px",
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  };
+
+  const headerStyle = {
+    fontSize: '1.4rem', 
   };
 
   return (
@@ -20,7 +34,7 @@ const ImageWithHeader = ({ imagePath, headerText }) => {
         <img className="profile-image" src={imagePath} style={imgStyle} alt="Profile Pic" />
       </div>
       <div className="header-column">
-        <h2>{headerText}</h2>
+        <h2 style={headerStyle}>{headerText}</h2>
       </div>
     </a>
   );
