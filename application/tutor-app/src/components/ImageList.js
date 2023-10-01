@@ -30,8 +30,8 @@ const ImageWithHeader = ({ imagePath, headerText }) => {
 
   return (
     <a href={pageUrl} target="_blank" className="image-list-item about-color" rel="noreferrer" style={linkStyle}>
-      <div className="image-column" style={containerStyle}>
-        <img src={imagePath} style={imgStyle} alt="Profile Pic" />
+      <div className="image-column">
+        <img className="profile-image" src={imagePath} style={imgStyle} alt="Profile Pic" />
       </div>
       <div className="header-column">
         <h2 style={headerStyle}>{headerText}</h2>

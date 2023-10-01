@@ -89,16 +89,13 @@ const Navbar = () => {
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
         <NavMenu>
           <NavLink to="/"><h1>Home</h1></NavLink>
-          {cookie.get('isLoggedIn') && !cookie.get('isTutor') && (
-            <NavLink to="/StudentView">Students</NavLink>
-          )}
-          <NavLink to="/AboutUs"><h1>About Us</h1></NavLink>
-          {cookie.get('isAdmin') && (
-            <NavLink to="/AdminPanel"><h1>Admin Control</h1></NavLink>
-          )}
-          {!cookie.get('isLoggedIn') && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
-          {!cookie.get('isLoggedIn') && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
-          {cookie.get('isLoggedIn') && <NavLink to="/Logout"><h1>Log Out</h1></NavLink>}
+          {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
+          {<NavLink to="/AboutUs"><h1>About Us</h1></NavLink>}
+          {<NavLink to="/AdminPanel"><h1>Admin Control</h1></NavLink>}
+          {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
+          {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1>Log Out</h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{cookie.get("userName")}</h1></NavLink>}
         </NavMenu>
       </Nav>
       <MobileMenu isOpen={isOpen}>

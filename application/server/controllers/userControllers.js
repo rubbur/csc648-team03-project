@@ -4,7 +4,7 @@
 
 const db = require("../config/database/dbConnection");
 const bcrypt = require("bcrypt"); //npm password hashing module
-
+const fs = require('fs'); //for moving image and video files around.
 
 
 const login = async (req, res) => {
@@ -109,6 +109,29 @@ const logout = async (req, res) =>{
 }
 
 
+const getUserData = async (req, res) =>{
+  const username = req.body.username;
+  console.log("in get user data");
+  //get the user from the database
+  try{
+    const q = "SELECT * FROM users WHERE username = ?";
+    const userData = await db.query(q, [username]);
+    if(userData[0].length == 0){
+      res.send({success: false, error: "user does not exist in database"});
+      return;
+  }
+  else{
+    res.send({success: true, userData: userData[0]});
+  }
+  
+  } catch(err){
+    console.log("error getting user data: " + err);
+    res.send({success:false, errorMessage: err});
+  }
+}
+
+
+
 //given a name or a fragment of a name, if nothing goes wrong returns object that looks like: 
 /*{
     "success": true,
@@ -132,7 +155,7 @@ const searchByName = async (req, res) =>{
   //get the name to search by
   const searchName = `%${req.body.name}%`;
   //create the query string. The % wildcard matches to 0 or more characters.
-  const q = "SELECT * FROM users WHERE username LIKE ?";
+  const q = "SELECT * FROM users WHERE username LIKE ? AND ispending = 0";
 
   try{
     const result = await db.query(q, [searchName]);
@@ -148,6 +171,70 @@ const searchByName = async (req, res) =>{
   }
 }
 
+const editUsername = async (req, res) =>{
+  
+  const username = req.body.username;
+  const newName = req.body.newUserName;
+  console.log("editing user: " + username)
+  //check to see if the new username is available
+  let q = "SELECT * FROM users WHERE username = ?";
+  //verify that the username is available
+  try{
+      const usernameQuery = await db.query(q, [newName]);
+      //if there already exists a user in the table then this username is not available
+      if(usernameQuery[0].length !== 0){
+          res.send({success: false, error: "username is taken already"});
+          console.log("got here");
+          return;
+      }
+    } catch(error){
+      console.log("error trying to check the username for uniqueness: " + error);
+      res.send({success:false, errorMessage: error + ""});
+    }
+   
+
+  q = "UPDATE users SET username = ? WHERE username = ?";
+
+  try{
+    await db.query(q, [newName, username]);
+    res.send({success:true});
+  } catch(error) {
+    console.log("error trying to update username: " + error);
+    res.send({success: false, errorMessage: error + ""});
+  }
+}
 
 
-module.exports = {login, register, logout, searchByName};
+const uploadImage = async (req, res) =>{
+  const {file}  = req.files;
+  const username = req.body.username;
+  if(file.mimetype.substring(0, 5) !== "image"){ //should be ex: image/jpg or image/png 
+    res.send({success: false, errorMessage: "cannot upload a non image file here."})
+  }
+  // const newFileName = username + "." + file.mimetype.substring(6); 
+  const newFileName = username + ".png" ; 
+  //move the file into the userImages folder
+  file.mv( `../tutor-app/public/userImages/${newFileName}`, async (err) => {
+    console.log(err);
+    if (err){ 
+      res.send({success: false, errorMessage: err})
+    }
+
+    //update the user table so that the relative path of the image is stored in the database
+    const q = "UPDATE users SET img_url = ?, ispending = 1 WHERE username = ?";
+    try{
+      const updateRes =  await db.query(q, [`/userImages/${newFileName}`, username]);
+      res.send({ success: true});
+    }
+    catch(err){
+      console.log("error doing insert query" + err);
+     // res.send({success: false, errorMessage: err});
+    }
+
+   
+  });
+}
+
+
+
+module.exports = {login, register, logout, searchByName, uploadImage, getUserData, editUsername};

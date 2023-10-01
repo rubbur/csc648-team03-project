@@ -70,6 +70,18 @@
   background-color: bisque;
 }
 
+.filter-box{
+    position:relative;
+    margin-right: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 50px;
+    width: 30%;
+    align-items: center;
+    background-color: bisque;
+}
+
 
 
 /*******************************************/
@@ -86,6 +98,14 @@
   text-align: center;
   width: 23%;
   padding-bottom: 10px;
+}
+
+.user-img{
+    margin-top: 20px;
+    height: 65px;
+    width: 65px;
+    border-radius: 20%;
+
 }
 
 .hidden{

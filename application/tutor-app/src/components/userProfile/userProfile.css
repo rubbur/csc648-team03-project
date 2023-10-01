@@ -1,0 +1,53 @@
+
+.profile{
+    display: flex;
+    height: 80%;
+    width: 100%;
+}
+
+.user-image{
+    height: 20%;
+    width: 20%;
+    margin-right: 50px;
+    margin-left: 30px;
+}
+
+.edit-box{
+    height: 20%;
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+    
+}
+
+.editting-box{
+    height: 500px;
+    width: 500px;
+    margin: 10px;
+    background-color: beige;
+    border: 3px solid black;
+}
+
+.button-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 20%;
+    height: 50%;
+    
+    margin-left: 20px;
+}
+.profile-edit-button{
+    height: 20%;
+    width: 100%;
+    font-size: 15px;
+    background-color: blue;
+}
+
+.profile-edit-button.pressed{
+    background-color: grey;
+    
+}
+
