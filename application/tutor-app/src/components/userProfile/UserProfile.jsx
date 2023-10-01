@@ -4,11 +4,15 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import ImageUpload from "../imageUpload/ImageUpload";
+import "./userProfile.css";
+import TutorEdit from "./editPages/TutorEdit";
+import PasswordEdit from "./editPages/PasswordEdit";
+import NameEdit from "./editPages/NameEdit";
 
 const UserProfile = () =>{
     const navigate = useNavigate();
     const [userData, setUserData] = useState({});
-
+    const [editPage, setEditPage] = useState("name");
         useEffect(() =>{
             console.log("in the use effect");
             const loadUserData = async () =>{
@@ -27,16 +31,36 @@ const UserProfile = () =>{
         loadUserData();
     }, []);
 
-    return (
+    const handleBecomeStudent = async () =>{
+        //change this user to a student
+    }
 
-        <div className="profile">
-           <h1>{`Hello, ${cookie.get("userName")}`}</h1>
-            <img className="user-image" src={userData.img_url}/>
-           <div className="edit-box">
-            <ImageUpload/>
-           </div>
+    return (
+        <div className="profile-container">
+            <h1 className="header">{`Hello, ${cookie.get("userName")}`}</h1>
+            <div className="profile">
+                <img className="user-image" src={userData.img_url}/>
+                <div className="edit-box">
+                        <ImageUpload/>
+                        <div className="button-container">
+                            <button className={`profile-edit-button ${editPage == "name" ? "pressed" : ""}`}  onClick={() => {setEditPage("name")}}>Update Username</button>
+                            <button className={`profile-edit-button ${editPage == "password" ? "pressed" : ""}`}  onClick={() => {setEditPage("password")}}>Update Password</button>            
+                        {(cookie.get("isTutor")) ?  <button className="profile-edit-button" onClick={handleBecomeStudent}>Become Student</button> :
+                            <button className={`profile-edit-button ${editPage == "tutor" ? "pressed" : ""}`} onClick={() => {setEditPage("tutor")}}>Register as Tutor</button>
+                            }
+                        </div>
+                </div>
+                <div className="editting-box">
+                    {editPage == "tutor" && <TutorEdit/>}
+                    {editPage == "name" && <NameEdit/>}
+                    {editPage == "password" && <PasswordEdit/>} 
+                </div>
+            </div>
         </div>
     );
 }
+
+
+
 
 export default UserProfile;

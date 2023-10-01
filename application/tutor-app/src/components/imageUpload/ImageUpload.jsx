@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react"
 import { cookie } from "../../App";
-
+import "./imageUpload.css";
 
 const ImageUpload = () =>{
     const [imageFile, setImageFile] = useState("");
@@ -43,9 +43,12 @@ const ImageUpload = () =>{
 
     return (
         <div className="image-upload-box">
-            <p>upload an image.</p>
+            <h1>Upload a Profile Picture</h1>
+            
             <input type="file" name="file" onChange={handleImageChange}/>
             <button onClick={handlePostImage}>Upload</button>
+            <p className="upload-disclaimer">Uploading media will place your account on hold <br/> 
+            pending admin's approval of the uploaded content.</p>
         </div>
     )
 }
