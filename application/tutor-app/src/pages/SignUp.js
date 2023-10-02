@@ -34,7 +34,10 @@ function SignUp() {
     console.log("Remember Me:", rememberMe);
     
     // send email and password to backend
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,{username:username,password:password,isTutor:isTutor});
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,
+    {username:username,password:password,isTutor:isTutor},
+     {withCredentials: true}
+     );
     console.log(response.data);
     setUsername("");
     setPassword("");
@@ -43,6 +46,7 @@ function SignUp() {
       cookie.set("isLoggedIn",true);
       cookie.set("userName",response.data.username);
       cookie.set("isTutor",response.data.isTutor);
+      cookie.set("userId", response.data.userId);
 
       console.log(cookie.get("userName"));
       console.log(cookie.get("isLoggedIn"));

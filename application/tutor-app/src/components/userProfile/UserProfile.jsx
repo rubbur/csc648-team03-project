@@ -26,6 +26,7 @@ const UserProfile = () =>{
             else{
                 console.log(data.data.userData);
                 setUserData({...data.data.userData[0]});
+                console.log(JSON.stringify(data.data.userData[0]));
             }
         }
         loadUserData();
@@ -35,26 +36,40 @@ const UserProfile = () =>{
         //change this user to a student
     }
 
+    const handleDeleteAccount =  async () =>{
+        //delete this user's account
+    }
+
     return (
         <div className="profile-container">
             <h1 className="header">{`Hello, ${cookie.get("userName")}`}</h1>
             <div className="profile">
                 <img className="user-image" src={userData.img_url}/>
                 <div className="edit-box">
-                        <ImageUpload/>
+                        <div>
+                            <ImageUpload/>
+                            <div className="danger-field">
+                                <h2>Danger Field</h2>
+                                <button onClick={handleDeleteAccount}>Delete Account</button>
+                            </div>
+                        </div>
                         <div className="button-container">
                             <button className={`profile-edit-button ${editPage == "name" ? "pressed" : ""}`}  onClick={() => {setEditPage("name")}}>Update Username</button>
                             <button className={`profile-edit-button ${editPage == "password" ? "pressed" : ""}`}  onClick={() => {setEditPage("password")}}>Update Password</button>            
                         {(cookie.get("isTutor")) ?  <button className="profile-edit-button" onClick={handleBecomeStudent}>Become Student</button> :
                             <button className={`profile-edit-button ${editPage == "tutor" ? "pressed" : ""}`} onClick={() => {setEditPage("tutor")}}>Register as Tutor</button>
                             }
+                            {cookie.get("isTutor") == true && <button className={`profile-edit-button ${editPage == "edit-tutor" ? "pressed" : ""}`}  onClick={() => {setEditPage("edit-tutor")}}>Edit Abilities</button>}
                         </div>
+                       
                 </div>
                 <div className="editting-box">
-                    {editPage == "tutor" && <TutorEdit/>}
+                    {editPage == "tutor" && <TutorEdit isTutor={false}/>}
                     {editPage == "name" && <NameEdit/>}
-                    {editPage == "password" && <PasswordEdit/>} 
+                    {editPage == "password" && <PasswordEdit/>}
+                    {editPage == "edit-tutor" && <TutorEdit isTutor={true}/>}
                 </div>
+               
             </div>
         </div>
     );

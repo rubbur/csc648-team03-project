@@ -1,7 +1,7 @@
 //Author: Cleveland Plonsey
 
 const express = require("express");
-const {login, register, logout, searchByName, uploadImage, getUserData, editUsername, editPassword} = require("../controllers/userControllers");
+const {login, register, logout, searchByName, uploadImage, getUserData, editUsername, editPassword, editTutorAbilities, getTutorSubjects} = require("../controllers/userControllers");
 const {isLoggedIn} = require("../middleware/authMiddleware");
 
 const userRouter = express.Router();
@@ -22,5 +22,9 @@ userRouter.post("/getUserData", isLoggedIn, getUserData);
 userRouter.post("/editUsername", isLoggedIn, editUsername);
 
 userRouter.post("/editPassword", isLoggedIn, editPassword);
+
+userRouter.post("/editTutorAbilities", isLoggedIn, editTutorAbilities);
+
+userRouter.post("/getTutorSubjects", isLoggedIn, getTutorSubjects);
 
 module.exports = userRouter;
