@@ -42,18 +42,22 @@ const UserProfile = () =>{
 
     return (
         <div className="profile-container">
-            <h1 className="header">{`Hello, ${cookie.get("userName")}`}</h1>
+           
             <div className="profile">
-                <img className="user-image" src={userData.img_url}/>
+                <div className="img-holder">
+                <h1 className="header">{`Hello, ${cookie.get("userName")}`}</h1>
+                     <img className="user-image" src={userData.img_url}/>
+                     <div className="danger-container">
+                        <div className="danger-field">
+                            <h2>Danger Field</h2>
+                            <button onClick={handleDeleteAccount}>Delete Account</button>
+                         </div>
+                     </div>
+                    
+                </div>
                 <div className="edit-box">
-                        <div>
-                            <ImageUpload/>
-                            <div className="danger-field">
-                                <h2>Danger Field</h2>
-                                <button onClick={handleDeleteAccount}>Delete Account</button>
-                            </div>
-                        </div>
                         <div className="button-container">
+                        <button className={`profile-edit-button ${editPage == "upload" ? "pressed" : ""}`}  onClick={() => {setEditPage("upload")}}>Upload Image</button>
                             <button className={`profile-edit-button ${editPage == "name" ? "pressed" : ""}`}  onClick={() => {setEditPage("name")}}>Update Username</button>
                             <button className={`profile-edit-button ${editPage == "password" ? "pressed" : ""}`}  onClick={() => {setEditPage("password")}}>Update Password</button>            
                         {(cookie.get("isTutor")) ?  <button className="profile-edit-button" onClick={handleBecomeStudent}>Become Student</button> :
@@ -68,6 +72,7 @@ const UserProfile = () =>{
                     {editPage == "name" && <NameEdit/>}
                     {editPage == "password" && <PasswordEdit/>}
                     {editPage == "edit-tutor" && <TutorEdit isTutor={true}/>}
+                    {editPage == "upload" && <ImageUpload/>}
                 </div>
                
             </div>

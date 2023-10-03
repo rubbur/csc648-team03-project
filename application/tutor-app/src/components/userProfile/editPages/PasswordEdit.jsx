@@ -34,8 +34,7 @@ const  PasswordEdit = () =>{
             Enter Current Password: <input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)}/> 
 New Password: <input type="password" value={password} onChange={e => setPassword(e.target.value)}/>
 Confirm Password: <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>  
-<button className="submit-edit-button" onClick={handlePasswordChange}>update password</button>  
-        <Mascot/>        
+<button className="submit-edit-button" onClick={handlePasswordChange}>update password</button>       
         </div>
     );
 }

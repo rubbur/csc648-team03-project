@@ -29,7 +29,7 @@ const [courseNum, setCourseNum] = useState("");
             }
 
             //put all the tuto'rs courses in the courseNumbers array
-            setCourseNumbers([...result.data.userData[0].courses.split(" ")]);
+            setCourseNumbers([...result.data.userData[0].courses.split(" ").filter( course => course!== "")]);
             let results = await axios.post(
                 `${process.env.REACT_APP_BACKEND_URL}/user/getTutorSubjects`,
                  {id: cookie.get("userId")},
@@ -108,7 +108,7 @@ const [courseNum, setCourseNum] = useState("");
                 <div className="card-box">
                     {
                     (courseNumbers.length > 0) ?  courseNumbers.map((course, index) =>{
-                          return <CourseCard courseNumber={course} deleteCourseNumber={deleteCourseNumber} key={index} index={index}/>  
+                         if(course !== "") return <CourseCard courseNumber={course} deleteCourseNumber={deleteCourseNumber} key={index} index={index}/>  
                         }) :
                         <p>No Courses Listed</p> 
                     }

@@ -8,6 +8,17 @@
     overflow-y: scroll;
 }
 
+.edit-form button{
+    height: 30px;
+    width: fit-content;
+    background-color: blue;
+    margin: 10px;
+}
+
+.edit-form button:hover{
+    background-color: lawngreen;
+}
+
 .edit-form > .mascot{
     height: inherit;
     width: inherit;
@@ -33,7 +44,7 @@
     justify-content: space-between;
     border: 2px solid cyan;
     background-color: rgb(47, 156, 156);
-    color: rgb(16, 174, 176);
+    color:  white;
     border-radius: 10%;
 }
 
@@ -42,8 +53,8 @@
 }
 
 .course-card:hover > .delete-button{
-    height: 10px;
-    width: 10px;
+    height: 7px;
+    width: 7px;
     color: white;
     visibility: visible;
     background-color: transparent;
@@ -80,5 +91,15 @@
 }
 
 
+/* ``````````````````````````````````````````````````````password form``````````````````````````````````````````````````````````````````` */
 
+
+.password-edit{
+    display: flex;
+    flex-direction: column;
+}
+
+.password-edit input{
+    width: 50%;
+}
 
