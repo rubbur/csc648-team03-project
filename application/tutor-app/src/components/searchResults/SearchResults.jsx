@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
+import "../admin/admin.css";
+import { useLocation } from 'react-router-dom';
 
 const SearchResults = () =>{
     const [resultsList, setResultsList] = useState([]);
+    const location = useLocation(); //tracks the query params
+
+
     //get the search results based on the query params
     useEffect(() =>{
         const getSearchResults = async () =>{
@@ -19,17 +24,43 @@ const SearchResults = () =>{
                 {withCredentials: true}
                 );
 
-            console.log(searchResults.data);
+            setResultsList([...searchResults.data.searchResults]);
         }
         getSearchResults();
-    }, []);
+    }, [location.search]); //when the query params change (because the user searched something else) trigger loading the new search results
 
 
     return (
         <div className="search-results">
             <h3>Showing {resultsList.length} search results</h3>
+            <div className="search-results-box">
+                {
+                    resultsList.map( (tutor, index ) => {
+                        return <UserResult username={tutor.username} userId={tutor.id} imgUrl={tutor.img_url} key={index} index={index} />
+                    })
+                }
+            </div>
         </div>
     )
+
+}
+
+
+const UserResult = ({username, userId, imgUrl }) => {
+
+    const handleContact = () => {
+        //TODO send a message to the tutor
+    }
+
+    return (
+    <div className = "user-result">
+            <img className="user-img" src={imgUrl} alt="pic"/>
+            <p>{username}</p>
+            <button onClick={handleContact}>Contact</button>
+            <button>{username}'s Profile</button>
+    </div>
+    );
+
 
 }
 
