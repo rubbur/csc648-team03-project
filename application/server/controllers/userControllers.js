@@ -382,19 +382,20 @@ const searchTutors = async (req, res) =>{
   const searchTerm = `%${req.body.searchTerm}%`;
   //get the subject to filter by
   const subject = req.body.subject;
+  console.log("search term is: " + searchTerm + " and subject is: " + subject);
   let q;
   let values;
   if(subject == "All"){
-    q = "SELECT * FROM users WHERE (username LIKE ? OR course LIKE ?) AND ispending = 0 AND istutor = 1";
+    q = "SELECT * FROM users WHERE (username LIKE ? OR courses LIKE ?) AND ispending = 0 AND istutor = 1";
     values = [searchTerm, searchTerm];
   }
   else{
     if(searchTerm == ""){
-      q = "SELECT users.* FROM users JOIN tutor_subjects ON users.id = tutor_subjects.tutor_id WHERE tutor_subjects.subject = ? AND users.istutor = 1 AND ispending = 0";
+      q = "SELECT users.* FROM users JOIN tutor_subjects ON users.id = tutor_subjects.tutor_id WHERE tutor_subjects.subject_name = ? AND users.istutor = 1 AND ispending = 0";
       values = [subject];
     }
     else {
-    q = "SELECT users.* FROM users JOIN tutor_subjects ON users.id = tutor_subjects.tutor_id WHERE tutor_subjects.subject = ? AND users.istutor = 1 AND ispending = 0 AND (users.username LIKE ? OR users.courses LIKE ?)";
+    q = "SELECT users.* FROM users JOIN tutor_subjects ON users.id = tutor_subjects.tutor_id WHERE tutor_subjects.subject_name = ? AND users.istutor = 1 AND ispending = 0 AND (users.username LIKE ? OR users.courses LIKE ?)";
     values = [subject, searchTerm, searchTerm];
     }
   }
