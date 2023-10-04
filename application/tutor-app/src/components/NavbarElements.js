@@ -3,6 +3,7 @@ import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { cookie } from '../App';
+import SearchBar from './searchBar/SearchBar';
 
 export const Nav = styled.nav`
   background: #666677;
@@ -89,6 +90,7 @@ const Navbar = () => {
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
         <NavMenu>
           <NavLink to="/"><h1>Home</h1></NavLink>
+          <SearchBar/>
           {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
           {<NavLink to="/AboutUs"><h1>About Us</h1></NavLink>}
           {<NavLink to="/AdminPanel"><h1>Admin Control</h1></NavLink>}
