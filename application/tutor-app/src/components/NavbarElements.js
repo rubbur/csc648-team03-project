@@ -4,6 +4,8 @@ import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { cookie } from '../App';
 import SearchBar from './searchBar/SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import "./navbar.css";
 
 export const Nav = styled.nav`
   background: #666677;
@@ -47,7 +49,6 @@ export const NavMenu = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: -24px;
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -85,18 +86,18 @@ const Navbar = () => {
   };
 
   return (
-    <div>
-      <Nav>
+    <div className='site-header'>
+      <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
         <NavMenu>
-          <NavLink to="/"><h1>Home</h1></NavLink>
+          <NavLink to="/"><h1> <FontAwesomeIcon icon="house" /></h1></NavLink>
           <SearchBar/>
           {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
           {<NavLink to="/AboutUs"><h1>About Us</h1></NavLink>}
-          {<NavLink to="/AdminPanel"><h1>Admin Control</h1></NavLink>}
+          {<NavLink to="/AdminPanel"><h1><FontAwesomeIcon icon="gear"/></h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1>Log Out</h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1><FontAwesomeIcon icon="right-from-bracket"/></h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{cookie.get("userName")}</h1></NavLink>}
         </NavMenu>
       </Nav>

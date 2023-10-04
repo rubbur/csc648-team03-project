@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./searchBar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const subjectList = ["All", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
 
@@ -45,8 +47,8 @@ const SearchBar = () => {
                 subjectList.map( (sub, index) => <option key={index} value={sub}>{sub}</option>)
             }
             </select>
-            <input type="text" className="search-bar-input" placeholder="Search by Tutor name or course..."  value={searchTerm} onChange={handleChange}/>
-            <button id="search-button" onClick={handleSearch}>Search</button>
+            <input type="text" className="search-bar-input" placeholder="Search Tutors.tech"  value={searchTerm} onChange={handleChange}/>
+            <button id="search-button" onClick={handleSearch}><FontAwesomeIcon icon = "magnifying-glass"/></button>
         </div>
     )
 }

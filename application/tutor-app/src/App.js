@@ -17,6 +17,13 @@ import Admin from './components/admin/Admin';
 import UserProfile from './components/userProfile/UserProfile';
 import SearchResults from './components/searchResults/SearchResults';
 
+//icons from font awesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faHouse, faCoffee, faMagnifyingGlass, faGear, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fab, faHouse, faRightFromBracket, faMagnifyingGlass, faGear);
+
 export const cookie=new Cookie();
 
 function App() {
