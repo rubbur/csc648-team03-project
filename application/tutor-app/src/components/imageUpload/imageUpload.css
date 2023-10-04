@@ -1,11 +1,11 @@
 
 
 .image-upload-box{
-    height: 70%;
-    width: 80%;
-    border: 3px solid black;
-    padding: 20px;
-    background-color: beige;
+    padding-left: 10px;
+    height: inherit;
+    width: inherit;
+    background-color: white;
+    overflow-y: scroll;
 }
 
 .upload-disclaimer{

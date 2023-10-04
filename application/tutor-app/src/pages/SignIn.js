@@ -43,11 +43,9 @@ function SignIn() {
       cookie.set("isLoggedIn",true);
       cookie.set("userName",response.data.username);
       cookie.set("isTutor",response.data.isTutor);
-
-      console.log("username:" + cookie.get("userName"));
-      console.log("isloggedin:" + cookie.get("isLoggedIn"));
-      console.log("istutor:" + cookie.get("isTutor"));
-
+      cookie.set("userId", response.data.userId);
+     
+      
       if(cookie.get("isTutor")){
         navigate("/TutorView");
         navigate(0);

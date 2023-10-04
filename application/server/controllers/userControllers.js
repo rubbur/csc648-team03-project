@@ -35,7 +35,8 @@ const login = async (req, res) => {
             req.session.isAuthenticated = true;
             console.log(req.session);
             req.session.isAdmin = results[0][0].isadmin;
-            res.send({ success: true, username: results[0][0].username, isTutor: results[0][0].istutor  });
+            console.log("the id we found was: " + results[0][0].id );
+            res.send({ success: true, username: results[0][0].username, isTutor: results[0][0].istutor, userId: results[0][0].id  });
           }
         }
       }
@@ -75,6 +76,7 @@ const register = async (req, res) =>{
                 q = "INSERT INTO users (username, hashed_password, istutor) VALUES (?, ?, ?)";
                 const result = await db.query(q, [username, hash, isTutor]);
                 console.log("User inserted successfully!");
+                req.session.isLoggedIn = true;
                 res.send({success: true, username: username, isTutor: isTutor});
             }
             catch(err){
@@ -87,6 +89,61 @@ const register = async (req, res) =>{
         console.log(error);
         res.send({success: false, error: error});
     }
+}
+
+
+const editPassword = async (req, res) =>{
+  
+  const {password, newPassword, username} = req.body;
+  console.log("updating password with newPassword: ", newPassword, username);
+  const saltRounds = 10;
+  //make sure that the user has the correct username and password
+  let q = "SELECT * FROM users WHERE username = ?";
+  
+  try {
+    const results = await db.query(q, [username]);
+    if(results[0].length == 0){
+      res.send({success: false, errorMessage: "Your username or password are incorrect"});
+    }
+    //check if the hashed password matches the passwordhash in the row from the first query.
+    bcrypt.compare(password, results[0][0].hashed_password, function (err, result) {
+        if (err) {
+          console.log("error occurred during bcrypt comparing " + err );
+          res.send({ success: false, error: err });
+        }
+        if (!result) { //password does not match
+          console.log("the password does not match our records")
+          res.send({
+            success: false,
+            errorMessage: "The password for this user is incorrect!",
+          });
+        } else {
+          if(results[0]){
+            //the user is verified
+            //hash the new password
+            bcrypt.hash(newPassword, saltRounds, async function(err, hash) {
+              // Store hash in your password DB.
+              if(err){
+                  console.log("error when trying to hash the password" + err);
+                  res.send({success: false, error: err});
+              }
+              q = "UPDATE users SET hashed_password = ? WHERE username = ?";
+
+              try{
+                db.query(q, [hash, username]);
+                res.send({success: true});
+              } catch (e) {
+                console.log("error updating password");
+                res.send({success: false, errorMessage: e+""});
+              }
+          });
+        }
+      }
+    });
+  } catch (err) {
+    console.log("error occurred in the try block" + err);
+   // res.send({ success: false, error:  "" +err });
+  }
 }
 
 const logout = async (req, res) =>{
@@ -235,6 +292,88 @@ const uploadImage = async (req, res) =>{
   });
 }
 
+const editTutorAbilities = async (req, res) => {
+  const {id, courses, subjects} = req.body;
+  if(!id || !courses || !subjects){
+    console.log("tutorID: " + id + " courses: " + courses + " subjects: " + subjects);
+    res.send({success: false, errorMessage: "username or courses or subjects was undefined"});
+  }
+  //convert the subjects object that looks like [{subject: "art", isChecked: true}, {subject: "math", isChecked: false}, {...}]
+  //into a list of subjects that they know (toAdd) and a list that they do not know (toDelete)
+  let toAdd = [];
+  let toDelete = [];
+  //place all the subjects into their correct arrays
+  let q = "";
+  for(const sub of subjects) {
+    if(sub.isChecked)
+      toAdd.push(sub.subject);
+    else
+      toDelete.push(sub.subject);
+  }
+  if(toAdd.length > 0){
+  //set up the insert query to add all the subjects that the tutor knows into the tutor_subjects table
+    const placeholders = toAdd.map( subject => "(?, ?)").join(',');
+    const values = toAdd.flatMap(subject => [id, subject]);
+    q= `INSERT INTO tutor_subjects (tutor_id, subject_name) VALUES ${placeholders} ON DUPLICATE KEY UPDATE subject_name = VALUES(subject_name)`;
+    //execute the query
+    try {
+      await db.query(q, values);
+    } catch (err) {
+        console.log("error when trying to insert to tutor_subjects table " + err);
+        res.send({success: false, errorMessage: err + ""});
+        return;
+    }
+  }
+  if(toDelete.length > 0){
+  //prepare the delete query to delete every value that the tutor says they do not know.
+    const placeholders = toDelete.map(subject => "(?, ?)").join(",");
+    const values = toDelete.flatMap(subject => [id, subject]);
+    console.log(placeholders);
+    console.log(values);
+    q = `DELETE FROM tutor_subjects WHERE (tutor_id, subject_name) IN (${placeholders})`;
+     //execute the query
+     try {
+      await db.query(q, values);
+
+    } catch (err) {
+        console.log("error when trying to DELETE to tutor_subjects table " + err);
+        res.send({success: false, errorMessage: err + ""});
+       
+    }
+  }
+  //update the courseNumbers 
+  q = "UPDATE users SET courses = ? WHERE id = ?";
+  let coursesString = courses.join(" ");
+  try{
+    await db.query(q, [coursesString, id]);
+    res.send({success: true});
+  } catch(err) {
+    console.log("error updating the courses of the user " + err);
+    res.send({success: false, errorMessage: err + ""});
+  }
+
+}
 
 
-module.exports = {login, register, logout, searchByName, uploadImage, getUserData, editUsername};
+const getTutorSubjects = async (req, res) =>{
+  const {id} = req.body;
+  console.log("id is: " +id);
+  const q = "SELECT subject_name FROM tutor_subjects WHERE tutor_id = ?";
+
+  try{
+   const results = await db.query(q, [id]);
+   if(results.length == 0){
+    console.log("no user with that id: " + id);
+   }
+   console.log("this is the shit:");
+   console.log(results[0]);
+    res.send({success: true, subjectList: results[0]});
+  } catch(err) {
+    res.send({success: false, errorMessage: err + ""});
+  }
+
+
+}
+
+
+module.exports = {login, register, logout, searchByName, uploadImage, getUserData, editUsername, editPassword, editTutorAbilities, getTutorSubjects};
