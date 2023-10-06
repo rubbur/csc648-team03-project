@@ -8,7 +8,7 @@ const Home = () => {
       }, []);
 	return (
 		<div>
-			<h1 className='header'>Welcome to Tutors.tech at SFSU</h1>
+			<h1 className='pageHeader'>Welcome to Tutors.tech at SFSU</h1>
 		</div>
 	);
 };

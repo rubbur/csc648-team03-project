@@ -17,7 +17,7 @@ function Logout() {
     }, []);
     return (
       <div>
-        <h1 className='header'>Logout</h1>
+        <h1 className='pageHeader'>Logout</h1>
       </div>
     );
   }

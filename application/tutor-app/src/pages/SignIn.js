@@ -61,7 +61,7 @@ function SignIn() {
 
   return (
     <div>
-      <h1 className='header'>Sign In</h1>
+      <h1 className='pageHeader'>Sign In</h1>
       <div className="form-set">
         <div className="form-group">
           <label htmlFor="username" className='no-select'>Username: </label>
