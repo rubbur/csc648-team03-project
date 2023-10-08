@@ -113,11 +113,11 @@ const Navbar = () => {
         <MobileMenuItem to="/AboutUs" onClick={toggleMobileMenu}>
         <h1>About Us</h1>
         </MobileMenuItem>
-        {cookie.get('isAdmin') && (
+        {/*cookie.get('isAdmin') && (
           <MobileMenuItem to="/AdminPanel" onClick={toggleMobileMenu}>
             <h1>Admin Control</h1>
           </MobileMenuItem>
-        )}
+        )*/}
         {!cookie.get('isLoggedIn') && (
           <MobileMenuItem to="/SignIn" onClick={toggleMobileMenu}>
             <h1>Sign In</h1>

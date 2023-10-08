@@ -6,7 +6,7 @@ function Profile({ img, name, bio }) {
 
   return (
     <div>
-      <h1 className='header'>{updateName}</h1>
+      <h1 className='pageHeader'>{updateName}</h1>
       <div className='image-container bio'>
         <img
           src={img}

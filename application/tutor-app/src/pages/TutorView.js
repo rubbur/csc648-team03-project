@@ -9,7 +9,7 @@ function TutorView() {
   }, []);
   return (
     <div>
-      <h1 className='header'>Welcome Tutor {cookie.get("userName")}</h1>
+      <h1 className='pageHeader'>Welcome Tutor {cookie.get("userName")}</h1>
       
     </div>
   );
