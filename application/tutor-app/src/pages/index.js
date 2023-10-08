@@ -8,6 +8,9 @@ const Home = () => {
       }, []);
 	return (
 		<div>
+			<div className='logo'>
+				<img src='../../images/logo.png' className='logo'></img>
+			</div>
 			<h1 className='pageHeader'>Welcome to Tutors.tech at SFSU</h1>
 		</div>
 	);

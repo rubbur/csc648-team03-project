@@ -19,6 +19,13 @@ code {
     monospace;
 }
 
+.logo {
+  width: 150px;
+  height: auto;
+  padding-top: 10px;
+  margin: auto;
+}
+
 .image-list-container {
   display: flex;
   flex-direction: column;
