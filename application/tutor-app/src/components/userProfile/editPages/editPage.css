@@ -11,12 +11,14 @@
 .edit-form button{
     height: 30px;
     width: fit-content;
-    background-color: blue;
+    background-color: #282828;
+    color:white;
     margin: 10px;
 }
 
 .edit-form button:hover{
-    background-color: lawngreen;
+    color: black;
+    background-color: yellow;
 }
 
 .edit-form > .mascot{

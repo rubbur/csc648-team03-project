@@ -54,7 +54,6 @@ const UserProfile = () =>{
 
     return (
         <div className="profile-container">
-           
             <div className="profile">
                 <div className="img-holder">
                 <h1 className="header">{`${userName}`}</h1>
@@ -62,7 +61,7 @@ const UserProfile = () =>{
                      <div className="danger-container">
                         <div className="danger-field">
                             <h2>Danger Field</h2>
-                            <button onClick={handleDeleteAccount}>Delete Account</button>
+                            <button onClick={handleDeleteAccount} className='danger-button'>Delete Account</button>
                          </div>
                      </div>
                     
