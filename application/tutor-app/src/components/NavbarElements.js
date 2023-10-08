@@ -48,13 +48,20 @@ const MobileLogo = styled.img`
   display: none;
   @media screen and (max-width: 855px) {
     display: block;
+    position: absolute;
     width: 100px;
     height: auto;
-    margin: 0 auto;
-    padding-top: 7px;
+    top: 5px;
+    left: 50%; 
+    transform: translateX(-50%); 
   }
 `;
 
+const Logo = styled.img`
+  width: 100px;
+  height: auto;
+  padding-top: 10px;
+`;
 
 export const NavMenu = styled.div`
   display: flex;
@@ -78,7 +85,7 @@ const MobileMenu = styled.div`
     position: absolute;
     top: ${({ isOpen }) => (isOpen ? '85px' : '-100%')}; /* Adjust top property */
     left: 0;
-    background-color: rgb(157, 89, 184);
+    background-color: #0C0032;
     width: 100%;
     transition: 0.25s ease-in-out;
   }
@@ -109,10 +116,9 @@ const Navbar = () => {
     <div className='site-header'>
       <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
-        <MobileLogo src='../../images/logo.png' alt='Mobile Logo' />
+        <NavLink to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' /></NavLink>
         <NavMenu>
-          <img src='../../images/logo.png' className='logo'></img>
-          <NavLink to="/"><h1><FontAwesomeIcon icon="house" /></h1></NavLink>
+          <NavLink to="/"><Logo src='../../images/logo.png' alt='Logo' /></NavLink>
           <SearchBar/>
           {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
           {<NavLink to="/AboutUs"><h1>About Us</h1></NavLink>}

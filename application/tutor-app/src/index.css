@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: rgb(66, 115, 155);
+  background-color: #190061;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -17,12 +17,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.logo {
-  width: 100px;
-  height: auto;
-  padding-top: 10px;
 }
 
 .image-list-container {
@@ -51,11 +45,11 @@ code {
 }
 
 .about-color {
-  background-color: rgb(42, 64, 83);
+  background-color: #240090;
 }
 
 .form-group {
-  background: #666677;
+  background: #282828;
   color: white;
   width: 400px;
   text-align: center;
@@ -79,7 +73,7 @@ form {
 }
 
 .form-color {
-  background: #666677;
+  background: #282828;
   padding-bottom: 10px;
 }
 
@@ -88,7 +82,7 @@ form {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #666677;
+  background: #282828;
   padding-bottom: 10px;
 }
 
