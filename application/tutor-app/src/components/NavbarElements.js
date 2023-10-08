@@ -99,7 +99,7 @@ const Navbar = () => {
       <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
         <NavMenu>
-          <NavLink to="/"><h1> <FontAwesomeIcon icon="house" /></h1></NavLink>
+          <NavLink to="/"><h1><FontAwesomeIcon icon="house" /></h1></NavLink>
           <SearchBar/>
           {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
           {<NavLink to="/AboutUs"><h1>About Us</h1></NavLink>}
@@ -112,7 +112,7 @@ const Navbar = () => {
       </Nav>
       <MobileMenu isOpen={isOpen}>
         <MobileMenuItem to="/" onClick={toggleMobileMenu}>
-          <h1>Home</h1>
+          <h1><FontAwesomeIcon icon="house" /></h1>
         </MobileMenuItem>
         {cookie.get('isLoggedIn') && !cookie.get('isTutor') && (
           <MobileMenuItem to="/StudentView" onClick={toggleMobileMenu}>
@@ -139,7 +139,7 @@ const Navbar = () => {
         )}
         {cookie.get('isLoggedIn') && (
           <MobileMenuItem to="/Logout" onClick={toggleMobileMenu}>
-            <h1>Log Out</h1>
+            <h1><FontAwesomeIcon icon="right-from-bracket"/></h1>
           </MobileMenuItem>
         )}
         {cookie.get('isLoggedIn') && (
