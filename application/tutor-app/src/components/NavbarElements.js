@@ -44,6 +44,17 @@ export const Bars = styled(FaBars)`
   }
 `;
 
+const MobileLogo = styled.img`
+  display: none;
+  @media screen and (max-width: 855px) {
+    display: block;
+    width: 100px;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 7px;
+  }
+`;
+
 
 export const NavMenu = styled.div`
   display: flex;
@@ -67,12 +78,11 @@ const MobileMenu = styled.div`
     position: absolute;
     top: ${({ isOpen }) => (isOpen ? '85px' : '-100%')}; /* Adjust top property */
     left: 0;
-    background-color: rgb(4, 4, 88);
+    background-color: rgb(157, 89, 184);
     width: 100%;
     transition: 0.25s ease-in-out;
   }
 `;
-
 
 const MobileMenuItem = styled(Link)`
   color: #ffffff;
@@ -90,6 +100,7 @@ const Navbar = () => {
     });
     setUserName(cookie.get("userName"));
   }, []);
+
   const toggleMobileMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -98,7 +109,9 @@ const Navbar = () => {
     <div className='site-header'>
       <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
+        <MobileLogo src='../../images/logo.png' alt='Mobile Logo' />
         <NavMenu>
+          <img src='../../images/logo.png' className='logo'></img>
           <NavLink to="/"><h1><FontAwesomeIcon icon="house" /></h1></NavLink>
           <SearchBar/>
           {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
@@ -110,6 +123,7 @@ const Navbar = () => {
           {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{userName}</h1></NavLink>}
         </NavMenu>
       </Nav>
+      
       <MobileMenu isOpen={isOpen}>
         <MobileMenuItem to="/" onClick={toggleMobileMenu}>
           <h1><FontAwesomeIcon icon="house" /></h1>
