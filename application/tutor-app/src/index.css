@@ -19,25 +19,6 @@ code {
     monospace;
 }
 
-.image-list-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.image-list-item {
-  max-width: 60%;
-  display: flex;
-  align-items: center;
-  margin: 10px;
-}
-
-.image-column {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
 .header-column {
   flex: 2;
   text-align: center;
