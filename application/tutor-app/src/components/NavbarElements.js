@@ -17,6 +17,7 @@ export const Nav = styled.nav`
 
 export const NavLink = styled(Link)`
   color: #ffffff;
+  z-index: 10;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -59,13 +60,14 @@ const MobileMenu = styled.div`
   display: none;
   z-index: 1;
   @media screen and (max-width: 855px) {
+    z-index: 1;
     display: flex;
     flex-direction: column;
     font-size: 10px;
     position: absolute;
     top: ${({ isOpen }) => (isOpen ? '85px' : '-100%')}; /* Adjust top property */
     left: 0;
-    background: #666677;
+    background-color: rgb(4, 4, 88);
     width: 100%;
     transition: 0.25s ease-in-out;
   }
