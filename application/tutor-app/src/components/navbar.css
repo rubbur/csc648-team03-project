@@ -1,0 +1,15 @@
+h1:hover{
+   color: rgb(185, 184, 184);
+}
+
+.site-header{
+    width: 67vw;
+}
+
+nav.navbar{
+    background-color: rgb(4, 4, 88);
+    width: 67vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
