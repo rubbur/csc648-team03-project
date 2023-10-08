@@ -12,7 +12,6 @@ export const Nav = styled.nav`
   height: 85px;
   display: flex;
   justify-content: space-between;
-  padding: 0.2rem calc((100vw - 1000px) / 2);
   z-index: 10;
 `;
 
@@ -33,7 +32,7 @@ export const Bars = styled(FaBars)`
   display: none;
   color: #808080;
   z-index: 10;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 855px) {
     display: block;
     position: absolute;
     top: 0;
@@ -47,17 +46,19 @@ export const Bars = styled(FaBars)`
 
 export const NavMenu = styled.div`
   display: flex;
+  min-width: 200px;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 855px) {
     display: none;
   }
 `;
 
 const MobileMenu = styled.div`
   display: none;
-  z-index: 9;
-  @media screen and (max-width: 768px) {
+  z-index: 1;
+  @media screen and (max-width: 855px) {
     display: flex;
     flex-direction: column;
     font-size: 10px;
@@ -119,11 +120,11 @@ const Navbar = () => {
         <MobileMenuItem to="/AboutUs" onClick={toggleMobileMenu}>
         <h1>About Us</h1>
         </MobileMenuItem>
-        {/*cookie.get('isAdmin') && (
+        {cookie.get('isAdmin') && (
           <MobileMenuItem to="/AdminPanel" onClick={toggleMobileMenu}>
-            <h1>Admin Control</h1>
+            <h1><FontAwesomeIcon icon="gear"/></h1>
           </MobileMenuItem>
-        )*/}
+        )}
         {!cookie.get('isLoggedIn') && (
           <MobileMenuItem to="/SignIn" onClick={toggleMobileMenu}>
             <h1>Sign In</h1>
