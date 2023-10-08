@@ -415,6 +415,17 @@ const searchTutors = async (req, res) =>{
   }
 }
 
+const deleteAccount = async (req, res) => {
+  const {username} = req.body;
+  const q = "DELETE FROM users WHERE username = ?";
+  try{
+    await db.query(q, [username]);
+    res.send({success: true});
+  } catch(err){
+    console.log("error deleting account: " + err);
+    res.send({success: false, errorMessage: err});
+  }
+}
 
 module.exports = {
   login,
@@ -427,5 +438,6 @@ module.exports = {
   editPassword,
   editTutorAbilities,
   getTutorSubjects,
-  searchTutors
+  searchTutors,
+  deleteAccount
 };

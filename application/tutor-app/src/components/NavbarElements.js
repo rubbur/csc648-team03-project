@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -80,7 +80,13 @@ const MobileMenuItem = styled(Link)`
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [userName, setUserName] = useState(cookie.get("userName"));
+  useEffect(() => {
+    cookie.addChangeListener(() => {
+      setUserName(cookie.get("userName"));
+    });
+    setUserName(cookie.get("userName"));
+  }, []);
   const toggleMobileMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -98,7 +104,7 @@ const Navbar = () => {
           {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1><FontAwesomeIcon icon="right-from-bracket"/></h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{cookie.get("userName")}</h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{userName}</h1></NavLink>}
         </NavMenu>
       </Nav>
       <MobileMenu isOpen={isOpen}>
@@ -135,7 +141,7 @@ const Navbar = () => {
         )}
         {cookie.get('isLoggedIn') && (
           <MobileMenuItem to="/Profile" onClick={toggleMobileMenu}>
-            <h1>{cookie.get("userName")}</h1>
+            <h1>{userName}</h1>
           </MobileMenuItem>
         )}
       </MobileMenu>
