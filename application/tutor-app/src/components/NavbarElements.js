@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { cookie } from '../App';
 import SearchBar from './searchBar/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import "./navbar.css";
+import "./navbar.scss";
 
 export const Nav = styled.nav`
   background: #666677;
