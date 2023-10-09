@@ -314,6 +314,7 @@ const editTutorAbilities = async (req, res) => {
   //set up the insert query to add all the subjects that the tutor knows into the tutor_subjects table
     const placeholders = toAdd.map( subject => "(?, ?)").join(',');
     const values = toAdd.flatMap(subject => [id, subject]);
+    console.log(values);
     q= `INSERT INTO tutor_subjects (tutor_id, subject_name) VALUES ${placeholders} ON DUPLICATE KEY UPDATE subject_name = VALUES(subject_name)`;
     //execute the query
     try {
@@ -427,6 +428,40 @@ const deleteAccount = async (req, res) => {
   }
 }
 
+const becomeTutor = async (req, res ) =>{
+  const {userId} = req.body;
+  let q = `UPDATE users SET istutor = 1 WHERE id = ?`;
+  try{
+    await db.query(q, [userId]);
+    res.send({success: true});
+  } catch(err){
+    console.log("error updating user to be a tutor: " + err);
+    res.send({success: false, errorMessage: err});
+  }
+  //get the username, hashed_password, img_url, from the users table of the user that wants to become a tutor
+  q = "SELECT username, hashed_password, img_url, ispending FROM users WHERE id = ?";
+  try{
+    const userResult = await db.query(q, [userId]);
+    const username = userResult[0][0].username;
+    const hashed_password = userResult[0][0].hashed_password;
+    const ispending = userResult[0][0].ispending;
+    const img_url = userResult[0][0].img_url;
+    console.log("username: " + username + " hashed_password: " + hashed_password + " img_url: " + img_url);
+    //insert the user into the tutors table
+    q = "INSERT INTO tutors (id, username, hashed_password, img_url, ispending) VALUES (?, ?, ?, ?, ?)";
+    try{
+      await db.query(q, [userId, username, hashed_password, img_url, ispending]);
+      console.log("inserted user as tutor succesfully");
+      res.send({success: true});
+    } catch(err){
+      console.log("error inserting into tutors table: " + err);
+    }
+  } catch(err){
+    console.log("error getting user data: " + err);
+  }
+}
+
+
 module.exports = {
   login,
   register,
@@ -439,5 +474,6 @@ module.exports = {
   editTutorAbilities,
   getTutorSubjects,
   searchTutors,
-  deleteAccount
+  deleteAccount,
+  becomeTutor
 };

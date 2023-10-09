@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../index.css';
+import '../index.scss';
 import axios from "axios";
 import {cookie} from "../App"
 import  { useNavigate } from 'react-router-dom'

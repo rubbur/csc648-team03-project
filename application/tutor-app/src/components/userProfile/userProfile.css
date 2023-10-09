@@ -109,13 +109,12 @@
     min-width: 10rem;
     height: 3rem;
     font-size: 15px;
-    background-color: #282828;
     font-weight: bold;
-    color: white;
+    
 }
 
 .profile-edit-button.pressed{
-    background-color: yellow;
-    color: black;
+    background-color: grey;
+    color: white;
 }
 

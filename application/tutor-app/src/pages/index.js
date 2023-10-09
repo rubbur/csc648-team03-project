@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../index.css';
+import '../index.scss';
 import ImageUpload from '../components/imageUpload/ImageUpload';
 
 const Home = () => {

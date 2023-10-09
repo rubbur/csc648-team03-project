@@ -92,6 +92,13 @@ const [courseNum, setCourseNum] = useState("");
         }
     }
 
+    const handleBecomeTutor = async () =>{
+        const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/becomeTutor`, {userId: cookie.get("userId")}, {withCredentials: true});
+        if(result.data.success){
+            await handleEditTutor();
+        }
+    }
+
     const handleSubjectChange = (index) => {
         subjects[index].isChecked = !subjects[index].isChecked;
         setSubjects([...subjects]);
@@ -130,7 +137,7 @@ const [courseNum, setCourseNum] = useState("");
                         })
                     }
             </div>
-            <button onClick = {handleEditTutor} className="submit-tutor-button">{isTutor ? "Apply Changes" : "Register as Tutor"}</button>
+            <button onClick = {isTutor ? handleEditTutor : handleBecomeTutor} className="submit-tutor-button">{isTutor ? "Apply Changes" : "Register as Tutor"}</button>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css';
+import '../index.scss';
 
 function Profile({ img, name, bio }) {
   const updateName = name.endsWith('s') ? `${name}' Profile` : `${name}'s Profile`;
