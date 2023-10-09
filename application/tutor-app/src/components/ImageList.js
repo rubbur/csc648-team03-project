@@ -1,5 +1,6 @@
 import React from 'react';
 import '../index.css';
+import './imageList.css';
 
 const ImageWithHeader = ({ imagePath, headerText }) => {
   const pageUrl = `./profiles/${headerText.replace(' ', '')}`;
@@ -7,15 +8,6 @@ const ImageWithHeader = ({ imagePath, headerText }) => {
   const linkStyle = {
     color: 'white',
     textDecoration: 'none',
-  };
-
-  const containerStyle = {
-    position: 'relative',
-    width: '100%', 
-    maxWidth: '256px', 
-    height: '100%',
-    maxHeight: '256px', 
-    overflow: 'hidden',
   };
 
   const imgStyle = {

@@ -13,6 +13,13 @@ const UserProfile = () =>{
     const navigate = useNavigate();
     const [userData, setUserData] = useState({});
     const [editPage, setEditPage] = useState("name");
+    const [userName, setUserName] = useState(cookie.get("userName"));
+    useEffect(() => {
+      cookie.addChangeListener(() => {
+        setUserName(cookie.get("userName"));
+      });
+      setUserName(cookie.get("userName"));
+    }, []);
         useEffect(() =>{
             console.log("in the use effect");
             const loadUserData = async () =>{
@@ -38,19 +45,23 @@ const UserProfile = () =>{
 
     const handleDeleteAccount =  async () =>{
         //delete this user's account
+        const data = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/deleteAccount`, {username: cookie.get("userName")}, {withCredentials: true});
+        if(data.data.success){
+            await axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/Logout`, {}, {withCredentials: true});
+            navigate("/Logout");
+        }
     }
 
     return (
         <div className="profile-container">
-           
             <div className="profile">
                 <div className="img-holder">
-                <h1 className="header">{`Hello, ${cookie.get("userName")}`}</h1>
+                <h1 className="header">{`${userName}`}</h1>
                      <img className="user-image" src={userData.img_url}/>
                      <div className="danger-container">
                         <div className="danger-field">
                             <h2>Danger Field</h2>
-                            <button onClick={handleDeleteAccount}>Delete Account</button>
+                            <button onClick={handleDeleteAccount} className='danger-button'>Delete Account</button>
                          </div>
                      </div>
                     

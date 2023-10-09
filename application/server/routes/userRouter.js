@@ -1,7 +1,7 @@
 //Author: Cleveland Plonsey
 
 const express = require("express");
-const {login, register, logout, searchByName, uploadImage, getUserData, editUsername, editPassword, editTutorAbilities, getTutorSubjects, searchTutors} = require("../controllers/userControllers");
+const {login, register, logout, searchByName, uploadImage, getUserData, editUsername, editPassword, editTutorAbilities, getTutorSubjects, searchTutors, deleteAccount} = require("../controllers/userControllers");
 const {isLoggedIn} = require("../middleware/authMiddleware");
 
 const userRouter = express.Router();
@@ -28,5 +28,7 @@ userRouter.post("/editTutorAbilities", isLoggedIn, editTutorAbilities);
 userRouter.post("/getTutorSubjects", isLoggedIn, getTutorSubjects);
 
 userRouter.post("/searchTutors", searchTutors);
+
+userRouter.post("/deleteAccount", isLoggedIn, deleteAccount)
 
 module.exports = userRouter;
