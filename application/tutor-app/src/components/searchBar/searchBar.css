@@ -7,12 +7,16 @@
     height: 40px;
     width: 700px;
     margin: 0 40px 0 40px;
+    transition: border 0.3s ease;
+    opacity: 0;
+  animation: fadeIn 1s ease forwards;
 }
 
 
 
 .searchbar:focus{
     border: solid 2px rgb(250, 205, 73);
+    border: 2px solid rgb(250, 205, 73)
 }
 
 .subject-dropdown{
@@ -21,6 +25,10 @@
     border-bottom-left-radius: 10%;
     border-top-left-radius: 10%;
     border: none;
+}
+
+.searchbar:hover {
+    transform: scale(1.05);
 }
 
 .subject-dropdown > option{
@@ -44,10 +52,12 @@
     background-color: rgb(250, 205, 73);
     border-top-right-radius: 10%;
     border-bottom-right-radius: 10%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #search-button:hover{
     background-color: rgb(223, 179, 45);
+    transform: scale(1.05);
 }
 
 .search-bar-input{
@@ -59,4 +69,12 @@
     outline: 2px solid rgb(250, 205, 73);
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
