@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
-import "../admin/admin.css";
+//import "../admin/admin.css";
 import { useLocation, useNavigate } from 'react-router-dom';
+import cookie from "./../../App";
+import "./searchResults.css";
 
 const SearchResults = () =>{
     const [resultsList, setResultsList] = useState([]);
@@ -57,6 +59,7 @@ const SearchResults = () =>{
 
 
 const UserResult = ({username, userId, imgUrl, searchSubject }) => {
+    const [isTyping, setIsTyping] = useState(false);
     const navigate = useNavigate(); //used to navigate to the tutor's profile page
     const handleContact = () => {
         //TODO send a message to the tutor
@@ -66,12 +69,29 @@ const UserResult = ({username, userId, imgUrl, searchSubject }) => {
         navigate(`/tutorProfile?user=${username}&subject=${searchSubject}`);
     }
 
+    const handleSend = async  () => {
+        if(cookie.get("isLoggedIn") === "false"){
+            //redirect to login page
+            alert("need to be logged in to contact a tutor");
+            return;
+        }
+        //TODO send the message to the tutor
+    }
+
     return (
     <div className = "user-result">
-            <img className="user-img" src={imgUrl} alt="pic"/>
-            <p>{username}</p>
-            <button onClick={handleContact}>Contact</button>
-            <button onClick={handleProfile}>{username}'s Profile</button>
+            <div className="results-container">
+                 <img className="user-img" src={imgUrl} alt="pic"/>
+                 <p>{username}</p>
+                 <button onClick={() => {setIsTyping(!isTyping)}}>{!isTyping ? "Contact" : "Close Chat"}</button>
+                 <button onClick={handleProfile}>{username}'s Profile</button>
+            </div>
+           { isTyping && 
+           <div className="message-box">
+                <textarea rows="30" placeholder="message" />
+                <button className="send-message-button" onClick={handleSend}>SendMessage</button>
+            </div>
+            }
     </div>
     );
 

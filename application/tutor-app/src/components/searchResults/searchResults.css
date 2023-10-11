@@ -1,0 +1,37 @@
+
+.user-result{
+    height: fit-content;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-box{
+   display: flex;
+   flex-direction: column;
+    margin: 20px;
+    width: 80%;
+    height: 400px;
+    border: solid black 3px;
+    background-color:aqua;
+}
+
+.message-box input{
+    height: 80%;
+    width: 100%;
+}
+
+.send-message-button{
+    width: fit-content;
+}
+
+.results-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px;
+    height: 30%;
+    width: 100%;
+    padding: 10px;
+}

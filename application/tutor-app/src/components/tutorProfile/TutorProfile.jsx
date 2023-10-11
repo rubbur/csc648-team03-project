@@ -34,7 +34,7 @@ const TutorProfile = () => {
                 return;
             }
             setTutorSubjects([...results.data.subjectList]);
-            
+
             //get the tutor's reviews
             const reviewResults = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`, {id: result.data.userData[0].id}, {withCredentials: true});
             if(!reviewResults.data.success){
@@ -101,7 +101,15 @@ const TutorProfile = () => {
             </div>
             <div className="main-content">
                 <div className='username-rating-box'>
-                    <p className='rating-p'>4.5</p> 
+                    <p className='rating-p'>
+                    {
+                        reviewList.length == 0 ?
+                            "unrated" 
+                        :
+                            // the average rating is:
+                            ((reviewList.reduce((total, review) => total + Number(review.rating)) / reviewList.length).toFixed(1))
+                    }
+                    </p> 
                     {/* TODO: add tutorData.rating instead of 7 */}
                     <h1>{tutorData.username}</h1>
                 </div>
