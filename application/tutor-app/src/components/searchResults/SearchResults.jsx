@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
 import "../admin/admin.css";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SearchResults = () =>{
     const [resultsList, setResultsList] = useState([]);
+    const [searchSubject, setSearchSubject] = useState("");
     const location = useLocation(); //tracks the query params
 
 
@@ -15,6 +16,9 @@ const SearchResults = () =>{
             const url = new URL(window.location.href);
             const params = new URLSearchParams(url.search);
             const subject = params.get('subject');
+            //if the subject is not specified, set it to overview so that the user can see the tutor's overview post
+            
+            setSearchSubject(subject === "all" ? "overview" : subject); 
             const searchTerm = params.get('searchterm');
             
             //get the results from the backend
@@ -36,7 +40,13 @@ const SearchResults = () =>{
             <div className="search-results-box">
                 {
                     resultsList.map( (tutor, index ) => {
-                        return <UserResult username={tutor.username} userId={tutor.id} imgUrl={tutor.img_url} key={index} index={index} />
+                        return <UserResult username={tutor.username}
+                        userId={tutor.id}
+                        imgUrl={tutor.img_url}
+                        key={index}
+                        index={index}
+                        searchSubject={searchSubject}
+                        />
                     })
                 }
             </div>
@@ -46,10 +56,14 @@ const SearchResults = () =>{
 }
 
 
-const UserResult = ({username, userId, imgUrl }) => {
-
+const UserResult = ({username, userId, imgUrl, searchSubject }) => {
+    const navigate = useNavigate(); //used to navigate to the tutor's profile page
     const handleContact = () => {
         //TODO send a message to the tutor
+    }
+    const handleProfile = () => {
+        //navigate to the tutor's profile page
+        navigate(`/tutorProfile?user=${username}&subject=${searchSubject}`);
     }
 
     return (
@@ -57,7 +71,7 @@ const UserResult = ({username, userId, imgUrl }) => {
             <img className="user-img" src={imgUrl} alt="pic"/>
             <p>{username}</p>
             <button onClick={handleContact}>Contact</button>
-            <button>{username}'s Profile</button>
+            <button onClick={handleProfile}>{username}'s Profile</button>
     </div>
     );
 
