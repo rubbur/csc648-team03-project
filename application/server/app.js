@@ -20,7 +20,8 @@ const path = require("path"); //used for generating static frontend file paths s
 
 //routes
 const userRouter = require("./routes/userRouter");
-const adminRouter = require('./routes/adminRoutes');
+const adminRouter = require('./routes/adminRouter');
+const tutorRouter = require('./routes/tutorRouter');
 
 app.use(fileUpload()); //middleware that allows all routes access to file upload functions.
 app.use(bodyParser.json({limit: '1mb'})); //more data than we ever need to send over http
@@ -48,6 +49,8 @@ app.use(session({
 
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
+app.use("/tutor", tutorRouter);
+
 
 //Serve static files from the React build directory
 app.use(express.static(path.join(__dirname, '../tutor-app/build')));

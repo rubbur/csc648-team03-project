@@ -433,7 +433,6 @@ const becomeTutor = async (req, res ) =>{
   let q = `UPDATE users SET istutor = 1 WHERE id = ?`;
   try{
     await db.query(q, [userId]);
-    res.send({success: true});
   } catch(err){
     console.log("error updating user to be a tutor: " + err);
     res.send({success: false, errorMessage: err});
