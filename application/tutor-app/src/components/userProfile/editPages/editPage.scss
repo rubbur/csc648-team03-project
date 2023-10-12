@@ -1,4 +1,4 @@
-
+@import "../../../colorScheme.scss";
 
 .edit-form{
     padding-left: 10px;
@@ -11,14 +11,15 @@
 .edit-form button{
     height: 30px;
     width: fit-content;
-    background-color: #282828;
+    background-color: $accent-color;
     color:white;
+    color: black;
     margin: 10px;
 }
 
 .edit-form button:hover{
     color: black;
-    background-color: yellow;
+    background-color: $accent-color-hover;
 }
 
 .edit-form > .mascot{

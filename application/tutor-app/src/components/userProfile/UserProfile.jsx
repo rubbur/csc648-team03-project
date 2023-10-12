@@ -1,10 +1,9 @@
 import { cookie } from "../../App";
-import "./userProfile.css";
+import "./userProfile.scss";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import ImageUpload from "../imageUpload/ImageUpload";
-import "./userProfile.css";
 import TutorEdit from "./editPages/TutorEdit";
 import PasswordEdit from "./editPages/PasswordEdit";
 import NameEdit from "./editPages/NameEdit";
@@ -58,14 +57,9 @@ const UserProfile = () =>{
                 <div className="img-holder">
                 <h1 className="header">{`${userName}`}</h1>
                      <img className="user-image" src={userData.img_url}/>
-                     <div className="danger-container">
-                        <div className="danger-field">
-                            <h2>Danger Field</h2>
-                            <button onClick={handleDeleteAccount} className='danger-button'>Delete Account</button>
-                         </div>
-                     </div>
                     
                 </div>
+                <div className="edit-container">
                 <div className="edit-box">
                         <div className="button-container">
                         <button className={`profile-edit-button ${editPage == "upload" ? "pressed" : ""}`}  onClick={() => {setEditPage("upload")}}>Upload Image</button>
@@ -85,8 +79,14 @@ const UserProfile = () =>{
                     {editPage == "edit-tutor" && <TutorEdit isTutor={true}/>}
                     {editPage == "upload" && <ImageUpload/>}
                 </div>
-               
+                </div>
             </div>
+            <div className="danger-container">
+                        <div className="danger-field">
+                            <h2>Danger Field</h2>
+                            <button onClick={handleDeleteAccount} className='danger-button'>Delete Account</button>
+                         </div>
+                     </div>
         </div>
     );
 }

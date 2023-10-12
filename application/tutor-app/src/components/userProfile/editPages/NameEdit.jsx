@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./editPage.css";
+import "./editPage.scss";
 import { cookie } from "../../../App";
 import axios from "axios";
 
@@ -26,7 +26,7 @@ const NameEdit = () =>{
         <div className="name-edit edit-form">
             <h2>Editting Username...</h2>
             <input type="text" value={username} onChange={e => setUsername(e.target.value)}/>
-            <button className="submit-edit-button" onClick={handleNameChange}>update username</button>
+            <button className="submit-edit-button" onClick={handleNameChange}>Update Username</button>
         </div>
     )
 }

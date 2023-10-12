@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./editPage.css";
+import "./editPage.scss";
 import { cookie } from "../../../App";
 import axios from "axios";
 
@@ -121,8 +121,9 @@ const [courseNum, setCourseNum] = useState("");
                     }
                 </div>
                 Add Course: <input type="text" onChange={e => setCourseNum(e.target.value)} value={courseNum} />
+                </div>
                 <button onClick={addCourseNumber}>Confirm</button>
-            </div>
+            
             <h4>Subjects</h4>
             <div className="subject-box">
                
