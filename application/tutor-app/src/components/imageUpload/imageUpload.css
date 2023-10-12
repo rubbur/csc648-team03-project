@@ -2,7 +2,7 @@
 
 .image-upload-box{
     padding-left: 10px;
-    height: inherit;
+    height: 100%;
     width: inherit;
     background-color: white;
     overflow-y: scroll;

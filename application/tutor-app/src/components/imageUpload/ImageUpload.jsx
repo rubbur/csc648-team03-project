@@ -20,6 +20,14 @@ const ImageUpload = () =>{
             alert("No file selected!");
             return;
         }
+
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+        if (!allowedTypes.includes(imageFile.type)) {
+            alert("Only .jpeg, .jpg, or .png files are allowed.");
+            return;
+        }
+
         const formData = new FormData();
         formData.append('file', imageFile);
         formData.append('username', cookie.get("userName"));
@@ -45,7 +53,7 @@ const ImageUpload = () =>{
         <div className="image-upload-box">
             <h1>Upload a Profile Picture</h1>
             
-            <input type="file" name="file" onChange={handleImageChange}/>
+            <input type="file" name="file" onChange={handleImageChange} accept=".jpg, .jpeg, .png"/>
             <button onClick={handlePostImage}>Upload</button>
             <p className="upload-disclaimer">Uploading media will place your account on hold <br/> 
             pending admin's approval of the uploaded content.</p>
