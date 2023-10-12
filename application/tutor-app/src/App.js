@@ -16,7 +16,7 @@ import Cookie from 'universal-cookie';
 import Admin from './components/admin/Admin';
 import UserProfile from './components/userProfile/UserProfile';
 import SearchResults from './components/searchResults/SearchResults';
-
+import TutorProfile from './components/tutorProfile/TutorProfile';
 //icons from font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -33,6 +33,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/searchResults' element={<SearchResults />} />
+        <Route path='/tutorProfile' element={<TutorProfile />} />
         <Route path='/AdminPanel' element={< Admin/>} />
         {cookie.get("isLoggedIn") && cookie.get("isTutor") && <Route path='/TutorView' element={<TutorView />} />}
         {cookie.get("isLoggedIn") && !cookie.get("isTutor") && <Route path='/StudentView' element={<StudentView />} />}
