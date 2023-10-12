@@ -116,7 +116,7 @@ const Navbar = () => {
     <div className='site-header'>
       <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
-        <NavLink to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' /></NavLink>
+        <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' /></Link>
         <NavMenu>
           <NavLink to="/"><Logo src='../../images/logo.png' alt='Logo' /></NavLink>
           <SearchBar/>
