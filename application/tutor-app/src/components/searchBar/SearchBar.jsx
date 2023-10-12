@@ -40,6 +40,12 @@ const SearchBar = () => {
         navigate(`/searchResults?searchterm=${searchTerm}&subject=${subject}`);
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    };
+
     return (
         <div className="searchbar">
             <select className="subject-dropdown" value={subject} onChange={handleSubjectChange} >
@@ -47,7 +53,7 @@ const SearchBar = () => {
                 subjectList.map( (sub, index) => <option key={index} value={sub}>{sub}</option>)
             }
             </select>
-            <input type="text" className="search-bar-input" placeholder="Search Tutors.tech"  value={searchTerm} onChange={handleChange}/>
+            <input type="text" className="search-bar-input" placeholder="Search Tutors.tech" onKeyPress={handleKeyPress} value={searchTerm} onChange={handleChange}/>
             <button id="search-button" onClick={handleSearch}><FontAwesomeIcon icon = "magnifying-glass"/></button>
         </div>
     )

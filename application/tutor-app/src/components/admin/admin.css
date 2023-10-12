@@ -113,7 +113,7 @@
 }
 
 .user-result:hover {
-  border: solid 3px rgb(0, 0, 0);
+  /*border: solid 3px rgb(0, 0, 0);*/
 }
 
 .user-delete-button{

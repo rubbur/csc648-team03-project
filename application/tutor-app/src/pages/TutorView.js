@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../index.scss';
-import ImageList from '../components/ImageList'; 
 import {cookie} from "../App"
 
 function TutorView() {

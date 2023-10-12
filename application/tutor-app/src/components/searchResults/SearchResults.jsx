@@ -3,7 +3,7 @@ import axios from "axios";
 //import "../admin/admin.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import cookie from "./../../App";
-import "./searchResults.css";
+import "./searchResults.scss";
 
 const SearchResults = () =>{
     const [resultsList, setResultsList] = useState([]);
@@ -38,7 +38,7 @@ const SearchResults = () =>{
 
     return (
         <div className="search-results">
-            <h3>Showing {resultsList.length} search results</h3>
+            <h3 className="search-total">Showing {resultsList.length} search results</h3>
             <div className="search-results-box">
                 {
                     resultsList.map( (tutor, index ) => {
@@ -84,15 +84,17 @@ const UserResult = ({username, userId, imgUrl, searchSubject }) => {
             <div className="results-container">
                  <img className="user-img" src={imgUrl} alt="pic"/>
                  <p>{username}</p>
-                 <button onClick={handleProfile}>See Profile</button>
-                 <button onClick={() => {setIsTyping(!isTyping)}}>{!isTyping ? "Contact" : "Close Chat"}</button>
+                 <div className="search-button-container">
+                    <button className="result-button" onClick={handleProfile}>See Profile</button>
+                    <button className="result-button" onClick={() => {setIsTyping(!isTyping)}}>{!isTyping ? "Message Tutor" : "Close Message"}</button>
+                 </div>
             </div>
            { isTyping && 
-           <div className="message-box">
-                <textarea rows="30" placeholder="message" value={messageInProgress} onChange={e => setMessageInProgress(e.target.valu)}/>
-                <div className="flex-row">
-                 <button className="send-message-button" onClick={handleSend}>Send Message</button>
-                 <button onClick={() => setMessageInProgress("")}>Clear</button>
+           <div className="message-container">
+                <textarea className="message-box" rows="30" placeholder="being typing.." value={messageInProgress} onChange={e => setMessageInProgress(e.target.valu)}/>
+                <div className="message-button-container">
+                 <button className="send-message-button result-button" onClick={handleSend}>Send Message</button>
+                 <button className="result-button" onClick={() => setMessageInProgress("")}>Clear</button>
                 </div>
             </div>
             }
