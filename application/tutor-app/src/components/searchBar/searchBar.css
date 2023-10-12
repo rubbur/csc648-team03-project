@@ -7,9 +7,9 @@
     height: 40px;
     width: 700px;
     margin: 0 40px 0 40px;
-    transition: border 0.3s ease;
+    transition: border 0.3s ease, transform 0.3s ease;
     opacity: 0;
-  animation: fadeIn 1s ease forwards;
+    animation: fadeIn 1s ease forwards;
 }
 
 
