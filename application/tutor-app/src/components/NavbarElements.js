@@ -116,7 +116,7 @@ const Navbar = () => {
     <div className='site-header'>
       <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
-        <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' /></Link>
+        <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' onClick={toggleMobileMenu}/></Link>
         <NavMenu>
           <NavLink to="/"><Logo src='../../images/logo.png' alt='Logo' /></NavLink>
           <SearchBar/>
@@ -131,9 +131,7 @@ const Navbar = () => {
       </Nav>
       
       <MobileMenu isOpen={isOpen}>
-        <MobileMenuItem to="/" onClick={toggleMobileMenu}>
-          <h1><FontAwesomeIcon icon="house" /></h1>
-        </MobileMenuItem>
+        <SearchBar/>
         {cookie.get('isLoggedIn') && !cookie.get('isTutor') && (
           <MobileMenuItem to="/StudentView" onClick={toggleMobileMenu}>
             <h1>Students</h1>

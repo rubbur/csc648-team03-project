@@ -78,3 +78,12 @@
     }
 }
 
+@media screen and (max-width: 855px) {
+    .searchbar{
+        min-width: 0;
+        max-width: 80%;
+        justify-content: center;
+        margin: 1rem auto auto auto;
+    }
+}
+
