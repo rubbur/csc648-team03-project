@@ -1,17 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../index.scss';
-import ImageUpload from '../components/imageUpload/ImageUpload';
 
 const Home = () => {
-	useEffect(() => {
+    const backgroundContainerRef = useRef(); // Create a ref object
+
+    useEffect(() => {
         document.title = "Tutors.tech: Home";
-      }, []);
-	return (
-		<div className='long-page'>
-			<div className='background-container'><img src='../../images/campus.jpg' width="100%" alt='Tutors.tech logo' /></div>
-			<h1 className='pageHeader'>Welcome to Tutors.tech at SFSU</h1>
-		</div>
-	);
+
+        // moves the image in the background as the user scrolls
+        const updateBackgroundPosition = () => {
+            const scrollY = window.scrollY || window.pageYOffset;
+            const backgroundContainer = backgroundContainerRef.current;
+            if (backgroundContainer) {
+                const newPosition = `${-scrollY*0.5}px -280px`; 
+                backgroundContainer.style.backgroundPosition = newPosition; 
+            }
+        };
+
+        window.addEventListener('scroll', updateBackgroundPosition); 
+        return () => {
+            window.removeEventListener('scroll', updateBackgroundPosition); 
+        };
+    }, []);
+
+    return (
+        <div className='long-page'>
+            <div className='background-container' ref={backgroundContainerRef}></div>
+            <h1 className='pageHeader'>Welcome to Tutors.tech at SFSU</h1>
+        </div>
+    );
 };
 
 export default Home;
