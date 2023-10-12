@@ -3,6 +3,8 @@ import axios from "axios";
 import "./tutorProfile.scss";
 import {cookie} from "../../App";
 import ReviewCard from "./ReviewCard";
+import Modal from 'react-modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const TutorProfile = () => {
     const [tutorData, setTutorData] = useState({});
@@ -10,6 +12,9 @@ const TutorProfile = () => {
     const [reviewList, setReviewList] = useState([]);
     const [subjectSelected, setSubjectSelected] = useState("overview");
     const [subjectInfo, setSubjectInfo] = useState({}); //contains the bio, video and pdf post for the subject selected
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [reviewText, setReviewText] = useState("");
+    const [starArray, setStarArray] = useState([false, false, false, false, false]);
 
     useEffect(() => {
         
@@ -62,6 +67,7 @@ const TutorProfile = () => {
             alert("need to be logged in to review a tutor");
             return;
         }
+        setIsOpen(true);
         //open a modal that allows the student to review the tutor
         //modal needs to have a text box for the review and a rating system
         //modal needs to have a submit button that sends the review to the backend
@@ -118,7 +124,24 @@ const TutorProfile = () => {
                     <p>{tutorData.bio || "I am a really qualified tutor. I can teach stuff to people"}</p>
                 </div>
             </div>
-            
+            {/*--------------------------------------Modal---------------------------------------------------------------------------------- */}
+        <Modal ariaHideApp={false}
+            className="custom-modal"
+            isOpen={modalIsOpen}
+            onRequestClose={() =>setIsOpen(false)}
+        >
+            <button className = "close-modal-button" onClick={() =>setIsOpen(false)}>X</button>
+            <div className="modal-content">
+                <h2>Review</h2>
+                <div className='star-holder'>
+                    {starArray.map((star, index) => {
+                        return (
+                            <p key={index} onClick={() => setStarArray(starArray.map((star, i) => i <= index ? true : false))}><FontAwesomeIcon key={index} icon={`fa-${star ? "solid" : "regular"} fa-star`} className="star" /></p>
+                            )}
+                    )}      
+                </div>
+            </div>
+        </Modal> 
         </div>
     )
 }
