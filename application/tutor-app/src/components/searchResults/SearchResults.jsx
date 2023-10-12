@@ -60,6 +60,7 @@ const SearchResults = () =>{
 
 const UserResult = ({username, userId, imgUrl, searchSubject }) => {
     const [isTyping, setIsTyping] = useState(false);
+    const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
     const navigate = useNavigate(); //used to navigate to the tutor's profile page
     const handleContact = () => {
         //TODO send a message to the tutor
@@ -83,13 +84,16 @@ const UserResult = ({username, userId, imgUrl, searchSubject }) => {
             <div className="results-container">
                  <img className="user-img" src={imgUrl} alt="pic"/>
                  <p>{username}</p>
+                 <button onClick={handleProfile}>See Profile</button>
                  <button onClick={() => {setIsTyping(!isTyping)}}>{!isTyping ? "Contact" : "Close Chat"}</button>
-                 <button onClick={handleProfile}>{username}'s Profile</button>
             </div>
            { isTyping && 
            <div className="message-box">
-                <textarea rows="30" placeholder="message" />
-                <button className="send-message-button" onClick={handleSend}>SendMessage</button>
+                <textarea rows="30" placeholder="message" value={messageInProgress} onChange={e => setMessageInProgress(e.target.valu)}/>
+                <div className="flex-row">
+                 <button className="send-message-button" onClick={handleSend}>Send Message</button>
+                 <button onClick={() => setMessageInProgress("")}>Clear</button>
+                </div>
             </div>
             }
     </div>
