@@ -11,6 +11,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.long-page {
+  min-height: 200vh;
+}
+
 .pageHeader {
   text-align: center;
   color: white;
