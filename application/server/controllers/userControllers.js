@@ -460,6 +460,21 @@ const becomeTutor = async (req, res ) =>{
   }
 }
 
+const submitReview = async (req, res) =>{
+  let date = new Date();
+  let currentTime = date.toISOString().split(/[- :]/).join("").slice(0, 14);
+  const {reviewerId, tutorId, reviewText, rating, reviewerName} = req.body;
+  console.log("reviewerId: " + reviewerId + " revieweeId: " + tutorId + " reviewText: " + reviewText + " rating: " + rating + " currentTime: " + currentTime);
+  //insert the review into the reviews table
+  const q = "INSERT INTO tutor_reviews (reviewer_id, tutor_id, review, rating, reviewer_name, time_stamp) VALUES (?, ?, ?, ?, ?, ?)";
+  try{
+    await db.query(q, [reviewerId, tutorId, reviewText, rating, reviewerName, currentTime]);
+    res.send({success: true});
+  } catch(err){
+    console.log("error inserting review into reviews table: " + err);
+    res.send({success: false, errorMessage: err});
+  }
+}
 
 module.exports = {
   login,
@@ -474,5 +489,6 @@ module.exports = {
   getTutorSubjects,
   searchTutors,
   deleteAccount,
-  becomeTutor
+  becomeTutor,
+  submitReview
 };
