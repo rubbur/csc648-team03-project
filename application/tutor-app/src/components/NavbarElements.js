@@ -112,11 +112,15 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const hideMobileMenu = () => {
+    setIsOpen(false);
+  }
+
   return (
     <div className='site-header'>
       <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
-        <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' onClick={toggleMobileMenu}/></Link>
+        <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' onClick={hideMobileMenu}/></Link>
         <NavMenu>
           <NavLink to="/"><Logo src='../../images/logo.png' alt='Logo' /></NavLink>
           <SearchBar/>
