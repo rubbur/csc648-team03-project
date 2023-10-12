@@ -42,12 +42,15 @@ const renderStars = (rating) => {
     }, []);
   return (
     <div className="review-card">
+      <div className="reviewer-container">
+        <img src={reviewerPhoto} alt="" />
+        <p className="review-name">{review.reviewer_name}</p>
+      </div>
       <div className="rating-date">
         <p className="rating">{renderStars(review.rating)}</p>
-        <p>{review.time_stamp}</p>
+        <p>Date: {review.time_stamp}</p>
       </div>
       <div className="card-container">
-        <img src={reviewerPhoto} alt="" />
         <p className="review">{review.review}</p>
       </div>
     </div>

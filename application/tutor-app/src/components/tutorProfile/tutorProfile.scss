@@ -23,7 +23,8 @@ $image-dimension: 300px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: $image-dimension;
+    width: 100%;
+    padding-top: 15px;
     height: inherit;
     background-color: #282828;
 }
@@ -48,7 +49,8 @@ $image-dimension: 300px;
 }
 
 .username-rating-box{
-    width: 80%;
+    width: 100%;
+    background-color: $header-bg-color;
     display: flex;
     flex-direction: column;
 }
@@ -79,6 +81,7 @@ $image-dimension: 300px;
     height: fit-content;
     padding: 10px;
     color: $text-color;
+    background-color: $base-color;
 }
 
 .star-holder {
@@ -91,7 +94,7 @@ $image-dimension: 300px;
 
 .star {
     color: $accent-color;
-    font-size: 50px;
+    font-size: 10px;
 }
 
 .review-text {
@@ -107,5 +110,15 @@ $image-dimension: 300px;
 .tutor-header {
     text-align: center;
     margin-bottom: 20px;
+    overflow-wrap: break-word;
+}
+
+.about-me-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     overflow-wrap: break-word;
 }

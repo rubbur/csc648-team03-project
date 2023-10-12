@@ -138,7 +138,7 @@ const TutorProfile = () => {
                             // the average rating is:
                             ((reviewList.reduce((total, review) => {total += Number(review.rating);return total;}) / reviewList.length).toFixed(1))
                     }
-                    </p> 
+                    <FontAwesomeIcon icon={["fas", "star"]} className="star"/></p> 
                     {/* TODO: add tutorData.rating instead of 7 */}
                     <h1 className='tutor-header'>{tutorData.username}'s Post</h1>
                 </div>
