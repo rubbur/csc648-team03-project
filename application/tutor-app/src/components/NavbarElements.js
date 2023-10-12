@@ -126,7 +126,7 @@ const Navbar = () => {
           {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1><FontAwesomeIcon icon="right-from-bracket"/></h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{userName}</h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{"Hi, "+userName}</h1></NavLink>}
         </NavMenu>
       </Nav>
       
@@ -164,7 +164,7 @@ const Navbar = () => {
         )}
         {cookie.get('isLoggedIn') && (
           <MobileMenuItem to="/Profile" onClick={toggleMobileMenu}>
-            <h1>{userName}</h1>
+            <h1>{"Hi, "+userName}</h1>
           </MobileMenuItem>
         )}
       </MobileMenu>
