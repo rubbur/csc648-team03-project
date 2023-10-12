@@ -73,6 +73,28 @@ const TutorProfile = () => {
         //modal needs to have a submit button that sends the review to the backend
 
     }
+
+    const submitReview = async () => {
+        //send the review to the backend
+        const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/submitReview`, {
+            tutorId: tutorData.id,
+            reviewText: reviewText,
+            rating: starArray.reduce((total, current, index) => {
+                if(current){
+                    return total + 1;
+                }
+                return total;
+            }, 0),
+            reviewerName: cookie.get("userName"),
+            reviewerId: cookie.get("userId")
+        }, {withCredentials: true});
+        if(!result.data.success){
+            console.log(result.data.errorMessage);
+            return;
+        }
+        //close the modal
+        setIsOpen(false);
+    }
     return (
         <div className="tutor-profile">
             <div className="left-side-bar">
@@ -113,7 +135,7 @@ const TutorProfile = () => {
                             "unrated" 
                         :
                             // the average rating is:
-                            ((reviewList.reduce((total, review) => total + Number(review.rating)) / reviewList.length).toFixed(1))
+                            ((reviewList.reduce((total, review) => {total += Number(review.rating);return total;}) / reviewList.length).toFixed(1))
                     }
                     </p> 
                     {/* TODO: add tutorData.rating instead of 7 */}
@@ -138,9 +160,11 @@ const TutorProfile = () => {
                         return (
                             <p key={index} onClick={() => setStarArray(starArray.map((star, i) => i <= index ? true : false))}><FontAwesomeIcon key={index} icon={`fa-${star ? "solid" : "regular"} fa-star`} className="star" /></p>
                             )}
-                    )}      
+                    )}  
                 </div>
-            </div>
+                    <textarea rows="10" className="review-text" onChange={(e) => setReviewText(e.target.value)}/>
+                </div>
+                <button className="submit-review-button" onClick={() => submitReview()}>Submit</button>
         </Modal> 
         </div>
     )

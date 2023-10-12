@@ -1,0 +1,59 @@
+@import "../../colorScheme.scss";
+
+.review-card {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid $accent-color;
+    color: white;
+    padding: 5px;
+    
+}
+
+.review-card > .rating {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+    align-items: center;
+    width: fit-content;
+    margin:auto;
+}
+
+.review-card > img {
+    width: 50px;
+    height: 50px;
+}
+
+.card-container {
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    color:black;
+    background-color: white;
+    justify-content: space-between;
+    width: 300px;
+    overflow: hidden;
+    align-items: center;
+    border-radius: 10px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.card-container > img {
+    width: 50px;
+    height: 50px;
+}
+
+.card-container > .review {
+    font-size: 20px;
+    text-align: center;
+    flex-wrap: wrap;
+    overflow: visible;
+    align-items: center;
+    width: 100%;
+}
+
+.rating-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

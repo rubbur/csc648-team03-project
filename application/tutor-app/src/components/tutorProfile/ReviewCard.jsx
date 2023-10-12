@@ -7,9 +7,10 @@ const ReviewCard = ({review}) => {
 
     useEffect(() => {
         const getReviewerPhoto = async () => {
-            const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, {id: review.reviewer_id}, {withCredentials: true});
+            const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, {username: review.reviewer_name}, {withCredentials: true});
             if(!result.data.success){
                 console.log(result.data.errorMessage);
+                console.log("Could not get reviewer photo");
                 return;
             }
             setReviewerPhoto(result.data.userData[0].img_url);
@@ -19,10 +20,20 @@ const ReviewCard = ({review}) => {
     }, []);
     return (
         <div className="review-card">
-            <img src={reviewerPhoto} alt="" />
-            <p>{review.review_text}</p>
-            <p>{review.rating}</p>
-            <p>{review.time_stamp}</p>
+            <div className="rating-date">
+            <p className="rating">{
+                (() => {
+                    let rating = "";
+                    for(let i = 0; i < review.rating; i++){
+                        rating += "⭐";
+                    }
+                    return rating;
+                })()
+            }</p><p>{review.time_stamp}</p></div>
+            <div className="card-container">
+                <img src={reviewerPhoto} alt="" />
+                <p className="review">{review.review}</p>
+            </div>
         </div>
     )
 
