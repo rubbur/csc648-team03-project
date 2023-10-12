@@ -1,42 +1,57 @@
 import { useState, useEffect } from "react";
 import "./reviewCard.scss";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ReviewCard = ({review}) => {
+const renderStars = (rating) => {
+    const fullStars = Array.from({ length: rating }, (_, index) => (
+      <FontAwesomeIcon
+        key={index}
+        icon={["fas", "star"]} 
+        className="star"
+      />
+    ));
+    const emptyStars = Array.from({ length: 5 - rating }, (_, index) => (
+      <FontAwesomeIcon
+        key={index}
+        icon={["far", "star"]} 
+        className="star"
+      />
+    ));
+    return [...fullStars, ...emptyStars];
+  };
+
+  const ReviewCard = ({ review }) => {
     const [reviewerPhoto, setReviewerPhoto] = useState("");
-
+  
     useEffect(() => {
-        const getReviewerPhoto = async () => {
-            const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, {username: review.reviewer_name}, {withCredentials: true});
-            if(!result.data.success){
-                console.log(result.data.errorMessage);
-                console.log("Could not get reviewer photo");
-                return;
-            }
-            setReviewerPhoto(result.data.userData[0].img_url);
+      const getReviewerPhoto = async () => {
+        const result = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/user/getUserData`,
+          { username: review.reviewer_name },
+          { withCredentials: true }
+        );
+        if (!result.data.success) {
+          console.log(result.data.errorMessage);
+          console.log("Could not get reviewer photo");
+          return;
         }
-        getReviewerPhoto();
-
+        setReviewerPhoto(result.data.userData[0].img_url);
+      };
+      getReviewerPhoto();
     }, []);
-    return (
-        <div className="review-card">
-            <div className="rating-date">
-            <p className="rating">{
-                (() => {
-                    let rating = "";
-                    for(let i = 0; i < review.rating; i++){
-                        rating += "⭐";
-                    }
-                    return rating;
-                })()
-            }</p><p>{review.time_stamp}</p></div>
-            <div className="card-container">
-                <img src={reviewerPhoto} alt="" />
-                <p className="review">{review.review}</p>
-            </div>
-        </div>
-    )
-
-}
+  return (
+    <div className="review-card">
+      <div className="rating-date">
+        <p className="rating">{renderStars(review.rating)}</p>
+        <p>{review.time_stamp}</p>
+      </div>
+      <div className="card-container">
+        <img src={reviewerPhoto} alt="" />
+        <p className="review">{review.review}</p>
+      </div>
+    </div>
+  );
+};
 
 export default ReviewCard;

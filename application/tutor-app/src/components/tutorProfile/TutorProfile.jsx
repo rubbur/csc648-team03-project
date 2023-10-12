@@ -100,6 +100,7 @@ const TutorProfile = () => {
             <div className="left-side-bar">
                 <div className="image-subjects-box">
                     <img src={tutorData.img_url} alt={`profile pic of ${tutorData.username}`} />
+                    <h2>{tutorData.username+"'s Subjects"}</h2>
                     <div className='subject-list'>
                     {
                         tutorSubjects && tutorSubjects.map((subject, index) => {
@@ -117,7 +118,7 @@ const TutorProfile = () => {
 
                 </div>
                 <div className="review-box">
-                    <h2>Reviews</h2>
+                    <h1 className='review-header'>Reviews</h1>
                     { (reviewList.length === 0) ? <p>No reviews yet</p> :
                         reviewList.map((review, index) => {
                             return (
@@ -139,7 +140,7 @@ const TutorProfile = () => {
                     }
                     </p> 
                     {/* TODO: add tutorData.rating instead of 7 */}
-                    <h1>{tutorData.username}</h1>
+                    <h1 className='tutor-header'>{tutorData.username}'s Post</h1>
                 </div>
                 <div className="about-me-box">
                     <h2>About Me</h2>
