@@ -2,7 +2,7 @@ import "./editPage.scss";
 import axios from "axios";
 import {useState} from "react";
 import { cookie } from "../../../App";
-import Mascot from "../../mascot/mascot";
+//import Mascot from "../../mascot/mascot";
 
 const  PasswordEdit = () =>{
     const [password, setPassword] = useState("");

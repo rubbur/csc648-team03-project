@@ -39,7 +39,7 @@ const renderStars = (rating) => {
         setReviewerPhoto(result.data.userData[0].img_url);
       };
       getReviewerPhoto();
-    }, []);
+    }, [review.reviewer_name]);
   return (
     <div className="review-card">
       <div className="reviewer-container">

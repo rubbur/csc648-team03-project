@@ -132,7 +132,7 @@ const TutorProfile = () => {
                 <div className='username-rating-box'>
                     <p className='rating-p'>
                     {
-                        reviewList.length == 0 ?
+                        reviewList.length === 0 ?
                             "unrated" 
                         :
                             // the average rating is:

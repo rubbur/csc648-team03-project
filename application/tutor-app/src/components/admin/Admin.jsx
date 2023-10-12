@@ -37,7 +37,7 @@ const Admin = () => {
       }
     };
     verifyAdmin();
-  }, []);
+  }, [navigate]);
 
 
   const applyFilters = (userList) =>{

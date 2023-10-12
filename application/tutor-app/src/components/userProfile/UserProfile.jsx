@@ -43,11 +43,17 @@ const UserProfile = () =>{
     }
 
     const handleDeleteAccount =  async () =>{
-        //delete this user's account
-        const data = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/deleteAccount`, {username: cookie.get("userName")}, {withCredentials: true});
-        if(data.data.success){
-            await axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/Logout`, {}, {withCredentials: true});
-            navigate("/Logout");
+        const confirmation = window.confirm("Are you sure you want to delete your account?");
+        if(confirmation){
+            // user clicked ok
+            //delete this user's account
+            const data = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/deleteAccount`, {username: cookie.get("userName")}, {withCredentials: true});
+            if(data.data.success){
+                await axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/Logout`, {}, {withCredentials: true});
+                navigate("/Logout");
+            }
+        } else {
+            // user clicked cancel
         }
     }
 
@@ -56,28 +62,27 @@ const UserProfile = () =>{
             <div className="profile">
                 <div className="img-holder">
                 <h1 className="header">{`${userName}`}</h1>
-                     <img className="user-image" src={userData.img_url}/>
-                    
+                     <img className="user-image" src={userData.img_url} alt={userName+"'s profile picture."}/>
                 </div>
                 <div className="edit-container">
                 <div className="edit-box">
                         <div className="button-container">
-                        <button className={`profile-edit-button ${editPage == "upload" ? "pressed" : ""}`}  onClick={() => {setEditPage("upload")}}>Upload Image</button>
-                            <button className={`profile-edit-button ${editPage == "name" ? "pressed" : ""}`}  onClick={() => {setEditPage("name")}}>Update Username</button>
-                            <button className={`profile-edit-button ${editPage == "password" ? "pressed" : ""}`}  onClick={() => {setEditPage("password")}}>Update Password</button>            
+                        <button className={`profile-edit-button ${editPage === "upload" ? "pressed" : ""}`}  onClick={() => {setEditPage("upload")}}>Upload Image</button>
+                            <button className={`profile-edit-button ${editPage === "name" ? "pressed" : ""}`}  onClick={() => {setEditPage("name")}}>Update Username</button>
+                            <button className={`profile-edit-button ${editPage === "password" ? "pressed" : ""}`}  onClick={() => {setEditPage("password")}}>Update Password</button>            
                         {(cookie.get("isTutor")) ?  <button className="profile-edit-button" onClick={handleBecomeStudent}>Become Student</button> :
-                            <button className={`profile-edit-button ${editPage == "tutor" ? "pressed" : ""}`} onClick={() => {setEditPage("tutor")}}>Register as Tutor</button>
+                            <button className={`profile-edit-button ${editPage === "tutor" ? "pressed" : ""}`} onClick={() => {setEditPage("tutor")}}>Register as Tutor</button>
                             }
-                            {cookie.get("isTutor") == true && <button className={`profile-edit-button ${editPage == "edit-tutor" ? "pressed" : ""}`}  onClick={() => {setEditPage("edit-tutor")}}>Edit Abilities</button>}
+                            {cookie.get("isTutor") === true && <button className={`profile-edit-button ${editPage === "edit-tutor" ? "pressed" : ""}`}  onClick={() => {setEditPage("edit-tutor")}}>Edit Abilities</button>}
                         </div>
                        
                 </div>
                 <div className="editting-box">
-                    {editPage == "tutor" && <TutorEdit isTutor={false}/>}
-                    {editPage == "name" && <NameEdit/>}
-                    {editPage == "password" && <PasswordEdit/>}
-                    {editPage == "edit-tutor" && <TutorEdit isTutor={true}/>}
-                    {editPage == "upload" && <ImageUpload/>}
+                    {editPage === "tutor" && <TutorEdit isTutor={false}/>}
+                    {editPage === "name" && <NameEdit/>}
+                    {editPage === "password" && <PasswordEdit/>}
+                    {editPage === "edit-tutor" && <TutorEdit isTutor={true}/>}
+                    {editPage === "upload" && <ImageUpload/>}
                 </div>
                 </div>
             </div>

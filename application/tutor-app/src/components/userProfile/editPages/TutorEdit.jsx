@@ -56,7 +56,7 @@ const [courseNum, setCourseNum] = useState("");
         }
         
         getTutorData();
-    }, []);
+    }, [isTutor, subjects]);
 
     const deleteCourseNumber = (index) =>{
         console.log(index);
@@ -114,6 +114,7 @@ const [courseNum, setCourseNum] = useState("");
                 
                 <div className="card-box">
                     {
+                        // eslint-disable-next-line
                     (courseNumbers.length > 0) ?  courseNumbers.map((course, index) =>{
                          if(course !== "") return <CourseCard courseNumber={course} deleteCourseNumber={deleteCourseNumber} key={index} index={index}/>  
                         }) :

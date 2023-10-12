@@ -20,7 +20,7 @@ import TutorProfile from './components/tutorProfile/TutorProfile';
 //icons from font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faHouse, faStar, faCoffee, faMagnifyingGlass, faGear, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faStar, faMagnifyingGlass, faGear, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { faStar as Star } from '@fortawesome/free-regular-svg-icons'
 
 library.add(fab, Star, faStar, faHouse, faRightFromBracket, faMagnifyingGlass, faGear);
