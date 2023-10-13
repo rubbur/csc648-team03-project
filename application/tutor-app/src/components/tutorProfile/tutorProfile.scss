@@ -42,6 +42,7 @@ $image-dimension: 300px;
 }
 
 .subject-list p{
+    border-radius: 10%;
     margin-left: 30px;
     color: $text-color;
     border: 3px solid $accent-color;
@@ -77,6 +78,7 @@ $image-dimension: 300px;
     top: -30px;
     position: relative;
     border: 3px solid $accent-color;
+    border-radius: 10%;
     width: fit-content;
     height: fit-content;
     padding: 10px;
