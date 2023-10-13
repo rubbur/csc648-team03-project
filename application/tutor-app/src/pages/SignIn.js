@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../index.css';
+import '../index.scss';
 import axios from "axios";
 import {cookie} from "../App"
 import  { useNavigate } from 'react-router-dom'
@@ -43,11 +43,9 @@ function SignIn() {
       cookie.set("isLoggedIn",true);
       cookie.set("userName",response.data.username);
       cookie.set("isTutor",response.data.isTutor);
-
-      console.log("username:" + cookie.get("userName"));
-      console.log("isloggedin:" + cookie.get("isLoggedIn"));
-      console.log("istutor:" + cookie.get("isTutor"));
-
+      cookie.set("userId", response.data.userId);
+     
+      
       if(cookie.get("isTutor")){
         navigate("/TutorView");
         navigate(0);
@@ -63,7 +61,7 @@ function SignIn() {
 
   return (
     <div>
-      <h1 className='header'>Sign In</h1>
+      <h1 className='pageHeader'>Sign In</h1>
       <div className="form-set">
         <div className="form-group">
           <label htmlFor="username" className='no-select'>Username: </label>

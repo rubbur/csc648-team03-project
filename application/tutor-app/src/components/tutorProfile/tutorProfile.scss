@@ -1,0 +1,124 @@
+@import "../../colorScheme.scss";
+
+
+$image-dimension: 300px;
+
+
+.tutor-profile{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    color: white;
+}
+
+.main-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.image-subjects-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 15px;
+    height: inherit;
+    background-color: #282828;
+}
+
+.image-subjects-box img{
+    width: $image-dimension;
+    height: $image-dimension;
+}
+
+.image-subjects-box > .subject-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #282828;
+}
+
+.subject-list p{
+    margin-left: 30px;
+    color: $text-color;
+    border: 3px solid $accent-color;
+    padding: 10px;
+}
+
+.username-rating-box{
+    width: 100%;
+    background-color: $header-bg-color;
+    display: flex;
+    flex-direction: column;
+}
+
+.username-rating-box > h1{
+    color: $text-color;
+    font-size: 50px;
+    text-align: center;
+    justify-content:space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.username-rating-box h2{
+    color: $text-color;
+    font-size: 50px;
+    text-align:left;
+    margin-left: 30px;
+}
+
+
+.rating-p{
+    font-size: 30px;
+    top: -30px;
+    position: relative;
+    border: 3px solid $accent-color;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    color: $text-color;
+    background-color: $base-color;
+}
+
+.star-holder {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.star {
+    color: $accent-color;
+    font-size: 10px;
+}
+
+.review-text {
+    width: 80%;
+    height: 80%;
+    resize: none;
+}
+
+.review-header {
+    text-align: center;
+}
+
+.tutor-header {
+    text-align: center;
+    margin-bottom: 20px;
+    overflow-wrap: break-word;
+}
+
+.about-me-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-wrap: break-word;
+}

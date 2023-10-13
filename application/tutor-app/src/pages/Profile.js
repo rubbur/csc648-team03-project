@@ -1,13 +1,19 @@
-import '../index.css';
 import React from 'react';
+import '../index.scss';
 
 function Profile({ img, name, bio }) {
   const updateName = name.endsWith('s') ? `${name}' Profile` : `${name}'s Profile`;
 
   return (
     <div>
-      <h1 className='header'>{updateName}</h1>
-      <div className='bio'><img src={img} alt={name} width={256} height={256} /></div>
+      <h1 className='pageHeader'>{updateName}</h1>
+      <div className='image-container bio'>
+        <img
+          src={img}
+          alt={name}
+          className='profile-image'
+        />
+      </div>
       <p className='bio'>{bio}</p>
     </div>
   );

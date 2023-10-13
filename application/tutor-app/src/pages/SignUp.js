@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../index.css';
+import '../index.scss';
 import axios from "axios";
 import {cookie} from "../App"
 import  { useNavigate } from 'react-router-dom'
@@ -34,7 +34,10 @@ function SignUp() {
     console.log("Remember Me:", rememberMe);
     
     // send email and password to backend
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,{username:username,password:password,isTutor:isTutor});
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,
+    {username:username,password:password,isTutor:isTutor},
+     {withCredentials: true}
+     );
     console.log(response.data);
     setUsername("");
     setPassword("");
@@ -43,6 +46,7 @@ function SignUp() {
       cookie.set("isLoggedIn",true);
       cookie.set("userName",response.data.username);
       cookie.set("isTutor",response.data.isTutor);
+      cookie.set("userId", response.data.userId);
 
       console.log(cookie.get("userName"));
       console.log(cookie.get("isLoggedIn"));
@@ -64,7 +68,7 @@ function SignUp() {
 
   return (
     <div>
-      <h1 className='header'>Sign Up</h1>
+      <h1 className='pageHeader'>Sign Up</h1>
       <div className="form-set">
         <div className="form-group">
           <label htmlFor="username" className='no-select'>Username: </label>

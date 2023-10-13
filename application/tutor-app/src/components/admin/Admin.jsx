@@ -11,9 +11,15 @@ import axios from "axios";
 import UserResult from "./UserResult";
 import "./admin.css";
 
+
 const Admin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [userList, setUserList] = useState([]);
+  const [filters, setFilters] = useState([
+    {name: "Only tutors", isChecked:false, test: user => user.istutor},
+    {name: "Only students", isChecked:false, test: user => !user.istutor},
+    {name: "Pending", isChecked:false, test: user => user.ispending}
+   ]);
   const navigate = useNavigate();
 
   //if the user is not an admin then reroute them to the home page
@@ -24,14 +30,26 @@ const Admin = () => {
         {},
         { withCredentials: true }
       );
-      if (res.success) {
+      if (res.data.success) {
         //TODO: make it if(!res.success) once testing is done.
         //they are not the admin so redirect them back to the landing page
         navigate(`${process.env.REACT_APP_BACKEND_URL}/`);
       }
     };
     verifyAdmin();
-  }, []);
+  }, [navigate]);
+
+
+  const applyFilters = (userList) =>{
+    return userList.filter((user) =>{
+      for(let i =0; i< filters.length; i++){
+        if( filters[i].isChecked && !filters[i].test(user)){
+          return false;
+        }
+      }
+      return true;
+    });
+  }
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -44,7 +62,7 @@ const Admin = () => {
       { withCredentials: true }
     );
     if (res.data.success) {
-      setUserList([...res.data.searchResults]);
+      setUserList([...applyFilters(res.data.searchResults)]);
       setSearchTerm("");
     }
   };
@@ -56,13 +74,42 @@ const Admin = () => {
       { withCredentials: true }
     );
     if (res.data.success) {
-      setUserList([...res.data.allUsers]);
+      setUserList([...applyFilters(res.data.allUsers)]);
     }
   };
 
+  const handleFilterChange = (index) =>{
+    filters[index].isChecked = !filters[index].isChecked;
+    setFilters([...filters]);
+    setUserList([...applyFilters(userList)]);
+  }
+
   return (
     <div className="admin-box">
+       <div className="filter-box">
+       <p><strong>Filter by:</strong></p>
+          {
+            filters.map((filter, index) =>{
+              return (
+              <div>
+                 <label htmlFor={filter.name}>{filter.name}</label>
+                 <input 
+                  type="checkbox" 
+                  name={filter.name}
+                  checked={filter.isChecked}
+                  index={index}
+                  key={index}
+                  onChange={() => {handleFilterChange(index)}}
+                  />
+              </div>
+              );
+            })
+          }
+        </div>
       <h1>Welcome, Admin.</h1>
+     
+      
+     
       <div className="admin-controls">
         <div className="search-box">
           <button id="admin-all-button" onClick={handleGetAllUsers}>
@@ -91,6 +138,8 @@ const Admin = () => {
                 isTutor={user.istutor}
                 userId={user.id}
                 key={index}
+                imgUrl={user.img_url}
+                isPending={user.ispending}
               />
             );
           })}{" "}

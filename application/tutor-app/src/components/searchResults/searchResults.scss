@@ -1,0 +1,102 @@
+@import "../../colorScheme.scss";
+
+.user-result{
+    height: fit-content;
+    width: 40%;
+    min-width: 17rem;
+    border: solid 3px rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+}
+
+.user-result:hover{
+    border: solid 5px $accent-color;
+    transition: 0.1s;
+}
+
+.search-button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+}
+
+.result-button {
+    max-width: 50%;
+    height: 100%;
+    border-radius: 10%;
+    margin: auto 10px 10px 10px;
+    margin-top: auto;
+    background-color: $accent-color;
+}
+
+.search-results {
+    margin: auto;
+    align-items: center;
+}
+
+.search-total {
+    color: white;
+    padding-left: 20%;
+}
+
+.message-box{
+   display: flex;
+   flex-direction: column;
+    margin: 20px;
+    width: 80%;
+    height: 100%;
+    border: solid $accent-color 3px;
+    background-color:white;
+    resize: none;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.message-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message-box input{
+    height: 80%;
+    width: 100%;
+}
+
+.message-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.send-message-button{
+    width: fit-content;
+}
+
+.results-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px;
+    height: 30%;
+    width: 100%;
+    padding: 10px;
+}
+
+.search-results-box {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
