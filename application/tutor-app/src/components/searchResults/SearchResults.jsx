@@ -91,7 +91,7 @@ const UserResult = ({username, userId, imgUrl, searchSubject }) => {
             </div>
            { isTyping && 
            <div className="message-container">
-                <textarea className="message-box" rows="30" placeholder="being typing.." value={messageInProgress} onChange={e => setMessageInProgress(e.target.valu)}/>
+                <textarea className="message-box" rows="30" placeholder="begin typing.." value={messageInProgress} onChange={e => setMessageInProgress(e.target.valu)}/>
                 <div className="message-button-container">
                  <button className="send-message-button result-button" onClick={handleSend}>Send Message</button>
                  <button className="result-button" onClick={() => setMessageInProgress("")}>Clear</button>
