@@ -52,8 +52,6 @@
     flex-direction: column; 
     justify-content: flex-end;
     align-items: center;
-    height: 39vh; 
-    max-height: 100%;
     width: 100%;
 }
 
@@ -71,8 +69,9 @@
 }
 
 .danger-button{
-    margin: auto;
-    height: 30%;
+    margin: auto auto 1rem auto;
+    min-height: 30px;
+    height: 40%;
     width: 80%;
     justify-content: center;
     align-items: center;
