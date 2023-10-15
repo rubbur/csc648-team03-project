@@ -20,11 +20,11 @@ import TutorProfile from './components/tutorProfile/TutorProfile';
 //icons from font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faHouse, faStar, faMagnifyingGlass, faGear, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faStar, faMagnifyingGlass, faGear, faRightFromBracket, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faStar as Star } from '@fortawesome/free-regular-svg-icons'
 import CreatePost from './components/userProfile/editPages/CreatePost';
 
-library.add(fab, Star, faStar, faHouse, faRightFromBracket, faMagnifyingGlass, faGear);
+library.add(fab, Star, faStar, faPlus, faHouse, faRightFromBracket, faMagnifyingGlass, faGear);
 
 export const cookie=new Cookie();
 

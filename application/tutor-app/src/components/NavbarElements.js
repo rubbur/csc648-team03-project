@@ -124,7 +124,7 @@ const Navbar = () => {
         <NavMenu>
           <NavLink to="/"><Logo src='../../images/logo.png' alt='Logo' /></NavLink>
           <SearchBar/>
-          {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
+          {(cookie.get("isLoggedIn")) && <NavLink to="/CreatePost"><FontAwesomeIcon className='plus-icon' icon="fa-plus"/></NavLink>}
           {<NavLink to="/AboutUs"><h1>About Us</h1></NavLink>}
           {cookie.get('isAdmin') && <NavLink to="/AdminPanel"><h1><FontAwesomeIcon icon="gear"/></h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
@@ -139,6 +139,11 @@ const Navbar = () => {
         {cookie.get('isLoggedIn') && !cookie.get('isTutor') && (
           <MobileMenuItem to="/StudentView" onClick={toggleMobileMenu}>
             <h1>Students</h1>
+          </MobileMenuItem>
+        )}
+        {cookie.get('isLoggedIn') && (
+          <MobileMenuItem to="/CreatePost" onClick={toggleMobileMenu}>
+            <FontAwesomeIcon className='plus-icon' icon="fa-plus"/>
           </MobileMenuItem>
         )}
         <MobileMenuItem to="/AboutUs" onClick={toggleMobileMenu}>
