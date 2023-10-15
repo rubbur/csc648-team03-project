@@ -72,7 +72,7 @@ const UserProfile = () =>{
                             <button className={`profile-edit-button ${editPage === "name" ? "pressed" : ""}`}  onClick={() => {setEditPage("name")}}>Update Username</button>
                             <button className={`profile-edit-button ${editPage === "password" ? "pressed" : ""}`}  onClick={() => {setEditPage("password")}}>Update Password</button>            
                             {!(cookie.get("isTutor")) && <button className={`profile-edit-button ${editPage === "tutor" ? "pressed" : ""}`} onClick={() => {setEditPage("tutor")}}>Register as Tutor</button>}
-                            {(cookie.get("isTutor")) && <button className={`profile-edit-button`} onClick={handleCreatePost}>Create Post</button>}
+                            {(cookie.get("isTutor")) && <button className={`profile-edit-button post-button`} onClick={handleCreatePost}>Create Post</button>}
                         </div>
                        
                 </div>
