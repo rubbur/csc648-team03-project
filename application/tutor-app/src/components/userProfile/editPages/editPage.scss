@@ -106,3 +106,54 @@
     width: 50%;
 }
 
+/* Create Post */
+
+.post-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    color: white;
+    padding: 0 10px 0 10px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.post-area {
+    display: flex;
+    height: fit-content;
+    margin: 1rem auto auto auto;
+    justify-content: center;
+}
+
+.post-textarea{
+    width: 80%;
+    height: 60vh;
+    resize: none;
+}
+
+.create-button {
+    min-height: 2rem;
+    width: 20%;
+    height: 10%;
+    background-color: $accent-color;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.post-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    color: white;
+    padding: 0 10px 0 10px;
+    border-radius: 5px;
+    margin: 10px;
+}
