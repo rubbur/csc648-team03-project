@@ -9,6 +9,7 @@ const CreatePost = () => {
   const [imageFile, setImageFile] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState("");
+  const [hourlyRate, setHourlyRate] = useState("");
   const subjectList = ["All", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
 
   const handleClear = () => { // clear all the fields
@@ -16,7 +17,8 @@ const CreatePost = () => {
     setPdfFile(null);
     setImageFile(null);
     setVideoFile(null);
-    setSelectedSubject(null);
+    setSelectedSubject("");
+    setHourlyRate("");
 
     // remove the file names from the file inputs
     const fileInputs = document.querySelectorAll('input[type="file"]');
@@ -33,6 +35,7 @@ const CreatePost = () => {
     formData.append("cv_url", pdfFile);
     formData.append("flier_url", imageFile);
     formData.append("video_url", videoFile);
+    formData.append("hourly_rate", hourlyRate);
 
     try {
       const response = await axios.post(
@@ -51,6 +54,8 @@ const CreatePost = () => {
         setPdfFile(null);
         setImageFile(null);
         setVideoFile(null);
+        setSelectedSubject("");
+        setHourlyRate("");
       } else {
         console.error("Failed to create the post:", response.data.error);
       }
@@ -84,6 +89,13 @@ const CreatePost = () => {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="upload-input">
+            <label>Hourly Rate: $ </label>
+            <input
+              value={hourlyRate}
+              onChange={(e) => setHourlyRate(e.target.value)}
+            />
           </div>
           <div className="upload-input">
             <span>Upload CV (PDF): </span>
