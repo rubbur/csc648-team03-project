@@ -69,7 +69,6 @@ const CreatePost = () => {
           <div className="upload-input">
             <span>Upload CV (PDF): </span>
             <input
-              className="file-input"
               type="file"
               accept=".pdf"
               onChange={(e) => setPdfFile(e.target.files[0])}
@@ -78,7 +77,6 @@ const CreatePost = () => {
           <div className="upload-input">
             <span>Upload Flier Image: </span>
             <input
-              className="file-input"
               type="file"
               accept="image/*"
               onChange={(e) => setImageFile(e.target.files[0])}
@@ -87,7 +85,6 @@ const CreatePost = () => {
           <div className="upload-input">
             <span>Upload Video: </span>
             <input
-              className="file-input"
               type="file"
               accept="video/*"
               onChange={(e) => setVideoFile(e.target.files[0])}
