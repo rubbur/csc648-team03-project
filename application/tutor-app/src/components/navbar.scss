@@ -1,17 +1,17 @@
-
 @import "../colorScheme.scss";
 
 
-h1:hover{
-   color: rgb(185, 184, 184);
+h1:hover {
+    //color: rgb(185, 184, 184);
 }
 
-.site-header{
+.site-header {
     width: 100%;
 }
 
-nav.navbar{
+nav.navbar {
     background-color: $header-bg-color;
+    height: 100px;
     width: 100%;
     display: flex;
     flex-direction: row;
