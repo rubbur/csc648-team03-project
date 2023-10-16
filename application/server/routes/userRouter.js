@@ -15,8 +15,9 @@ const {
     searchTutors,
     deleteAccount,
     submitReview,
-    becomeTutor} = require("../controllers/userControllers");
-const {isLoggedIn} = require("../middleware/authMiddleware");
+    createPost,
+    becomeTutor } = require("../controllers/userControllers");
+const { isLoggedIn } = require("../middleware/authMiddleware");
 
 const userRouter = express.Router();
 
@@ -48,5 +49,7 @@ userRouter.post("/deleteAccount", isLoggedIn, deleteAccount);
 userRouter.post("/becomeTutor", isLoggedIn, becomeTutor);
 
 userRouter.post("/submitReview", isLoggedIn, submitReview);
+
+userRouter.post("/CreatePost", isLoggedIn, createPost);
 
 module.exports = userRouter;

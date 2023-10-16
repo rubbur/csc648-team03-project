@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./editPage.scss";
 import axios from "axios";
+import { cookie } from "../../../App";
 
 const CreatePost = () => {
   const [postContent, setPostContent] = useState("");
@@ -23,10 +24,12 @@ const CreatePost = () => {
 
   const handlePost = async () => {
     const formData = new FormData();
-    formData.append("content", postContent);
-    formData.append("pdfFile", pdfFile);
-    formData.append("imageFile", imageFile);
-    formData.append("videoFile", videoFile);
+    formData.append("tutor_id", cookie.get("userId"));
+    // add subject to the form data
+    formData.append("description", postContent);
+    formData.append("cv_url", pdfFile);
+    formData.append("flier_url", imageFile);
+    formData.append("video_url", videoFile);
 
     try {
       const response = await axios.post(

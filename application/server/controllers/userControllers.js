@@ -167,15 +167,17 @@ const logout = async (req, res) => {
 
 const createPost = async (req, res) => {
   const { tutor_id, subject, description, flier_url, cv_url, hourly_rate, video_url } = req.body;
+  const isPending = 1;
   console.log("creating post with tutor_id: ", tutor_id);
-  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, flier_url, cv_url, video_url, hourly_rate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, flier_url, cv_url, video_url, hourly_rate, is_pending) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
   try {
-    const result = await db.query(q, [tutor_id, subject, description, flier_url, cv_url, video_url, hourly_rate]);
+    const result = await db.query(q, [tutor_id, subject, description, flier_url, cv_url, video_url, hourly_rate, isPending]);
     console.log("post inserted successfully!");
     res.send({ success: true });
   }
   catch (err) {
     console.log("error inserting post");
+    console.log()
     res.send({ success: false, error: err });
   }
 }
