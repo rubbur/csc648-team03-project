@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios";
 //import "../admin/admin.css";
 import { useLocation, useNavigate } from 'react-router-dom';
-import cookie from "./../../App";
+import {cookie} from "./../../App";
 import "./searchResults.scss";
 
 const SearchResults = () =>{
@@ -25,12 +25,13 @@ const SearchResults = () =>{
             
             //get the results from the backend
             const searchResults = await axios.post(
-                `${process.env.REACT_APP_BACKEND_URL}/user/searchTutors`,
-                {subject: subject, searchTerm: searchTerm}, 
+                `${process.env.REACT_APP_BACKEND_URL}/user/searchPosts`,
+                {subject: subject, searchTerm: searchTerm},
                 {withCredentials: true}
                 );
 
             setResultsList([...searchResults.data.searchResults]);
+            console.log(searchResults.data.searchResults[0]);
         }
         getSearchResults();
     }, [location.search]); //when the query params change (because the user searched something else) trigger loading the new search results
@@ -43,11 +44,13 @@ const SearchResults = () =>{
                 {
                     resultsList.map( (tutor, index ) => {
                         return <UserResult username={tutor.username}
-                        userId={tutor.id}
+                        userId={tutor.tutor_id}
                         imgUrl={tutor.img_url}
                         key={index}
                         index={index}
-                        searchSubject={searchSubject}
+                        subject={tutor.subject}
+                        rate={tutor.hourly_rate}
+                        postId = {tutor.post_id}
                         />
                     })
                 }
@@ -58,16 +61,14 @@ const SearchResults = () =>{
 }
 
 
-const UserResult = ({username, userId, imgUrl, searchSubject }) => {
+const UserResult = ({username, postId, imgUrl, subject, rate }) => {
     const [isTyping, setIsTyping] = useState(false);
     const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
     const navigate = useNavigate(); //used to navigate to the tutor's profile page
-    const handleContact = () => {
-        //TODO send a message to the tutor
-    }
+  
     const handleProfile = () => {
         //navigate to the tutor's profile page
-        navigate(`/tutorProfile?user=${username}&subject=${searchSubject}`);
+        navigate(`/tutorProfile?postId=${postId}`);
     }
 
     const handleSend = async  () => {
@@ -77,6 +78,7 @@ const UserResult = ({username, userId, imgUrl, searchSubject }) => {
             return;
         }
         //TODO send the message to the tutor
+        const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`, {withCredentials: true});
     }
 
     return (
@@ -84,6 +86,8 @@ const UserResult = ({username, userId, imgUrl, searchSubject }) => {
             <div className="results-container">
                  <img className="user-img" src={imgUrl} alt="pic"/>
                  <p>{username}</p>
+                 <p>{subject}</p>
+                 <p>{rate}</p>
                  <div className="search-button-container">
                     <button className="result-button" onClick={handleProfile}>See Profile</button>
                     <button className="result-button" onClick={() => {setIsTyping(!isTyping)}}>{!isTyping ? "Message Tutor" : "Close Message"}</button>

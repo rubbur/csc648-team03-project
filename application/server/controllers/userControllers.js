@@ -494,6 +494,40 @@ const submitReview = async (req, res) => {
   }
 }
 
+const searchPosts = async (req, res) =>{
+  //return all tutor posts where (the search term matches the description OR the name of the tutor) AND the post subject matches the subject 
+   let {searchTerm, subject,} = req.body;
+   console.log("search term is: " + searchTerm + " and subject is: " + subject);
+    searchTerm = `%${searchTerm}%`;
+   const q = "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.subject = ? AND tutor_posts.is_pending = 1"; 
+    try{
+      const result = await db.query(q, [searchTerm, searchTerm, subject]);
+      console.log(JSON.stringify(result));
+      res.send({success: true, searchResults: result[0]});
+} catch (e) {
+    console.log("error in search query! : " + e);
+  }
+}
+
+
+const sendMessage = async (req, res) =>{
+  //get the current date and time
+  let date = new Date();
+  let currentTime = date.toISOString().split(/[- :]/).join("").slice(0, 14);
+
+  const {recipientId, senderId, message} = req.body;
+  const q = "INSERT INTO messages (sender_id, recipient_id, message, time_stamp) VALUES (?, ?, ?, ?)";
+  try {
+    await db.query(q, [senderId, recipientId, message, currentTime]);
+    res.send({ success: true });
+  } catch {
+    console.log("error inserting message into messages table: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
+
+
 module.exports = {
   login,
   register,
@@ -509,5 +543,6 @@ module.exports = {
   deleteAccount,
   becomeTutor,
   submitReview,
-  createPost
+  createPost,
+  searchPosts
 };
