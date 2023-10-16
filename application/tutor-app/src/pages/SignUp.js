@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../index.scss';
 import axios from "axios";
 import {cookie} from "../App"
-import  { useNavigate } from 'react-router-dom'
+import  { Link, useNavigate } from 'react-router-dom'
 
 function SignUp() {
   useEffect(() => {
@@ -12,10 +12,14 @@ function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [isTutor, setIsTutor] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
+  };
+
+  const handleacceptTermsChange = (e) => {
+    setAcceptTerms(e.target.checked);
   };
 
   const handlePasswordChange = (e) => {
@@ -32,10 +36,17 @@ function SignUp() {
     console.log("Username:", username);
     console.log("Password:", password);
     console.log("Remember Me:", rememberMe);
+    console.log("Accept Terms:", acceptTerms);
+
+    if(!acceptTerms){
+      alert("Please accept the terms of service");
+      // don't send request to backend if terms not accepted
+      return;
+    }
     
     // send email and password to backend
     const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,
-    {username:username,password:password,isTutor:isTutor},
+    {username:username,password:password},
      {withCredentials: true}
      );
     console.log(response.data);
@@ -45,23 +56,10 @@ function SignUp() {
       //user successfully registered
       cookie.set("isLoggedIn",true);
       cookie.set("userName",response.data.username);
-      cookie.set("isTutor",response.data.isTutor);
       cookie.set("userId", response.data.userId);
 
       console.log(cookie.get("userName"));
       console.log(cookie.get("isLoggedIn"));
-      console.log(cookie.get("isTutor"));
-
-      if(cookie.get("isTutor")){
-        navigate("/TutorView");
-        navigate(0);
-      }
-      else{
-        navigate("/StudentView");
-        navigate(0);  
-      }
-      
-
     }
 
   };
@@ -93,14 +91,6 @@ function SignUp() {
           />
         </div>
         <div className="form-group">
-          
-            student<input value="student" type="radio" checked={!isTutor} onChange={() => setIsTutor(false)} />
-            tutor<input value="tutor" type="radio" checked={isTutor} onChange={() => setIsTutor(true)}/>
-          
-
-
-        </div>
-        <div className="form-group">
           <label htmlFor="rememberMe" className='no-select'>
             Remember me: 
             <input
@@ -110,6 +100,23 @@ function SignUp() {
               checked={rememberMe}
               onChange={handleRememberMeChange}
             />
+          </label>
+        </div>
+        <div className="form-group no-select">
+          <label htmlFor="acceptTerms" >
+            <div>
+              <span className='accept-text'>Accept </span>
+              <Link className='terms-link'>Terms of Service</Link>:
+            
+
+            <input
+              type="checkbox"
+              id="acceptTerms"
+              name="acceptTerms"
+              checked={acceptTerms}
+              onChange={handleacceptTermsChange}
+            />
+            </div>
           </label>
         </div>
         <div className="center-button">
