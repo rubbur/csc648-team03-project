@@ -142,6 +142,11 @@
     resize: none;
 }
 
+.post-textarea:focus {
+    outline: 2px solid rgb(250, 205, 73);
+    border-radius: 2px;
+}
+
 .upload-input {
     margin-bottom: 20px;
     width: 100%;
