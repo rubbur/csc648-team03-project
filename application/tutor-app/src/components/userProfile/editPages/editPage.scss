@@ -163,12 +163,6 @@
     color: white;
 }
 
-.button-container {
-    width: 40%;
-    min-width: 380px;
-    text-align: right;
-}
-
 .create-button {
     min-height: 2rem;
     width: 20%;
@@ -178,6 +172,17 @@
     border: none;
     border-radius: 5px;
     margin: 10px;
+}
+
+.upload-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    width: 40%;
+    gap: 20px;
+    color: white;
 }
 
 .post-button-container {

@@ -65,7 +65,7 @@ const CreatePost = () => {
         />
       </div>
       <div className="upload-container">
-        <div className="button-container">
+        <div className="upload-button-container">
           <div className="upload-input">
             <span>Upload CV (PDF): </span>
             <input
