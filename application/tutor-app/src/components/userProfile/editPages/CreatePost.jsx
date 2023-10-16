@@ -8,12 +8,15 @@ const CreatePost = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const subjectList = ["All", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
 
   const handleClear = () => { // clear all the fields
     setPostContent("");
     setPdfFile(null);
     setImageFile(null);
     setVideoFile(null);
+    setSelectedSubject(null);
 
     // remove the file names from the file inputs
     const fileInputs = document.querySelectorAll('input[type="file"]');
@@ -25,7 +28,7 @@ const CreatePost = () => {
   const handlePost = async () => {
     const formData = new FormData();
     formData.append("tutor_id", cookie.get("userId"));
-    // add subject to the form data
+    formData.append("subject", selectedSubject);
     formData.append("description", postContent);
     formData.append("cv_url", pdfFile);
     formData.append("flier_url", imageFile);
@@ -69,6 +72,19 @@ const CreatePost = () => {
       </div>
       <div className="upload-container">
         <div className="upload-button-container">
+          <div className="upload-input">
+            <label>Subject: </label>
+            <select
+              value={selectedSubject}
+              onChange={(e) => setSelectedSubject(e.target.value)}
+            >
+              {subjectList.map((subject) => (
+                <option key={subject} value={subject}>
+                  {subject}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="upload-input">
             <span>Upload CV (PDF): </span>
             <input
