@@ -15,7 +15,7 @@ const TutorProfile = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [reviewText, setReviewText] = useState("");
     const [starArray, setStarArray] = useState([false, false, false, false, false]);
-
+    const [avgReview, setAvgReview] = useState(0);
     useEffect(() => {
         
         //get the tutor's id from the url query string
@@ -33,12 +33,12 @@ const TutorProfile = () => {
             console.log("id is: " +result.data.userData[0].id);
             setTutorData({...result.data.userData[0]});
             // TODO: change the getTutorSubjects route to /tutor/getTutorSubjects
-            const results = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getTutorSubjects`, {id: result.data.userData[0].id}, {withCredentials: true});
-            if(!results.data.success){
-                console.log(results.data.errorMessage);
-                return;
-            }
-            setTutorSubjects([...results.data.subjectList]);
+            // const results = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getTutorSubjects`, {id: result.data.userData[0].id}, {withCredentials: true});
+            // if(!results.data.success){
+            //     console.log(results.data.errorMessage);
+                
+            // }
+            // // setTutorSubjects([...results.data.subjectList]);
 
             //get the tutor's reviews
             const reviewResults = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`, {id: result.data.userData[0].id}, {withCredentials: true});
@@ -47,6 +47,13 @@ const TutorProfile = () => {
                 return;
             }
             setReviewList([...reviewResults.data.reviews]);
+            //get the tutor's average review
+            let total = 0;
+            for(let i = 0; i < reviewResults.data.reviews.length; i++){
+                total += Number(reviewResults.data.reviews[i].rating);
+            }
+            total /= reviewResults.data.reviews.length;
+            setAvgReview(total.toFixed(1));
         }
         getTutorData();
     }, []);
@@ -131,12 +138,12 @@ const TutorProfile = () => {
             <div className="main-content">
                 <div className='username-rating-box'>
                     <p className='rating-p'>
-                    {
+                    { 
                         reviewList.length === 0 ?
                             "unrated" 
                         :
                             // the average rating is:
-                            ((reviewList.reduce((total, review) => {total += Number(review.rating);return total;}) / reviewList.length).toFixed(1))
+                            avgReview
                     }
                     <FontAwesomeIcon icon={["fas", "star"]} className="star"/></p> 
                     {/* TODO: add tutorData.rating instead of 7 */}
