@@ -135,15 +135,40 @@
 }
 
 .post-textarea {
-    width: 70%;
+    width: 85%;
     height: 40vh;
     font-size: 16px;
+    margin-bottom: 20px;
     resize: none;
 }
 
 .upload-input {
     margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     color: white;
+}
+
+.upload-input>span {
+    text-align: left;
+}
+
+.file-input {}
+
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: white;
+}
+
+.button-container {
+    width: 40%;
+    min-width: 380px;
+    text-align: right;
 }
 
 .create-button {

@@ -10,6 +10,9 @@ const CreatePost = () => {
 
   const handleClear = () => {
     setPostContent("");
+    setPdfFile(null);
+    setImageFile(null);
+    setVideoFile(null);
   };
 
   const handlePost = async () => {
@@ -47,35 +50,38 @@ const CreatePost = () => {
   return (
     <div>
       <h1 className="post-header">Create Post</h1>
-      <div className="post-area">
-        <div className="post-textarea-container">
-          <textarea
-            className="post-textarea"
-            placeholder="Write your post here"
-            value={postContent}
-            onChange={(e) => setPostContent(e.target.value)}
-          />
-        </div>
-        <div className="upload-container">
+      <div className="post-textarea-container">
+        <textarea
+          className="post-textarea"
+          placeholder="Write your post here"
+          value={postContent}
+          onChange={(e) => setPostContent(e.target.value)}
+        />
+      </div>
+      <div className="upload-container">
+        <div className="button-container">
           <div className="upload-input">
-            <span>Upload CV:</span>
+            <span>Upload CV (PDF): </span>
             <input
+              className="file-input"
               type="file"
               accept=".pdf"
               onChange={(e) => setPdfFile(e.target.files[0])}
             />
           </div>
           <div className="upload-input">
-            <span>Upload Flier:</span>
+            <span>Upload Flier Image: </span>
             <input
+              className="file-input"
               type="file"
               accept="image/*"
               onChange={(e) => setImageFile(e.target.files[0])}
             />
           </div>
           <div className="upload-input">
-            <span>Upload Video:</span>
+            <span>Upload Video: </span>
             <input
+              className="file-input"
               type="file"
               accept="video/*"
               onChange={(e) => setVideoFile(e.target.files[0])}
@@ -88,7 +94,7 @@ const CreatePost = () => {
           Create Post
         </button>
         <button className="create-button" onClick={handleClear}>
-          Clear
+          Clear All
         </button>
       </div>
     </div>
