@@ -8,11 +8,17 @@ const CreatePost = () => {
   const [imageFile, setImageFile] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
 
-  const handleClear = () => {
+  const handleClear = () => { // clear all the fields
     setPostContent("");
     setPdfFile(null);
     setImageFile(null);
     setVideoFile(null);
+
+    // remove the file names from the file inputs
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach((input) => {
+      input.value = "";
+    });
   };
 
   const handlePost = async () => {
