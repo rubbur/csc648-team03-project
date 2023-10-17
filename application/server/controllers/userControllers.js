@@ -176,8 +176,8 @@ const createPost = async (req, res) => {
     res.send({ success: true });
   }
   catch (err) {
-    console.log("error inserting post");
-    console.log()
+    console.log("error inserting post" + err);
+    
     res.send({ success: false, error: err });
   }
 }

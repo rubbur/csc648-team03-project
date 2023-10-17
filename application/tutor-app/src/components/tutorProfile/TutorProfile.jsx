@@ -109,7 +109,8 @@ const TutorProfile = () => {
 
                 </div>
                 <div className="review-box">
-                    <h1 className='review-header'>{`Reviews (${reviewList.length})`}</h1>
+                    <h1 className='review-header'>Reviews</h1>
+                    {(!showAllReviews && reviewList.length > 1) && <p id="review-showing-p">{`showing ${initialReviewNum} of ${reviewList.length}`}</p>}
                     { (reviewList.length === 0) ? <p>No reviews yet</p> :
                         reviewList.map((review, index) => {
                             if(showAllReviews || index < initialReviewNum)
