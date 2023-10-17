@@ -6,42 +6,34 @@ import ReviewCard from "./ReviewCard";
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+
 const TutorProfile = () => {
-    const [tutorData, setTutorData] = useState({});
-    const [tutorSubjects, setTutorSubjects] = useState([]);
+    const initialReviewNum = 2;
     const [reviewList, setReviewList] = useState([]);
-    const [subjectSelected, setSubjectSelected] = useState("overview");
-    const [subjectInfo, setSubjectInfo] = useState({}); //contains the bio, video and pdf post for the subject selected
+    const [postData, setPostData] = useState({});
     const [modalIsOpen, setIsOpen] = useState(false);
     const [reviewText, setReviewText] = useState("");
     const [starArray, setStarArray] = useState([false, false, false, false, false]);
     const [avgReview, setAvgReview] = useState(0);
+    const [showAllReviews, setShowAllReviews] = useState(false);
     useEffect(() => {
         
-        //get the tutor's id from the url query string
+        //get the post id from the url query string
         const urlParams = new URLSearchParams(window.location.search);
-        const tutorUsername = urlParams.get('user');
-        //get the tutor's subject from the url query string
-        setSubjectSelected(urlParams.get('subject'));
-        const getTutorData = async () => {
+        const postId = urlParams.get('postId');
+       
+        const getPostData = async () => {
             //load the tutor's profile data
-            const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, {username: tutorUsername }, {withCredentials: true});
+            const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getPostById`, {postId: postId }, {withCredentials: true});
             if(!result.data.success){
                 console.log(result.data.errorMessage);
                 return;
             }
-            console.log("id is: " +result.data.userData[0].id);
-            setTutorData({...result.data.userData[0]});
-            // TODO: change the getTutorSubjects route to /tutor/getTutorSubjects
-            // const results = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getTutorSubjects`, {id: result.data.userData[0].id}, {withCredentials: true});
-            // if(!results.data.success){
-            //     console.log(results.data.errorMessage);
-                
-            // }
-            // // setTutorSubjects([...results.data.subjectList]);
-
+            
+            setPostData({...result.data.postData});
+          
             //get the tutor's reviews
-            const reviewResults = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`, {id: result.data.userData[0].id}, {withCredentials: true});
+            const reviewResults = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`, {id: result.data.postData.tutor_id}, {withCredentials: true});
             if(!reviewResults.data.success){
                 console.log(reviewResults.data.errorMessage);
                 return;
@@ -52,10 +44,16 @@ const TutorProfile = () => {
             for(let i = 0; i < reviewResults.data.reviews.length; i++){
                 total += Number(reviewResults.data.reviews[i].rating);
             }
-            total /= reviewResults.data.reviews.length;
-            setAvgReview(total.toFixed(1));
+            if(reviewResults.data.reviews.length > 0) {
+                total /= reviewResults.data.reviews.length;
+                setAvgReview(total.toFixed(1));
+            }
+            else {
+                setAvgReview("unrated");
+            }
         }
-        getTutorData();
+
+        getPostData();
     }, []);
 
    const  handleContact = () => {
@@ -75,16 +73,12 @@ const TutorProfile = () => {
             return;
         }
         setIsOpen(true);
-        //open a modal that allows the student to review the tutor
-        //modal needs to have a text box for the review and a rating system
-        //modal needs to have a submit button that sends the review to the backend
-
     }
 
     const submitReview = async () => {
         //send the review to the backend
         const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/submitReview`, {
-            tutorId: tutorData.id,
+            tutorId: postData.tutor_id,
             reviewText: reviewText,
             rating: starArray.reduce((total, current, index) => {
                 if(current){
@@ -99,25 +93,15 @@ const TutorProfile = () => {
             console.log(result.data.errorMessage);
             return;
         }
-        //close the modal
         setIsOpen(false);
     }
+
     return (
         <div className="tutor-profile">
             <div className="left-side-bar">
                 <div className="image-subjects-box">
-                    <img src={tutorData.img_url} alt={`profile pic of ${tutorData.username}`} />
-                    <h2>{tutorData.username+"'s Subjects"}</h2>
-                    <div className='subject-list'>
-                    {
-                        tutorSubjects && tutorSubjects.map((subject, index) => {
-                            console.log(subject);
-                            return (
-                                <p key={index}>{subject.subject_name}</p>
-                            )
-                        })
-                    }
-                    </div>
+                    <img src={postData.img_url} alt={`profile pic of ${postData.username}`} />
+                    <p id="subject-banner">{postData.subject} Tutor</p>
                 </div>
                 <div className="contact-review-controls">
                     <button className=" controls-button contact-button" onClick={handleContact}>Contact</button>
@@ -125,14 +109,17 @@ const TutorProfile = () => {
 
                 </div>
                 <div className="review-box">
-                    <h1 className='review-header'>Reviews</h1>
+                    <h1 className='review-header'>{`Reviews (${reviewList.length})`}</h1>
                     { (reviewList.length === 0) ? <p>No reviews yet</p> :
                         reviewList.map((review, index) => {
+                            if(showAllReviews || index < initialReviewNum)
                             return (
                               <ReviewCard key={index} review={review} />
                             )
                         })
                     }
+                    {reviewList.length > initialReviewNum && !showAllReviews && <button className="show-all-reviews-button" onClick={() => setShowAllReviews(true)}>See All Reviews</button>}
+                    {reviewList.length > initialReviewNum && showAllReviews && <button className="show-all-reviews-button" onClick={() => setShowAllReviews(false)}>Hide Reviews</button>}
                 </div>
             </div>
             <div className="main-content">
@@ -143,15 +130,15 @@ const TutorProfile = () => {
                             "unrated" 
                         :
                             // the average rating is:
-                            avgReview
+                            avgReview +"   "
                     }
                     <FontAwesomeIcon icon={["fas", "star"]} className="star"/></p> 
-                    {/* TODO: add tutorData.rating instead of 7 */}
-                    <h1 className='tutor-header'>{tutorData.username}'s Post</h1>
+                    
+                    <h1 className='tutor-header'>{postData.username}'s Post</h1>
                 </div>
                 <div className="about-me-box">
                     <h2>About Me</h2>
-                    <p>{tutorData.bio || "I am a really qualified tutor. I can teach stuff to people"}</p>
+                    <p>{postData.description || "I am a really qualified tutor. I can teach stuff to people"}</p>
                 </div>
             </div>
             {/*--------------------------------------Modal---------------------------------------------------------------------------------- */}

@@ -51,7 +51,7 @@ $image-dimension: 300px;
 
 .username-rating-box{
     width: 100%;
-    background-color: $header-bg-color;
+    background-color: #99610d;
     display: flex;
     flex-direction: column;
 }
@@ -63,6 +63,8 @@ $image-dimension: 300px;
     justify-content:space-around;
     align-items: center;
     width: 100%;
+    position: relative;
+    top: -30%;
 }
 
 .username-rating-box h2{
@@ -72,7 +74,14 @@ $image-dimension: 300px;
     margin-left: 30px;
 }
 
-
+#subject-banner{
+    background-color: grey;
+    color: white;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    
+}
 .rating-p{
     font-size: 30px;
     top: -30px;

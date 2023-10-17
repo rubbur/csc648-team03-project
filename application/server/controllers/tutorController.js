@@ -3,7 +3,7 @@ const db = require("../config/database/dbConnection");
 const getTutorReviews = async (req, res) => {
     const { id } = req.body;
     try {
-        let q = "SELECT * FROM tutor_reviews WHERE tutor_id = ?";
+        let q = "SELECT * FROM tutor_reviews WHERE tutor_id = ? ORDER BY time_stamp DESC";
         const reviews = await db.query(q, [id]);
         console.log("reviews: " + JSON.stringify(reviews[0][0]["time_stamp"]));
         const results = reviews[0].map((review) => {
@@ -20,5 +20,18 @@ const getTutorReviews = async (req, res) => {
     }
 }
 
+const getPostById = async (req, res) => {
+    const {postId} = req.body;
+    console.log("the tutorId is " + postId);
+    const q = "SELECT tutor_posts.*, users.img_url, users.username FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE tutor_posts.post_id = ?";
+    try {
+        const posts = await db.query(q, [postId]);
+        console.log("posts: " + JSON.stringify(posts[0][0]));
+        res.send({success: true, postData: posts[0][0]});
+    } catch (err) {
+        console.log("error retrieving posts for tutor with id: " + postId + " error: " + err);
+    }
+}
 
-module.exports = {getTutorReviews};
+
+module.exports = {getTutorReviews, getPostById};
