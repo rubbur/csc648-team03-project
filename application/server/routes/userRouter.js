@@ -16,7 +16,8 @@ const {
     deleteAccount,
     submitReview,
     createPost,
-    searchPosts
+    searchPosts,
+    sendMessage
  } = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 
@@ -51,6 +52,8 @@ userRouter.post("/submitReview", isLoggedIn, submitReview);
 
 userRouter.post("/CreatePost", isLoggedIn, createPost);
 
-userRouter.post("/searchPosts", searchPosts);   
+userRouter.post("/searchPosts", searchPosts);
+
+userRouter.post("/sendMessage", isLoggedIn, sendMessage);
 
 module.exports = userRouter;

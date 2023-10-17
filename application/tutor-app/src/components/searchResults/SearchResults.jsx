@@ -51,6 +51,7 @@ const SearchResults = () =>{
                         subject={tutor.subject}
                         rate={tutor.hourly_rate}
                         postId = {tutor.post_id}
+                        tutorId = {tutor.tutor_id}
                         />
                     })
                 }
@@ -61,7 +62,7 @@ const SearchResults = () =>{
 }
 
 
-const UserResult = ({username, postId, imgUrl, subject, rate }) => {
+const UserResult = ({username, postId, imgUrl, subject, rate, tutorId }) => {
     const [isTyping, setIsTyping] = useState(false);
     const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
     const navigate = useNavigate(); //used to navigate to the tutor's profile page
@@ -78,7 +79,9 @@ const UserResult = ({username, postId, imgUrl, subject, rate }) => {
             return;
         }
         //TODO send the message to the tutor
-        const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`, {withCredentials: true});
+        const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`,
+         {recipientId: tutorId, message: messageInProgress, senderId: cookie.get("userId"), postId: postId},
+          {withCredentials: true});
     }
 
     return (
@@ -95,7 +98,7 @@ const UserResult = ({username, postId, imgUrl, subject, rate }) => {
             </div>
            { isTyping && 
            <div className="message-container">
-                <textarea className="message-box" rows="30" placeholder="begin typing.." value={messageInProgress} onChange={e => setMessageInProgress(e.target.valu)}/>
+                <textarea className="message-box" rows="30" placeholder="begin typing.." value={messageInProgress} onChange={e => setMessageInProgress(e.target.value)}/>
                 <div className="message-button-container">
                  <button className="send-message-button result-button" onClick={handleSend}>Send Message</button>
                  <button className="result-button" onClick={() => setMessageInProgress("")}>Clear</button>

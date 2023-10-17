@@ -517,13 +517,15 @@ const sendMessage = async (req, res) =>{
   //get the current date and time
   let date = new Date();
   let currentTime = date.toISOString().split(/[- :]/).join("").slice(0, 14);
-
-  const {recipientId, senderId, message} = req.body;
-  const q = "INSERT INTO messages (sender_id, recipient_id, message, time_stamp) VALUES (?, ?, ?, ?)";
+  const {recipientId, senderId, message, postId} = req.body;
+  console.log(recipientId, senderId, message, postId);
+   //threadId is the smaller of the two ids concatenated with the larger of the two ids concatenated with the postId
+   const threadId = (senderId < recipientId) ? senderId + "_" + recipientId + "_" + postId : recipientId + "_" +  senderId + "_" + postId;
+  const q = "INSERT INTO messages (sender_id, recipient_id, message_text, date_stamp, post_id, thread_id) VALUES (?, ?, ?, ?, ?, ?)";
   try {
-    await db.query(q, [senderId, recipientId, message, currentTime]);
+    await db.query(q, [senderId, recipientId, message, currentTime, postId, threadId]);
     res.send({ success: true });
-  } catch {
+  } catch (err) {
     console.log("error inserting message into messages table: " + err);
     res.send({ success: false, errorMessage: err });
   }
@@ -547,5 +549,6 @@ module.exports = {
   becomeTutor,
   submitReview,
   createPost,
-  searchPosts
+  searchPosts,
+  sendMessage
 };
