@@ -33,10 +33,10 @@ const SearchBar = () => {
     } 
 
     const handleSearch =  () =>{
-        if(subject === "All" && searchTerm === ""){
-            alert("enter some search criteria first");
-            return;
-        }
+        // if(subject === "All" && searchTerm === ""){
+        //     alert("enter some search criteria first");
+        //     return;
+        // }
         navigate(`/searchResults?searchterm=${searchTerm}&subject=${subject}`);
     }
 
