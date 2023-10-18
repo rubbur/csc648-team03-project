@@ -129,11 +129,21 @@
 
 .post-textarea-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
+}
+
+.post-textarea-container > p{
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.post-textarea-container > p.error{
+    color: red;
 }
 
 .post-textarea {

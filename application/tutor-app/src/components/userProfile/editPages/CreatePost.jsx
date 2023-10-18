@@ -4,6 +4,10 @@ import axios from "axios";
 import { cookie } from "../../../App";
 
 const CreatePost = () => {
+
+  const characterLimit = 1000; //this is the max number of characters allowed in the post description
+  //and it must match the character limit (the VARCHAR set in the description column in the tutor_post table).
+
   const [postContent, setPostContent] = useState("");
   const [pdfFile, setPdfFile] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -30,6 +34,10 @@ const CreatePost = () => {
   const handlePost = async () => {
     if(selectedSubject === "NOT SELECTED"){
       alert("Please select a subject");
+      return;
+    }
+    if(postContent.length > characterLimit){
+      alert("Post description is too long");
       return;
     }
     if(!cookie.get("isLoggedIn")) {
@@ -79,6 +87,7 @@ const CreatePost = () => {
     <div>
       <h1 className="post-header">Create Post</h1>
       <div className="post-textarea-container">
+        <p className = {(postContent.length > characterLimit) ? "error" : ""}>{` ${postContent.length}/${characterLimit} characters `}</p>
         <textarea
           className="post-textarea"
           placeholder="Write your post here"
