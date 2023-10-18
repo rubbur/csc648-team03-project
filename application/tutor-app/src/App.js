@@ -20,12 +20,12 @@ import TutorProfile from './components/tutorProfile/TutorProfile';
 //icons from font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faHouse, faStar, faMagnifyingGlass, faGear, faRightFromBracket, faPlus, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faStar, faMagnifyingGlass, faGear, faRightFromBracket, faPlus, faEnvelope, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import { faStar as Star, faMessage } from '@fortawesome/free-regular-svg-icons'
 // import CreatePost from './components/userProfile/editPages/CreatePost';
 import CreatePost from './components/userProfile/editPages/CreatePost';
 
-library.add(fab, Star, faStar, faPlus, faHouse, faRightFromBracket, faMagnifyingGlass, faGear, faMessage, faEnvelope);
+library.add(fab, Star, faStar, faPlus, faHouse, faRightFromBracket, faMagnifyingGlass, faGear, faMessage, faEnvelope, faCircleInfo);
 
 export const cookie=new Cookie();
 
@@ -44,7 +44,7 @@ function App() {
         {!cookie.get("isLoggedIn") && <Route path='/SignIn' element={<SignIn />} />}
         {!cookie.get("isLoggedIn") && <Route path='/SignUp' element={<SignUp />} />}
         {cookie.get("isLoggedIn") && <Route path='/Logout' element={<Logout />} />}
-        {cookie.get("isLoggedIn") && <Route path='/CreatePost' element={<CreatePost />} />}
+        <Route path='/CreatePost' element={<CreatePost />} />
         <Route path="/Profile" element={<UserProfile/>}/>
         <Route path="/profiles/MichaelMathews" element={<Profile img="/images/Michael_Mathews.jpg" name="Michael Mathews" bio={bios.Michael_Mathews}/>} />
         <Route path="/profiles/DanialTahir" element={<Profile img="/images/Danial_Tahir.jpg" name="Danial Tahir" bio={bios.Danial_Tahir}/>} />
