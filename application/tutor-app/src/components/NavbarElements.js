@@ -137,7 +137,7 @@ const Navbar = () => {
           {cookie.get('isAdmin') && <NavLink to="/AdminPanel"><h1><FontAwesomeIcon icon="gear" /></h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to={`/tutorPostsView?tutorId=${cookie.get("userId")}`}><h1>View Posts</h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to={`/tutorPostsView`}><h1>View Posts</h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1><FontAwesomeIcon icon="right-from-bracket" /></h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Messages"><h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{"Hi, " + userName}</h1></NavLink>}

@@ -11,25 +11,37 @@ const getTutorReviews = async (req, res) => {
                 ...review,
                 time_stamp: formattedDate[1] + "/" + formattedDate[2] + "/" + formattedDate[0]
             }
-            return review;     
-            });
-        res.send({success: true, reviews: results})
-        } catch (err) {
+            return review;
+        });
+        res.send({ success: true, reviews: results })
+    } catch (err) {
         console.log("error retrieving reviews for tutor with id: " + id + " error: " + err);
     }
 }
 
 const getPostById = async (req, res) => {
-    const {postId} = req.body;
+    const { postId } = req.body;
     console.log("the tutorId is " + postId);
     const q = "SELECT tutor_posts.*, users.img_url, users.username FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE tutor_posts.post_id = ?";
     try {
         const posts = await db.query(q, [postId]);
-        res.send({success: true, postData: posts[0][0]});
+        res.send({ success: true, postData: posts[0][0] });
     } catch (err) {
         console.log("error retrieving posts for tutor with id: " + postId + " error: " + err);
     }
 }
 
+const getPostByTutorId = async (req, res) => {
+    const { tutorId } = req.body;
+    console.log("the tutorId is " + tutorId);
+    const q = "SELECT subject, hourly_rate FROM tutor_posts WHERE tutor_posts.tutor_id = ?";
+    try {
+        const posts = await db.query(q, [tutorId]);
+        console.log(posts[0]);
+        res.send({ success: true, postData: posts[0] });
+    } catch (err) {
+        console.log("error retrieving posts for tutor with id: " + tutorId + " error: " + err);
+    }
+}
 
-module.exports = {getTutorReviews, getPostById};
+module.exports = { getTutorReviews, getPostById, getPostByTutorId };
