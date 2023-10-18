@@ -3,7 +3,7 @@ import "./tutorPostsView.scss";
 import axios from "axios";
 import { cookie } from "../../App";
 import { useEffect } from "react";
-import PostCard from "./PostCard";
+import PostCard from "./PostCard/PostCard";
 
 const TutorPostsView = () => {
     const [PostsList, setPostsList] = useState([]);
@@ -26,10 +26,10 @@ const TutorPostsView = () => {
 
     return (
         <div className="tutor-posts-view">
-            <h1>Posts</h1>
+            <h1>Current Posts:</h1>
             <div className="posts-container">
-                {PostsList.map((post) => (
-                    <PostCard key={post.post_id} rate={post.hourly_rate} subject={post.subject} />
+                {PostsList.map((post, index) => (
+                    <PostCard key={index} rate={post.hourly_rate} subject={post.subject} />
                 ))}
             </div>
         </div>
