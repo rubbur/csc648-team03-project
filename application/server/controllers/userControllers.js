@@ -500,9 +500,9 @@ const searchPosts = async (req, res) => {
   console.log("search term is: " + searchTerm + " and subject is: " + subject);
   searchTerm = `%${searchTerm}%`;
   const q = (subject === "All") ?
-    "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.is_pending = 1"
+    "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.is_pending = 0"
     :
-    "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.subject = ? AND tutor_posts.is_pending = 1";
+    "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.subject = ? AND tutor_posts.is_pending = 0";
   try {
     const result = await db.query(q, [searchTerm, searchTerm, subject]);
     res.send({ success: true, searchResults: result[0] });
