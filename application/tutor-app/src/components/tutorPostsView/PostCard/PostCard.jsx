@@ -1,12 +1,16 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import "./postCard.scss";
 
-const PostCard = ({ rate, subject }) => {
+const PostCard = ({ rate, subject, handleDelete, postId }) => {
     return (
-        <div className="post-card">
+        <Link to={`/tutorProfile?postId=${postId}`} className="post-card">
             <h2>{subject}</h2>
             <h3>${rate}/hr</h3>
-            <button className="delete-button" onClick={() => console.log("delete")}>X</button>
-        </div>
+            <button className="delete-button" onClick={() => handleDelete(postId)}>
+                X
+            </button>
+        </Link>
     );
 };
 

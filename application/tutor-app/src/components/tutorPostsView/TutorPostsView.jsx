@@ -23,13 +23,29 @@ const TutorPostsView = () => {
         };
         getPosts();
     }, []);
+    const handleDelete = async (postId, subject) => {
+        const confirmation = window.confirm("Are you sure you want to delete this post for " + subject + "?");
+        if (confirmation) {
+            const result = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/tutor/deletePost`,
+                { postId: postId },
+                { withCredentials: true }
+            );
+            if (!result.data.success) {
+                console.log(result.data.errorMessage);
+                console.log("Could not delete post");
+                return;
+            }
+            setPostsList(PostsList.filter((post) => post.post_id !== postId));
+        }
+    };
 
     return (
         <div className="tutor-posts-view">
             <h1>Current Posts:</h1>
             <div className="posts-container">
                 {PostsList.map((post, index) => (
-                    <PostCard key={index} rate={post.hourly_rate} subject={post.subject} />
+                    <PostCard key={index} rate={post.hourly_rate} subject={post.subject} handleDelete={() => handleDelete(post.post_id, post.subject)} postId={post.post_id} />
                 ))}
             </div>
         </div>

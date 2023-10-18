@@ -1,11 +1,13 @@
 @import "../../../colorScheme.scss";
 
 .post-card {
+    text-decoration: none;
     display: flex;
+    padding: 0 10px 0 10px;
     flex-direction: row;
     border: 1px solid black;
     width: 50%;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     margin: auto;
     background-color: white;
@@ -13,9 +15,23 @@
     border-radius: 5px;
 }
 
+.post-card:hover {
+    background-color: #bbbbbb;
+    cursor: pointer;
+}
+
+.post-card>h2 {
+    width: 40%;
+}
+
 .delete-button {
     padding: 10px;
     height: fit-content;
     width: fit-content;
-    background-color: red;
+    background-color: rgb(119, 0, 0);
+}
+
+.delete-button:hover {
+    background-color: #ff0000;
+    cursor: pointer;
 }

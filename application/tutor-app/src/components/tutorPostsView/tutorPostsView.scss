@@ -3,3 +3,9 @@
     text-align: center;
     font-size: 2rem;
 }
+
+.posts-container {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}

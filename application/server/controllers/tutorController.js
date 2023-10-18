@@ -34,7 +34,7 @@ const getPostById = async (req, res) => {
 const getPostByTutorId = async (req, res) => {
     const { tutorId } = req.body;
     console.log("the tutorId is " + tutorId);
-    const q = "SELECT subject, hourly_rate FROM tutor_posts WHERE tutor_posts.tutor_id = ?";
+    const q = "SELECT subject, post_id, hourly_rate FROM tutor_posts WHERE tutor_posts.tutor_id = ?";
     try {
         const posts = await db.query(q, [tutorId]);
         console.log(posts[0]);
@@ -44,4 +44,16 @@ const getPostByTutorId = async (req, res) => {
     }
 }
 
-module.exports = { getTutorReviews, getPostById, getPostByTutorId };
+const deletePost = async (req, res) => {
+    const { postId } = req.body;
+    console.log("the postId is " + postId);
+    const q = "DELETE FROM tutor_posts WHERE post_id = ?";
+    try {
+        const posts = await db.query(q, [postId]);
+        res.send({ success: true });
+    } catch (err) {
+        console.log("error deleting post with id: " + postId + " error: " + err);
+    }
+}
+
+module.exports = { getTutorReviews, getPostById, getPostByTutorId, deletePost };
