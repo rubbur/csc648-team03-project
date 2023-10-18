@@ -44,8 +44,8 @@ const CreatePost = () => {
       alert("Must be logged in to create a post.");
       return;
     }
-    if (hourlyRate < 15 || hourlyRate > 100) {
-      alert("Hourly rate must be between $15 and $100");
+    if (hourlyRate < 15 || hourlyRate > 99.99) {
+      alert("Hourly rate must be between $15 and $99.99");
       return;
     }
 
@@ -64,10 +64,8 @@ const CreatePost = () => {
       );
 
       if (response.data.success) {
-        // Extract the post ID from the response
-        const postId = response.data.postId;
+        const postId = response.data.postId; // Get the post_id of the post that was just created
 
-        // Handle the successful response for creating the post
 
         // Reset the form fields and state
         setPostContent("");
@@ -75,7 +73,6 @@ const CreatePost = () => {
         setHourlyRate(20);
         handleClear();
 
-        // Now, you can make individual POST requests for each file type
         const fileUploadRequests = [];
 
         if (pdfFile) {
@@ -103,10 +100,10 @@ const CreatePost = () => {
         if (imageFile) {
           const imageData = new FormData();
           imageData.append("file", imageFile);
-          imageData.append("post_id", postId); // Include post_id
-          imageData.append("tutor_id", cookie.get("userId")); // Include tutor_id
-          imageData.append("username", cookie.get("userName")); // Include username
-          imageData.append("subject", selectedSubject); // Include subject
+          imageData.append("post_id", postId);
+          imageData.append("tutor_id", cookie.get("userId"));
+          imageData.append("username", cookie.get("userName"));
+          imageData.append("subject", selectedSubject);
 
           fileUploadRequests.push(
             axios.post(
@@ -125,10 +122,10 @@ const CreatePost = () => {
         if (videoFile) {
           const videoData = new FormData();
           videoData.append("file", videoFile);
-          videoData.append("post_id", postId); // Include post_id
-          videoData.append("tutor_id", cookie.get("userId")); // Include tutor_id
-          videoData.append("username", cookie.get("userName")); // Include username
-          videoData.append("subject", selectedSubject); // Include subject
+          videoData.append("post_id", postId);
+          videoData.append("tutor_id", cookie.get("userId"));
+          videoData.append("username", cookie.get("userName"));
+          videoData.append("subject", selectedSubject);
 
           fileUploadRequests.push(
             axios.post(

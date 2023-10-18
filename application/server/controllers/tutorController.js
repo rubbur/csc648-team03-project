@@ -63,7 +63,7 @@ const uploadFile = async (req, res) => {
     const postId = req.body.post_id;
     const subject = req.body.subject;
     let newFileName;
-    let destinationFolder = "postFiles"; // Use "postFiles" for all file types
+    let destinationFolder = "postFiles";
     let updateColumn = "";
     if (file.mimetype.substring(0, 5) === "image") {
         // Handle image file
