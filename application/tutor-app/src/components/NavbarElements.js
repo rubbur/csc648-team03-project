@@ -142,10 +142,10 @@ const Navbar = () => {
           {cookie.get("isLoggedIn") && <NavLink to="/Messages"><h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{"Hi, " + userName}</h1></NavLink>}
         </NavMenu>
-        <hr ></hr>
+        <hr className="disclaimer-p"></hr>
         <p className="disclaimer-p"><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration </em></p>
       </Nav>
-     
+
 
       <MobileMenu isOpen={isOpen}>
         <SearchBar />

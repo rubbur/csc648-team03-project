@@ -5,16 +5,16 @@ h1:hover {
     //color: rgb(185, 184, 184);
 }
 
-h1{
-  font-size: 18px;  
-  padding: none;
+h1 {
+    font-size: 18px;
+    padding: none;
 }
 
 .site-header {
     width: 100%;
 }
 
-.disclaimer-p{
+.disclaimer-p {
     color: $text-color;
     margin: 0 0 11px 15px;
 }
@@ -28,9 +28,24 @@ nav.navbar {
     height: fit-content;
 }
 
-hr{
+hr {
     width: 100%;
     color: $text-color
+}
+
+@media screen and (max-width: 855px) {
+    .disclaimer-p {
+        display: none;
+    }
+
+    nav.navbar {
+        background-color: $header-bg-color;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 90px;
+    }
 }
 
 .plus-icon {
