@@ -4,13 +4,17 @@ import "./postCard.scss";
 
 const PostCard = ({ rate, subject, handleDelete, postId }) => {
     return (
-        <Link to={`/tutorProfile?postId=${postId}`} className="post-card">
-            <h2>{subject}</h2>
-            <h3>${rate}/hr</h3>
+        <div className="post-card">
+            <div className="post-card-link">
+                <Link to={`/tutorProfile?postId=${postId}`} className="post-card-link">
+                    <h2 className="post-card-link">{subject}</h2>
+                    <h3 className="post-card-link">${rate}/hr</h3>
+                </Link>
+            </div>
             <button className="delete-button" onClick={() => handleDelete(postId)}>
                 X
             </button>
-        </Link>
+        </div>
     );
 };
 
