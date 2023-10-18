@@ -41,7 +41,6 @@ const CreatePost = () => {
       return;
     }
     if (!cookie.get("isLoggedIn")) {
-      // TODO: Handle user authentication
       alert("Must be logged in to create a post.");
       return;
     }
@@ -65,84 +64,94 @@ const CreatePost = () => {
       );
 
       if (response.data.success) {
+        // Extract the post ID from the response
+        const postId = response.data.postId;
+
         // Handle the successful response for creating the post
 
         // Reset the form fields and state
         setPostContent("");
         setSelectedSubject("NOT SELECTED");
         setHourlyRate(20);
-        handleClear(); // You can create a separate function to reset file inputs
+        handleClear();
+
+        // Now, you can make individual POST requests for each file type
+        const fileUploadRequests = [];
+
+        if (pdfFile) {
+          const pdfData = new FormData();
+          pdfData.append("file", pdfFile);
+          pdfData.append("post_id", postId); // Include post_id
+          pdfData.append("tutor_id", cookie.get("userId")); // Include tutor_id
+          pdfData.append("username", cookie.get("userName")); // Include username
+          console.log("APPENDING PDF USERNAME" + cookie.get("userName"));
+
+          fileUploadRequests.push(
+            axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`,
+              pdfData,
+              {
+                withCredentials: true,
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              }
+            )
+          );
+        }
+
+        if (imageFile) {
+          const imageData = new FormData();
+          imageData.append("file", imageFile);
+          imageData.append("post_id", postId); // Include post_id
+          imageData.append("tutor_id", cookie.get("userId")); // Include tutor_id
+          imageData.append("username", cookie.get("username")); // Include username
+
+          fileUploadRequests.push(
+            axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`,
+              imageData,
+              {
+                withCredentials: true,
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              }
+            )
+          );
+        }
+
+        if (videoFile) {
+          const videoData = new FormData();
+          videoData.append("file", videoFile);
+          videoData.append("post_id", postId); // Include post_id
+          videoData.append("tutor_id", cookie.get("userId")); // Include tutor_id
+          videoData.append("username", cookie.get("username")); // Include username
+
+          fileUploadRequests.push(
+            axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`,
+              videoData,
+              {
+                withCredentials: true,
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              }
+            )
+          );
+        }
+
+        try {
+          await Promise.all(fileUploadRequests); // Wait for all file uploads to complete
+        } catch (error) {
+          console.error("Error uploading files:", error);
+        }
       } else {
         console.error("Failed to create the post:", response.data.error);
       }
     } catch (error) {
       console.error("Error making the POST request:", error);
-    }
-
-    // Now, you can make individual POST requests for each file type
-    const fileUploadRequests = [];
-
-    if (pdfFile) {
-      const pdfData = new FormData();
-      pdfData.append("file", pdfFile);
-      pdfData.append("username", cookie.get("userName"));
-
-      fileUploadRequests.push(
-        axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/user/uploadPdf`,
-          pdfData,
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-      );
-    }
-
-    if (imageFile) {
-      const imageData = new FormData();
-      imageData.append("file", imageFile);
-      imageData.append("username", cookie.get("userName"));
-
-      fileUploadRequests.push(
-        axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/user/uploadImage`,
-          imageData,
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-      );
-    }
-
-    if (videoFile) {
-      const videoData = new FormData();
-      videoData.append("file", videoFile);
-      videoData.append("username", cookie.get("userName"));
-
-      fileUploadRequests.push(
-        axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/user/uploadVideo`,
-          videoData,
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-      );
-    }
-
-    try {
-      await Promise.all(fileUploadRequests); // Wait for all file uploads to complete
-    } catch (error) {
-      console.error("Error uploading files:", error);
     }
   };
 

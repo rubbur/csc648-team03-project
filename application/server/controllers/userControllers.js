@@ -166,18 +166,17 @@ const logout = async (req, res) => {
 }
 
 const createPost = async (req, res) => {
-  const { tutor_id, subject, description, flier_url, cv_url, hourly_rate, video_url } = req.body;
+  const { tutor_id, subject, description, hourly_rate } = req.body;
   const isPending = 1;
-  console.log("creating post with tutor_id: ", tutor_id);
-  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, flier_url, cv_url, video_url, hourly_rate, is_pending) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-  try {
-    const result = await db.query(q, [tutor_id, subject, description, flier_url, cv_url, video_url, hourly_rate, isPending]);
-    console.log("post inserted successfully!");
-    res.send({ success: true });
-  }
-  catch (err) {
-    console.log("error inserting post" + err);
 
+  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, hourly_rate, is_pending) VALUES (?, ?, ?, ?, ?)";
+  try {
+    const result = await db.query(q, [tutor_id, subject, description, hourly_rate, isPending]);
+    const postId = result[0].insertId;
+    console.log("Post inserted successfully. postid: " + postId);
+    res.send({ success: true, postId }); // Include the postId in the response
+  } catch (err) {
+    console.log("Error inserting post: " + err);
     res.send({ success: false, error: err });
   }
 }

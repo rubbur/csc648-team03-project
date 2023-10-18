@@ -59,24 +59,29 @@ const deletePost = async (req, res) => {
 const uploadFile = async (req, res) => {
     const { file } = req.files;
     const username = req.body.username;
+    const tutorId = req.body.tutor_id;
+    const postId = req.body.post_id;
     let newFileName;
-
+    let destinationFolder = "postFiles"; // Use "postFiles" for all file types
+    let updateColumn = "";
     if (file.mimetype.substring(0, 5) === "image") {
         // Handle image file
-        newFileName = username + ".png";
-        const destinationFolder = "userImages";
+        newFileName = username + "_" + postId + ".png";
+        updateColumn = "img_url";
     } else if (file.mimetype === "application/pdf") {
         // Handle PDF file
-        newFileName = username + ".pdf";
-        const destinationFolder = "userPdfs";
+        newFileName = username + "_" + postId + ".pdf";
+        updateColumn = "pdf_url";
     } else if (file.mimetype.substring(0, 5) === "video") {
         // Handle video file
-        newFileName = username + ".mp4";
-        const destinationFolder = "userVideos";
+        newFileName = username + "_" + postId + ".mp4";
+        updateColumn = "video_url";
     } else {
         res.send({ success: false, errorMessage: "Unsupported file type" });
         return;
     }
+
+    console.log("The file is: " + file + " and the tutorId is: " + tutorId + " and the new file name is: " + newFileName);
 
     // Move the file into the appropriate folder
     file.mv(`../tutor-app/public/${destinationFolder}/${newFileName}`, async (err) => {
@@ -86,12 +91,10 @@ const uploadFile = async (req, res) => {
             return;
         }
 
-        // Update the user table to store the relative path of the file in the database
-        const updateColumn = destinationFolder === "userImages" ? "img_url" : destinationFolder === "userPdfs" ? "cv_url" : "video_url";
-        const q = `UPDATE users SET ${updateColumn} = ?, ispending = 1 WHERE username = ?`;
+        const q = `UPDATE tutor_posts SET ${updateColumn} = ?, ispending = 1 WHERE tutor_id = ?`;
 
         try {
-            const updateRes = await db.query(q, [`/${destinationFolder}/${newFileName}`, username]);
+            const updateRes = await db.query(q, [`/${destinationFolder}/${newFileName}`, tutorId]);
             res.send({ success: true });
         } catch (err) {
             console.error("Error updating the database: " + err);
