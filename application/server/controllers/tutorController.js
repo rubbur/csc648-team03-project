@@ -61,6 +61,7 @@ const uploadFile = async (req, res) => {
     const username = req.body.username;
     const tutorId = req.body.tutor_id;
     const postId = req.body.post_id;
+    const subject = req.body.subject;
     let newFileName;
     let destinationFolder = "postFiles"; // Use "postFiles" for all file types
     let updateColumn = "";
@@ -81,7 +82,7 @@ const uploadFile = async (req, res) => {
         return;
     }
 
-    console.log("The file is: " + file + " and the tutorId is: " + tutorId + " and the new file name is: " + newFileName);
+    console.log("The tutorId is: " + tutorId + ", the postId is: " + postId + " and the new file name is: " + newFileName);
 
     // Move the file into the appropriate folder
     file.mv(`../tutor-app/public/${destinationFolder}/${newFileName}`, async (err) => {
@@ -91,9 +92,8 @@ const uploadFile = async (req, res) => {
             return;
         }
 
-        console.log(updateColumn);
 
-        const q = `UPDATE tutor_posts SET ${updateColumn} = ?, ispending = 1 WHERE tutor_id = ?`;
+        const q = `UPDATE tutor_posts SET ${updateColumn} = '/${destinationFolder}/${newFileName}' WHERE post_id = ${postId} AND tutor_id = ${tutorId}`;
 
         try {
             const updateRes = await db.query(q, [`/${destinationFolder}/${newFileName}`]);

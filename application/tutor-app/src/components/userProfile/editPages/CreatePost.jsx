@@ -84,7 +84,7 @@ const CreatePost = () => {
           pdfData.append("post_id", postId); // Include post_id
           pdfData.append("tutor_id", cookie.get("userId")); // Include tutor_id
           pdfData.append("username", cookie.get("userName")); // Include username
-          console.log("APPENDING PDF USERNAME" + cookie.get("userName"));
+          pdfData.append("subject", selectedSubject); // Include subject
 
           fileUploadRequests.push(
             axios.post(
@@ -105,7 +105,8 @@ const CreatePost = () => {
           imageData.append("file", imageFile);
           imageData.append("post_id", postId); // Include post_id
           imageData.append("tutor_id", cookie.get("userId")); // Include tutor_id
-          imageData.append("username", cookie.get("username")); // Include username
+          imageData.append("username", cookie.get("userName")); // Include username
+          imageData.append("subject", selectedSubject); // Include subject
 
           fileUploadRequests.push(
             axios.post(
@@ -126,7 +127,8 @@ const CreatePost = () => {
           videoData.append("file", videoFile);
           videoData.append("post_id", postId); // Include post_id
           videoData.append("tutor_id", cookie.get("userId")); // Include tutor_id
-          videoData.append("username", cookie.get("username")); // Include username
+          videoData.append("username", cookie.get("userName")); // Include username
+          videoData.append("subject", selectedSubject); // Include subject
 
           fileUploadRequests.push(
             axios.post(
