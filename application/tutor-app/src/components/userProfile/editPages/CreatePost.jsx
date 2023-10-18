@@ -31,6 +31,28 @@ const CreatePost = () => {
     });
   };
 
+  const handleFileUpload = async (file, updateColumn, postId) => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("post_id", postId);
+      formData.append("tutor_id", cookie.get("userId"));
+      formData.append("username", cookie.get("userName"));
+      formData.append("subject", selectedSubject);
+
+      try {
+        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`, formData, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } catch (error) {
+        console.error(`Error uploading ${updateColumn}:`, error);
+      }
+    }
+  };
+
   const handlePost = async () => {
     if (selectedSubject === "NOT SELECTED") {
       alert("Please select a subject");
@@ -64,88 +86,15 @@ const CreatePost = () => {
       );
 
       if (response.data.success) {
-        const postId = response.data.postId; // Get the post_id of the post that was just created
-
-
-        // Reset the form fields and state
-        setPostContent("");
-        setSelectedSubject("NOT SELECTED");
-        setHourlyRate(20);
+        const postId = response.data.postId;
         handleClear();
 
-        const fileUploadRequests = [];
-
-        if (pdfFile) {
-          const pdfData = new FormData();
-          pdfData.append("file", pdfFile);
-          pdfData.append("post_id", postId); // Include post_id
-          pdfData.append("tutor_id", cookie.get("userId")); // Include tutor_id
-          pdfData.append("username", cookie.get("userName")); // Include username
-          pdfData.append("subject", selectedSubject); // Include subject
-
-          fileUploadRequests.push(
-            axios.post(
-              `${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`,
-              pdfData,
-              {
-                withCredentials: true,
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              }
-            )
-          );
-        }
-
-        if (imageFile) {
-          const imageData = new FormData();
-          imageData.append("file", imageFile);
-          imageData.append("post_id", postId);
-          imageData.append("tutor_id", cookie.get("userId"));
-          imageData.append("username", cookie.get("userName"));
-          imageData.append("subject", selectedSubject);
-
-          fileUploadRequests.push(
-            axios.post(
-              `${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`,
-              imageData,
-              {
-                withCredentials: true,
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              }
-            )
-          );
-        }
-
-        if (videoFile) {
-          const videoData = new FormData();
-          videoData.append("file", videoFile);
-          videoData.append("post_id", postId);
-          videoData.append("tutor_id", cookie.get("userId"));
-          videoData.append("username", cookie.get("userName"));
-          videoData.append("subject", selectedSubject);
-
-          fileUploadRequests.push(
-            axios.post(
-              `${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`,
-              videoData,
-              {
-                withCredentials: true,
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              }
-            )
-          );
-        }
-
-        try {
-          await Promise.all(fileUploadRequests); // Wait for all file uploads to complete
-        } catch (error) {
-          console.error("Error uploading files:", error);
-        }
+        // handle file uploads
+        await Promise.all([
+          handleFileUpload(pdfFile, "pdf_url", postId),
+          handleFileUpload(imageFile, "img_url", postId),
+          handleFileUpload(videoFile, "video_url", postId),
+        ]);
       } else {
         console.error("Failed to create the post:", response.data.error);
       }
