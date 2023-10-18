@@ -10,7 +10,7 @@ const CreatePost = () => {
 
   const [postContent, setPostContent] = useState("");
   const [pdfFile, setPdfFile] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
+  const [flierFile, setFlierFile] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState("All");
   const [hourlyRate, setHourlyRate] = useState(20);
@@ -19,7 +19,7 @@ const CreatePost = () => {
   const handleClear = () => { // clear all the fields
     setPostContent("");
     setPdfFile(null);
-    setImageFile(null);
+    setFlierFile(null);
     setVideoFile(null);
     setSelectedSubject("NOT SELECTED");
     setHourlyRate(20);
@@ -39,6 +39,7 @@ const CreatePost = () => {
       formData.append("tutor_id", cookie.get("userId"));
       formData.append("username", cookie.get("userName"));
       formData.append("subject", selectedSubject);
+      formData.append("update_column", updateColumn);
 
       try {
         await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`, formData, {
@@ -91,8 +92,8 @@ const CreatePost = () => {
 
         // handle file uploads
         await Promise.all([
-          handleFileUpload(pdfFile, "pdf_url", postId),
-          handleFileUpload(imageFile, "img_url", postId),
+          handleFileUpload(pdfFile, "cv_url", postId),
+          handleFileUpload(flierFile, "flier_url", postId),
           handleFileUpload(videoFile, "video_url", postId),
         ]);
       } else {
@@ -149,11 +150,11 @@ const CreatePost = () => {
             />
           </div>
           <div className="upload-input">
-            <span>Upload Flier Image: </span>
+            <span>Upload Flier (PDF): </span>
             <input
               type="file"
-              accept="image/*"
-              onChange={(e) => setImageFile(e.target.files[0])}
+              accept=".pdf"
+              onChange={(e) => setFlierFile(e.target.files[0])}
             />
           </div>
           <div className="upload-input">

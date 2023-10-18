@@ -63,20 +63,20 @@ const uploadFile = async (req, res) => {
     const postId = req.body.post_id;
     const subject = req.body.subject;
     let newFileName;
-    let destinationFolder = "postFiles";
-    let updateColumn = "";
-    if (file.mimetype.substring(0, 5) === "image") {
-        // Handle image file
-        newFileName = username + "_" + postId + ".png";
-        updateColumn = "flier_url";
-    } else if (file.mimetype === "application/pdf") {
+    let destinationFolder = "";
+    const updateColumn = req.body.update_column;
+    if (file.mimetype === "application/pdf" && updateColumn === "flier_url") {
+        // Handle flier file
+        newFileName = postId + ".pdf";
+        destinationFolder = "fliers";
+    } else if (file.mimetype === "application/pdf" && updateColumn === "cv_url") {
         // Handle PDF file
-        newFileName = username + "_" + postId + ".pdf";
-        updateColumn = "cv_url";
-    } else if (file.mimetype.substring(0, 5) === "video") {
+        newFileName = postId + ".pdf";
+        destinationFolder = "cvs";
+    } else if (file.mimetype.substring(0, 5) === "video" && updateColumn === "video_url") {
         // Handle video file
-        newFileName = username + "_" + postId + ".mp4";
-        updateColumn = "video_url";
+        newFileName = postId + ".mp4";
+        destinationFolder = "videos";
     } else {
         res.send({ success: false, errorMessage: "Unsupported file type" });
         return;
