@@ -149,6 +149,7 @@ const Navbar = () => {
 
       <MobileMenu isOpen={isOpen}>
         <SearchBar />
+        <p className='mobile-disclaimer'><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration </em></p>
         {cookie.get('isLoggedIn') && !cookie.get('isTutor') && (
           <MobileMenuItem to="/StudentView" onClick={toggleMobileMenu}>
             <h1>Students</h1>
