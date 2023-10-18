@@ -31,6 +31,28 @@ const CreatePost = () => {
     });
   };
 
+  const handleFileUpload = async (file, updateColumn, postId) => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("post_id", postId);
+      formData.append("tutor_id", cookie.get("userId"));
+      formData.append("username", cookie.get("userName"));
+      formData.append("subject", selectedSubject);
+
+      try {
+        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`, formData, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } catch (error) {
+        console.error(`Error uploading ${updateColumn}:`, error);
+      }
+    }
+  };
+
   const handlePost = async () => {
     if (selectedSubject === "NOT SELECTED") {
       alert("Please select a subject");
@@ -41,44 +63,38 @@ const CreatePost = () => {
       return;
     }
     if (!cookie.get("isLoggedIn")) {
-      //TODO: store form data as json string in local storage
-      //navigate("/Login");
-      //for now just return
-      alert("must be logged in to create a post. DEVS: Cash the todo in CreatePost.jsx");
+      alert("Must be logged in to create a post.");
       return;
     }
-    if (hourlyRate < 15 || hourlyRate > 100) {
-      alert("Hourly rate must be between $15 and $100");
+    if (hourlyRate < 15 || hourlyRate > 99.99) {
+      alert("Hourly rate must be between $15 and $99.99");
       return;
     }
-    const formData = new FormData();
-    formData.append("tutor_id", cookie.get("userId"));
-    formData.append("subject", selectedSubject);
-    formData.append("description", postContent);
-    formData.append("cv_url", pdfFile);
-    formData.append("flier_url", imageFile);
-    formData.append("video_url", videoFile);
-    formData.append("hourly_rate", hourlyRate);
 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/CreatePost`,
-        formData,
+        {
+          tutor_id: cookie.get("userId"),
+          subject: selectedSubject,
+          description: postContent,
+          hourly_rate: hourlyRate,
+        },
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
         }
       );
 
       if (response.data.success) {
-        setPostContent("");
-        setPdfFile(null);
-        setImageFile(null);
-        setVideoFile(null);
-        setSelectedSubject("");
-        setHourlyRate("");
+        const postId = response.data.postId;
+        handleClear();
+
+        // handle file uploads
+        await Promise.all([
+          handleFileUpload(pdfFile, "pdf_url", postId),
+          handleFileUpload(imageFile, "img_url", postId),
+          handleFileUpload(videoFile, "video_url", postId),
+        ]);
       } else {
         console.error("Failed to create the post:", response.data.error);
       }
@@ -155,7 +171,7 @@ const CreatePost = () => {
           Create Post
         </button>
         <button className="create-button" onClick={handleClear}>
-          Clear All
+          Reset
         </button>
       </div>
     </div>

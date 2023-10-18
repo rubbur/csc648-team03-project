@@ -56,4 +56,53 @@ const deletePost = async (req, res) => {
     }
 }
 
-module.exports = { getTutorReviews, getPostById, getPostByTutorId, deletePost };
+const uploadFile = async (req, res) => {
+    const { file } = req.files;
+    const username = req.body.username;
+    const tutorId = req.body.tutor_id;
+    const postId = req.body.post_id;
+    const subject = req.body.subject;
+    let newFileName;
+    let destinationFolder = "postFiles";
+    let updateColumn = "";
+    if (file.mimetype.substring(0, 5) === "image") {
+        // Handle image file
+        newFileName = username + "_" + postId + ".png";
+        updateColumn = "flier_url";
+    } else if (file.mimetype === "application/pdf") {
+        // Handle PDF file
+        newFileName = username + "_" + postId + ".pdf";
+        updateColumn = "cv_url";
+    } else if (file.mimetype.substring(0, 5) === "video") {
+        // Handle video file
+        newFileName = username + "_" + postId + ".mp4";
+        updateColumn = "video_url";
+    } else {
+        res.send({ success: false, errorMessage: "Unsupported file type" });
+        return;
+    }
+
+    console.log("The tutorId is: " + tutorId + ", the postId is: " + postId + " and the new file name is: " + newFileName);
+
+    // Move the file into the appropriate folder
+    file.mv(`../tutor-app/public/${destinationFolder}/${newFileName}`, async (err) => {
+        if (err) {
+            console.error(err);
+            res.send({ success: false, errorMessage: err });
+            return;
+        }
+
+
+        const q = `UPDATE tutor_posts SET ${updateColumn} = '/${destinationFolder}/${newFileName}' WHERE post_id = ${postId} AND tutor_id = ${tutorId}`;
+
+        try {
+            const updateRes = await db.query(q, [`/${destinationFolder}/${newFileName}`]);
+            res.send({ success: true });
+        } catch (err) {
+            console.error("Error updating the database: " + err);
+            res.send({ success: false, errorMessage: err });
+        }
+    });
+};
+
+module.exports = { getTutorReviews, getPostById, getPostByTutorId, deletePost, uploadFile };
