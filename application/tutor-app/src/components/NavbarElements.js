@@ -160,7 +160,7 @@ const Navbar = () => {
           </MobileMenuItem>
         )}
         <MobileMenuItem to="/AboutUs" onClick={toggleMobileMenu}>
-          <h1>About Us</h1>
+          <h1><FontAwesomeIcon icon="fa-circle-info" /></h1>
         </MobileMenuItem>
         {cookie.get('isAdmin') && (
           <MobileMenuItem to="/AdminPanel" onClick={toggleMobileMenu}>
@@ -180,6 +180,16 @@ const Navbar = () => {
         {cookie.get('isLoggedIn') && (
           <MobileMenuItem to="/Logout" onClick={toggleMobileMenu}>
             <h1><FontAwesomeIcon icon="right-from-bracket" /></h1>
+          </MobileMenuItem>
+        )}
+        {cookie.get('isLoggedIn') && (
+          <MobileMenuItem to="/tutorPostsView" onClick={toggleMobileMenu}>
+            <h1>View Posts</h1>
+          </MobileMenuItem>
+        )}
+        {cookie.get('isLoggedIn') && (
+          <MobileMenuItem to="/Messages" onClick={toggleMobileMenu}>
+            <h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1>
           </MobileMenuItem>
         )}
         {cookie.get('isLoggedIn') && (

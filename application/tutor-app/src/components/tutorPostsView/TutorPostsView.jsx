@@ -4,6 +4,7 @@ import axios from "axios";
 import { cookie } from "../../App";
 import { useEffect } from "react";
 import PostCard from "./PostCard/PostCard";
+import { Link } from "react-router-dom";
 
 const TutorPostsView = () => {
     const [PostsList, setPostsList] = useState([]);
@@ -43,6 +44,10 @@ const TutorPostsView = () => {
     return (
         <div className="tutor-posts-view">
             <h1>Current Posts:</h1>
+            {PostsList.length > 0 ?
+                <></>
+                : <h1>You have no posts, <Link to="/CreatePost" className="link-create-post">click here</Link> to create one.</h1>}
+
             <div className="posts-container">
                 {PostsList.map((post, index) => (
                     <PostCard key={index} rate={post.hourly_rate} subject={post.subject} handleDelete={() => handleDelete(post.post_id, post.subject)} postId={post.post_id} />
