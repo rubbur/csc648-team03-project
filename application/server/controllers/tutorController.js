@@ -56,4 +56,48 @@ const deletePost = async (req, res) => {
     }
 }
 
-module.exports = { getTutorReviews, getPostById, getPostByTutorId, deletePost };
+const uploadFile = async (req, res) => {
+    const { file } = req.files;
+    const username = req.body.username;
+    let newFileName;
+
+    if (file.mimetype.substring(0, 5) === "image") {
+        // Handle image file
+        newFileName = username + ".png";
+        const destinationFolder = "userImages";
+    } else if (file.mimetype === "application/pdf") {
+        // Handle PDF file
+        newFileName = username + ".pdf";
+        const destinationFolder = "userPdfs";
+    } else if (file.mimetype.substring(0, 5) === "video") {
+        // Handle video file
+        newFileName = username + ".mp4";
+        const destinationFolder = "userVideos";
+    } else {
+        res.send({ success: false, errorMessage: "Unsupported file type" });
+        return;
+    }
+
+    // Move the file into the appropriate folder
+    file.mv(`../tutor-app/public/${destinationFolder}/${newFileName}`, async (err) => {
+        if (err) {
+            console.error(err);
+            res.send({ success: false, errorMessage: err });
+            return;
+        }
+
+        // Update the user table to store the relative path of the file in the database
+        const updateColumn = destinationFolder === "userImages" ? "img_url" : destinationFolder === "userPdfs" ? "cv_url" : "video_url";
+        const q = `UPDATE users SET ${updateColumn} = ?, ispending = 1 WHERE username = ?`;
+
+        try {
+            const updateRes = await db.query(q, [`/${destinationFolder}/${newFileName}`, username]);
+            res.send({ success: true });
+        } catch (err) {
+            console.error("Error updating the database: " + err);
+            res.send({ success: false, errorMessage: err });
+        }
+    });
+};
+
+module.exports = { getTutorReviews, getPostById, getPostByTutorId, deletePost, uploadFile };

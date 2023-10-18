@@ -41,49 +41,108 @@ const CreatePost = () => {
       return;
     }
     if (!cookie.get("isLoggedIn")) {
-      //TODO: store form data as json string in local storage
-      //navigate("/Login");
-      //for now just return
-      alert("must be logged in to create a post. DEVS: Cash the todo in CreatePost.jsx");
+      // TODO: Handle user authentication
+      alert("Must be logged in to create a post.");
       return;
     }
     if (hourlyRate < 15 || hourlyRate > 100) {
       alert("Hourly rate must be between $15 and $100");
       return;
     }
-    const formData = new FormData();
-    formData.append("tutor_id", cookie.get("userId"));
-    formData.append("subject", selectedSubject);
-    formData.append("description", postContent);
-    formData.append("cv_url", pdfFile);
-    formData.append("flier_url", imageFile);
-    formData.append("video_url", videoFile);
-    formData.append("hourly_rate", hourlyRate);
 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/CreatePost`,
-        formData,
+        {
+          tutor_id: cookie.get("userId"),
+          subject: selectedSubject,
+          description: postContent,
+          hourly_rate: hourlyRate,
+        },
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
         }
       );
 
       if (response.data.success) {
+        // Handle the successful response for creating the post
+
+        // Reset the form fields and state
         setPostContent("");
-        setPdfFile(null);
-        setImageFile(null);
-        setVideoFile(null);
-        setSelectedSubject("");
-        setHourlyRate("");
+        setSelectedSubject("NOT SELECTED");
+        setHourlyRate(20);
+        handleClear(); // You can create a separate function to reset file inputs
       } else {
         console.error("Failed to create the post:", response.data.error);
       }
     } catch (error) {
       console.error("Error making the POST request:", error);
+    }
+
+    // Now, you can make individual POST requests for each file type
+    const fileUploadRequests = [];
+
+    if (pdfFile) {
+      const pdfData = new FormData();
+      pdfData.append("file", pdfFile);
+      pdfData.append("username", cookie.get("userName"));
+
+      fileUploadRequests.push(
+        axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/user/uploadPdf`,
+          pdfData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+      );
+    }
+
+    if (imageFile) {
+      const imageData = new FormData();
+      imageData.append("file", imageFile);
+      imageData.append("username", cookie.get("userName"));
+
+      fileUploadRequests.push(
+        axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/user/uploadImage`,
+          imageData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+      );
+    }
+
+    if (videoFile) {
+      const videoData = new FormData();
+      videoData.append("file", videoFile);
+      videoData.append("username", cookie.get("userName"));
+
+      fileUploadRequests.push(
+        axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/user/uploadVideo`,
+          videoData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+      );
+    }
+
+    try {
+      await Promise.all(fileUploadRequests); // Wait for all file uploads to complete
+    } catch (error) {
+      console.error("Error uploading files:", error);
     }
   };
 
@@ -155,7 +214,7 @@ const CreatePost = () => {
           Create Post
         </button>
         <button className="create-button" onClick={handleClear}>
-          Clear All
+          Reset
         </button>
       </div>
     </div>
