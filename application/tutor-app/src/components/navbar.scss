@@ -10,15 +10,22 @@ h1:hover {
 }
 
 .disclaimer-p{
-    color: white;
+    color: $text-color;
+    margin: 0 0 11px 15px;
 }
 
 nav.navbar {
     background-color: $header-bg-color;
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
+    height: fit-content;
+}
+
+hr{
+    width: 100%;
+    color: $text-color
 }
 
 .plus-icon {

@@ -130,7 +130,7 @@ const Navbar = () => {
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
         <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' onClick={hideMobileMenu} /></Link>
         <NavMenu>
-          <NavLink to="/"><Logo src='../../images/logo.png' alt='Logo' /></NavLink>
+          <NavLink to="/"><Logo src='/images/logo.png' alt='Logo' /></NavLink>
           <SearchBar />
           {(cookie.get("isLoggedIn")) && <NavLink to="/CreatePost"><FontAwesomeIcon className='plus-icon' icon="fa-plus" /></NavLink>}
           {<NavLink to="/AboutUs"><h1>About Us</h1></NavLink>}
@@ -138,10 +138,13 @@ const Navbar = () => {
           {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1><FontAwesomeIcon icon="right-from-bracket" /></h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Messages"><h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{"Hi, " + userName}</h1></NavLink>}
         </NavMenu>
+        <hr ></hr>
         <p className="disclaimer-p"><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration </em></p>
       </Nav>
+     
 
       <MobileMenu isOpen={isOpen}>
         <SearchBar />
