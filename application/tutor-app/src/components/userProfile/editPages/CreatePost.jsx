@@ -32,19 +32,23 @@ const CreatePost = () => {
   };
 
   const handlePost = async () => {
-    if(selectedSubject === "NOT SELECTED"){
+    if (selectedSubject === "NOT SELECTED") {
       alert("Please select a subject");
       return;
     }
-    if(postContent.length > characterLimit){
+    if (postContent.length > characterLimit) {
       alert("Post description is too long");
       return;
     }
-    if(!cookie.get("isLoggedIn")) {
+    if (!cookie.get("isLoggedIn")) {
       //TODO: store form data as json string in local storage
       //navigate("/Login");
       //for now just return
       alert("must be logged in to create a post. DEVS: Cash the todo in CreatePost.jsx");
+      return;
+    }
+    if (hourlyRate < 15 || hourlyRate > 100) {
+      alert("Hourly rate must be between $15 and $100");
       return;
     }
     const formData = new FormData();
@@ -87,7 +91,7 @@ const CreatePost = () => {
     <div>
       <h1 className="post-header">Create Post</h1>
       <div className="post-textarea-container">
-        <p className = {(postContent.length > characterLimit) ? "error" : ""}>{` ${postContent.length}/${characterLimit} characters `}</p>
+        <p className={(postContent.length > characterLimit) ? "error" : ""}>{` ${postContent.length}/${characterLimit} characters `}</p>
         <textarea
           className="post-textarea"
           placeholder="Write your post here"
