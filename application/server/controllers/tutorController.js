@@ -67,11 +67,11 @@ const uploadFile = async (req, res) => {
     if (file.mimetype.substring(0, 5) === "image") {
         // Handle image file
         newFileName = username + "_" + postId + ".png";
-        updateColumn = "img_url";
+        updateColumn = "flier_url";
     } else if (file.mimetype === "application/pdf") {
         // Handle PDF file
         newFileName = username + "_" + postId + ".pdf";
-        updateColumn = "pdf_url";
+        updateColumn = "cv_url";
     } else if (file.mimetype.substring(0, 5) === "video") {
         // Handle video file
         newFileName = username + "_" + postId + ".mp4";
@@ -91,10 +91,12 @@ const uploadFile = async (req, res) => {
             return;
         }
 
+        console.log(updateColumn);
+
         const q = `UPDATE tutor_posts SET ${updateColumn} = ?, ispending = 1 WHERE tutor_id = ?`;
 
         try {
-            const updateRes = await db.query(q, [`/${destinationFolder}/${newFileName}`, tutorId]);
+            const updateRes = await db.query(q, [`/${destinationFolder}/${newFileName}`]);
             res.send({ success: true });
         } catch (err) {
             console.error("Error updating the database: " + err);
