@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const TutorProfile = () => {
     const initialReviewNum = 2;
+    const [hasFlier, setHasFlier] = useState(false);
+    const [hasCv, setHasCv] = useState(false);
+    const [hasVideo, setHasVideo] = useState(false);
     const [reviewList, setReviewList] = useState([]);
     const [postData, setPostData] = useState({});
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -25,12 +28,17 @@ const TutorProfile = () => {
         const postId = urlParams.get('postId');
 
         const getPostData = async () => {
-            //load the tutor's profile data
+            //load the tutor's post data
             const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getPostById`, { postId: postId }, { withCredentials: true });
             if (!result.data.success) {
                 console.log(result.data.errorMessage);
                 return;
             }
+
+            console.log(result.data.postData);
+            if (result.data.postData.flier_url !== "null") setHasFlier(true);
+            if (result.data.postData.cv_url !== "null") setHasCv(true);
+            if (result.data.postData.video_url !== "null") setHasVideo(true);
 
             setPostData({ ...result.data.postData });
 
@@ -65,8 +73,7 @@ const TutorProfile = () => {
                 }
 
                 if (userResult.data.userData[0] && userResult.data.userData[0].courses) {
-                    setCourses(userResult.data.userData[0].courses);
-                    console.log("COURSES: " + courses);
+                    setCourses(userResult.data.userData[0].courses.toUpperCase());
                 } else {
                     setCourses([]);
                 }
@@ -78,6 +85,9 @@ const TutorProfile = () => {
         }
         if (postData.username) {
             getUserData();
+            console.log("has flier: " + hasFlier);
+            console.log("has cv: " + hasCv);
+            console.log("has video: " + hasVideo);
         }
     }, [postData.username]);
 
@@ -168,7 +178,7 @@ const TutorProfile = () => {
                     <p>{postData.description || "I am a really qualified tutor. I can teach stuff to people"}</p>
                 </div>
 
-                {postData.flier_url && (
+                {hasFlier && (
                     <div className="file-box">
                         <h2>Flier</h2>
                         <object data={postData.flier_url} type="application/pdf" width="100%" height="500">
@@ -177,7 +187,7 @@ const TutorProfile = () => {
                     </div>
                 )}
 
-                {postData.cv_url && (
+                {hasCv && (
                     <div className="file-box">
                         <h2>CV</h2>
                         <object data={postData.cv_url} type="application/pdf" width="100%" height="500">
@@ -186,7 +196,7 @@ const TutorProfile = () => {
                     </div>
                 )}
 
-                {postData.video_url && (
+                {hasVideo && (
                     <div className="video-box">
                         <h2>Video</h2>
                         <video controls>
