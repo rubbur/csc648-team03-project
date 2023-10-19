@@ -517,6 +517,18 @@ const searchPosts = async (req, res) => {
   }
 }
 
+const setIsTutor = async (req, res) => {
+  const { userId } = req.body;
+  const q = "UPDATE users SET istutor = 1, ispending = 1 WHERE id = ?";
+  console.log("Updating user to be a tutor: " + userId);
+  try {
+    await db.query(q, [userId]);
+    res.send({ success: true });
+  } catch (err) {
+    console.log("Error updating user to be a tutor: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
 
 const sendMessage = async (req, res) => {
   //get the current date and time
@@ -554,5 +566,6 @@ module.exports = {
   submitReview,
   createPost,
   searchPosts,
-  sendMessage
+  sendMessage,
+  setIsTutor
 };

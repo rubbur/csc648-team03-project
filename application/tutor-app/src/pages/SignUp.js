@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import '../index.scss';
 import axios from "axios";
 import { cookie } from "../App"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   useEffect(() => {
     document.title = "Tutors.tech: Sign Up";
   }, []);
 
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -85,6 +86,12 @@ function SignUp() {
         localStorage.removeItem("unsentMessage");
         localStorage.removeItem("unsentMessageRecipientId");
         localStorage.removeItem("unsentMessagePostId");
+      }
+      if (cookie.get("isTutor")) {
+        navigate("/TutorView");
+      }
+      else {
+        navigate("/StudentView");
       }
     }
   };
