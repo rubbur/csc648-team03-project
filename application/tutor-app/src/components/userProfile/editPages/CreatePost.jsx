@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import "./editPage.scss";
 import axios from "axios";
 import { cookie } from "../../../App";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
-
+  const navigate = useNavigate();
   const characterLimit = 1000; //this is the max number of characters allowed in the post description
   //and it must match the character limit (the VARCHAR set in the description column in the tutor_post table).
 
@@ -96,6 +97,27 @@ const CreatePost = () => {
           handleFileUpload(flierFile, "flier_url", postId),
           handleFileUpload(videoFile, "video_url", postId),
         ]);
+
+        // Set isTutor to 1 in users table
+        console.log("istutor: " + cookie.get("isTutor"));
+        if (cookie.get("isTutor") === 0 || typeof cookie.get("isTutor") === "undefined") {
+          console.log("Trying to update user to tutor");
+          const tutorResponse = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/user/setIsTutor`,
+            {
+              userId: cookie.get("userId"),
+            },
+            { withCredentials: true }
+          );
+
+          if (tutorResponse.data.success) {
+            cookie.set("isTutor", 1);
+          } else {
+            console.error("Failed to set isTutor:", tutorResponse.data.error);
+          }
+        }
+
+        navigate("/tutorPostsView");
       } else {
         console.error("Failed to create the post:", response.data.error);
       }

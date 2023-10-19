@@ -73,16 +73,32 @@ const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId }) => {
     }
 
     const handleSend = async () => {
-        if (cookie.get("isLoggedIn") === "false") {
-            //redirect to login page
-            alert("need to be logged in to contact a tutor");
+        console.log("sending message")
+        console.log(cookie.get("isLoggedIn"));
+        if (cookie.get("isLoggedIn") === "false" || cookie.get("isLoggedIn") === undefined) {
+            // Save the unsent message to local storage
+            localStorage.setItem("unsentMessage", messageInProgress);
+            localStorage.setItem("unsentMessageRecipientId", tutorId);
+            localStorage.setItem("unsentMessagePostId", postId);
+            // Redirect to the signup page
+            alert("You need to be logged in to contact a tutor. You will be redirected to sign in.");
+            window.location.href = "/SignIn";
             return;
         }
-        //TODO send the message to the tutor
-        const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`,
-            { recipientId: tutorId, message: messageInProgress, senderId: cookie.get("userId"), postId: postId },
-            { withCredentials: true });
+
+        // User is logged in, proceed with sending the message
+        const result = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`,
+            {
+                recipientId: tutorId,
+                message: messageInProgress,
+                senderId: cookie.get("userId"),
+                postId: postId
+            },
+            { withCredentials: true }
+        );
     }
+
 
     return (
         <div className="user-result">

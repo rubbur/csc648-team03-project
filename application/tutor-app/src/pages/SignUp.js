@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import '../index.scss';
 import axios from "axios";
-import {cookie} from "../App"
-import  { Link, useNavigate } from 'react-router-dom'
+import { cookie } from "../App"
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   useEffect(() => {
     document.title = "Tutors.tech: Sign Up";
   }, []);
 
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -30,38 +31,69 @@ function SignUp() {
     setRememberMe(e.target.checked);
   };
 
-  const navigate = useNavigate();
-
   const HandleRegistration = async () => {
     console.log("Username:", username);
     console.log("Password:", password);
     console.log("Remember Me:", rememberMe);
     console.log("Accept Terms:", acceptTerms);
 
-    if(!acceptTerms){
+    if (!acceptTerms) {
       alert("Please accept the terms of service");
-      // don't send request to backend if terms not accepted
+      // Don't send the request to the backend if terms are not accepted
       return;
     }
-    
-    // send email and password to backend
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,
-    {username:username,password:password},
-     {withCredentials: true}
-     );
+
+    // Send email and password to the backend
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/user/register`,
+      { username: username, password: password },
+      { withCredentials: true }
+    );
     console.log(response.data);
     setUsername("");
     setPassword("");
-    if (response.data.success){
-      //user successfully registered
-      cookie.set("isLoggedIn",true);
-      cookie.set("userName",response.data.username);
-      cookie.set("userId", response.data.userId);
+
+    if (response.data.success) {
+      // User successfully registered
+      const { userId, username } = response.data;
+
+      // Set user data in the cookie
+      cookie.set("isLoggedIn", true);
+      cookie.set("userName", username);
+      cookie.set("userId", userId);
 
       console.log(cookie.get("userName"));
       console.log(cookie.get("isLoggedIn"));
-    }
 
+      const unsentMessage = localStorage.getItem("unsentMessage");
+      const unsentMessageRecipientId = localStorage.getItem("unsentMessageRecipientId");
+      const unsentMessagePostId = localStorage.getItem("unsentMessagePostId");
+
+      if (unsentMessage && unsentMessageRecipientId && unsentMessagePostId) {
+        // User has an unsent message, recipient, and post ID
+        // Send the message now
+        const result = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`,
+          {
+            recipientId: unsentMessageRecipientId,
+            message: unsentMessage,
+            senderId: userId, // Use the retrieved userId
+            postId: unsentMessagePostId
+          },
+          { withCredentials: true }
+        );
+        console.log("Sent unsent message: " + result.data);
+        localStorage.removeItem("unsentMessage");
+        localStorage.removeItem("unsentMessageRecipientId");
+        localStorage.removeItem("unsentMessagePostId");
+      }
+      if (cookie.get("isTutor")) {
+        navigate("/TutorView");
+      }
+      else {
+        navigate("/StudentView");
+      }
+    }
   };
 
   return (
@@ -92,7 +124,7 @@ function SignUp() {
         </div>
         <div className="form-group">
           <label htmlFor="rememberMe" className='no-select'>
-            Remember me: 
+            Remember me:
             <input
               type="checkbox"
               id="rememberMe"
@@ -107,22 +139,22 @@ function SignUp() {
             <div>
               <span className='accept-text'>Accept </span>
               <Link className='terms-link'>Terms of Service</Link>:
-            
 
-            <input
-              type="checkbox"
-              id="acceptTerms"
-              name="acceptTerms"
-              checked={acceptTerms}
-              onChange={handleacceptTermsChange}
-            />
+
+              <input
+                type="checkbox"
+                id="acceptTerms"
+                name="acceptTerms"
+                checked={acceptTerms}
+                onChange={handleacceptTermsChange}
+              />
             </div>
           </label>
         </div>
         <div className="center-button">
           <button onClick={HandleRegistration}>Sign Up</button>
         </div>
-        
+
 
       </div>
     </div>

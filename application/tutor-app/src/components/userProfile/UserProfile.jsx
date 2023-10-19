@@ -83,10 +83,9 @@ const UserProfile = () => {
                             <button className={`profile-edit-button ${editPage === "upload" ? "pressed" : ""}`} onClick={() => { setEditPage("upload") }}>Upload Image</button>
                             <button className={`profile-edit-button ${editPage === "name" ? "pressed" : ""}`} onClick={() => { setEditPage("name") }}>Update Username</button>
                             <button className={`profile-edit-button ${editPage === "password" ? "pressed" : ""}`} onClick={() => { setEditPage("password") }}>Update Password</button>
-                            {!(cookie.get("isTutor")) && <button className={`profile-edit-button ${editPage === "tutor" ? "pressed" : ""}`} onClick={() => { setEditPage("tutor") }}>Register as Tutor</button>}
-                            {(cookie.get("isTutor")) && <button className={`profile-edit-button post-button`} onClick={handleCreatePost}>Create Post</button>}
-                            {(cookie.get("isTutor")) && <button className={`profile-edit-button post-button`} onClick={handleSeeMessages}>See Messages</button>}
-                            {(cookie.get("isTutor")) && <button className={`profile-edit-button post-button`} onClick={handleSeeReviews}>See Reviews</button>}
+                            <button className={`profile-edit-button post-button`} onClick={handleCreatePost}>Create Post</button>
+                            {(cookie.get("isTutor") === 1) && <button className={`profile-edit-button post-button`} onClick={handleSeeMessages}>See Messages</button>}
+                            {(cookie.get("isTutor") === 1) && <button className={`profile-edit-button post-button`} onClick={handleSeeReviews}>See Reviews</button>}
                         </div>
 
                     </div>

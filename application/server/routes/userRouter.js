@@ -17,8 +17,9 @@ const {
     submitReview,
     createPost,
     searchPosts,
-    sendMessage
- } = require("../controllers/userControllers");
+    sendMessage,
+    setIsTutor
+} = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 
 const userRouter = express.Router();
@@ -55,5 +56,7 @@ userRouter.post("/CreatePost", isLoggedIn, createPost);
 userRouter.post("/searchPosts", searchPosts);
 
 userRouter.post("/sendMessage", isLoggedIn, sendMessage);
+
+userRouter.post("/setIsTutor", isLoggedIn, setIsTutor);
 
 module.exports = userRouter;
