@@ -136,7 +136,7 @@ const TutorProfile = () => {
             <div className="left-side-bar">
                 <div className="image-subjects-box">
                     <img src={postData.img_url} alt={`profile pic of ${postData.username}`} />
-                    <p id="subject-banner">{postData.subject} Tutor</p>
+                    <p id="subject-banner">{postData.subject} Tutor - Rate: ${postData.hourly_rate}</p>
                     <p>Courses offered: {courses || "None"}</p>
                 </div>
                 <div className="contact-review-controls">
