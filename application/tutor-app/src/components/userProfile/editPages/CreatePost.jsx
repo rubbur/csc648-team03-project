@@ -13,7 +13,7 @@ const CreatePost = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [flierFile, setFlierFile] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
-  const [selectedSubject, setSelectedSubject] = useState("All");
+  const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const subjectList = ["NOT SELECTED", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
 
@@ -62,6 +62,9 @@ const CreatePost = () => {
     }
     if (postContent.length > characterLimit) {
       alert("Post description is too long");
+      return;
+    } else if (postContent.length === 0) {
+      alert("Post description cannot be empty");
       return;
     }
     if (!cookie.get("isLoggedIn")) {

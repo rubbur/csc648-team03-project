@@ -36,9 +36,9 @@ const TutorProfile = () => {
             }
 
             console.log(result.data.postData);
-            if (result.data.postData.flier_url !== "null") setHasFlier(true);
-            if (result.data.postData.cv_url !== "null") setHasCv(true);
-            if (result.data.postData.video_url !== "null") setHasVideo(true);
+            if (result.data.postData.flier_url !== "null" && result.data.postData.flier_url !== null) setHasFlier(true);
+            if (result.data.postData.cv_url !== "null" && result.data.postData.cv_url !== null) setHasCv(true);
+            if (result.data.postData.video_url !== "null" && result.data.postData.video_url !== null) setHasVideo(true);
 
             setPostData({ ...result.data.postData });
 
