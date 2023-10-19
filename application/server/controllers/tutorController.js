@@ -21,7 +21,7 @@ const getTutorReviews = async (req, res) => {
 
 const getPostById = async (req, res) => {
     const { postId } = req.body;
-    console.log("the tutorId is " + postId);
+    console.log("getting post with post id: " + postId);
     const q = "SELECT tutor_posts.*, users.img_url, users.username FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE tutor_posts.post_id = ?";
     try {
         const posts = await db.query(q, [postId]);

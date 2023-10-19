@@ -190,7 +190,6 @@ const createPost = async (req, res) => {
 
 const getUserData = async (req, res) => {
   const username = req.body.username;
-  console.log("in get user data: " + username);
   //get the user from the database
   try {
     const q = "SELECT * FROM users WHERE username = ?";
@@ -200,7 +199,6 @@ const getUserData = async (req, res) => {
       return;
     }
     else {
-      console.log("userData: ", userData[0][0]);
       res.send({ success: true, userData: userData[0] });
     }
 

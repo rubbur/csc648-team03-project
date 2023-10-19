@@ -73,7 +73,9 @@ const TutorProfile = () => {
             }
         }
 
-        getPostData();
+        if (!postData.username) {
+            getPostData();
+        }
         if (postData.username) {
             getUserData();
         }
