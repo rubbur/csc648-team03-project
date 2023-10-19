@@ -167,6 +167,35 @@ const TutorProfile = () => {
                     <h2>About Me</h2>
                     <p>{postData.description || "I am a really qualified tutor. I can teach stuff to people"}</p>
                 </div>
+
+                {postData.flier_url && (
+                    <div className="file-box">
+                        <h2>Flier</h2>
+                        <object data={postData.flier_url} type="application/pdf" width="100%" height="500">
+                            <p>Your browser does not support PDFs. You can download the PDF <a href={postData.flier_url}>here</a>.</p>
+                        </object>
+                    </div>
+                )}
+
+                {postData.cv_url && (
+                    <div className="file-box">
+                        <h2>CV</h2>
+                        <object data={postData.cv_url} type="application/pdf" width="100%" height="500">
+                            <p>Your browser does not support PDFs. You can download the PDF <a href={postData.cv_url}>here</a>.</p>
+                        </object>
+                    </div>
+                )}
+
+                {postData.video_url && (
+                    <div className="video-box">
+                        <h2>Video</h2>
+                        <video width="100%" controls>
+                            <source src={postData.video_url} type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                )}
+
             </div>
             {/*--------------------------------------Modal---------------------------------------------------------------------------------- */}
             <Modal ariaHideApp={false}
