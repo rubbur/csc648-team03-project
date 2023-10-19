@@ -102,7 +102,7 @@ const MobileMenu = styled.div`
 const MobileMenuItem = styled(Link)`
   color: #ffffff;
   text-decoration: none;
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center;
 `;
 
