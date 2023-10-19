@@ -7,6 +7,7 @@ import ImageUpload from "../imageUpload/ImageUpload";
 import TutorEdit from "./editPages/TutorEdit";
 import PasswordEdit from "./editPages/PasswordEdit";
 import NameEdit from "./editPages/NameEdit";
+import SeeReviews from "./editPages/seeReviews";
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -64,10 +65,10 @@ const UserProfile = () => {
         navigate("/messages");
     }
 
-    const handleSeeReviews = async () => {
+    /*const handleSeeReviews = async () => {
         //TODO: navigate to the reviews page or something.
         //ask ava what she wants to do here
-    }
+    }*/
 
     return (
         <div className="profile-container">
@@ -83,9 +84,10 @@ const UserProfile = () => {
                             <button className={`profile-edit-button ${editPage === "upload" ? "pressed" : ""}`} onClick={() => { setEditPage("upload") }}>Upload Image</button>
                             <button className={`profile-edit-button ${editPage === "name" ? "pressed" : ""}`} onClick={() => { setEditPage("name") }}>Update Username</button>
                             <button className={`profile-edit-button ${editPage === "password" ? "pressed" : ""}`} onClick={() => { setEditPage("password") }}>Update Password</button>
+                            <button className={`profile-edit-button ${editPage === "reviews" ? "pressed" : ""}`} onClick={() => { setEditPage("reviews") }}>See Reviews</button>
                             <button className={`profile-edit-button post-button`} onClick={handleCreatePost}>Create Post</button>
                             {(cookie.get("isTutor") === 1) && <button className={`profile-edit-button post-button`} onClick={handleSeeMessages}>See Messages</button>}
-                            {(cookie.get("isTutor") === 1) && <button className={`profile-edit-button post-button`} onClick={handleSeeReviews}>See Reviews</button>}
+                            {/*(cookie.get("isTutor") === 1) && <button className={`profile-edit-button post-button`} onClick={handleSeeReviews}>See Reviews</button>*/}
                         </div>
 
                     </div>
@@ -93,6 +95,7 @@ const UserProfile = () => {
                         {editPage === "tutor" && <TutorEdit isTutor={false} />}
                         {editPage === "name" && <NameEdit />}
                         {editPage === "password" && <PasswordEdit />}
+                        {editPage === "reviews" && <SeeReviews />}
                         {editPage === "edit-tutor" && <TutorEdit isTutor={true} />}
                         {editPage === "upload" && <ImageUpload />}
                     </div>
