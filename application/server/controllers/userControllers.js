@@ -52,7 +52,7 @@ const register = async (req, res) => {
   //get the username and password out of the request
   const username = req.body.username;
   const password = req.body.password;
-  const isTutor = req.body.isTutor;
+  const isTutor = 0;
   console.log(username, password, isTutor);
   const saltRounds = 10; //for password hashing
   let q = "SELECT * FROM users WHERE username = ?";
@@ -445,7 +445,7 @@ const deleteAccount = async (req, res) => {
   }
 }
 
-const becomeTutor = async (req, res) => {
+/*const becomeTutor = async (req, res) => {
   const { userId } = req.body;
   let q = `UPDATE users SET istutor = 1 WHERE id = ?`;
   try {
@@ -475,7 +475,7 @@ const becomeTutor = async (req, res) => {
   } catch (err) {
     console.log("error getting user data: " + err);
   }
-}
+}*/
 
 const submitReview = async (req, res) => {
   let date = new Date();
@@ -545,7 +545,6 @@ module.exports = {
   getTutorSubjects,
   searchTutors,
   deleteAccount,
-  becomeTutor,
   submitReview,
   createPost,
   searchPosts,
