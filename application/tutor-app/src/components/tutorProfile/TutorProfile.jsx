@@ -35,11 +35,9 @@ const TutorProfile = () => {
             setPostData({ ...result.data.postData });
 
             //load the user's data
-            if (cookie.get("userName") !== null) {
-                const userName = cookie.get("userName");
-                const userResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, { username: userName }, { withCredentials: true });
+            if (postData.username !== null) {
+                const userResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, { username: postData.username }, { withCredentials: true });
                 if (!userResult.data.success) {
-                    console.log(userResult.data.errorMessage);
                     return;
                 }
                 if (userResult.data.userData[0] && userResult.data.userData[0].courses) {
