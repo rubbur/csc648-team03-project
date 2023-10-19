@@ -49,47 +49,52 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  //get the username and password out of the request
+  // Get the username and password out of the request
   const username = req.body.username;
   const password = req.body.password;
   const isTutor = 0;
-  console.log(username, password, isTutor);
-  const saltRounds = 10; //for password hashing
-  let q = "SELECT * FROM users WHERE username = ?";
-  //verify that the username is available
+  const saltRounds = 10; // for password hashing
+
+  // Verify that the username is available
   try {
-    const usernameQuery = await db.query(q, [username]);
-    //if there already exists a user in the table then this username is not available
-    if (usernameQuery[0].length != 0) {
+    const usernameQuery = await db.query("SELECT * FROM users WHERE username = ?", [username]);
+
+    // If there already exists a user in the table, then this username is not available
+    if (usernameQuery[0].length !== 0) {
       res.send({ success: false, error: "username is taken already" });
       return;
     }
-    //hash the password before putting it in the database
+
+    // Hash the password before putting it in the database
     bcrypt.hash(password, saltRounds, async function (err, hash) {
-      // Store hash in your password DB.
       if (err) {
-        console.log("error when trying to hash the password" + password);
+        console.log("error when trying to hash the password: " + password);
         res.send({ success: false, error: err });
       }
-      try {
-        //store the new user in the database
-        q = "INSERT INTO users (username, hashed_password, istutor) VALUES (?, ?, ?)";
-        const result = await db.query(q, [username, hash, isTutor]);
-        console.log("User inserted successfully!");
-        req.session.isLoggedIn = true;
-        res.send({ success: true, username: username, isTutor: isTutor });
-      }
-      catch (err) {
-        console.log("error inserting user");
-      }
 
+      try {
+        // Store the new user in the database
+        const result = await db.query("INSERT INTO users (username, hashed_password, istutor) VALUES (?, ?, ?)", [username, hash, isTutor]);
+        console.log("User inserted successfully!");
+
+        // Query the user's id from the database
+        const userQuery = await db.query("SELECT id FROM users WHERE username = ?", [username]);
+        const userId = userQuery[0][0].id;
+
+        // Set the user's id in the cookie
+        req.session.isLoggedIn = true;
+        res.send({ success: true, username: username, isTutor: isTutor, userId: userId });
+      } catch (err) {
+        console.log("error inserting user");
+        res.send({ success: false, error: err });
+      }
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
     res.send({ success: false, error: error });
   }
-}
+};
+
 
 
 const editPassword = async (req, res) => {
@@ -195,6 +200,7 @@ const getUserData = async (req, res) => {
       return;
     }
     else {
+      console.log("userData: ", userData[0][0]);
       res.send({ success: true, userData: userData[0] });
     }
 

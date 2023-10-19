@@ -38,23 +38,28 @@ function SignUp() {
 
     if (!acceptTerms) {
       alert("Please accept the terms of service");
-      // don't send request to backend if terms not accepted
+      // Don't send the request to the backend if terms are not accepted
       return;
     }
 
-    // send email and password to backend
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/register`,
+    // Send email and password to the backend
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/user/register`,
       { username: username, password: password },
       { withCredentials: true }
     );
     console.log(response.data);
     setUsername("");
     setPassword("");
+
     if (response.data.success) {
-      //user successfully registered
+      // User successfully registered
+      const { userId, username } = response.data;
+
+      // Set user data in the cookie
       cookie.set("isLoggedIn", true);
-      cookie.set("userName", response.data.username);
-      cookie.set("userId", response.data.userId);
+      cookie.set("userName", username);
+      cookie.set("userId", userId);
 
       console.log(cookie.get("userName"));
       console.log(cookie.get("isLoggedIn"));
@@ -71,12 +76,12 @@ function SignUp() {
           {
             recipientId: unsentMessageRecipientId,
             message: unsentMessage,
-            senderId: cookie.get("userId"),
+            senderId: userId, // Use the retrieved userId
             postId: unsentMessagePostId
           },
           { withCredentials: true }
         );
-        console.log("sent unsent message: " + result.data);
+        console.log("Sent unsent message: " + result.data);
         localStorage.removeItem("unsentMessage");
         localStorage.removeItem("unsentMessageRecipientId");
         localStorage.removeItem("unsentMessagePostId");

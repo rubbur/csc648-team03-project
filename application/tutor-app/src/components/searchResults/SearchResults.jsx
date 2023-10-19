@@ -81,8 +81,8 @@ const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId }) => {
             localStorage.setItem("unsentMessageRecipientId", tutorId);
             localStorage.setItem("unsentMessagePostId", postId);
             // Redirect to the signup page
-            alert("You need to be logged in to contact a tutor. You will be redirected to sign up.");
-            window.location.href = "/SignUp";
+            alert("You need to be logged in to contact a tutor. You will be redirected to sign in.");
+            window.location.href = "/SignIn";
             return;
         }
 
