@@ -4,21 +4,21 @@
 $image-dimension: 300px;
 
 
-.tutor-profile{
+.tutor-profile {
     display: flex;
     flex-direction: row;
     width: 100%;
     color: white;
 }
 
-.main-content{
+.main-content {
     width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 }
 
-.image-subjects-box{
+.image-subjects-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,19 +29,19 @@ $image-dimension: 300px;
     background-color: #282828;
 }
 
-.image-subjects-box img{
+.image-subjects-box img {
     width: $image-dimension;
     height: $image-dimension;
 }
 
-.image-subjects-box > .subject-list{
+.image-subjects-box>.subject-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     background-color: #282828;
 }
 
-.subject-list p{
+.subject-list p {
     border-radius: 10%;
     margin-left: 30px;
     color: $text-color;
@@ -49,44 +49,45 @@ $image-dimension: 300px;
     padding: 10px;
 }
 
-.username-rating-box{
+.username-rating-box {
     width: 100%;
     background-color: #99610d;
     display: flex;
     flex-direction: column;
 }
 
-#review-showing-p{
+#review-showing-p {
     margin-left: 10px;
 }
 
-.username-rating-box > h1{
+.username-rating-box>h1 {
     color: $text-color;
     font-size: 50px;
     text-align: center;
-    justify-content:space-around;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     position: relative;
     top: -30%;
 }
 
-.username-rating-box h2{
+.username-rating-box h2 {
     color: $text-color;
     font-size: 50px;
-    text-align:left;
+    text-align: left;
     margin-left: 30px;
 }
 
-#subject-banner{
+#subject-banner {
     background-color: grey;
     color: white;
     width: 100%;
     padding: 10px 0px 10px 0px;
     text-align: center;
-    
+
 }
-.rating-p{
+
+.rating-p {
     font-size: 30px;
     top: -30px;
     position: relative;
@@ -136,4 +137,27 @@ $image-dimension: 300px;
     align-items: center;
     text-align: center;
     overflow-wrap: break-word;
+    margin-bottom: 100px;
+}
+
+.file-box {
+    text-align: center;
+    margin: auto;
+    padding-bottom: 20px;
+    height: 100vh;
+    width: 90%;
+}
+
+.file-box>object {
+    height: 90%;
+}
+
+.video-box {
+    text-align: center;
+}
+
+.video-box>video {
+    margin: auto;
+    height: 50vh;
+    width: auto;
 }

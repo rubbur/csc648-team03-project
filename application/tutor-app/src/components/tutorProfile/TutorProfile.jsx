@@ -189,7 +189,7 @@ const TutorProfile = () => {
                 {postData.video_url && (
                     <div className="video-box">
                         <h2>Video</h2>
-                        <video width="100%" controls>
+                        <video controls>
                             <source src={postData.video_url} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
