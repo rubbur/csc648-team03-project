@@ -16,6 +16,8 @@ const TutorProfile = () => {
     const [starArray, setStarArray] = useState([false, false, false, false, false]);
     const [avgReview, setAvgReview] = useState(0);
     const [showAllReviews, setShowAllReviews] = useState(false);
+    const [courses, setCourses] = useState([]);
+
     useEffect(() => {
 
         //get the post id from the url query string
@@ -31,6 +33,20 @@ const TutorProfile = () => {
             }
 
             setPostData({ ...result.data.postData });
+
+            //load the user's data
+            if (cookie.get("userName") !== null) {
+                const userName = cookie.get("userName");
+                const userResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, { username: userName }, { withCredentials: true });
+                if (!userResult.data.success) {
+                    console.log(userResult.data.errorMessage);
+                    return;
+                }
+                if (userResult.data.userData[0] && userResult.data.userData[0].courses) {
+                    setCourses(userResult.data.userData[0].courses);
+                }
+            }
+
 
             //get the tutor's reviews
             const reviewResults = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`, { id: result.data.postData.tutor_id }, { withCredentials: true });
@@ -102,6 +118,7 @@ const TutorProfile = () => {
                 <div className="image-subjects-box">
                     <img src={postData.img_url} alt={`profile pic of ${postData.username}`} />
                     <p id="subject-banner">{postData.subject} Tutor</p>
+                    <p>Courses offered: {courses !== null && (courses)}</p>
                 </div>
                 <div className="contact-review-controls">
                     <button className=" controls-button contact-button" onClick={handleContact}>Contact</button>
