@@ -21,7 +21,6 @@ const UserProfile = () => {
         setUserName(cookie.get("userName"));
     }, []);
     useEffect(() => {
-        console.log("in the use effect");
         const loadUserData = async () => {
             //get the user data from the database
 
@@ -31,9 +30,7 @@ const UserProfile = () => {
                 // navigate("/");
             }
             else {
-                console.log(data.data.userData);
                 setUserData({ ...data.data.userData[0] });
-                console.log(JSON.stringify(data.data.userData[0]));
             }
         }
         loadUserData();

@@ -21,23 +21,27 @@ const getTutorReviews = async (req, res) => {
 
 const getPostById = async (req, res) => {
     const { postId } = req.body;
-    console.log("getting post with post id: " + postId);
     const q = "SELECT tutor_posts.*, users.img_url, users.username FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE tutor_posts.post_id = ?";
     try {
         const posts = await db.query(q, [postId]);
-        res.send({ success: true, postData: posts[0][0] });
+        if (posts[0].length > 0) {
+            res.send({ success: true, postData: posts[0] });
+        } else {
+            res.send({ success: false, error: "Post not found" });
+            console.log("Post not found.");
+        }
     } catch (err) {
-        console.log("error retrieving posts for tutor with id: " + postId + " error: " + err);
+        console.log("Error retrieving posts for tutor with id: " + postId + " error: " + err);
+        res.send({ success: false, error: err });
     }
 }
 
+
 const getPostByTutorId = async (req, res) => {
     const { tutorId } = req.body;
-    console.log("the tutorId is " + tutorId);
     const q = "SELECT subject, post_id, hourly_rate FROM tutor_posts WHERE tutor_posts.tutor_id = ?";
     try {
         const posts = await db.query(q, [tutorId]);
-        console.log(posts[0]);
         res.send({ success: true, postData: posts[0] });
     } catch (err) {
         console.log("error retrieving posts for tutor with id: " + tutorId + " error: " + err);

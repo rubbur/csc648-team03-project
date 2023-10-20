@@ -208,6 +208,37 @@ const getUserData = async (req, res) => {
   }
 }
 
+const getUserDataById = async (req, res) => {
+  const userId = req.body.userId;
+  //get the user from the database
+  try {
+    const q = "SELECT * FROM users WHERE id = ?";
+    const userData = await db.query(q, [userId]);
+    if (userData[0].length == 0) {
+      res.send({ success: false, error: "user does not exist in database" });
+      return;
+    }
+    else {
+      res.send({ success: true, userData: userData[0] });
+    }
+  }
+  catch (err) {
+    console.log("error getting user data: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
+const getConversations = async (req, res) => {
+  const { userId } = req.body;
+  const q = "SELECT * FROM messages WHERE sender_id = ? OR recipient_id = ? ORDER BY date_stamp DESC";
+  try {
+    const messages = await db.query(q, [userId, userId]);
+    res.send({ success: true, messages: messages[0] });
+  } catch (err) {
+    console.log("error getting messages: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
 
 
 //given a name or a fragment of a name, if nothing goes wrong returns object that looks like: 
@@ -555,6 +586,7 @@ module.exports = {
   searchByName,
   uploadImage,
   getUserData,
+  getUserDataById,
   editUsername,
   editPassword,
   editTutorAbilities,
@@ -565,5 +597,6 @@ module.exports = {
   createPost,
   searchPosts,
   sendMessage,
-  setIsTutor
+  setIsTutor,
+  getConversations
 };

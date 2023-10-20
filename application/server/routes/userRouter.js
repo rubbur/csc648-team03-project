@@ -8,6 +8,7 @@ const {
     searchByName,
     uploadImage,
     getUserData,
+    getUserDataById,
     editUsername,
     editPassword,
     editTutorAbilities,
@@ -18,7 +19,8 @@ const {
     createPost,
     searchPosts,
     sendMessage,
-    setIsTutor
+    setIsTutor,
+    getConversations
 } = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 
@@ -58,5 +60,9 @@ userRouter.post("/searchPosts", searchPosts);
 userRouter.post("/sendMessage", isLoggedIn, sendMessage);
 
 userRouter.post("/setIsTutor", isLoggedIn, setIsTutor);
+
+userRouter.post("/getConversations", isLoggedIn, getConversations);
+
+userRouter.post("/getUserDataById", isLoggedIn, getUserDataById);
 
 module.exports = userRouter;

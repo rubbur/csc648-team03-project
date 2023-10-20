@@ -4,8 +4,7 @@ import "./tutorProfile.scss";
 import { cookie } from "../../App";
 import ReviewCard from "./ReviewCard";
 import Modal from 'react-modal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const TutorProfile = () => {
     const initialReviewNum = 2;
@@ -22,28 +21,47 @@ const TutorProfile = () => {
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-
-        //get the post id from the url query string
-        const urlParams = new URLSearchParams(window.location.search);
-        const postId = urlParams.get('postId');
-
         const getPostData = async () => {
-            //load the tutor's post data
-            const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getPostById`, { postId: postId }, { withCredentials: true });
-            if (!result.data.success) {
-                console.log(result.data.errorMessage);
-                return;
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('postId');
+
+            try {
+                const postResponse = await axios.post(
+                    `${process.env.REACT_APP_BACKEND_URL}/tutor/getPostById`,
+                    { postId },
+                    { withCredentials: true }
+                );
+
+                if (!postResponse.data.success) {
+                    console.log(postResponse.data.errorMessage);
+                    return;
+                }
+
+                const postDataArray = postResponse.data.postData;
+                if (postDataArray.length > 0) {
+                    const postData = postDataArray[0]; // Access the first item in the array
+                    setPostData({ ...postData });
+
+                    if (postData.flier_url !== "null" && postData.flier_url !== null) {
+                        setHasFlier(true);
+                    }
+                    if (postData.cv_url !== "null" && postData.cv_url !== null) {
+                        setHasCv(true);
+                    }
+                    if (postData.video_url !== "null" && postData.video_url !== null) {
+                        setHasVideo(true);
+                    }
+                } else {
+                    console.log("Post not found.");
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
             }
+        }
 
-            console.log(result.data.postData);
-            if (result.data.postData.flier_url !== "null" && result.data.postData.flier_url !== null) setHasFlier(true);
-            if (result.data.postData.cv_url !== "null" && result.data.postData.cv_url !== null) setHasCv(true);
-            if (result.data.postData.video_url !== "null" && result.data.postData.video_url !== null) setHasVideo(true);
-
-            setPostData({ ...result.data.postData });
-
+        const getReviews = async () => {
             //get the tutor's reviews
-            const reviewResults = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`, { id: result.data.postData.tutor_id }, { withCredentials: true });
+            const reviewResults = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`, { id: postData.tutor_id }, { withCredentials: true });
             if (!reviewResults.data.success) {
                 console.log(reviewResults.data.errorMessage);
                 return;
@@ -64,18 +82,24 @@ const TutorProfile = () => {
         }
 
         const getUserData = async () => {
-            console.log("USERNAME: " + postData.username);
             if (postData.username) {
+                try {
+                    const userResponse = await axios.post(
+                        `${process.env.REACT_APP_BACKEND_URL}/user/getUserData`,
+                        { username: postData.username },
+                        { withCredentials: true }
+                    );
 
-                const userResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, { username: postData.username }, { withCredentials: true });
-                if (!userResult.data.success) {
-                    return;
-                }
-
-                if (userResult.data.userData[0] && userResult.data.userData[0].courses) {
-                    setCourses(userResult.data.userData[0].courses.toUpperCase());
-                } else {
-                    setCourses([]);
+                    if (userResponse.data.success) {
+                        const userData = userResponse.data.userData[0];
+                        if (userData && userData.courses) {
+                            setCourses(userData.courses.toUpperCase());
+                        } else {
+                            setCourses([]);
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
                 }
             }
         }
@@ -85,11 +109,11 @@ const TutorProfile = () => {
         }
         if (postData.username) {
             getUserData();
-            console.log("has flier: " + hasFlier);
-            console.log("has cv: " + hasCv);
-            console.log("has video: " + hasVideo);
         }
-    }, [postData.username]);
+        if (postData.tutor_id) {
+            getReviews();
+        }
+    }, [postData.username, hasFlier, hasCv, hasVideo]);
 
     const handleContact = () => {
         if (cookie.get("isLoggedIn") === "false") {
@@ -153,6 +177,7 @@ const TutorProfile = () => {
                                 return (
                                     <ReviewCard key={index} review={review} />
                                 )
+                            else return null;
                         })
                     }
                     {reviewList.length > initialReviewNum && !showAllReviews && <button className="show-all-reviews-button" onClick={() => setShowAllReviews(true)}>See All Reviews</button>}
