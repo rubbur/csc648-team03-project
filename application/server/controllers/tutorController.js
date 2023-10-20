@@ -26,9 +26,7 @@ const getPostById = async (req, res) => {
     try {
         const posts = await db.query(q, [postId]);
         if (posts[0].length > 0) {
-            res.send({ success: true, postData: posts[0][0] });
-            //console.log("Post data retrieved: ", posts[0][0]);
-            console.log("subject retrieved: " + posts[0][0].subject);
+            res.send({ success: true, postData: posts[0] });
         } else {
             res.send({ success: false, error: "Post not found" });
             console.log("Post not found.");

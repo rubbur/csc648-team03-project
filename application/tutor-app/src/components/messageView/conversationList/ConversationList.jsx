@@ -11,7 +11,6 @@ const ConversationList = () => {
     useEffect(() => {
         const fetchConversations = async () => {
             try {
-                console.log("Fetching conversations for user: " + userId);
                 const response = await axios.post(
                     `${process.env.REACT_APP_BACKEND_URL}/user/getConversations`,
                     { userId },
@@ -29,7 +28,6 @@ const ConversationList = () => {
                     });
 
                     setConvoList(updatedConvoList);
-                    console.log(response.data.messages[0].message_text);
                 } else {
                     console.log("Error fetching conversations: " + response.data.errorMessage);
                 }
@@ -40,14 +38,12 @@ const ConversationList = () => {
 
         const fetchDataForConvo = async (convo) => {
             try {
-                console.log("Fetching username for user: " + convo.otherPersonId);
                 const usernameResponse = await axios.post(
                     `${process.env.REACT_APP_BACKEND_URL}/user/getUserDataById`,
                     { userId: convo.otherPersonId },
                     { withCredentials: true }
                 );
 
-                console.log("Fetching post subject for post: " + convo.post_id);
                 const postResponse = await axios.post(
                     `${process.env.REACT_APP_BACKEND_URL}/tutor/getPostById`,
                     { postId: convo.post_id },
@@ -57,7 +53,6 @@ const ConversationList = () => {
                 if (usernameResponse.data.success) {
                     if (usernameResponse.data.userData.length > 0) {
                         convo.otherPersonUsername = usernameResponse.data.userData[0].username;
-                        console.log("Username fetched: " + usernameResponse.data.userData[0].username);
                         convo.img_url = usernameResponse.data.userData[0].img_url;
                     } else {
                         console.log("No user data found.");
@@ -67,8 +62,11 @@ const ConversationList = () => {
                 }
 
                 if (postResponse.data.success) {
-                    convo.postSubject = postResponse.data.postData[0];
-                    console.log("Post subject fetched: " + postResponse.data.postData[0]);
+                    if (postResponse.data.postData.length > 0) {
+                        convo.postSubject = postResponse.data.postData[0].subject;
+                    } else {
+                        console.log("No post data found.");
+                    }
                 } else {
                     console.log("Error fetching post subject: " + postResponse.data.errorMessage);
                 }
@@ -93,7 +91,7 @@ const ConversationList = () => {
         if (convoList.length > 0) {
             updateConvoListData();
         }
-    }, [userId, convoList.length]);
+    }, [userId, convoList.length, convoList.postSubject]);
 
     return (
         <div className="ConversationList">
