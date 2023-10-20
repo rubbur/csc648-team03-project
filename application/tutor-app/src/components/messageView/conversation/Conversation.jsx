@@ -1,14 +1,13 @@
 import "./conversation.scss";
 
-const Conversation = ({ conversation }) => {
-    // You can access the details from the conversation object
-    const { key, name, postSubject } = conversation;
-
+const Conversation = ({ img_url, name, postSubject }) => {
     return (
-        <div className="Conversation">
-            <p>{key}</p>
-            <p>{name}</p>
-            <p>{postSubject}</p>
+        <div className="ConversationContainer">
+            <div className="Conversation">
+                <img src={process.env.PUBLIC_URL + img_url} alt={name + "'s profile picture"} />
+                <p>{name}</p>
+                <p>{postSubject}</p>
+            </div>
         </div>
     );
 };

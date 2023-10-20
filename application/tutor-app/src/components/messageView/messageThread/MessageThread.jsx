@@ -8,7 +8,7 @@ const MessageThread = ({ }) => {
     return (
 
         <div className="MessageThread">
-            <h1>Message Thread</h1>
+            <h1>Message Threads</h1>
 
         </div>
 

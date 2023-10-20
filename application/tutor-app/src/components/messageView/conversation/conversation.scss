@@ -1,9 +1,17 @@
 @import "../../../colorScheme.scss";
 
+.ConversationContainer {
+    width: 90%;
+}
+
 .Conversation {
     display: flex;
+    flex-direction: column;
     border: solid black 3px;
     justify-content: space-around;
     background-color: $accent-color;
-    width: 40%;
+    width: 90%;
+    padding: 0 5% 0 5%;
+    margin-bottom: 20px;
+    color: black;
 }
