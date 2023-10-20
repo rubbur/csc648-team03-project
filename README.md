@@ -21,5 +21,5 @@
 | Cleveland Plonsey     |       cplonsey1@sfsu.edu        |      CleveyP           |
 | Danial Tahir     |       dtahir@sfsu.edu        |        DanTahir         |
 | Michael Mathews      |       mmathews1@sfsu.edu        |      rubbur           |
-
+-----
 ## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
