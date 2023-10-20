@@ -25,6 +25,7 @@ import { faHouse, faStar, faMagnifyingGlass, faGear, faRightFromBracket, faPlus,
 import { faStar as Star, faMessage } from '@fortawesome/free-regular-svg-icons'
 // import CreatePost from './components/userProfile/editPages/CreatePost';
 import CreatePost from './components/userProfile/editPages/CreatePost';
+import MessageView from './components/messageView/MessageView';
 
 library.add(fab, Star, faStar, faPlus, faHouse, faRightFromBracket, faMagnifyingGlass, faGear, faMessage, faEnvelope, faCircleInfo);
 
@@ -36,6 +37,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/Messages' element={<MessageView />} />
         <Route path='/searchResults' element={<SearchResults />} />
         <Route path='/tutorProfile' element={<TutorProfile />} />
         <Route path='/AdminPanel' element={< Admin />} />
