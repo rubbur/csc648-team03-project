@@ -9,9 +9,20 @@
     flex-direction: column;
     border: solid black 3px;
     justify-content: space-around;
+    text-align: center;
     background-color: $accent-color;
-    width: 90%;
+    width: 80%;
     padding: 0 5% 0 5%;
     margin-bottom: 20px;
     color: black;
+}
+
+.user-container {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: bold;
 }

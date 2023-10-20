@@ -6,9 +6,6 @@ import { cookie } from "../../../App";
 
 const ConversationList = () => {
     const [convoList, setConvoList] = useState([]);
-    const [otherPersonUsername, setOtherPersonUsername] = useState("");
-    const [otherPersonId, setOtherPersonId] = useState("");
-    const [postSubject, setPostSubject] = useState("");
     const userId = cookie.get('userId');
 
     useEffect(() => {
@@ -21,12 +18,17 @@ const ConversationList = () => {
                     { withCredentials: true }
                 );
                 if (response.data.success) {
-                    setConvoList(response.data.messages);
-                    if (response.data.messages[0].sender_id === userId) {
-                        setOtherPersonId(response.data.messages[0].recipient_id);
-                    } else {
-                        setOtherPersonId(response.data.messages[0].sender_id);
-                    }
+                    // Set otherPersonId for each conversation in the list
+                    const updatedConvoList = response.data.messages.map((convo) => {
+                        if (convo.sender_id === userId) {
+                            convo.otherPersonId = convo.recipient_id;
+                        } else {
+                            convo.otherPersonId = convo.sender_id;
+                        }
+                        return convo;
+                    });
+
+                    setConvoList(updatedConvoList);
                     console.log(response.data.messages[0].message_text);
                 } else {
                     console.log("Error fetching conversations: " + response.data.errorMessage);
@@ -36,66 +38,73 @@ const ConversationList = () => {
             }
         };
 
-        const getUsername = async () => {
+        const fetchDataForConvo = async (convo) => {
             try {
-                console.log("Fetching username for user: " + otherPersonId);
-                const response = await axios.post(
+                console.log("Fetching username for user: " + convo.otherPersonId);
+                const usernameResponse = await axios.post(
                     `${process.env.REACT_APP_BACKEND_URL}/user/getUserDataById`,
-                    { userId: otherPersonId },
+                    { userId: convo.otherPersonId },
                     { withCredentials: true }
                 );
-                if (response.data.success) {
-                    if (Array.isArray(response.data.userData) && response.data.userData.length > 0) {
-                        setOtherPersonUsername(response.data.userData[0].username);
-                        console.log("Username fetched: " + response.data.userData[0].username);
+
+                console.log("Fetching post subject for post: " + convo.post_id);
+                const postResponse = await axios.post(
+                    `${process.env.REACT_APP_BACKEND_URL}/tutor/getPostById`,
+                    { postId: convo.post_id },
+                    { withCredentials: true }
+                );
+
+                if (usernameResponse.data.success) {
+                    if (usernameResponse.data.userData.length > 0) {
+                        convo.otherPersonUsername = usernameResponse.data.userData[0].username;
+                        console.log("Username fetched: " + usernameResponse.data.userData[0].username);
                     } else {
                         console.log("No user data found.");
                     }
                 } else {
-                    console.log("Error fetching username: " + response.data.errorMessage);
+                    console.log("Error fetching username: " + usernameResponse.data.errorMessage);
                 }
+
+                if (postResponse.data.success) {
+                    convo.postSubject = postResponse.data.postData[0];
+                    console.log("Post subject fetched: " + postResponse.data.postData[0]);
+                } else {
+                    console.log("Error fetching post subject: " + postResponse.data.errorMessage);
+                }
+
+                return convo;
             } catch (error) {
-                console.error("Error fetching username:", error);
+                console.error("Error fetching data:", error);
+                return convo;
             }
         };
 
-        const getPostSubject = async () => {
-            if (convoList.length > 0) {
-                try {
-                    console.log("Fetching post subject for post: " + convoList[0].post_id);
-                    const response = await axios.post(
-                        `${process.env.REACT_APP_BACKEND_URL}/tutor/getPostById`,
-                        { postId: 66 },
-                        { withCredentials: true }
-                    );
-                    console.log("SUCCESS");
-                    if (response.data.success) {
-                        setPostSubject(response.data.postData[0]);
-                        console.log("Post subject fetched with id " + "66" + ": " + response.data.postData[0]);
-                    } else {
-                        console.log("Error fetching post subject: " + response.data.errorMessage);
-                    }
-                } catch (error) {
-                    console.error("Error fetching post:", error);
-                }
+        const updateConvoListData = async () => {
+            const updatedConvoList = [];
+            for (const convo of convoList) {
+                const updatedConvo = await fetchDataForConvo(convo);
+                updatedConvoList.push(updatedConvo);
             }
+            setConvoList(updatedConvoList);
         };
 
         fetchConversations();
-        getUsername();
-        getPostSubject();
-        // print all elements of convoList
-        convoList.forEach((convo) => {
-            console.log(convo);
+        if (convoList.length > 0) {
+            updateConvoListData();
         }
-        );
-    }, [userId, otherPersonId]);
+    }, [userId]);
 
     return (
         <div className="ConversationList">
             <h1>{cookie.get("userName")}'s Conversations</h1>
             {convoList.map((convo) => (
-                <Conversation message_id={convo.message_id} img_url={convo.img_url} name={otherPersonUsername} postSubject={convo.message_text} />
+                <Conversation
+                    key={convo.message_id}
+                    message_id={convo.message_id}
+                    img_url={convo.img_url}
+                    name={convo.otherPersonUsername}
+                    postSubject={convo.postSubject}
+                />
             ))}
         </div>
     );
