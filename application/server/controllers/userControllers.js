@@ -171,12 +171,12 @@ const logout = async (req, res) => {
 }
 
 const createPost = async (req, res) => {
-  const { tutor_id, subject, description, hourly_rate } = req.body;
+  const { tutor_id, subject, description, hourly_rate, name } = req.body;
   const isPending = 1;
 
-  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, hourly_rate, is_pending) VALUES (?, ?, ?, ?, ?)";
+  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, hourly_rate, name, is_pending) VALUES (?, ?, ?, ?, ?, ?)";
   try {
-    const result = await db.query(q, [tutor_id, subject, description, hourly_rate, isPending]);
+    const result = await db.query(q, [tutor_id, subject, description, hourly_rate, name, isPending]);
     const postId = result[0].insertId;
     console.log("Post inserted successfully. postid: " + postId);
     res.send({ success: true, postId }); // Include the postId in the response

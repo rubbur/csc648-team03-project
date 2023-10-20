@@ -129,6 +129,8 @@ const Navbar = () => {
       <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
         <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' onClick={hideMobileMenu} /></Link>
+        <p className="disclaimer-p"><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration Only.</em></p>
+        <hr className="disclaimer-p"></hr>
         <NavMenu>
           <NavLink to="/"><Logo src='/images/logo.png' alt='Logo' /></NavLink>
           <SearchBar />
@@ -142,8 +144,6 @@ const Navbar = () => {
           {cookie.get("isLoggedIn") && <NavLink to="/Messages"><h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1></NavLink>}
           {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{"Hi, " + userName}</h1></NavLink>}
         </NavMenu>
-        <hr className="disclaimer-p"></hr>
-        <p className="disclaimer-p"><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration </em></p>
       </Nav>
 
 
