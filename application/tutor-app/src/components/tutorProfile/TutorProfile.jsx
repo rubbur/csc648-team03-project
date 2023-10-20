@@ -64,7 +64,6 @@ const TutorProfile = () => {
         }
 
         const getUserData = async () => {
-            console.log("USERNAME: " + postData.username);
             if (postData.username) {
 
                 const userResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getUserData`, { username: postData.username }, { withCredentials: true });
@@ -85,9 +84,6 @@ const TutorProfile = () => {
         }
         if (postData.username) {
             getUserData();
-            console.log("has flier: " + hasFlier);
-            console.log("has cv: " + hasCv);
-            console.log("has video: " + hasVideo);
         }
     }, [postData.username, hasFlier, hasCv, hasVideo]);
 

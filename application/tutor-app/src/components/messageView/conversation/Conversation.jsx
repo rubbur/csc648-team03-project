@@ -1,27 +1,16 @@
-import "./conversation.scss"
+import "./conversation.scss";
 
-const Conversation = ({name, postSubject}) =>  {
+const Conversation = ({ conversation }) => {
+    // You can access the details from the conversation object
+    const { key, name, postSubject } = conversation;
 
     return (
         <div className="Conversation">
-            <p>
-            {
-                name
-            }
-            </p>
-
-            <p>
-            {
-                postSubject
-            }
-            </p>
-
-
+            <p>{key}</p>
+            <p>{name}</p>
+            <p>{postSubject}</p>
         </div>
+    );
+};
 
-
-    )
-
-
-}
-export default Conversation
+export default Conversation;

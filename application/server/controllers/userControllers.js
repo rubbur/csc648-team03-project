@@ -208,6 +208,26 @@ const getUserData = async (req, res) => {
   }
 }
 
+const getUserDataById = async (req, res) => {
+  const userId = req.body.userId;
+  //get the user from the database
+  try {
+    const q = "SELECT * FROM users WHERE id = ?";
+    const userData = await db.query(q, [userId]);
+    if (userData[0].length == 0) {
+      res.send({ success: false, error: "user does not exist in database" });
+      return;
+    }
+    else {
+      res.send({ success: true, userData: userData[0] });
+    }
+  }
+  catch (err) {
+    console.log("error getting user data: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
 const getConversations = async (req, res) => {
   const { userId } = req.body;
   const q = "SELECT * FROM messages WHERE sender_id = ? OR recipient_id = ? ORDER BY date_stamp DESC";
@@ -566,6 +586,7 @@ module.exports = {
   searchByName,
   uploadImage,
   getUserData,
+  getUserDataById,
   editUsername,
   editPassword,
   editTutorAbilities,
