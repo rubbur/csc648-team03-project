@@ -89,7 +89,7 @@ const TutorProfile = () => {
             console.log("has cv: " + hasCv);
             console.log("has video: " + hasVideo);
         }
-    }, [postData.username]);
+    }, [postData.username, hasFlier, hasCv, hasVideo]);
 
     const handleContact = () => {
         if (cookie.get("isLoggedIn") === "false") {
@@ -153,6 +153,7 @@ const TutorProfile = () => {
                                 return (
                                     <ReviewCard key={index} review={review} />
                                 )
+                            else return null;
                         })
                     }
                     {reviewList.length > initialReviewNum && !showAllReviews && <button className="show-all-reviews-button" onClick={() => setShowAllReviews(true)}>See All Reviews</button>}

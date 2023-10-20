@@ -1,19 +1,21 @@
 import { useState } from "react"
 import "./messageThread.scss"
 
-const MessageThread = ({}) => {
+const MessageThread = ({ }) => {
 
-const [messageList, setMessageList] = useState([])
+    const [messageList, setMessageList] = useState([])
 
-return (
+    return (
 
-    <div className="MessageThread">
+        <div className="MessageThread">
 
-    <h1></h1>
+            <h1></h1>
 
-    </div>
+        </div>
 
 
-)
+    )
 
 }
+
+export default MessageThread;
