@@ -15,6 +15,7 @@ const CreatePost = () => {
   const [videoFile, setVideoFile] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
+  const [name, setName] = useState(null);
   const subjectList = ["NOT SELECTED", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
 
   const handleClear = () => { // clear all the fields
@@ -24,6 +25,7 @@ const CreatePost = () => {
     setVideoFile(null);
     setSelectedSubject("NOT SELECTED");
     setHourlyRate(20);
+    setName(null);
 
     // remove the file names from the file inputs
     const fileInputs = document.querySelectorAll('input[type="file"]');
@@ -40,6 +42,7 @@ const CreatePost = () => {
       formData.append("tutor_id", cookie.get("userId"));
       formData.append("username", cookie.get("userName"));
       formData.append("subject", selectedSubject);
+      formData.append("name",name);
       formData.append("update_column", updateColumn);
 
       try {
@@ -84,6 +87,7 @@ const CreatePost = () => {
           subject: selectedSubject,
           description: postContent,
           hourly_rate: hourlyRate,
+          name: name,
         },
         {
           withCredentials: true,
@@ -140,6 +144,18 @@ const CreatePost = () => {
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}
         />
+      </div>
+      <div classname="upload-container">
+        <div className="upload-button-container">
+          <div className="upload-input">
+            <label>Your Name:</label>
+            <textarea
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+        </div>
+
       </div>
       <div className="upload-container">
         <div className="upload-button-container">

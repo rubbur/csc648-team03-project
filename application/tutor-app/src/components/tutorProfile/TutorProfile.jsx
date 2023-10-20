@@ -159,7 +159,7 @@ const TutorProfile = () => {
         <div className="tutor-profile">
             <div className="left-side-bar">
                 <div className="image-subjects-box">
-                    <img src={postData.img_url} alt={`profile pic of ${postData.username}`} />
+                    <img src={postData.img_url} alt={`profile pic of ${postData.name}`} />
                     <p id="subject-banner">{postData.subject} Tutor - Rate: ${postData.hourly_rate}</p>
                     <p>Courses offered: {courses || "None"}</p>
                 </div>
@@ -196,7 +196,7 @@ const TutorProfile = () => {
                         }
                         <FontAwesomeIcon icon={["fas", "star"]} className="star" /></p>
 
-                    <h1 className='tutor-header'>{postData.username}'s Post</h1>
+                    <h1 className='tutor-header'>{postData.name}'s Post</h1>
                 </div>
                 <div className="about-me-box">
                     <h2>About Me</h2>

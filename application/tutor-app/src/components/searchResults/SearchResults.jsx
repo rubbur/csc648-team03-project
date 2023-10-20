@@ -44,6 +44,7 @@ const SearchResults = () => {
                 {
                     resultsList.map((tutor, index) => {
                         return <UserResult username={tutor.username}
+                            name={tutor.name}
                             userId={tutor.tutor_id}
                             imgUrl={tutor.img_url}
                             key={index}
@@ -62,7 +63,7 @@ const SearchResults = () => {
 }
 
 
-const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId }) => {
+const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name }) => {
     const [isTyping, setIsTyping] = useState(false);
     const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
     const navigate = useNavigate(); //used to navigate to the tutor's profile page
@@ -104,7 +105,7 @@ const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId }) => {
         <div className="user-result">
             <div className="results-container">
                 <img className="user-img" src={imgUrl} alt="pic" />
-                <p>{username}</p>
+                <p>{name}</p>
                 <p>{subject}</p>
                 <p>{rate}</p>
                 <div className="search-button-container">
