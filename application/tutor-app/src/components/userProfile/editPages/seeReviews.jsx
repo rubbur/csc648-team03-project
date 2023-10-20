@@ -16,7 +16,6 @@ const SeeReviews = () => {
                     return;
                 }
                 setReviews([...reviewResults.data.reviews]);
-                console.log(reviewResults.data);
             } catch (error) {
                 console.error("Error fetching reviews:", error);
             }
