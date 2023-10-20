@@ -1,0 +1,10 @@
+@import "../../../colorScheme.scss";
+
+.Conversation{
+display: flex;
+border: solid black 3px;
+justify-content: space-around;
+background-color: $accent-color;
+
+}
+
