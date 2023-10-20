@@ -59,6 +59,28 @@ const TutorProfile = () => {
             }
         }
 
+        const getReviews = async () => {
+            //get the tutor's reviews
+            const reviewResults = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`, { id: postData.tutor_id }, { withCredentials: true });
+            if (!reviewResults.data.success) {
+                console.log(reviewResults.data.errorMessage);
+                return;
+            }
+            setReviewList([...reviewResults.data.reviews]);
+            //get the tutor's average review
+            let total = 0;
+            for (let i = 0; i < reviewResults.data.reviews.length; i++) {
+                total += Number(reviewResults.data.reviews[i].rating);
+            }
+            if (reviewResults.data.reviews.length > 0) {
+                total /= reviewResults.data.reviews.length;
+                setAvgReview(total.toFixed(1));
+            }
+            else {
+                setAvgReview("unrated");
+            }
+        }
+
         const getUserData = async () => {
             if (postData.username) {
                 try {
@@ -87,6 +109,9 @@ const TutorProfile = () => {
         }
         if (postData.username) {
             getUserData();
+        }
+        if (postData.tutor_id) {
+            getReviews();
         }
     }, [postData.username, hasFlier, hasCv, hasVideo]);
 
