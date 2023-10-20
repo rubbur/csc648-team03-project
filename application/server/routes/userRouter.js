@@ -59,4 +59,6 @@ userRouter.post("/sendMessage", isLoggedIn, sendMessage);
 
 userRouter.post("/setIsTutor", isLoggedIn, setIsTutor);
 
+userRouter.post("/getConversations", isLoggedIn);
+
 module.exports = userRouter;

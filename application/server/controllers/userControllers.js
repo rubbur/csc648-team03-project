@@ -208,6 +208,17 @@ const getUserData = async (req, res) => {
   }
 }
 
+const getConversations = async (req, res) => {
+  const { userId } = req.body;
+  const q = "SELECT * FROM messages WHERE sender_id = ? OR recipient_id = ? ORDER BY date_stamp DESC";
+  try {
+    const messages = await db.query(q, [userId, userId]);
+    res.send({ success: true, messages: messages[0] });
+  } catch (err) {
+    console.log("error getting messages: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
 
 
 //given a name or a fragment of a name, if nothing goes wrong returns object that looks like: 
@@ -565,5 +576,6 @@ module.exports = {
   createPost,
   searchPosts,
   sendMessage,
-  setIsTutor
+  setIsTutor,
+  getConversations
 };
