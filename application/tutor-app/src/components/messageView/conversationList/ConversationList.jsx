@@ -58,6 +58,7 @@ const ConversationList = () => {
                     if (usernameResponse.data.userData.length > 0) {
                         convo.otherPersonUsername = usernameResponse.data.userData[0].username;
                         console.log("Username fetched: " + usernameResponse.data.userData[0].username);
+                        convo.img_url = usernameResponse.data.userData[0].img_url;
                     } else {
                         console.log("No user data found.");
                     }
@@ -92,7 +93,7 @@ const ConversationList = () => {
         if (convoList.length > 0) {
             updateConvoListData();
         }
-    }, [userId]);
+    }, [userId, convoList.length]);
 
     return (
         <div className="ConversationList">

@@ -1,6 +1,6 @@
 import "./conversation.scss";
 
-const Conversation = ({ img_url, message_id, name, postSubject }) => {
+const Conversation = ({ img_url, name, postSubject }) => {
     return (
         <div className="ConversationContainer">
             <div className="Conversation">
