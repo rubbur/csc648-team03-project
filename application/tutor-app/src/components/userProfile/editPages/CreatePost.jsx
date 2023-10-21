@@ -25,7 +25,7 @@ const CreatePost = () => {
     setVideoFile(null);
     setSelectedSubject("NOT SELECTED");
     setHourlyRate(20);
-    setName(null);
+    setName("");
 
     // remove the file names from the file inputs
     const fileInputs = document.querySelectorAll('input[type="file"]');
