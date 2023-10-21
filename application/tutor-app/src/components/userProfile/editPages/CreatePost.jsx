@@ -15,7 +15,7 @@ const CreatePost = () => {
   const [videoFile, setVideoFile] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
-  const [name, setName] = useState(null);
+  const [name, setName] = useState("");
   const subjectList = ["NOT SELECTED", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
 
   const handleClear = () => { // clear all the fields
@@ -149,7 +149,8 @@ const CreatePost = () => {
         <div className="upload-button-container">
           <div className="upload-input">
             <label>Your Name:</label>
-            <textarea
+            <input
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
