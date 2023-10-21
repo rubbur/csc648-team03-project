@@ -1,0 +1,39 @@
+@import "../../../colorScheme.scss";
+
+.ConversationContainer {
+    width: 90%;
+}
+
+.Conversation {
+    display: flex;
+    flex-direction: column;
+    border: solid black 3px;
+    justify-content: space-around;
+    text-align: center;
+    background-color: $accent-color;
+    width: 80%;
+    padding: 0 5% 0 5%;
+    margin-bottom: 20px;
+    color: black;
+    cursor: pointer;
+}
+
+.user-container>img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10%;
+    margin: 10px;
+}
+
+.user-container>p {
+    margin: auto;
+}
+
+.user-container {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    flex-direction: row;
+    align-items: center;
+    font-weight: bold;
+}

@@ -1,19 +1,59 @@
-
 @import "../colorScheme.scss";
 
 
-h1:hover{
-   color: rgb(185, 184, 184);
+
+h1 {
+    font-size: 18px;
+    padding: none;
 }
 
-.site-header{
+.site-header {
     width: 100%;
 }
 
-nav.navbar{
+.disclaimer-p {
+    color: $text-color;
+    margin: 0 0 11px 15px;
+    width: 97%;
+}
+
+.mobile-disclaimer {
+    color: white;
+    text-align: center;
+    font-size: large;
+}
+
+nav.navbar {
     background-color: $header-bg-color;
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
+    height: fit-content;
+}
+
+hr {
+    width: 100%;
+    color: $text-color
+}
+
+@media screen and (max-width: 855px) {
+    .disclaimer-p {
+        display: none;
+    }
+
+    nav.navbar {
+        background-color: $header-bg-color;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 90px;
+    }
+}
+
+.plus-icon {
+    color: white;
+    width: 24px;
+    height: 24px;
 }

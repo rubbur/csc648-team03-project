@@ -1,0 +1,23 @@
+@import "../../colorScheme.scss";
+
+.tutor-posts-view>h1 {
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.posts-container {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.link-create-post {
+    text-decoration: none;
+    color: $accent-color;
+    border: 1px solid transparent;
+}
+
+.link-create-post:hover {
+    border: 1px solid $accent-color;
+}

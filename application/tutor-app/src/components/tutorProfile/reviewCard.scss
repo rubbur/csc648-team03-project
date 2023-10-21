@@ -2,6 +2,7 @@
 
 .review-card {
     display: flex;
+    border-radius: 5%;
     flex-direction: column;
     border: 3px solid $accent-color;
     color: white;

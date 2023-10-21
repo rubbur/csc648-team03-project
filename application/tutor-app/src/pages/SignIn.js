@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../index.scss';
 import axios from "axios";
-import {cookie} from "../App"
-import  { useNavigate } from 'react-router-dom'
+import { cookie } from "../App"
+import { Link, useNavigate } from 'react-router-dom'
 
 function SignIn() {
   useEffect(() => {
@@ -34,27 +34,56 @@ function SignIn() {
     console.log("Remember Me:", rememberMe);
 
     // send email and password to backend
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`,{username:username,password:password}, {withCredentials: true});
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, { username: username, password: password }, { withCredentials: true });
     console.log(response.data);
     setUsername("");
     setPassword("");
-    if (response.data.success){
+    if (response.data.success) {
       //user successfully registered
-      cookie.set("isLoggedIn",true);
-      cookie.set("userName",response.data.username);
-      cookie.set("isTutor",response.data.isTutor);
+      cookie.set("isLoggedIn", true);
+      cookie.set("userName", response.data.username);
+      cookie.set("isTutor", response.data.isTutor);
       cookie.set("userId", response.data.userId);
-     
-      
-      if(cookie.get("isTutor")){
+
+      // Check if there is an unsent message in local storage
+      const unsentMessage = localStorage.getItem("unsentMessage");
+      const unsentMessageRecipientId = localStorage.getItem("unsentMessageRecipientId");
+      const unsentMessagePostId = localStorage.getItem("unsentMessagePostId");
+
+      if (unsentMessage && unsentMessageRecipientId && unsentMessagePostId) {
+        // Ask the user if they want to send the unsent message
+        const confirmSend = window.confirm("You have an unsent message. Do you want to send it now?");
+        if (confirmSend) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`,
+            {
+              recipientId: unsentMessageRecipientId,
+              message: unsentMessage,
+              senderId: cookie.get("userId"),
+              postId: unsentMessagePostId
+            },
+            { withCredentials: true }
+          );
+
+          console.log("Sent unsent message: " + response.data);
+        }
+      }
+
+      // Remove any unsent message item from local storage
+      localStorage.removeItem("unsentMessage");
+      localStorage.removeItem("unsentMessageRecipientId");
+      localStorage.removeItem("unsentMessagePostId");
+
+
+      if (cookie.get("isTutor")) {
         navigate("/TutorView");
         navigate(0);
       }
-      else{
+      else {
         navigate("/StudentView");
-        navigate(0);  
+        navigate(0);
       }
-      
+
 
     }
   };
@@ -87,7 +116,7 @@ function SignIn() {
         </div>
         <div className="form-group">
           <label htmlFor="rememberMe" className='no-select'>
-            Remember me: 
+            Remember me:
             <input
               type="checkbox"
               id="rememberMe"
@@ -103,8 +132,9 @@ function SignIn() {
         <div className="center-button">
           <button type="submit">Forgot Password?</button>
         </div>
+        <Link to="/SignUp" className='suggest-signup'>Don't have an account?<br></br>Click here to create one</Link>
       </div>
-    </div>
+    </div >
   );
 }
 

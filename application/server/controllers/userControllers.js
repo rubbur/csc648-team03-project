@@ -17,176 +17,228 @@ const login = async (req, res) => {
     const results = await db.query(q, [username]);
     //check if the hashed password matches the passwordhash in the row from the first query.
     bcrypt.compare(password, results[0][0].hashed_password, function (err, result) {
-        if (err) {
-          console.log("error occurred during bcrypt comparing " + err );
-          res.send({ success: false, error: err });
-        }
-        if (!result) { //password does not match
-          console.log("the password does not match our records")
-          res.send({
-            success: false,
-            error: "The password for this user is incorrect!",
-          });
-        } else {
-          if(results[0]){
-            //the user is verified
-            //add to the session that the user is loggedIn
-            req.session.isLoggedIn = true;
-            req.session.isAuthenticated = true;
-            console.log(req.session);
-            req.session.isAdmin = results[0][0].isadmin;
-            console.log("the id we found was: " + results[0][0].id );
-            res.send({ success: true, username: results[0][0].username, isTutor: results[0][0].istutor, userId: results[0][0].id  });
-          }
+      if (err) {
+        console.log("error occurred during bcrypt comparing " + err);
+        res.send({ success: false, error: err });
+      }
+      if (!result) { //password does not match
+        console.log("the password does not match our records")
+        res.send({
+          success: false,
+          error: "The password for this user is incorrect!",
+        });
+      } else {
+        if (results[0]) {
+          //the user is verified
+          //add to the session that the user is loggedIn
+          req.session.isLoggedIn = true;
+          req.session.isAuthenticated = true;
+          console.log(req.session);
+          req.session.isAdmin = results[0][0].isadmin;
+          console.log("the id we found was: " + results[0][0].id);
+          res.send({ success: true, username: results[0][0].username, isTutor: results[0][0].istutor, userId: results[0][0].id });
         }
       }
+    }
     );
   } catch (err) {
     console.log("error occurred in the try block" + err);
-    
-    res.send({ success: false, error:  "" +err });
+
+    res.send({ success: false, error: "" + err });
   }
 };
 
-const register = async (req, res) =>{  
-    //get the username and password out of the request
-    const username = req.body.username;
-    const password = req.body.password;
-    const isTutor = req.body.isTutor;
-    console.log(username, password, isTutor);
-    const saltRounds = 10; //for password hashing
-    let q = "SELECT * FROM users WHERE username = ?";
-    //verify that the username is available
-    try{
-        const usernameQuery = await db.query(q, [username]);
-        //if there already exists a user in the table then this username is not available
-        if(usernameQuery[0].length != 0){
-            res.send({success: false, error: "username is taken already"});
-            return;
-        }
-        //hash the password before putting it in the database
-        bcrypt.hash(password, saltRounds, async function(err, hash) {
-            // Store hash in your password DB.
-            if(err){
-                console.log("error when trying to hash the password" + password);
-                res.send({success: false, error: err});
-            }
-            try{
-                //store the new user in the database
-                q = "INSERT INTO users (username, hashed_password, istutor) VALUES (?, ?, ?)";
-                const result = await db.query(q, [username, hash, isTutor]);
-                console.log("User inserted successfully!");
-                req.session.isLoggedIn = true;
-                res.send({success: true, username: username, isTutor: isTutor});
-            }
-            catch(err){
-                console.log("error inserting user");
-            }
-            
-        });
+const register = async (req, res) => {
+  // Get the username and password out of the request
+  const username = req.body.username;
+  const password = req.body.password;
+  const isTutor = 0;
+  const saltRounds = 10; // for password hashing
+
+  // Verify that the username is available
+  try {
+    const usernameQuery = await db.query("SELECT * FROM users WHERE username = ?", [username]);
+
+    // If there already exists a user in the table, then this username is not available
+    if (usernameQuery[0].length !== 0) {
+      res.send({ success: false, error: "username is taken already" });
+      return;
     }
-    catch(error){
-        console.log(error);
-        res.send({success: false, error: error});
-    }
-}
+
+    // Hash the password before putting it in the database
+    bcrypt.hash(password, saltRounds, async function (err, hash) {
+      if (err) {
+        console.log("error when trying to hash the password: " + password);
+        res.send({ success: false, error: err });
+      }
+
+      try {
+        // Store the new user in the database
+        const result = await db.query("INSERT INTO users (username, hashed_password, istutor) VALUES (?, ?, ?)", [username, hash, isTutor]);
+        console.log("User inserted successfully!");
+
+        // Query the user's id from the database
+        const userQuery = await db.query("SELECT id FROM users WHERE username = ?", [username]);
+        const userId = userQuery[0][0].id;
+
+        // Set the user's id in the cookie
+        req.session.isLoggedIn = true;
+        res.send({ success: true, username: username, isTutor: isTutor, userId: userId });
+      } catch (err) {
+        console.log("error inserting user");
+        res.send({ success: false, error: err });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({ success: false, error: error });
+  }
+};
 
 
-const editPassword = async (req, res) =>{
-  
-  const {password, newPassword, username} = req.body;
+
+const editPassword = async (req, res) => {
+
+  const { password, newPassword, username } = req.body;
   console.log("updating password with newPassword: ", newPassword, username);
   const saltRounds = 10;
   //make sure that the user has the correct username and password
   let q = "SELECT * FROM users WHERE username = ?";
-  
+
   try {
     const results = await db.query(q, [username]);
-    if(results[0].length == 0){
-      res.send({success: false, errorMessage: "Your username or password are incorrect"});
+    if (results[0].length == 0) {
+      res.send({ success: false, errorMessage: "Your username or password are incorrect" });
     }
     //check if the hashed password matches the passwordhash in the row from the first query.
     bcrypt.compare(password, results[0][0].hashed_password, function (err, result) {
-        if (err) {
-          console.log("error occurred during bcrypt comparing " + err );
-          res.send({ success: false, error: err });
-        }
-        if (!result) { //password does not match
-          console.log("the password does not match our records")
-          res.send({
-            success: false,
-            errorMessage: "The password for this user is incorrect!",
-          });
-        } else {
-          if(results[0]){
-            //the user is verified
-            //hash the new password
-            bcrypt.hash(newPassword, saltRounds, async function(err, hash) {
-              // Store hash in your password DB.
-              if(err){
-                  console.log("error when trying to hash the password" + err);
-                  res.send({success: false, error: err});
-              }
-              q = "UPDATE users SET hashed_password = ? WHERE username = ?";
+      if (err) {
+        console.log("error occurred during bcrypt comparing " + err);
+        res.send({ success: false, error: err });
+      }
+      if (!result) { //password does not match
+        console.log("the password does not match our records")
+        res.send({
+          success: false,
+          errorMessage: "The password for this user is incorrect!",
+        });
+      } else {
+        if (results[0]) {
+          //the user is verified
+          //hash the new password
+          bcrypt.hash(newPassword, saltRounds, async function (err, hash) {
+            // Store hash in your password DB.
+            if (err) {
+              console.log("error when trying to hash the password" + err);
+              res.send({ success: false, error: err });
+            }
+            q = "UPDATE users SET hashed_password = ? WHERE username = ?";
 
-              try{
-                db.query(q, [hash, username]);
-                res.send({success: true});
-              } catch (e) {
-                console.log("error updating password");
-                res.send({success: false, errorMessage: e+""});
-              }
+            try {
+              db.query(q, [hash, username]);
+              res.send({ success: true });
+            } catch (e) {
+              console.log("error updating password");
+              res.send({ success: false, errorMessage: e + "" });
+            }
           });
         }
       }
     });
   } catch (err) {
     console.log("error occurred in the try block" + err);
-   // res.send({ success: false, error:  "" +err });
+    // res.send({ success: false, error:  "" +err });
   }
 }
 
-const logout = async (req, res) =>{
+const logout = async (req, res) => {
   console.log("logging out");
-  
+
   req.session.destroy((error) => {
     if (error) {
       console.log(error);
-      res.send({success: false});
+      res.send({ success: false });
     }
     else {
-      
+
       console.log("logged out successfully");
       //TODO: clear cookies
       //for example 
       res.clearCookie("sfsuCookies");
-      res.send({success: true});
+      res.send({ success: true });
     }
   });
 }
 
+const createPost = async (req, res) => {
+  const { tutor_id, subject, description, hourly_rate, name } = req.body;
+  const isPending = 1;
 
-const getUserData = async (req, res) =>{
-  const username = req.body.username;
-  console.log("in get user data");
-  //get the user from the database
-  try{
-    const q = "SELECT * FROM users WHERE username = ?";
-    const userData = await db.query(q, [username]);
-    if(userData[0].length == 0){
-      res.send({success: false, error: "user does not exist in database"});
-      return;
-  }
-  else{
-    res.send({success: true, userData: userData[0]});
-  }
-  
-  } catch(err){
-    console.log("error getting user data: " + err);
-    res.send({success:false, errorMessage: err});
+  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, hourly_rate, name, is_pending) VALUES (?, ?, ?, ?, ?, ?)";
+  try {
+    const result = await db.query(q, [tutor_id, subject, description, hourly_rate, name, isPending]);
+    const postId = result[0].insertId;
+    console.log("Post inserted successfully. postid: " + postId);
+    res.send({ success: true, postId }); // Include the postId in the response
+  } catch (err) {
+    console.log("Error inserting post: " + err);
+    res.send({ success: false, error: err });
   }
 }
 
+
+
+const getUserData = async (req, res) => {
+  const username = req.body.username;
+  //get the user from the database
+  try {
+    const q = "SELECT * FROM users WHERE username = ?";
+    const userData = await db.query(q, [username]);
+    if (userData[0].length == 0) {
+      res.send({ success: false, error: "user does not exist in database" });
+      return;
+    }
+    else {
+      res.send({ success: true, userData: userData[0] });
+    }
+
+  } catch (err) {
+    console.log("error getting user data: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
+const getUserDataById = async (req, res) => {
+  const userId = req.body.userId;
+  //get the user from the database
+  try {
+    const q = "SELECT * FROM users WHERE id = ?";
+    const userData = await db.query(q, [userId]);
+    if (userData[0].length == 0) {
+      res.send({ success: false, error: "user does not exist in database" });
+      return;
+    }
+    else {
+      res.send({ success: true, userData: userData[0] });
+    }
+  }
+  catch (err) {
+    console.log("error getting user data: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
+const getConversations = async (req, res) => {
+  const { userId } = req.body;
+  const q = "SELECT * FROM messages WHERE sender_id = ? OR recipient_id = ? ORDER BY date_stamp DESC";
+  try {
+    const messages = await db.query(q, [userId, userId]);
+    res.send({ success: true, messages: messages[0] });
+  } catch (err) {
+    console.log("error getting messages: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
 
 
 //given a name or a fragment of a name, if nothing goes wrong returns object that looks like: 
@@ -208,95 +260,95 @@ const getUserData = async (req, res) =>{
     ]
 }*/
 //if something does go wrong, then will return {success: false, error: err}
-const searchByName = async (req, res) =>{
+const searchByName = async (req, res) => {
   //get the name to search by
   const searchName = `%${req.body.name}%`;
   //create the query string. The % wildcard matches to 0 or more characters.
   const q = "SELECT * FROM users WHERE username LIKE ? AND ispending = 0";
 
-  try{
+  try {
     const result = await db.query(q, [searchName]);
     let userList = result[0];
     //do not give the hashed_passwords of any of the users to the client
-    for(let i =0; i< userList.length; i++){
-     delete userList[i].hashed_password;
+    for (let i = 0; i < userList.length; i++) {
+      delete userList[i].hashed_password;
     }
-    res.send({success: true, searchResults: userList});
-  }catch(err){
+    res.send({ success: true, searchResults: userList });
+  } catch (err) {
     console.log(err);
-    res.send({success: false, error: err});
+    res.send({ success: false, error: err });
   }
 }
 
-const editUsername = async (req, res) =>{
-  
+const editUsername = async (req, res) => {
+
   const username = req.body.username;
   const newName = req.body.newUserName;
   console.log("editing user: " + username)
   //check to see if the new username is available
   let q = "SELECT * FROM users WHERE username = ?";
   //verify that the username is available
-  try{
-      const usernameQuery = await db.query(q, [newName]);
-      //if there already exists a user in the table then this username is not available
-      if(usernameQuery[0].length !== 0){
-          res.send({success: false, error: "username is taken already"});
-          console.log("got here");
-          return;
-      }
-    } catch(error){
-      console.log("error trying to check the username for uniqueness: " + error);
-      res.send({success:false, errorMessage: error + ""});
+  try {
+    const usernameQuery = await db.query(q, [newName]);
+    //if there already exists a user in the table then this username is not available
+    if (usernameQuery[0].length !== 0) {
+      res.send({ success: false, error: "username is taken already" });
+      console.log("got here");
+      return;
     }
-   
+  } catch (error) {
+    console.log("error trying to check the username for uniqueness: " + error);
+    res.send({ success: false, errorMessage: error + "" });
+  }
+
 
   q = "UPDATE users SET username = ? WHERE username = ?";
 
-  try{
+  try {
     await db.query(q, [newName, username]);
-    res.send({success:true});
-  } catch(error) {
+    res.send({ success: true });
+  } catch (error) {
     console.log("error trying to update username: " + error);
-    res.send({success: false, errorMessage: error + ""});
+    res.send({ success: false, errorMessage: error + "" });
   }
 }
 
 
-const uploadImage = async (req, res) =>{
-  const {file}  = req.files;
+const uploadImage = async (req, res) => {
+  const { file } = req.files;
   const username = req.body.username;
-  if(file.mimetype.substring(0, 5) !== "image"){ //should be ex: image/jpg or image/png 
-    res.send({success: false, errorMessage: "cannot upload a non image file here."})
+  if (file.mimetype.substring(0, 5) !== "image") { //should be ex: image/jpg or image/png 
+    res.send({ success: false, errorMessage: "cannot upload a non image file here." })
   }
   // const newFileName = username + "." + file.mimetype.substring(6); 
-  const newFileName = username + ".png" ; 
+  const newFileName = username + ".png";
   //move the file into the userImages folder
-  file.mv( `../tutor-app/public/userImages/${newFileName}`, async (err) => {
+  file.mv(`../tutor-app/public/userImages/${newFileName}`, async (err) => {
     console.log(err);
-    if (err){ 
-      res.send({success: false, errorMessage: err})
+    if (err) {
+      res.send({ success: false, errorMessage: err })
     }
 
     //update the user table so that the relative path of the image is stored in the database
     const q = "UPDATE users SET img_url = ?, ispending = 1 WHERE username = ?";
-    try{
-      const updateRes =  await db.query(q, [`/userImages/${newFileName}`, username]);
-      res.send({ success: true});
+    try {
+      const updateRes = await db.query(q, [`/userImages/${newFileName}`, username]);
+      res.send({ success: true });
     }
-    catch(err){
+    catch (err) {
       console.log("error doing insert query" + err);
-     // res.send({success: false, errorMessage: err});
+      // res.send({success: false, errorMessage: err});
     }
 
-   
+
   });
 }
 
 const editTutorAbilities = async (req, res) => {
-  const {id, courses, subjects} = req.body;
-  if(!id || !courses || !subjects){
+  const { id, courses, subjects } = req.body;
+  if (!id || !courses || !subjects) {
     console.log("tutorID: " + id + " courses: " + courses + " subjects: " + subjects);
-    res.send({success: false, errorMessage: "username or courses or subjects was undefined"});
+    res.send({ success: false, errorMessage: "username or courses or subjects was undefined" });
   }
   //convert the subjects object that looks like [{subject: "art", isChecked: true}, {subject: "math", isChecked: false}, {...}]
   //into a list of subjects that they know (toAdd) and a list that they do not know (toDelete)
@@ -304,73 +356,73 @@ const editTutorAbilities = async (req, res) => {
   let toDelete = [];
   //place all the subjects into their correct arrays
   let q = "";
-  for(const sub of subjects) {
-    if(sub.isChecked)
+  for (const sub of subjects) {
+    if (sub.isChecked)
       toAdd.push(sub.subject);
     else
       toDelete.push(sub.subject);
   }
-  if(toAdd.length > 0){
-  //set up the insert query to add all the subjects that the tutor knows into the tutor_subjects table
-    const placeholders = toAdd.map( subject => "(?, ?)").join(',');
+  if (toAdd.length > 0) {
+    //set up the insert query to add all the subjects that the tutor knows into the tutor_subjects table
+    const placeholders = toAdd.map(subject => "(?, ?)").join(',');
     const values = toAdd.flatMap(subject => [id, subject]);
     console.log(values);
-    q= `INSERT INTO tutor_subjects (tutor_id, subject_name) VALUES ${placeholders} ON DUPLICATE KEY UPDATE subject_name = VALUES(subject_name)`;
+    q = `INSERT INTO tutor_subjects (tutor_id, subject_name) VALUES ${placeholders} ON DUPLICATE KEY UPDATE subject_name = VALUES(subject_name)`;
     //execute the query
     try {
       await db.query(q, values);
     } catch (err) {
-        console.log("error when trying to insert to tutor_subjects table " + err);
-        res.send({success: false, errorMessage: err + ""});
-        return;
+      console.log("error when trying to insert to tutor_subjects table " + err);
+      res.send({ success: false, errorMessage: err + "" });
+      return;
     }
   }
-  if(toDelete.length > 0){
-  //prepare the delete query to delete every value that the tutor says they do not know.
+  if (toDelete.length > 0) {
+    //prepare the delete query to delete every value that the tutor says they do not know.
     const placeholders = toDelete.map(subject => "(?, ?)").join(",");
     const values = toDelete.flatMap(subject => [id, subject]);
     console.log(placeholders);
     console.log(values);
     q = `DELETE FROM tutor_subjects WHERE (tutor_id, subject_name) IN (${placeholders})`;
-     //execute the query
-     try {
+    //execute the query
+    try {
       await db.query(q, values);
 
     } catch (err) {
-        console.log("error when trying to DELETE to tutor_subjects table " + err);
-        res.send({success: false, errorMessage: err + ""});
-       
+      console.log("error when trying to DELETE to tutor_subjects table " + err);
+      res.send({ success: false, errorMessage: err + "" });
+
     }
   }
   //update the courseNumbers 
   q = "UPDATE users SET courses = ? WHERE id = ?";
   let coursesString = courses.join(" ");
-  try{
+  try {
     await db.query(q, [coursesString, id]);
-    res.send({success: true});
-  } catch(err) {
+    res.send({ success: true });
+  } catch (err) {
     console.log("error updating the courses of the user " + err);
-    res.send({success: false, errorMessage: err + ""});
+    res.send({ success: false, errorMessage: err + "" });
   }
 
 }
 
 
-const getTutorSubjects = async (req, res) =>{
-  const {id} = req.body;
-  console.log("id is: " +id);
+const getTutorSubjects = async (req, res) => {
+  const { id } = req.body;
+  console.log("id is: " + id);
   const q = "SELECT subject_name FROM tutor_subjects WHERE tutor_id = ?";
 
-  try{
-   const results = await db.query(q, [id]);
-   if(results.length == 0){
-    console.log("no user with that id: " + id);
-   }
-   console.log("this is the shit:");
-   console.log(results[0]);
-    res.send({success: true, subjectList: results[0]});
-  } catch(err) {
-    res.send({success: false, errorMessage: err + ""});
+  try {
+    const results = await db.query(q, [id]);
+    if (results.length == 0) {
+      console.log("no user with that id: " + id);
+    }
+    console.log("this is the shit:");
+    console.log(results[0]);
+    res.send({ success: true, subjectList: results[0] });
+  } catch (err) {
+    res.send({ success: false, errorMessage: err + "" });
   }
 
 }
@@ -378,7 +430,7 @@ const getTutorSubjects = async (req, res) =>{
 
 
 
-const searchTutors = async (req, res) =>{
+const searchTutors = async (req, res) => {
   //get the name/course number to search by
   const searchTerm = `%${req.body.searchTerm}%`;
   //get the subject to filter by
@@ -386,60 +438,60 @@ const searchTutors = async (req, res) =>{
   console.log("search term is: " + searchTerm + " and subject is: " + subject);
   let q;
   let values;
-  if(subject == "All"){
+  if (subject == "All") {
     q = "SELECT * FROM users WHERE (username LIKE ? OR courses LIKE ?) AND ispending = 0 AND istutor = 1";
     values = [searchTerm, searchTerm];
   }
-  else{
-    if(searchTerm == ""){
+  else {
+    if (searchTerm == "") {
       q = "SELECT users.* FROM users JOIN tutor_subjects ON users.id = tutor_subjects.tutor_id WHERE tutor_subjects.subject_name = ? AND users.istutor = 1 AND ispending = 0";
       values = [subject];
     }
     else {
-    q = "SELECT users.* FROM users JOIN tutor_subjects ON users.id = tutor_subjects.tutor_id WHERE tutor_subjects.subject_name = ? AND users.istutor = 1 AND ispending = 0 AND (users.username LIKE ? OR users.courses LIKE ?)";
-    values = [subject, searchTerm, searchTerm];
+      q = "SELECT users.* FROM users JOIN tutor_subjects ON users.id = tutor_subjects.tutor_id WHERE tutor_subjects.subject_name = ? AND users.istutor = 1 AND ispending = 0 AND (users.username LIKE ? OR users.courses LIKE ?)";
+      values = [subject, searchTerm, searchTerm];
     }
   }
- 
-  try{
+
+  try {
     const result = await db.query(q, values);
     let userList = result[0];
     //do not give the hashed_passwords of any of the users to the client
-    for(let i =0; i< userList.length; i++){
-     delete userList[i].hashed_password;
+    for (let i = 0; i < userList.length; i++) {
+      delete userList[i].hashed_password;
     }
     console.log("userlist is: " + userList);
-    res.send({success: true, searchResults: userList});
-  }catch(err){
+    res.send({ success: true, searchResults: userList });
+  } catch (err) {
     console.log("error in query! : " + err);
-    res.send({success: false, error: err});
+    res.send({ success: false, error: err });
   }
 }
 
 const deleteAccount = async (req, res) => {
-  const {username} = req.body;
+  const { username } = req.body;
   const q = "DELETE FROM users WHERE username = ?";
-  try{
+  try {
     await db.query(q, [username]);
-    res.send({success: true});
-  } catch(err){
+    res.send({ success: true });
+  } catch (err) {
     console.log("error deleting account: " + err);
-    res.send({success: false, errorMessage: err});
+    res.send({ success: false, errorMessage: err });
   }
 }
 
-const becomeTutor = async (req, res ) =>{
-  const {userId} = req.body;
+/*const becomeTutor = async (req, res) => {
+  const { userId } = req.body;
   let q = `UPDATE users SET istutor = 1 WHERE id = ?`;
-  try{
+  try {
     await db.query(q, [userId]);
-  } catch(err){
+  } catch (err) {
     console.log("error updating user to be a tutor: " + err);
-    res.send({success: false, errorMessage: err});
+    res.send({ success: false, errorMessage: err });
   }
   //get the username, hashed_password, img_url, from the users table of the user that wants to become a tutor
   q = "SELECT username, hashed_password, img_url, ispending FROM users WHERE id = ?";
-  try{
+  try {
     const userResult = await db.query(q, [userId]);
     const username = userResult[0][0].username;
     const hashed_password = userResult[0][0].hashed_password;
@@ -448,33 +500,84 @@ const becomeTutor = async (req, res ) =>{
     console.log("username: " + username + " hashed_password: " + hashed_password + " img_url: " + img_url);
     //insert the user into the tutors table
     q = "INSERT INTO tutors (id, username, hashed_password, img_url, ispending) VALUES (?, ?, ?, ?, ?)";
-    try{
+    try {
       await db.query(q, [userId, username, hashed_password, img_url, ispending]);
       console.log("inserted user as tutor succesfully");
-      res.send({success: true});
-    } catch(err){
+      res.send({ success: true });
+    } catch (err) {
       console.log("error inserting into tutors table: " + err);
     }
-  } catch(err){
+  } catch (err) {
     console.log("error getting user data: " + err);
   }
-}
+}*/
 
-const submitReview = async (req, res) =>{
+const submitReview = async (req, res) => {
   let date = new Date();
   let currentTime = date.toISOString().split(/[- :]/).join("").slice(0, 14);
-  const {reviewerId, tutorId, reviewText, rating, reviewerName} = req.body;
+  const { reviewerId, tutorId, reviewText, rating, reviewerName } = req.body;
   console.log("reviewerId: " + reviewerId + " revieweeId: " + tutorId + " reviewText: " + reviewText + " rating: " + rating + " currentTime: " + currentTime);
   //insert the review into the reviews table
   const q = "INSERT INTO tutor_reviews (reviewer_id, tutor_id, review, rating, reviewer_name, time_stamp) VALUES (?, ?, ?, ?, ?, ?)";
-  try{
+  try {
     await db.query(q, [reviewerId, tutorId, reviewText, rating, reviewerName, currentTime]);
-    res.send({success: true});
-  } catch(err){
+    res.send({ success: true });
+  } catch (err) {
     console.log("error inserting review into reviews table: " + err);
-    res.send({success: false, errorMessage: err});
+    res.send({ success: false, errorMessage: err });
   }
 }
+
+const searchPosts = async (req, res) => {
+  //return all tutor posts where (the search term matches the description OR the name of the tutor) AND the post subject matches the subject 
+  let { searchTerm, subject, } = req.body;
+
+  console.log("search term is: " + searchTerm + " and subject is: " + subject);
+  searchTerm = `%${searchTerm}%`;
+  const q = (subject === "All") ?
+    "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.is_pending = 0"
+    :
+    "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.subject = ? AND tutor_posts.is_pending = 0";
+  try {
+    const result = await db.query(q, [searchTerm, searchTerm, subject]);
+    res.send({ success: true, searchResults: result[0] });
+  } catch (e) {
+    console.log("error in search query! : " + e);
+  }
+}
+
+const setIsTutor = async (req, res) => {
+  const { userId } = req.body;
+  const q = "UPDATE users SET istutor = 1, ispending = 1 WHERE id = ?";
+  console.log("Updating user to be a tutor: " + userId);
+  try {
+    await db.query(q, [userId]);
+    res.send({ success: true });
+  } catch (err) {
+    console.log("Error updating user to be a tutor: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
+const sendMessage = async (req, res) => {
+  //get the current date and time
+  let date = new Date();
+  let currentTime = date.toISOString().split(/[- :]/).join("").slice(0, 14);
+  const { recipientId, senderId, message, postId } = req.body;
+  console.log(recipientId, senderId, message, postId);
+  //threadId is the smaller of the two ids concatenated with the larger of the two ids concatenated with the postId
+  const threadId = (senderId < recipientId) ? senderId + "_" + recipientId + "_" + postId : recipientId + "_" + senderId + "_" + postId;
+  const q = "INSERT INTO messages (sender_id, recipient_id, message_text, date_stamp, post_id, thread_id) VALUES (?, ?, ?, ?, ?, ?)";
+  try {
+    await db.query(q, [senderId, recipientId, message, currentTime, postId, threadId]);
+    res.send({ success: true });
+  } catch (err) {
+    console.log("error inserting message into messages table: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
+
 
 module.exports = {
   login,
@@ -483,12 +586,17 @@ module.exports = {
   searchByName,
   uploadImage,
   getUserData,
+  getUserDataById,
   editUsername,
   editPassword,
   editTutorAbilities,
   getTutorSubjects,
   searchTutors,
   deleteAccount,
-  becomeTutor,
-  submitReview
+  submitReview,
+  createPost,
+  searchPosts,
+  sendMessage,
+  setIsTutor,
+  getConversations
 };

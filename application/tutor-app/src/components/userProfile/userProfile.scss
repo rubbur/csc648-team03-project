@@ -1,22 +1,22 @@
 @import "../../colorScheme.scss";
 
-.profile{
+.profile {
     display: flex;
     height: 100%;
     width: 100%;
 }
 
-.header{
+.header {
     color: white;
     display: block;
     margin-left: 3%;
     width: fit-content;
     margin-bottom: 10px;
-    height:fit-content;
+    height: fit-content;
     margin-top: 10px;
 }
 
-.img-holder{
+.img-holder {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,7 +25,7 @@
     padding: 1%;
 }
 
-.user-image{
+.user-image {
     height: auto;
     max-width: 90%;
     margin-right: 50px;
@@ -49,11 +49,9 @@
     margin-top: 1rem;
     background-color: $header-bg-color;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    height: 39vh; 
-    max-height: 100%;
     width: 100%;
 }
 
@@ -66,26 +64,27 @@
     min-width: 15rem;
     width: 50%;
     max-width: fit-content;
-    height: 50%; 
+    height: 50%;
     color: white;
 }
 
-.danger-button{
-    margin: auto;
-    height: 30%;
+.danger-button {
+    margin: auto auto 1rem auto;
+    min-height: 30px;
+    height: 40%;
     width: 80%;
     justify-content: center;
     align-items: center;
     display: flex;
 }
 
-.edit-container{
+.edit-container {
     display: flex;
     flex-direction: row;
     min-width: 50%;
 }
 
-.edit-box{
+.edit-box {
     justify-content: center;
     height: 100%;
     min-width: 20%;
@@ -95,7 +94,7 @@
     flex-direction: row;
 }
 
-.editting-box{
+.editting-box {
     margin: 10px;
     background-color: beige;
     border: 3px solid black;
@@ -112,6 +111,7 @@
     width: 100%;
     gap: 20px;
 }
+
 /* .button-container{
     display: flex;
     flex-direction: column;
@@ -122,7 +122,7 @@
     
     margin-left: 20px;
 } */
-.profile-edit-button{
+.profile-edit-button {
     min-width: 5rem;
     width: 90%;
     height: 3rem;
@@ -131,9 +131,17 @@
     margin-left: 5px;
 }
 
-.profile-edit-button.pressed{
-    background-color: grey;
+.profile-edit-button.pressed {
+    background-color: #3f3f3f;
     color: white;
+}
+
+.post-button {
+    background-color: rgb(0, 177, 0);
+}
+
+.post-button:hover {
+    background-color: rgb(0, 77, 0);
 }
 
 
@@ -143,7 +151,7 @@
     }
 
     .edit-box {
-        width: 100%; 
+        width: 100%;
         height: auto;
         margin: 0;
     }
@@ -152,4 +160,3 @@
         width: 100%;
     }
 }
-

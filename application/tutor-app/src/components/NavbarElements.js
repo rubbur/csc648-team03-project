@@ -24,6 +24,14 @@ export const NavLink = styled(Link)`
   padding: 0 1rem;
   height: 100%;
   cursor: pointer;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+
+  &:hover {
+    border: 1px solid white; 
+    border-radius: 5px; 
+  }
+
   &.active {
     color: #ffffff;
   }
@@ -94,7 +102,7 @@ const MobileMenu = styled.div`
 const MobileMenuItem = styled(Link)`
   color: #ffffff;
   text-decoration: none;
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center;
 `;
 
@@ -120,33 +128,44 @@ const Navbar = () => {
     <div className='site-header'>
       <Nav className='navbar'>
         <Bars color='#ffffff' onClick={toggleMobileMenu} />
-        <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' onClick={hideMobileMenu}/></Link>
+        <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' onClick={hideMobileMenu} /></Link>
+        <p className="disclaimer-p"><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration Only.</em></p>
+        <hr className="disclaimer-p"></hr>
         <NavMenu>
-          <NavLink to="/"><Logo src='../../images/logo.png' alt='Logo' /></NavLink>
-          <SearchBar/>
-          {(cookie.get("isLoggedIn") && !cookie.get("isTutor")) && <NavLink to="/StudentView"><h1>Students</h1></NavLink>}
-          {<NavLink to="/AboutUs"><h1>About Us</h1></NavLink>}
-          {cookie.get('isAdmin') && <NavLink to="/AdminPanel"><h1><FontAwesomeIcon icon="gear"/></h1></NavLink>}
+          <NavLink to="/"><Logo src='/images/logo.png' alt='Logo' /></NavLink>
+          <SearchBar />
+          <NavLink to="/CreatePost"><h1><FontAwesomeIcon className='plus-icon' icon="fa-plus" /></h1></NavLink>
+          {<NavLink to="/AboutUs"><h1><FontAwesomeIcon icon="fa-circle-info" /></h1></NavLink>}
+          {cookie.get('isAdmin') && <NavLink to="/AdminPanel"><h1><FontAwesomeIcon icon="gear" /></h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
           {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1><FontAwesomeIcon icon="right-from-bracket"/></h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{"Hi, "+userName}</h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to={`/tutorPostsView`}><h1>View Posts</h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1><FontAwesomeIcon icon="right-from-bracket" /></h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Messages"><h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1></NavLink>}
+          {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{"Hi, " + userName}</h1></NavLink>}
         </NavMenu>
       </Nav>
-      
+
+
       <MobileMenu isOpen={isOpen}>
-        <SearchBar/>
+        <SearchBar />
+        <p className='mobile-disclaimer'><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration </em></p>
         {cookie.get('isLoggedIn') && !cookie.get('isTutor') && (
           <MobileMenuItem to="/StudentView" onClick={toggleMobileMenu}>
             <h1>Students</h1>
           </MobileMenuItem>
         )}
+        {cookie.get('isLoggedIn') && (
+          <MobileMenuItem to="/CreatePost" onClick={toggleMobileMenu}>
+            <FontAwesomeIcon className='plus-icon' icon="fa-plus" />
+          </MobileMenuItem>
+        )}
         <MobileMenuItem to="/AboutUs" onClick={toggleMobileMenu}>
-        <h1>About Us</h1>
+          <h1><FontAwesomeIcon icon="fa-circle-info" /></h1>
         </MobileMenuItem>
         {cookie.get('isAdmin') && (
           <MobileMenuItem to="/AdminPanel" onClick={toggleMobileMenu}>
-            <h1><FontAwesomeIcon icon="gear"/></h1>
+            <h1><FontAwesomeIcon icon="gear" /></h1>
           </MobileMenuItem>
         )}
         {!cookie.get('isLoggedIn') && (
@@ -161,12 +180,22 @@ const Navbar = () => {
         )}
         {cookie.get('isLoggedIn') && (
           <MobileMenuItem to="/Logout" onClick={toggleMobileMenu}>
-            <h1><FontAwesomeIcon icon="right-from-bracket"/></h1>
+            <h1><FontAwesomeIcon icon="right-from-bracket" /></h1>
+          </MobileMenuItem>
+        )}
+        {cookie.get('isLoggedIn') && (
+          <MobileMenuItem to="/tutorPostsView" onClick={toggleMobileMenu}>
+            <h1>View Posts</h1>
+          </MobileMenuItem>
+        )}
+        {cookie.get('isLoggedIn') && (
+          <MobileMenuItem to="/Messages" onClick={toggleMobileMenu}>
+            <h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1>
           </MobileMenuItem>
         )}
         {cookie.get('isLoggedIn') && (
           <MobileMenuItem to="/Profile" onClick={toggleMobileMenu}>
-            <h1>{"Hi, "+userName}</h1>
+            <h1>{"Hi, " + userName}</h1>
           </MobileMenuItem>
         )}
       </MobileMenu>

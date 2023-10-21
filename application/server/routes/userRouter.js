@@ -8,6 +8,7 @@ const {
     searchByName,
     uploadImage,
     getUserData,
+    getUserDataById,
     editUsername,
     editPassword,
     editTutorAbilities,
@@ -15,8 +16,13 @@ const {
     searchTutors,
     deleteAccount,
     submitReview,
-    becomeTutor} = require("../controllers/userControllers");
-const {isLoggedIn} = require("../middleware/authMiddleware");
+    createPost,
+    searchPosts,
+    sendMessage,
+    setIsTutor,
+    getConversations
+} = require("../controllers/userControllers");
+const { isLoggedIn } = require("../middleware/authMiddleware");
 
 const userRouter = express.Router();
 
@@ -45,8 +51,18 @@ userRouter.post("/searchTutors", searchTutors);
 
 userRouter.post("/deleteAccount", isLoggedIn, deleteAccount);
 
-userRouter.post("/becomeTutor", isLoggedIn, becomeTutor);
-
 userRouter.post("/submitReview", isLoggedIn, submitReview);
+
+userRouter.post("/CreatePost", isLoggedIn, createPost);
+
+userRouter.post("/searchPosts", searchPosts);
+
+userRouter.post("/sendMessage", isLoggedIn, sendMessage);
+
+userRouter.post("/setIsTutor", isLoggedIn, setIsTutor);
+
+userRouter.post("/getConversations", isLoggedIn, getConversations);
+
+userRouter.post("/getUserDataById", isLoggedIn, getUserDataById);
 
 module.exports = userRouter;

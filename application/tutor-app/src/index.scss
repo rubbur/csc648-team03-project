@@ -55,11 +55,22 @@ code {
   align-items: center;
 }
 
+.terms-link {
+  color: rgb(116, 116, 255);
+  text-decoration: none;
+  font-size: 16px;
+}
+
 .center-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px; 
+  margin-top: 20px;
+  min-width: fit-content;
+}
+
+.center-button>button {
+  padding: 10px;
 }
 
 form {
@@ -89,7 +100,7 @@ button {
 }
 
 button:hover {
-  background-color: $accent-color-hover; 
+  background-color: $accent-color-hover;
 }
 
 .no-select {
@@ -114,10 +125,20 @@ button:hover {
 }
 
 .profile-image {
-  max-width: 100%; 
-  max-height: 100%; 
-  width: auto; 
-  height: auto; 
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   margin: auto;
   display: block;
+}
+
+.suggest-signup {
+  color: rgb(47, 179, 255);
+  text-decoration: none;
+  text-align: center;
+  font-size: 16px;
+  padding-top: 2rem;
+  margin: auto;
+  width: 50%;
 }
