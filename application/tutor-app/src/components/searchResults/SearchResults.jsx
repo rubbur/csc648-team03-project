@@ -74,6 +74,7 @@ const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name }) 
     }
 
     const handleSend = async () => {
+        if (messageInProgress === "" || messageInProgress === undefined) return;
         console.log("sending message")
         console.log(cookie.get("isLoggedIn"));
         if (cookie.get("isLoggedIn") === "false" || cookie.get("isLoggedIn") === undefined) {
