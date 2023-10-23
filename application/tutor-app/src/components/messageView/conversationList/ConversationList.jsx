@@ -4,7 +4,7 @@ import Conversation from "../conversation/Conversation";
 import axios from "axios";
 import { cookie } from "../../../App";
 
-const ConversationList = () => {
+const ConversationList = ({setThread}) => {
     const [convoList, setConvoList] = useState([]);
     const userId = cookie.get('userId');
 
@@ -98,6 +98,7 @@ const ConversationList = () => {
             <h1>{cookie.get("userName")}'s Conversations</h1>
             {convoList.map((convo) => (
                 <Conversation
+                    onClick={() => setThread(convo.thread_id)}
                     key={convo.message_id}
                     message_id={convo.message_id}
                     img_url={convo.img_url}

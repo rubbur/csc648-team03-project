@@ -1,12 +1,17 @@
 import "./messageView.scss"
 import ConversationList from "./conversationList/ConversationList"
 import MessageThread from "./messageThread/MessageThread"
-const MessageView = () => {
+import React, {useState} from "react";
 
+
+
+const MessageView = () => {
+    const [thread, setThread] = useState([]);
+   
     return (
         <div className="MessageView">
-            <ConversationList />
-            <MessageThread />
+            <ConversationList setThread={setThread}/>
+            <MessageThread msgs={thread}/>
         </div>
     )
 

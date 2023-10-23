@@ -232,8 +232,19 @@ const getConversations = async (req, res) => {
   const { userId } = req.body;
   const q = "SELECT * FROM messages WHERE sender_id = ? OR recipient_id = ? ORDER BY date_stamp DESC";
   try {
-    const messages = await db.query(q, [userId, userId]);
-    res.send({ success: true, messages: messages[0] });
+    let messages = await db.query(q, [userId, userId]);
+    messages = messages[0];
+    let conversations = new Map();
+    console.log(messages, messages.length)
+    for (let i = 0; i < messages.length; i++) {
+      if(!conversations.has(messages[i].thread_id)) {
+        conversations.set(messages[i].thread_id, new Array());
+      }
+      conversations.get(messages[i].thread_id).push(messages[i]);
+    }
+   
+    res.send({ success: true, messages: messages, conversations: conversations });
+
   } catch (err) {
     console.log("error getting messages: " + err);
     res.send({ success: false, errorMessage: err });
