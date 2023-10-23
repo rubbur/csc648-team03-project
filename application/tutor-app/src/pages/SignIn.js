@@ -74,7 +74,10 @@ function SignIn() {
       localStorage.removeItem("unsentMessageRecipientId");
       localStorage.removeItem("unsentMessagePostId");
 
-
+      if(localStorage.getItem("temporaryWindow")) {
+        localStorage.removeItem("temporaryWindow");
+        window.close();
+      }
       if (cookie.get("isTutor")) {
         navigate("/TutorView");
         navigate(0);

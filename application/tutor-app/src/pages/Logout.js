@@ -10,6 +10,7 @@ function Logout() {
       cookie.remove("isLoggedIn");
       cookie.remove("isTutor");
       cookie.remove("userName");
+      cookie.remove("userId");
 
       // Remove any unsent message item from local storage
       localStorage.removeItem("unsentMessage");

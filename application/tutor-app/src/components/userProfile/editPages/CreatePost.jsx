@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./editPage.scss";
 import axios from "axios";
 import { cookie } from "../../../App";
@@ -16,7 +16,16 @@ const CreatePost = () => {
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const subjectList = ["NOT SELECTED", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
+  
+  useEffect(() =>{
+    console.log("logged in");
+    setLoginDialogOpen(false);
+    
+  }, []);
+
+
 
   const handleClear = () => { // clear all the fields
     setPostContent("");
@@ -46,18 +55,22 @@ const CreatePost = () => {
       formData.append("update_column", updateColumn);
 
       try {
-        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`, formData, {
+        const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`, formData, {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
+        if (!result.data.success) 
+          console.error(`Error uploading ${updateColumn}:`, result.data.error);
+
       } catch (error) {
         console.error(`Error uploading ${updateColumn}:`, error);
       }
     }
   };
 
+  // This function is called when the user clicks the "Create Post" button
   const handlePost = async () => {
     if (selectedSubject === "NOT SELECTED") {
       alert("Please select a subject");
@@ -71,7 +84,11 @@ const CreatePost = () => {
       return;
     }
     if (!cookie.get("isLoggedIn")) {
-      alert("Must be logged in to create a post.");
+      //TODO lazy login 
+      window.open(`${window.location.origin}/SignIn`);
+      //indicate that this new window is temporary
+      localStorage.setItem("temporaryWindow", true);
+      setLoginDialogOpen(true);
       return;
     }
     if (hourlyRate < 15 || hourlyRate > 99.99) {
@@ -136,6 +153,7 @@ const CreatePost = () => {
   return (
     <div>
       <h1 className="post-header">Create Post</h1>
+      {(loginDialogOpen) ? <p id="not-logged-in">You must be logged in to create a post</p> : null}
       <div className="post-textarea-container">
         <p className={(postContent.length > characterLimit) ? "error" : ""}>{` ${postContent.length}/${characterLimit} characters `}</p>
         <textarea
@@ -145,7 +163,7 @@ const CreatePost = () => {
           onChange={(e) => setPostContent(e.target.value)}
         />
       </div>
-      <div classname="upload-container">
+      <div className="upload-container">
         <div className="upload-button-container">
           <div className="upload-input">
             <label>Your Name:</label>
