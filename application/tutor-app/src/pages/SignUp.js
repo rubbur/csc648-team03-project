@@ -87,12 +87,7 @@ function SignUp() {
         localStorage.removeItem("unsentMessageRecipientId");
         localStorage.removeItem("unsentMessagePostId");
       }
-      if (cookie.get("isTutor")) {
-        navigate("/TutorView");
-      }
-      else {
-        navigate("/StudentView");
-      }
+      navigate("/Profile");
     }
   };
 
