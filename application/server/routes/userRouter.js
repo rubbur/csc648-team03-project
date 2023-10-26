@@ -30,7 +30,7 @@ userRouter.post("/login", login);
 
 userRouter.post("/register", register);
 
-userRouter.get("/logout", logout);
+userRouter.get("/Logout", logout);
 
 userRouter.post("/searchByName", isLoggedIn, searchByName);
 
