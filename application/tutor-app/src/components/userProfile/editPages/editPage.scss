@@ -108,6 +108,17 @@
 
 /* ``````````````````````````````````````````````````````` Create Post ``````````````````````````````````````````````````````` */
 
+.not-logged-in {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: red;
+    font-size: 20px;
+}
+
 .post-disclaimer {
     color: $accent-color;
     text-align: center;

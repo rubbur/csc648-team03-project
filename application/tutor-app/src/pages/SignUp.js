@@ -87,6 +87,12 @@ function SignUp() {
         localStorage.removeItem("unsentMessageRecipientId");
         localStorage.removeItem("unsentMessagePostId");
       }
+
+      if (localStorage.getItem("temporaryWindow")) {
+        localStorage.removeItem("temporaryWindow");
+        window.close();
+      }
+
       navigate("/Profile");
     }
   };
