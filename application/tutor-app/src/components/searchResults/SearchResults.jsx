@@ -4,6 +4,8 @@ import axios from "axios";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cookie } from "./../../App";
 import "./searchResults.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
 const SearchResults = () => {
     const [resultsList, setResultsList] = useState([]);
@@ -46,7 +48,21 @@ const SearchResults = () => {
 
     return (
         <div className="search-results">
-            <h3 className="search-total">Showing {resultsList.length} search results</h3>
+            <div className="sort-by-box">
+                <h3 className="search-total">Showing {resultsList.length} search results</h3>
+                <div className="sort-box">
+                    <div className="sort-by-title"><h3>Sort by:</h3></div>
+                    <select className="sort-by">
+                        <option value="date">Date</option>
+                        <option value="rate">Price</option>
+                        <option value="stars">Average review</option>
+                    </select>
+                    <div className="sort-arrows">
+                        <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
+                        <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
+                    </div>
+                </div>
+            </div>
             <div className="search-results-box">
                 {
                     resultsList.map((tutor, index) => {
@@ -57,7 +73,7 @@ const SearchResults = () => {
                             key={index}
                             index={index}
                             subject={tutor.subject}
-                            rate={tutor.hourly_rate}
+                            rate={"$" + tutor.hourly_rate}
                             postId={tutor.post_id}
                             tutorId={tutor.tutor_id}
                         />
