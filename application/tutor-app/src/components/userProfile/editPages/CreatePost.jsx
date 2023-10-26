@@ -1,3 +1,13 @@
+/*  
+  Author: Michael Mathews
+  Date: 10/14/2023
+  Description: This page allows a user to create a post. 
+    The user can upload a cv, flier, and video. 
+    The user can also set the subject, the hourly rate, and write a description of their post.
+    If the user is not logged in when creating a post, they will be sent to the login page.
+*/
+
+
 import React, { useState } from "react";
 import "./editPage.scss";
 import axios from "axios";
