@@ -1,5 +1,25 @@
 @import "../../../colorScheme.scss";
 
+.required {
+    color: red;
+    font-weight: bold;
+    user-select: none;
+}
+
+.required-center {
+    text-align: center;
+}
+
+.upload-input>label {
+    user-select: none;
+}
+
+.textarea-container>span {
+    display: flex;
+    align-self: flex-start;
+    padding-left: 5px;
+}
+
 .edit-form {
     padding-left: 10px;
     height: 100%;
@@ -141,9 +161,9 @@
     justify-content: center;
 }
 
-.post-textarea-container {
+.textarea-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 100%;
