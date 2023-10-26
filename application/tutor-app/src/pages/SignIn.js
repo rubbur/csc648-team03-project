@@ -7,11 +7,16 @@ import { Link, useNavigate } from 'react-router-dom'
 function SignIn() {
   useEffect(() => {
     document.title = "Tutors.tech: Sign In";
+    if (localStorage.getItem("temporaryWindow") === "true") {
+      setLoginDialogOpen(true);
+      return;
+    }
   }, []);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -87,6 +92,7 @@ function SignIn() {
   return (
     <div>
       <h1 className='pageHeader'>Sign In</h1>
+      {(loginDialogOpen) ? <p className="not-logged-in" id="not-logged-in">You must be logged in to create a post</p> : null}
       <div className="form-set">
         <div className="form-group">
           <label htmlFor="username" className='no-select'>Username: </label>

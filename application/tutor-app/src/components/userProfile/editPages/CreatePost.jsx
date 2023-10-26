@@ -16,16 +16,7 @@ const CreatePost = () => {
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
-  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const subjectList = ["NOT SELECTED", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
-  
-  useEffect(() =>{
-    console.log("logged in");
-    setLoginDialogOpen(false);
-    
-  }, []);
-
-
 
   const handleClear = () => { // clear all the fields
     setPostContent("");
@@ -51,7 +42,7 @@ const CreatePost = () => {
       formData.append("tutor_id", cookie.get("userId"));
       formData.append("username", cookie.get("userName"));
       formData.append("subject", selectedSubject);
-      formData.append("name",name);
+      formData.append("name", name);
       formData.append("update_column", updateColumn);
 
       try {
@@ -61,7 +52,7 @@ const CreatePost = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        if (!result.data.success) 
+        if (!result.data.success)
           console.error(`Error uploading ${updateColumn}:`, result.data.error);
 
       } catch (error) {
@@ -84,11 +75,9 @@ const CreatePost = () => {
       return;
     }
     if (!cookie.get("isLoggedIn")) {
-      //TODO lazy login 
       window.open(`${window.location.origin}/SignIn`);
       //indicate that this new window is temporary
       localStorage.setItem("temporaryWindow", true);
-      setLoginDialogOpen(true);
       return;
     }
     if (hourlyRate < 15 || hourlyRate > 99.99) {
@@ -153,7 +142,6 @@ const CreatePost = () => {
   return (
     <div>
       <h1 className="post-header">Create Post</h1>
-      {(loginDialogOpen) ? <p id="not-logged-in">You must be logged in to create a post</p> : null}
       <div className="post-textarea-container">
         <p className={(postContent.length > characterLimit) ? "error" : ""}>{` ${postContent.length}/${characterLimit} characters `}</p>
         <textarea

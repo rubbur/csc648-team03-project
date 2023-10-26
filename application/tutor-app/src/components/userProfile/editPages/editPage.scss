@@ -108,7 +108,16 @@
 
 /* ``````````````````````````````````````````````````````` Create Post ``````````````````````````````````````````````````````` */
 
-.post-subject-dropdown {}
+.not-logged-in {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: red;
+    font-size: 20px;
+}
 
 .post-header {
     display: flex;
@@ -136,14 +145,14 @@
     width: 100%;
 }
 
-.post-textarea-container > p{
+.post-textarea-container>p {
     color: white;
     font-size: 20px;
     margin-bottom: 10px;
     margin-left: 70%;
 }
 
-.post-textarea-container > p.error{
+.post-textarea-container>p.error {
     color: red;
 }
 
