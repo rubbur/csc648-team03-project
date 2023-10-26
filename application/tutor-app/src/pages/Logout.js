@@ -19,6 +19,7 @@ function Logout() {
 
       navigate("/");
       navigate(0);
+      navigate("./");
     }
     logout();
   }, [navigate]);
