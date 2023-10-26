@@ -16,7 +16,14 @@ const SearchResults = () => {
         const getSearchResults = async () => {
             //get the subject and the search term from the queryparams
             const url = new URL(window.location.href);
+
             const params = new URLSearchParams(url.search);
+            // error if search is more than 40 characters
+            if (params.get('searchterm').length > 40) {
+                alert("Search term must be at most 40 characters");
+                return;
+            }
+
             const subject = params.get('subject');
             //if the subject is not specified, set it to overview so that the user can see the tutor's overview post
 

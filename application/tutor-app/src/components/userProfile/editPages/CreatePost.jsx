@@ -223,6 +223,7 @@ const CreatePost = () => {
           Reset
         </button>
       </div>
+      <p className="post-disclaimer">Note: New posts may take up to 24 hours to be approved.</p>
     </div>
   );
 };
