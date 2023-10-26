@@ -1,4 +1,3 @@
-import { cookie } from "../App"
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
 import axios from "axios";
@@ -8,10 +7,6 @@ function Logout() {
   useEffect(() => {
     const logout = async () => {
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/Logout`, { withCredentials: true });
-      cookie.remove("isLoggedIn");
-      cookie.remove("isTutor");
-      cookie.remove("userName");
-      cookie.remove("userId");
 
       // Remove any unsent message item from local storage
       localStorage.removeItem("unsentMessage");
@@ -19,8 +14,6 @@ function Logout() {
       localStorage.removeItem("unsentMessagePostId");
 
       navigate("/");
-      navigate(0);
-      navigate("./");
     }
     logout();
   }, [navigate]);
