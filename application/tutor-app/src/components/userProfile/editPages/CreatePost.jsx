@@ -42,7 +42,7 @@ const CreatePost = () => {
       formData.append("tutor_id", cookie.get("userId"));
       formData.append("username", cookie.get("userName"));
       formData.append("subject", selectedSubject);
-      formData.append("name",name);
+      formData.append("name", name);
       formData.append("update_column", updateColumn);
 
       try {
@@ -217,6 +217,7 @@ const CreatePost = () => {
           Reset
         </button>
       </div>
+      <p className="post-disclaimer">Note: New posts may take up to 24 hours to be approved.</p>
     </div>
   );
 };

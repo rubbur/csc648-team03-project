@@ -108,7 +108,10 @@
 
 /* ``````````````````````````````````````````````````````` Create Post ``````````````````````````````````````````````````````` */
 
-.post-subject-dropdown {}
+.post-disclaimer {
+    color: $accent-color;
+    text-align: center;
+}
 
 .post-header {
     display: flex;
@@ -136,14 +139,14 @@
     width: 100%;
 }
 
-.post-textarea-container > p{
+.post-textarea-container>p {
     color: white;
     font-size: 20px;
     margin-bottom: 10px;
     margin-left: 70%;
 }
 
-.post-textarea-container > p.error{
+.post-textarea-container>p.error {
     color: red;
 }
 
