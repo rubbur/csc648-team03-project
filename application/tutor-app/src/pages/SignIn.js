@@ -95,7 +95,7 @@ function SignIn() {
       {(loginDialogOpen) ? <p className="not-logged-in" id="not-logged-in">You must be logged in to create a post</p> : null}
       <div className="form-set">
         <div className="form-group">
-          <label htmlFor="username" className='no-select'>Username: </label>
+          <label htmlFor="username" className='no-select'>SFSU Email: </label>
           <input
             type="username"
             id="username"

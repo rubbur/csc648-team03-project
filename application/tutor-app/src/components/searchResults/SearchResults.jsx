@@ -77,7 +77,7 @@ const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name }) 
 
     const handleProfile = () => {
         //navigate to the tutor's profile page
-        navigate(`/tutorProfile?postId=${postId}`);
+        window.open(`/tutorProfile?postId=${postId}`, '_blank');
     }
 
     const handleSend = async () => {

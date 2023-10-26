@@ -43,6 +43,16 @@ function SignUp() {
       return;
     }
 
+    if (!username.endsWith('@sfsu.edu') || username.length < 10) {
+      alert("Please use a SFSU email address. Example email: example@sfsu.edu");
+      return;
+    }
+
+    if (password.trim() === '') {
+      alert("Password cannot be empty.");
+      return;
+    }
+
     // Send email and password to the backend
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/user/register`,
@@ -102,7 +112,7 @@ function SignUp() {
       <h1 className='pageHeader'>Sign Up</h1>
       <div className="form-set">
         <div className="form-group">
-          <label htmlFor="username" className='no-select'>Username: </label>
+          <label htmlFor="username" className='no-select'>SFSU Email: </label>
           <input
             type="username"
             id="username"
@@ -111,6 +121,7 @@ function SignUp() {
             onChange={handleUsernameChange}
             required
           />
+          <span className='required'> *</span>
         </div>
         <div className="form-group">
           <label htmlFor="password" className='no-select'>Password: </label>
@@ -122,6 +133,7 @@ function SignUp() {
             onChange={handlePasswordChange}
             required
           />
+          <span className='required'> *</span>
         </div>
         <div className="form-group">
           <label htmlFor="rememberMe" className='no-select'>
@@ -140,8 +152,6 @@ function SignUp() {
             <div>
               <span className='accept-text'>Accept </span>
               <Link className='terms-link'>Terms of Service</Link>:
-
-
               <input
                 type="checkbox"
                 id="acceptTerms"
@@ -149,6 +159,7 @@ function SignUp() {
                 checked={acceptTerms}
                 onChange={handleacceptTermsChange}
               />
+              <span className='required'> *</span>
             </div>
           </label>
         </div>
@@ -156,7 +167,7 @@ function SignUp() {
           <button onClick={HandleRegistration}>Sign Up</button>
         </div>
 
-
+        <p className='required'>* Required</p>
       </div>
     </div>
   );
