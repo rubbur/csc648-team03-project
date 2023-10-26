@@ -74,17 +74,7 @@ function SignIn() {
       localStorage.removeItem("unsentMessageRecipientId");
       localStorage.removeItem("unsentMessagePostId");
 
-
-      if (cookie.get("isTutor")) {
-        navigate("/TutorView");
-        navigate(0);
-      }
-      else {
-        navigate("/StudentView");
-        navigate(0);
-      }
-
-
+      navigate("/Profile");
     }
   };
 
