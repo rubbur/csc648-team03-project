@@ -6,10 +6,12 @@ import { cookie } from "./../../App";
 import "./searchResults.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import comparators from "./algorithms";
 
 const SearchResults = () => {
     const [resultsList, setResultsList] = useState([]);
     const [searchSubject, setSearchSubject] = useState("");
+    const [sortType, setSortType] = useState("Price");
     const location = useLocation(); //tracks the query params
 
 
@@ -45,6 +47,10 @@ const SearchResults = () => {
         getSearchResults();
     }, [location.search]); //when the query params change (because the user searched something else) trigger loading the new search results
 
+    const sortResults = () => {
+        console.log("sorting results");
+        setResultsList([...resultsList.sort(comparators[sortType])]);
+    }
 
     return (
         <div className="search-results">
@@ -52,11 +58,13 @@ const SearchResults = () => {
                 <h3 className="search-total">Showing {resultsList.length} search results</h3>
                 <div className="sort-box">
                     <div className="sort-by-title"><h3>Sort by:</h3></div>
-                    <select className="sort-by">
-                        <option value="date">Date</option>
-                        <option value="rate">Price</option>
-                        <option value="stars">Average review</option>
+                    <select value={sortType} className="sort-by" onChange={ (e) => setSortType(e.target.value) }>
+                        <option value="Date">Date</option>
+                        <option value="Price">Price</option>
+                        <option value="Review">Review</option>
+                        <option value="Alpha">Alpha</option>
                     </select>
+                    <button onClick={() => { sortResults(); console.log(JSON.stringify(resultsList))}}>Apply sort</button>
                     <div className="sort-arrows">
                         <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
                         <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
