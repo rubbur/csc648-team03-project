@@ -19,7 +19,8 @@ const TutorProfile = () => {
     const [avgReview, setAvgReview] = useState(0);
     const [showAllReviews, setShowAllReviews] = useState(false);
     const [courses, setCourses] = useState([]);
-
+    const [isTyping, setIsTyping] = useState(false);
+    const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
     useEffect(() => {
         const getPostData = async () => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -116,15 +117,38 @@ const TutorProfile = () => {
     }, [postData.username, hasFlier, hasCv, hasVideo]);
 
     const handleContact = () => {
-        if (cookie.get("isLoggedIn") === "false") {
-            //redirect to login page
-            alert("need to be logged in to contact a tutor");
-            return;
-        }
-        //open a chat with the tutor where student can send messages
-        //open a modal that allows the student to send a message to the tutor
+        setIsTyping(true);
+        
     }
 
+    const handleSend = async () => {
+        console.log("post data is: " + JSON.stringify(postData))
+        if (messageInProgress === "" || messageInProgress === undefined) return;
+        console.log("sending message")
+        console.log(cookie.get("isLoggedIn"));
+        if (cookie.get("isLoggedIn") === "false" || cookie.get("isLoggedIn") === undefined) {
+            // Save the unsent message to local storage
+            localStorage.setItem("unsentMessage", messageInProgress);
+            localStorage.setItem("unsentMessageRecipientId", postData.tutor_id);
+            localStorage.setItem("unsentMessagePostId", postData.post_id);
+            // Redirect to the signup page
+            alert("You need to be logged in to contact a tutor. You will be redirected to sign in.");
+            window.location.href = "/SignIn";
+            return;
+        }
+      // User is logged in, proceed with sending the message
+        const result = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`,
+            {
+                recipientId: postData.tutor_id,
+                message: messageInProgress,
+                senderId: cookie.get("userId"),
+                postId: postData.post_id
+            },
+            { withCredentials: true }
+        );
+    }
+    
     const handleReview = () => {
         if (cookie.get("isLoggedIn") === "false") {
             //redirect to login page
@@ -198,10 +222,22 @@ const TutorProfile = () => {
 
                     <h1 className='tutor-header'>{postData.name}'s Post</h1>
                 </div>
+
+                { isTyping ? 
+                <div className="message-container">
+                    <button className="close-typing-button" onClick={ () => setIsTyping(false)}>X</button>
+                    <textarea className="message-box" rows="30" placeholder="begin typing.." value={messageInProgress} onChange={e => setMessageInProgress(e.target.value)} />
+                    <div className="message-button-container">
+                        <button className="send-message-button result-button" onClick={handleSend}>Send Message</button>
+                        <button className="result-button" onClick={() => setMessageInProgress("")}>Clear</button>
+                    </div>
+                </div>
+                :
                 <div className="about-me-box">
                     <h2>About Me</h2>
                     <p>{postData.description || "I am a really qualified tutor. I can teach stuff to people"}</p>
                 </div>
+                }
 
                 {hasFlier && (
                     <div className="file-box">
