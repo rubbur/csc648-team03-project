@@ -23,16 +23,16 @@ const SearchResults = () => {
 
             const params = new URLSearchParams(url.search);
             // error if search is more than 40 characters
-            if (params.get('searchterm').length > 40) {
+            if (params.get("searchterm") && params.get('searchterm').length > 40) {
                 alert("Search term must be at most 40 characters");
                 return;
             }
 
-            const subject = params.get('subject');
+            const subject = params.get('subject') || "All";
             //if the subject is not specified, set it to overview so that the user can see the tutor's overview post
 
             setSearchSubject(subject === "all" ? "overview" : subject);
-            const searchTerm = params.get('searchterm');
+            const searchTerm = params.get('searchterm') || "";
 
             //get the results from the backend
             const searchResults = await axios.post(
