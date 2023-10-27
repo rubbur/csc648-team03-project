@@ -3,10 +3,16 @@ import { useState, useEffect } from "react";
 import Conversation from "../conversation/Conversation";
 import axios from "axios";
 import { cookie } from "../../../App";
+import comparators from "./algorithms";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
+//TODO: pass Conversation component time_stamp prop which is when the conversation was last active.
 const ConversationList = () => {
     const [convoList, setConvoList] = useState([]);
+    const [sortType, setSortType] = useState("Alpha");
     const userId = cookie.get('userId');
+    const criteria = ["Alpha", "Recent"];
 
     useEffect(() => {
         const fetchConversations = async () => {
@@ -35,6 +41,8 @@ const ConversationList = () => {
                 console.error("Error fetching conversations:", error);
             }
         };
+
+
 
         const fetchDataForConvo = async (convo) => {
             try {
@@ -94,9 +102,25 @@ const ConversationList = () => {
         });
     }, [userId, convoList.length, convoList.postSubject]);
 
+    const sortConvos = () => {
+        console.log("sorting results");
+        setConvoList([...convoList.sort(comparators[sortType])]);
+    }
+
     return (
         <div className="ConversationList">
             <h1>{cookie.get("userName")}'s Conversations</h1>
+            <div className="sort-box">
+                    <div className="sort-by-title"><h3>Sort by:</h3></div>
+                    <select value={sortType} className="sort-by" onChange={ (e) => setSortType(e.target.value) }>
+                       {criteria.map(crit => <option value={crit}>{crit}</option>)}
+                    </select>
+                    <button onClick={() => { sortConvos(); console.log(JSON.stringify(convoList))}}>Apply sort</button>
+                    <div className="sort-arrows">
+                        <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
+                        <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
+                    </div>
+                </div>
             {convoList.map((convo) => (
                 <Conversation
                     key={convo.message_id}
