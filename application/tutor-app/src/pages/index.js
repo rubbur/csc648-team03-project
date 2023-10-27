@@ -1,3 +1,10 @@
+
+// Author:  Whole team
+// Date: 8/26/2023
+// Purpose: Landing page for the application. Contains a few tutors and the ability to log in or register
+
+
+
 import React, { useState, useEffect, useRef } from 'react';
 import '../index.scss';
 import { UserResult } from '../components/searchResults/SearchResults';

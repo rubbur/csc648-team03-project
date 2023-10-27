@@ -1,3 +1,11 @@
+//Author: Cleveland Plonsey
+//date: 9/12/2023
+//purpose: This component allows the user to upload a profile picture
+//it accepts a file and uploads it to the backend where the file is stored in a folder
+//at the root of the public folder. 
+//and the backend updates the database with the relative path to the file
+
+
 import axios from "axios";
 import { useState } from "react"
 import { cookie } from "../../App";

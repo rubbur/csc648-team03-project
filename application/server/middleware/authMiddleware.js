@@ -1,3 +1,7 @@
+//Author: Cleveland Plonsey
+//date: 9/10/2023
+//purpose: This file contains the middleware for authentication.
+
 //middleware that checks if user is actually logged in.
 const isLoggedIn = (req, res, next) => {
     if(req.session.isLoggedIn){

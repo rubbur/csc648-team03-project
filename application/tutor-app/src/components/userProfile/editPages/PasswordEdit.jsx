@@ -1,3 +1,7 @@
+// Author:  Cleveland Plonsey
+// Date: 10/18/2023
+// Purpose: presents user with form that allows user to change their password
+
 import "./editPage.scss";
 import axios from "axios";
 import {useState} from "react";

@@ -1,3 +1,12 @@
+
+// Author: Michael Mathews, Cleveland Plonsey
+// Date: 9/18/2023
+// Purpose: this component is rendered when the user logs out. It does not have any jsx. 
+//cleans up cookies and session for user.
+//shouldnt be a component at all.
+
+
+import { cookie } from "../App"
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react';
 import axios from "axios";

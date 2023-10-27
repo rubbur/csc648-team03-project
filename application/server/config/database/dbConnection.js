@@ -1,6 +1,13 @@
+//Author: Cleveland Plonsey
+//date: 9/3/2023
+//purpose: This file configures the database connection.
+//this connection can be imported into any file that needs to interact with the database.
+//interaction example: import db from "./config/database/dbConnection.js"
+//const allUsers = await db.query("SELECT * FROM users");
+
 const mysql = require('mysql2/promise');
 require('dotenv').config();
-;
+
 
 
   // Create a connection pool after the database setup

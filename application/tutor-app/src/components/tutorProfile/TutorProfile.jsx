@@ -1,3 +1,8 @@
+// Author: Cleveland Plonsey
+// Date: 9/28/2023
+// Purpose: deprecated feature. Displays a Tutor's Profile page.
+
+
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import "./tutorProfile.scss";

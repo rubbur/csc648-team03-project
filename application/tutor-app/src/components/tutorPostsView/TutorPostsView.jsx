@@ -1,3 +1,8 @@
+// Author: Michael Mathews
+// Date: 10/9/2023
+// Purpose: Page that a tutor can go to to examine all of their posts.
+
+
 import React, { useState } from "react";
 import "./tutorPostsView.scss";
 import axios from "axios";

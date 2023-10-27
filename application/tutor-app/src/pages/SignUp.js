@@ -1,3 +1,7 @@
+// Author:  Cleveland Plonsey, team lead
+// Date: 9/3/2023
+// Purpose: component that presents register form to user.
+
 import React, { useEffect, useState } from 'react';
 import '../index.scss';
 import axios from "axios";
