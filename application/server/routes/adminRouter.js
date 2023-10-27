@@ -1,4 +1,7 @@
 //Author: Cleveland Plonsey
+//date: 9/14/2023
+//router for routes that have to do with admin
+
 const {verifyAdmin, deleteUser, getAllUsers, editUser} = require("../controllers/adminControllers");
 
 

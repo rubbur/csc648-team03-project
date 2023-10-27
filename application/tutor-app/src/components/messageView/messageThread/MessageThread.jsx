@@ -1,3 +1,9 @@
+// Author: Ava Albright, Michael Mathews, Cleveland Plonsey
+// Date: 10/18/2023
+// Purpose: renders all messages in a conversation
+
+
+
 import { useState } from "react"
 import "./messageThread.scss"
 

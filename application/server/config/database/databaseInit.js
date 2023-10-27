@@ -1,3 +1,8 @@
+//Author: Cleveland Plonsey
+//date: 9/3/2023
+//purpose: script that initializes the database and creates the tables if they do not exist
+//This file is out of date! Do not run this file. It is only here for reference.
+
 const mysql = require('mysql2/promise');
 
 const DATABASE_NAME = "SFSUtutors";

@@ -1,3 +1,9 @@
+// Author:  Cleveland Plonsey
+// Date: 10/18/2023
+// Purpose: presents user with form that allows them to become a tutor or add subjects/classes to their profile.
+//this is a deprecated Component.
+
+
 import { useEffect, useState } from "react";
 import "./editPage.scss";
 import { cookie } from "../../../App";

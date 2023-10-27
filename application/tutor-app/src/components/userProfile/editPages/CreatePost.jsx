@@ -1,3 +1,8 @@
+// Author: Michael Mathews, Cleveland Plonsey
+// Date: 9/18/2023
+// Purpose: CreatePost component that presents a form where a user (even if not authenticated) can fill out
+//the data necessary to advertise their services as a tutor. 
+
 import React, { useEffect, useState } from "react";
 import "./editPage.scss";
 import axios from "axios";

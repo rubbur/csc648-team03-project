@@ -1,3 +1,9 @@
+// Author:  Cleveland Plonsey
+// Date: 10/2/2023
+// Purpose: Is the view that shows the results of a user using search bar
+// all tutor_posts that match the search criteria are displayed as post cards.
+
+
 import { useState, useEffect } from "react"
 import axios from "axios";
 //import "../admin/admin.css";

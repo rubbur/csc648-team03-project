@@ -1,3 +1,9 @@
+// Author: Ava Albright, Michael Mathews, Cleveland Plonsey
+// Date: 10/18/2023
+// Purpose: renders all conversations that a user has. Controls the Conversation components
+
+
+
 import "./conversationList.scss";
 import { useState, useEffect } from "react";
 import Conversation from "../conversation/Conversation";

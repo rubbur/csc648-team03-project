@@ -1,3 +1,9 @@
+// Author: Michael Mathews, Cleveland Plonsey
+// Date: 10/15/2023
+// Purpose: componenet that displays a tutor post as a card
+//this component is used by the tutor who owns all of these posts. 
+//tutor can edit or delete posts through this component.
+
 import React from "react";
 import { Link } from "react-router-dom";
 import "./postCard.scss";

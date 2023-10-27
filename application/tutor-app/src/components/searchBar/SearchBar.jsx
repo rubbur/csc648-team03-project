@@ -1,3 +1,10 @@
+// Author: Cleveland Plonsey
+// Date: 10/4/2023
+// Purpose: search bar that appears in the header on every page. Meant to look like amazon search bar
+//has a filter and a text input that both are applied to the database. 
+//The tutor_posts table is queried using LIKE % AND subject = 
+
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./searchBar.css";

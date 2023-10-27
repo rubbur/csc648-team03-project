@@ -1,3 +1,9 @@
+//Author: Cleveland Plonsey
+//date: 9/3/2023
+//controllers for tutor routes. These controllers are invoked when the client sends http requests
+//and the endpoint starts with "/tutor/"
+
+
 const db = require("../config/database/dbConnection");
 
 const getTutorReviews = async (req, res) => {
