@@ -86,7 +86,7 @@ const SearchResults = () => {
 }
 
 
-const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name }) => {
+export const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name }) => {
     const [isTyping, setIsTyping] = useState(false);
     const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
     const navigate = useNavigate(); //used to navigate to the tutor's profile page
