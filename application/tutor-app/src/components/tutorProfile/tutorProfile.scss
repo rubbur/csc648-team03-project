@@ -172,3 +172,16 @@ $image-dimension: 300px;
     color: white;
     font-weight: 500;
 }
+
+
+h1.sent-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: orangered;
+    color: #fff;
+    border-radius: 5px;
+    opacity: 1;
+    transition: opacity 2s;
+  }

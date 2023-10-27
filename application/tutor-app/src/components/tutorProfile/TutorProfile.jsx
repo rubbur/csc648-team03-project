@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const TutorProfile = () => {
     const initialReviewNum = 2;
+    const [showSentMessage, setShowSentMessage] = useState(false);
     const [hasFlier, setHasFlier] = useState(false);
     const [hasCv, setHasCv] = useState(false);
     const [hasVideo, setHasVideo] = useState(false);
@@ -116,9 +117,16 @@ const TutorProfile = () => {
         }
     }, [postData.username, hasFlier, hasCv, hasVideo]);
 
+    useEffect(() => {
+        if (showSentMessage) {
+          setTimeout(() => {
+            setShowSentMessage(false);
+          }, 2000);
+        }
+      }, [showSentMessage]);
+
     const handleContact = () => {
         setIsTyping(true);
-        
     }
 
     const handleSend = async () => {
@@ -147,6 +155,14 @@ const TutorProfile = () => {
             },
             { withCredentials: true }
         );
+        if (!result.data.success) {
+            console.log(result.data.errorMessage);
+            return;
+        }
+        else {
+            setMessageInProgress("");
+            setShowSentMessage(true);
+        }
     }
     
     const handleReview = () => {
@@ -181,6 +197,7 @@ const TutorProfile = () => {
 
     return (
         <div className="tutor-profile">
+            {showSentMessage && <h1 className="sent-alert">Message Sent.</h1>}
             <div className="left-side-bar">
                 <div className="image-subjects-box">
                     <img src={postData.img_url} alt={`profile pic of ${postData.name}`} />
