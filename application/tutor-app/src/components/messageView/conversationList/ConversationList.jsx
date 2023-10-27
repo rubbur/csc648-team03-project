@@ -33,7 +33,7 @@ const ConversationList = ({setThread}) => {
                         return convo;
                     });
 
-                    setConvoList(updatedConvoList);
+                    setConvoList([...updatedConvoList]);
                 } else {
                     console.log("Error fetching conversations: " + response.data.errorMessage);
                 }
@@ -93,10 +93,11 @@ const ConversationList = ({setThread}) => {
             setConvoList(updatedConvoList);
         };
 
-        fetchConversations();
-        if (convoList.length > 0) {
-            updateConvoListData();
-        }
+        fetchConversations().then(() => {
+            if (convoList.length > 0) {
+                updateConvoListData();
+            }
+        });
     }, [userId, convoList.length, convoList.postSubject]);
 
     return (

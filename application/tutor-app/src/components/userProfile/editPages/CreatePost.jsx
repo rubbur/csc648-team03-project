@@ -1,9 +1,17 @@
-// Author: Michael Mathews, Cleveland Plonsey
-// Date: 9/18/2023
-// Purpose: CreatePost component that presents a form where a user (even if not authenticated) can fill out
-//the data necessary to advertise their services as a tutor. 
+
 
 import React, { useEffect, useState } from "react";
+/*  
+  Author: Michael Mathews
+  Date: 10/14/2023
+  Description: This page allows a user to create a post. 
+    The user can upload a cv, flier, and video. 
+    The user can also set the subject, the hourly rate, and write a description of their post.
+    If the user is not logged in when creating a post, they will be sent to the login page.
+*/
+
+
+import React, { useState } from "react";
 import "./editPage.scss";
 import axios from "axios";
 import { cookie } from "../../../App";
@@ -21,16 +29,7 @@ const CreatePost = () => {
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
-  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const subjectList = ["NOT SELECTED", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
-  
-  useEffect(() =>{
-    console.log("logged in");
-    setLoginDialogOpen(false);
-    
-  }, []);
-
-
 
   const handleClear = () => { // clear all the fields
     setPostContent("");
@@ -56,7 +55,7 @@ const CreatePost = () => {
       formData.append("tutor_id", cookie.get("userId"));
       formData.append("username", cookie.get("userName"));
       formData.append("subject", selectedSubject);
-      formData.append("name",name);
+      formData.append("name", name);
       formData.append("update_column", updateColumn);
 
       try {
@@ -66,7 +65,7 @@ const CreatePost = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        if (!result.data.success) 
+        if (!result.data.success)
           console.error(`Error uploading ${updateColumn}:`, result.data.error);
 
       } catch (error) {
@@ -77,10 +76,7 @@ const CreatePost = () => {
 
   // This function is called when the user clicks the "Create Post" button
   const handlePost = async () => {
-    if (selectedSubject === "NOT SELECTED") {
-      alert("Please select a subject");
-      return;
-    }
+    // make sure the post content is valid
     if (postContent.length > characterLimit) {
       alert("Post description is too long");
       return;
@@ -88,16 +84,24 @@ const CreatePost = () => {
       alert("Post description cannot be empty");
       return;
     }
-    if (!cookie.get("isLoggedIn")) {
-      //TODO lazy login 
-      window.open(`${window.location.origin}/SignIn`);
-      //indicate that this new window is temporary
-      localStorage.setItem("temporaryWindow", true);
-      setLoginDialogOpen(true);
+    if (name.length === 0) {
+      alert("Please enter your name");
+      return;
+    }
+    if (selectedSubject === "NOT SELECTED") {
+      alert("Please select a subject");
       return;
     }
     if (hourlyRate < 15 || hourlyRate > 99.99) {
       alert("Hourly rate must be between $15 and $99.99");
+      return;
+    }
+
+    // lazy login/signup
+    if (!cookie.get("isLoggedIn")) {
+      window.open(`${window.location.origin}/SignIn`);
+      //indicate that this new window is temporary
+      localStorage.setItem("temporaryWindow", true);
       return;
     }
 
@@ -158,25 +162,30 @@ const CreatePost = () => {
   return (
     <div>
       <h1 className="post-header">Create Post</h1>
-      {(loginDialogOpen) ? <p id="not-logged-in">You must be logged in to create a post</p> : null}
       <div className="post-textarea-container">
         <p className={(postContent.length > characterLimit) ? "error" : ""}>{` ${postContent.length}/${characterLimit} characters `}</p>
-        <textarea
-          className="post-textarea"
-          placeholder="Write your post here"
-          value={postContent}
-          onChange={(e) => setPostContent(e.target.value)}
-        />
+        <div className="textarea-container">
+          <textarea
+            className="post-textarea"
+            placeholder="Write your post here"
+            value={postContent}
+            onChange={(e) => setPostContent(e.target.value)}
+          />
+          <span className='required'>  *</span>
+        </div>
       </div>
       <div className="upload-container">
         <div className="upload-button-container">
           <div className="upload-input">
             <label>Your Name:</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <div>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <span className='required'> *</span>
+            </div>
           </div>
         </div>
 
@@ -185,26 +194,32 @@ const CreatePost = () => {
         <div className="upload-button-container">
           <div className="upload-input">
             <label>Subject: </label>
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-            >
-              {subjectList.map((subject) => (
-                <option key={subject} value={subject}>
-                  {subject}
-                </option>
-              ))}
-            </select>
+            <div>
+              <select
+                value={selectedSubject}
+                onChange={(e) => setSelectedSubject(e.target.value)}
+              >
+                {subjectList.map((subject) => (
+                  <option key={subject} value={subject}>
+                    {subject}
+                  </option>
+                ))}
+              </select>
+              <span className='required'> *</span>
+            </div>
           </div>
           <div className="upload-input">
             <label>Hourly Rate: $ </label>
-            <input
-              value={hourlyRate}
-              type="number"
-              min={15}
-              max={100}
-              onChange={(e) => setHourlyRate(e.target.value)}
-            />
+            <div>
+              <input
+                value={hourlyRate}
+                type="number"
+                min={15}
+                max={100}
+                onChange={(e) => setHourlyRate(e.target.value)}
+              />
+              <span className='required'> *</span>
+            </div>
           </div>
           <div className="upload-input">
             <span>Upload CV (PDF): </span>
@@ -231,7 +246,7 @@ const CreatePost = () => {
             />
           </div>
         </div>
-      </div>
+      </div >
       <div className="post-button-container">
         <button className="create-button" onClick={handlePost}>
           Create Post
@@ -240,7 +255,9 @@ const CreatePost = () => {
           Reset
         </button>
       </div>
-    </div>
+      <p className='required required-center'>* Required</p>
+      <p className="post-disclaimer">Note: New posts may take up to 24 hours to be approved.</p>
+    </div >
   );
 };
 

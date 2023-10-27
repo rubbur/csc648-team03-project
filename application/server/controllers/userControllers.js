@@ -163,9 +163,11 @@ const logout = async (req, res) => {
     else {
 
       console.log("logged out successfully");
-      //TODO: clear cookies
-      //for example 
-      res.clearCookie("sfsuCookies");
+
+      res.clearCookie("isLoggedIn");
+      res.clearCookie("isTutor");
+      res.clearCookie("userId");
+      res.clearCookie("userName");
       res.send({ success: true });
     }
   });
