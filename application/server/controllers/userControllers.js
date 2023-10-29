@@ -240,13 +240,36 @@ const getConversations = async (req, res) => {
     let conversations = new Map();
     console.log(messages, messages.length)
     for (let i = 0; i < messages.length; i++) {
-      if(!conversations.has(messages[i].thread_id)) {
+      if (!conversations.has(messages[i].thread_id)) {
         conversations.set(messages[i].thread_id, new Array());
       }
       conversations.get(messages[i].thread_id).push(messages[i]);
     }
-   
-    res.send({ success: true, messages: messages, conversations: conversations });
+
+    console.log(conversations);
+    let senderData = [];
+    for (let [_key, value] of conversations) {
+      if (userId == value[0].sender_id) {
+        senderId = value[0].recipient_id;
+      }
+      else {
+        senderId = value[0].sender_id;
+      }
+      let dataObj = {};
+      const q = "SELECT users.img_url, users.username FROM users WHERE id = ?";
+      let data = await db.query(q, [senderId]);
+      console.log(data);
+      dataObj.img_url = data[0][0].img_url;
+      dataObj.username = data[0][0].username;
+      let q2 = "SELECT subject FROM tutor_posts WHERE tutor_id = ?";
+      data = await db.query(q2, value[0].sender_id);
+      dataObj.subject = data[0][0].subject;
+      dataObj.thread_id = value[0].thread_id;
+
+      senderData.push(dataObj);
+    };
+
+    res.send({ success: true, messages: messages, conversations: conversations, senderData: senderData });
 
   } catch (err) {
     console.log("error getting messages: " + err);
