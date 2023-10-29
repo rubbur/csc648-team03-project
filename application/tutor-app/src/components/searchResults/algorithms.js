@@ -8,7 +8,7 @@ const comparators = {
          return (+a.hourly_rate) - +(b.hourly_rate)
         else return 0;       
     },
-    Review : (a, b) => { if(a.avg_review && b.avg_review) return a.avg_review - b.avg_review
+    Review : (a, b) => { if(a.avg_review && b.avg_review) return (+a.avg_review) - (+b.avg_review)
         else return 0; },
     Alpha: (a, b) => { if(a.name && b.name) 
         return a.name.localeCompare(b.name);

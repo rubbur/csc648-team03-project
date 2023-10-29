@@ -175,10 +175,11 @@ const logout = async (req, res) => {
 const createPost = async (req, res) => {
   const { tutor_id, subject, description, hourly_rate, name } = req.body;
   const isPending = 1;
-
-  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, hourly_rate, name, is_pending) VALUES (?, ?, ?, ?, ?, ?)";
+  let date = new Date();
+  let currentTime = date.toISOString().split(/[- :]/).join("").slice(0, 14);
+  let q = "INSERT INTO tutor_posts (tutor_id, subject, description, hourly_rate, name, is_pending, creation_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
   try {
-    const result = await db.query(q, [tutor_id, subject, description, hourly_rate, name, isPending]);
+    const result = await db.query(q, [tutor_id, subject, description, hourly_rate, name, isPending, currentTime]);
     const postId = result[0].insertId;
     console.log("Post inserted successfully. postid: " + postId);
     res.send({ success: true, postId }); // Include the postId in the response
@@ -523,6 +524,15 @@ const submitReview = async (req, res) => {
   const q = "INSERT INTO tutor_reviews (reviewer_id, tutor_id, review, rating, reviewer_name, time_stamp) VALUES (?, ?, ?, ?, ?, ?)";
   try {
     await db.query(q, [reviewerId, tutorId, reviewText, rating, reviewerName, currentTime]);
+    //update the avg_review of the tutor in the users table
+    const q2 = `UPDATE users
+    SET avg_rating = (
+        SELECT AVG(tutor_reviews.rating)
+        FROM tutor_reviews
+        WHERE tutor_reviews.tutor_id = ?
+    )
+    WHERE id = ?;`
+    await db.query(q2, [tutorId, tutorId]);
     res.send({ success: true });
   } catch (err) {
     console.log("error inserting review into reviews table: " + err);
@@ -534,12 +544,12 @@ const searchPosts = async (req, res) => {
   //return all tutor posts where (the search term matches the description OR the name of the tutor) AND the post subject matches the subject 
   let { searchTerm, subject, } = req.body;
 
-  console.log("search term is: " + searchTerm + " and subject is: " + subject);
+  
   searchTerm = `%${searchTerm}%`;
   const q = (subject === "All") ?
-    "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.is_pending = 0"
+    "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.is_pending = 0"
     :
-    "SELECT tutor_posts.*, users.img_url, users.username  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.subject = ? AND tutor_posts.is_pending = 0";
+    "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.subject = ? AND tutor_posts.is_pending = 0";
   try {
     const result = await db.query(q, [searchTerm, searchTerm, subject]);
     res.send({ success: true, searchResults: result[0] });

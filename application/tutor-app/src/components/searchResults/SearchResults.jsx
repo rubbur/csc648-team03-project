@@ -7,13 +7,27 @@ import "./searchResults.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import comparators from "./algorithms";
-
+import "../../index.scss";
 const SearchResults = () => {
+    const location = useLocation(); //tracks the query params in the url
     const [resultsList, setResultsList] = useState([]);
     const [searchSubject, setSearchSubject] = useState("");
     const [sortType, setSortType] = useState("Price");
-    const location = useLocation(); //tracks the query params
+    
+    const [topThreeTutors, setTopThreeTutors] = useState([]);
+    //get the top three tutors of the site
+    useEffect( () => {
+        const getTopTutors = async () => {
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/tutor/topThreeTutors`, {}, {withCredentails: true});
+            console.log("this is the response: " +response.data)
+            if(response.data.success) {
+                setTopThreeTutors([...response.data.data]);
+                console.log(JSON.stringify(response.data.data));
+            }
 
+        }
+        getTopTutors();
+    }, []);
 
     //get the search results based on the query params
     useEffect(() => {
@@ -45,10 +59,10 @@ const SearchResults = () => {
             console.log(searchResults.data.searchResults[0]);
         }
         getSearchResults();
+        console.log(JSON.stringify(resultsList));
     }, [location.search]); //when the query params change (because the user searched something else) trigger loading the new search results
 
     const sortResults = () => {
-        console.log("sorting results");
         setResultsList([...resultsList.sort(comparators[sortType])]);
     }
 
@@ -64,7 +78,7 @@ const SearchResults = () => {
                         <option value="Review">Review</option>
                         <option value="Alpha">Alpha</option>
                     </select>
-                    <button onClick={() => { sortResults(); console.log(JSON.stringify(resultsList))}}>Apply sort</button>
+                    <button onClick={sortResults}>Apply sort</button>
                     <div className="sort-arrows">
                         <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
                         <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
@@ -88,13 +102,43 @@ const SearchResults = () => {
                     })
                 }
             </div>
+            {
+             resultsList.length === 0 &&  
+             <div>
+             
+             <br />
+             <br />
+             <br />
+             <br />
+             <br />
+             <br />
+             <br />
+             <h2>Our three most recent posts</h2>
+             <br />
+             <hr />
+            <div className='top-tutors-container'>
+               
+            {
+                topThreeTutors.length > 0 &&
+                topThreeTutors.map( tutor => <UserResult 
+                    name={tutor.name}
+                    postId={tutor.post_id}
+                    imgUrl={tutor.img_url}
+                    subject={tutor.subject}
+                    rate={tutor.hourly_rate}
+                    tutorId={tutor.tutor_id}
+                />)
+            }
+            </div>
+             </div>
+        }
         </div>
     )
 
 }
 
 
-export const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name }) => {
+export const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name,  }) => {
     const [isTyping, setIsTyping] = useState(false);
     const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
     const navigate = useNavigate(); //used to navigate to the tutor's profile page
