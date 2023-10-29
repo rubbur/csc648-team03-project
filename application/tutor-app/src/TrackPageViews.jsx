@@ -1,25 +1,27 @@
-//google analytics
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga';
-import React, {useEffect} from "react";
-import { useNavigate } from 'react-router-dom';
 
 const TrackPageViews = () => {
-    const navigate = useNavigate();
-    useEffect(() => {
-      ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
-  
-      // Track initial pageview
-      ReactGA.pageview(window.location.pathname + window.location.search);
-  
-      // Set up listener for route changes
-      const unlisten = navigate((location) => {
-        ReactGA.pageview(location.pathname + location.search);
-      });
-  
-    }, [navigate]);
-  
-    return null;
-  };
+  const location = useLocation();
 
-  export default TrackPageViews;
+  useEffect(() => {
+    ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
+
+    // Track initial pageview
+    ReactGA.pageview(location.pathname + location.search);
+
+    // Set up listener for route changes
+    const unlisten = () => {
+      ReactGA.pageview(location.pathname + location.search);
+    };
+
+    return unlisten;
+  }, [location]);
+
+  return null;
+};
+
+export default TrackPageViews;
+
   
