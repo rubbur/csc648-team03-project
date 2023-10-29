@@ -258,7 +258,6 @@ const getConversations = async (req, res) => {
       let dataObj = {};
       const q = "SELECT users.img_url, users.username FROM users WHERE id = ?";
       let data = await db.query(q, [senderId]);
-      console.log(data);
       dataObj.img_url = data[0][0].img_url;
       dataObj.username = data[0][0].username;
       let q2 = "SELECT subject FROM tutor_posts WHERE tutor_id = ?";
@@ -269,7 +268,12 @@ const getConversations = async (req, res) => {
       senderData.push(dataObj);
     };
 
-    res.send({ success: true, messages: messages, conversations: conversations, senderData: senderData });
+    let mapObj = {};
+    for (let [key, value] of conversations) {
+      mapObj[key] = value;
+    }
+
+    res.send({ success: true, messages: messages, conversations: mapObj, senderData: senderData });
 
   } catch (err) {
     console.log("error getting messages: " + err);

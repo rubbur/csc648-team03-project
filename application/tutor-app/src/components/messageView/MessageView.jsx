@@ -7,27 +7,39 @@
 import "./messageView.scss"
 import ConversationList from "./conversationList/ConversationList"
 import MessageThread from "./messageThread/MessageThread"
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { cookie } from "../../App";
 
 
 const MessageView = () => {
-    const [thread, setThread] = useState([]);
-    const [convoMap, setConvoMap] = useState(new Map());
+    const [thread, setThread] = useState("");
+    const [convoMap, setConvoMap] = useState({});
     useEffect(() => {
         //get all the conversations
-        const  getConvoMap = async () => {
-            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getConversations`,
-             { withCredentials: true });
-             setConvoMap(res.data.conversations);
-        }   
+        const getConvoMap = async () => {
+            const res = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/user/getConversations`,
+                { userId: cookie.get("userId") },
+                { withCredentials: true }
+            );
+            if (res.data.success) {
+                console.log(cookie.get("userId"));
+                console.log(res.data.conversations);
+            } else {
+                console.log("Error fetching conversations: " + res.data.errorMessage);
+            }
+
+            setConvoMap(res.data.conversations);
+        }
+        getConvoMap();
     }, [])
 
 
     return (
         <div className="MessageView">
-            <ConversationList setThread={setThread}/>
-            <MessageThread msgs={convoMap.get(thread)}/>
+            <ConversationList setThread={setThread} />
+            <MessageThread msgs={convoMap[thread]} />
         </div>
     )
 

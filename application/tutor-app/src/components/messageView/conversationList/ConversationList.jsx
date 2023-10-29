@@ -23,7 +23,6 @@ const ConversationList = ({ setThread }) => {
                     { withCredentials: true }
                 );
                 if (response.data.success) {
-                    console.log(response.data.senderData);
                     setConvoList(response.data.senderData);
                 } else {
                     console.log("Error fetching conversations: " + response.data.errorMessage);
@@ -38,11 +37,12 @@ const ConversationList = ({ setThread }) => {
     }, []);
 
     return (
-        <div className="ConversationList">
+        <div className="ConversationList" >
             <h1>{cookie.get("userName")}'s Conversations</h1>
             {convoList.map((convo) => (
                 <Conversation
-                    onClick={() => setThread(convo.thread_id)}
+                    threadId={convo.thread_id}
+                    setThread={setThread}
                     key={convo.message_id}
                     message_id={convo.message_id}
                     img_url={convo.img_url}

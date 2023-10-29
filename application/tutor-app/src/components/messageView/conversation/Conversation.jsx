@@ -5,9 +5,9 @@
 
 import "./conversation.scss";
 
-const Conversation = ({ img_url, name, postSubject }) => {
+const Conversation = ({ img_url, name, postSubject, setThread, threadId }) => {
     return (
-        <div className="ConversationContainer">
+        <div className="ConversationContainer" onClick={() => { console.log("thread id: " + threadId); setThread(threadId) }}>
             <div className="Conversation">
                 <div className="user-container">
                     <img src={process.env.PUBLIC_URL + img_url} alt={name + "'s profile picture"} />
