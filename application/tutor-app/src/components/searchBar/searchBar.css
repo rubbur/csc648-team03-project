@@ -60,7 +60,6 @@ Purpose: Style the SearchBar component */
 
 #search-button:hover {
     background-color: rgb(223, 179, 45);
-    transform: scale(1.05);
 }
 
 .search-bar-input {
