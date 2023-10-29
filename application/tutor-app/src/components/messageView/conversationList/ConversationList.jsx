@@ -33,7 +33,6 @@ const ConversationList = ({ setThread }) => {
         };
 
         fetchConversations();
-        console.log(convoList);
     }, []);
 
     return (
@@ -48,6 +47,7 @@ const ConversationList = ({ setThread }) => {
                     img_url={convo.img_url}
                     name={convo.username}
                     postSubject={convo.subject}
+                    date={convo.date_stamp}
                 />
             ))}
         </div>

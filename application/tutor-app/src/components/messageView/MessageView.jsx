@@ -23,10 +23,7 @@ const MessageView = () => {
                 { userId: cookie.get("userId") },
                 { withCredentials: true }
             );
-            if (res.data.success) {
-                console.log(cookie.get("userId"));
-                console.log(res.data.conversations);
-            } else {
+            if (!res.data.success) {
                 console.log("Error fetching conversations: " + res.data.errorMessage);
             }
 

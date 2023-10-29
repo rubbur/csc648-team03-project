@@ -238,7 +238,6 @@ const getConversations = async (req, res) => {
     let messages = await db.query(q, [userId, userId]);
     messages = messages[0];
     let conversations = new Map();
-    console.log(messages, messages.length)
     for (let i = 0; i < messages.length; i++) {
       if (!conversations.has(messages[i].thread_id)) {
         conversations.set(messages[i].thread_id, new Array());
@@ -246,7 +245,6 @@ const getConversations = async (req, res) => {
       conversations.get(messages[i].thread_id).push(messages[i]);
     }
 
-    console.log(conversations);
     let senderData = [];
     for (let [_key, value] of conversations) {
       if (userId == value[0].sender_id) {
@@ -264,6 +262,7 @@ const getConversations = async (req, res) => {
       data = await db.query(q2, value[0].sender_id);
       dataObj.subject = data[0][0].subject;
       dataObj.thread_id = value[0].thread_id;
+      dataObj.date_stamp = value[0].date_stamp;
 
       senderData.push(dataObj);
     };

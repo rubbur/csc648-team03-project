@@ -3,28 +3,19 @@
 // Purpose: renders all messages in a conversation
 
 
-
-import { useState } from "react"
 import "./messageThread.scss"
 
 const MessageThread = ({ msgs }) => {
-
-
-
-
+    let reversedMsgs = msgs ? [...msgs].reverse() : [];
 
     return (
-
         <div className="MessageThread">
             <h1>Message Threads</h1>
             {
-                msgs && msgs.map(msg => <p>{msg.message_text}</p>)
+                msgs && reversedMsgs.map(msg => <p>{msg.message_text}</p>)
             }
         </div>
-
-
     )
-
 }
 
 export default MessageThread;

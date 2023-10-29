@@ -5,15 +5,18 @@
 
 import "./conversation.scss";
 
-const Conversation = ({ img_url, name, postSubject, setThread, threadId }) => {
+const Conversation = ({ img_url, name, postSubject, setThread, threadId, date }) => {
+    let formattedDate = date.split(/[- :]/);
+    formattedDate = formattedDate[1] + "/" + formattedDate[2].split("T")[0] + "/" + formattedDate[0]
     return (
-        <div className="ConversationContainer" onClick={() => { console.log("thread id: " + threadId); setThread(threadId) }}>
+        <div className="ConversationContainer" onClick={() => { setThread(threadId) }}>
             <div className="Conversation">
                 <div className="user-container">
                     <img src={process.env.PUBLIC_URL + img_url} alt={name + "'s profile picture"} />
                     <p>{name}</p>
                 </div>
                 <p>{"Subject: " + postSubject}</p>
+                <p>{"Last message: " + formattedDate}</p>
             </div>
         </div>
     );
