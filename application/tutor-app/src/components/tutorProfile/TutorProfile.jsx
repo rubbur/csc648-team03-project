@@ -135,10 +135,8 @@ const TutorProfile = () => {
     }
 
     const handleSend = async () => {
-        console.log("post data is: " + JSON.stringify(postData))
+        
         if (messageInProgress === "" || messageInProgress === undefined) return;
-        console.log("sending message")
-        console.log(cookie.get("isLoggedIn"));
         if (cookie.get("isLoggedIn") === "false" || cookie.get("isLoggedIn") === undefined) {
             // Save the unsent message to local storage
             localStorage.setItem("unsentMessage", messageInProgress);

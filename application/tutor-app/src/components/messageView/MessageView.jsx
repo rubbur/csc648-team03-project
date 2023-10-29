@@ -14,6 +14,7 @@ import { cookie } from "../../App";
 
 const MessageView = () => {
     const [thread, setThread] = useState("");
+    const [person, setPerson] = useState({});//[name, img_url
     const [convoMap, setConvoMap] = useState({});
     useEffect(() => {
         //get all the conversations
@@ -35,8 +36,8 @@ const MessageView = () => {
 
     return (
         <div className="MessageView">
-            <ConversationList setThread={setThread} />
-            <MessageThread msgs={convoMap[thread]} />
+            <ConversationList setThread={setThread} setPerson={setPerson} />
+            <MessageThread person = {person} msgs={convoMap[thread]} />
         </div>
     )
 
