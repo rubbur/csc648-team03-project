@@ -1,4 +1,4 @@
-//Author: Ava Albright
+//Author: Ava Albert
 //Date: 10/20/2023
 //purpose: Displays a conversation card that when clicked opens a list of messages in the conversation
 

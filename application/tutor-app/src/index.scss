@@ -148,27 +148,29 @@ button:hover {
   width: 50%;
 }
 
-.top-tutors-container{
+.top-tutors-container {
   display: flex;
   flex-direction: row;
-  width: 80%;
+  width: 100%;
+  justify-content: space-around;
   margin: auto;
-  justify-content: space-evenly;
-  
 }
 
-.top-tutors-container>div{
-  box-shadow: 0px 0px 3px 3px rgb(21, 249, 253);
+.top-tutors-container>div {
+  //box-shadow: 0px 0px 3px 3px rgb(21, 249, 253);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
-h2{
- margin-left: 10%;
+h2 {
+  margin-left: 10%;
   color: $text-color;
 }
 
-hr{
+hr {
   margin-left: 10%;
   color: $accent-color;
   width: 70%
 }
-

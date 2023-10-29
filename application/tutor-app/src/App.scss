@@ -1,4 +1,4 @@
-// Author: Create React App, Cleveland Plonsey, Michael Mathews, Ava Albright
+// Author: Create React App, Cleveland Plonsey, Michael Mathews, Ava Albert
 // Date: na
 // Purpose: style the App page.
 
@@ -39,16 +39,17 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-button{
+button {
   background-color: $accent-color;
 }
 
 
-button:hover{
+button:hover {
   background-color: $accent-color-hover;
 }

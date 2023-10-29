@@ -14,11 +14,11 @@ const Home = () => {
     const backgroundContainerRef = useRef(); // Create a ref object
     const [topThreeTutors, setTopThreeTutors] = useState([]);
     //get the top three tutors of the site
-    useEffect( () => {
+    useEffect(() => {
         const getTopTutors = async () => {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/tutor/topThreeTutors`, {}, {withCredentails: true});
-            console.log("this is the response: " +response.data)
-            if(response.data.success) {
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/tutor/topThreeTutors`, {}, { withCredentails: true });
+            console.log("this is the response: " + response.data)
+            if (response.data.success) {
                 setTopThreeTutors([...response.data.data]);
                 console.log(JSON.stringify(response.data.data));
             }
@@ -58,17 +58,19 @@ const Home = () => {
             <br></br>
             <br></br>
             <div className='top-tutors-container'>
-            {
-                topThreeTutors.length > 0 &&
-                topThreeTutors.map( tutor => <UserResult 
-                    name={tutor.name}
-                    postId={tutor.post_id}
-                    imgUrl={tutor.img_url}
-                    subject={tutor.subject}
-                    rate={tutor.hourly_rate}
-                    tutorId={tutor.tutor_id}
-                />)
-            }
+                <div>
+                    {
+                        topThreeTutors.length > 0 &&
+                        topThreeTutors.map(tutor => <UserResult
+                            name={tutor.name}
+                            postId={tutor.post_id}
+                            imgUrl={tutor.img_url}
+                            subject={tutor.subject}
+                            rate={tutor.hourly_rate}
+                            tutorId={tutor.tutor_id}
+                        />)
+                    }
+                </div>
             </div>
         </div>
     );

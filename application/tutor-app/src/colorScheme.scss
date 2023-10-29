@@ -1,4 +1,4 @@
-// Author: Cleveland Plonsey, Ava Albright, Michael Mathews
+// Author: Cleveland Plonsey, Ava Albert, Michael Mathews
 // Date: 9/28/2023
 // Purpose: enumerate the whole color scheme of the site
 //can import these sass variables into any other sass file like:
@@ -7,8 +7,11 @@
 // h1{ color: $text-color; }
 
 
-$base-color: #190061; /*the base color for the body of the application*/
-$header-bg-color:  #0C0032;
-$accent-color: rgb(250, 205, 73); /*accent color used for buttons and other small elements that we want to stand out*/
-$accent-color-hover: rgb(231, 158, 0); 
-$text-color: #ffffff; /*color for the text element (h1 h2 etc or p tags )*/
+$base-color: #190061;
+/*the base color for the body of the application*/
+$header-bg-color: #0C0032;
+$accent-color: rgb(250, 205, 73);
+/*accent color used for buttons and other small elements that we want to stand out*/
+$accent-color-hover: rgb(231, 158, 0);
+$text-color: #ffffff;
+/*color for the text element (h1 h2 etc or p tags )*/

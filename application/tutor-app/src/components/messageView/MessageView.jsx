@@ -1,4 +1,4 @@
-// Author: Ava Albright, Michael Mathews, Cleveland Plonsey
+// Author: Ava Albert, Michael Mathews, Cleveland Plonsey
 // Date: 10/18/2023
 // Purpose: renders all conversations that a user has as conversation cards on the left.
 //on the right of the view, the current conversation that the user has selected.
