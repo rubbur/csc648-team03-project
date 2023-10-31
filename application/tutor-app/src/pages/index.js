@@ -66,7 +66,7 @@ const Home = () => {
                             postId={tutor.post_id}
                             imgUrl={tutor.img_url}
                             subject={tutor.subject}
-                            rate={tutor.hourly_rate}
+                            rate={"$" + tutor.hourly_rate + "/hr"}
                             tutorId={tutor.tutor_id}
                         />)
                     }
