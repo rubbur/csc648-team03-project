@@ -1,7 +1,7 @@
 // Author: whole team
 // Date: 8/30/2023
 // Purpose: component that houses the whole application. Uses react router dom to make every view swap out
-//as this is predominantly a Single Page Application
+//as this is predominantly a Single Page Application test!
 
 
 import React from 'react';
