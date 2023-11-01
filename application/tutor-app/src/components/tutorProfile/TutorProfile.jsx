@@ -178,7 +178,11 @@ const TutorProfile = () => {
     }
 
     const submitReview = async () => {
-        //send the review to the backend
+        //send the review to the backend if not empty
+        if (reviewText === "" || reviewText === undefined) {
+            alert("Review cannot be empty.");
+            return;
+        }   
         const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/submitReview`, {
             tutorId: postData.tutor_id,
             reviewText: reviewText,
