@@ -79,7 +79,7 @@ const SearchResults = () => {
                             key={index}
                             index={index}
                             subject={tutor.subject}
-                            rate={"$" + tutor.hourly_rate}
+                            rate={"$" + tutor.hourly_rate + "/hr"}
                             postId={tutor.post_id}
                             tutorId={tutor.tutor_id}
                         />
