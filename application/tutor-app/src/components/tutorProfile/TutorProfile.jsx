@@ -183,6 +183,16 @@ const TutorProfile = () => {
             alert("Review cannot be empty.");
             return;
         }   
+        // star rating cannot be empty
+        if (starArray.reduce((total, current, index) => {
+            if (current) {
+                return total + 1;
+            }
+            return total;
+        }, 0) === 0) {
+            alert("Please select a star rating.");
+            return;
+        }
         const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/submitReview`, {
             tutorId: postData.tutor_id,
             reviewText: reviewText,
