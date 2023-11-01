@@ -3,7 +3,7 @@
 //delete a user
 //modify a user
 //search up a specific user
-//message a user by email possibly---- could be a third priority feature using nodemailer: send an email to the user
+
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

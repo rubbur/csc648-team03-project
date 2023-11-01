@@ -15,6 +15,11 @@ body {
   min-height: 200vh;
 }
 
+.required {
+  color: red;
+  font-weight: bold;
+}
+
 .pageHeader {
   text-align: center;
   color: white;
@@ -141,4 +146,35 @@ button:hover {
   padding-top: 2rem;
   margin: auto;
   width: 50%;
+}
+
+.top-tutors-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  margin: auto;
+}
+
+.top-tutors-container>div {
+  //box-shadow: 0px 0px 3px 3px rgb(21, 249, 253);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+h2 {
+  margin-left: 10%;
+  color: $text-color;
+}
+
+hr {
+  margin-left: 10%;
+  color: $accent-color;
+  width: 70%
+}
+
+.disclaimer-p {
+  margin: 0.2em;
 }

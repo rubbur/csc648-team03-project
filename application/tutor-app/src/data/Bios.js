@@ -1,3 +1,6 @@
+//Author: Whole team
+//Date: 8/27/2023
+//Purpose: store all developer bios in one object 
 
 const bios ={
     Michael_Mathews: "Hi, I'm Michael Mathews. I live in San Jose and commute to SFSU three days a week. One of my main interests is animals. My family has five cats, but I like dogs more. I also love multiplayer games and helping others. My main goal for tutors.tech is to create an efficient tutoring experience.",

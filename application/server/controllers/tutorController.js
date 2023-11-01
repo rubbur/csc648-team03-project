@@ -1,3 +1,9 @@
+//Author: Cleveland Plonsey
+//date: 9/3/2023
+//controllers for tutor routes. These controllers are invoked when the client sends http requests
+//and the endpoint starts with "/tutor/"
+
+
 const db = require("../config/database/dbConnection");
 
 const getTutorReviews = async (req, res) => {
@@ -109,4 +115,23 @@ const uploadFile = async (req, res) => {
     });
 };
 
-module.exports = { getTutorReviews, getPostById, getPostByTutorId, deletePost, uploadFile };
+//most recently added tutors NOT top three rated tutors
+const topThreeTutors = async (req, res) => {
+    const q = `SELECT tutor_posts.*, users.img_url
+    FROM tutor_posts
+    JOIN users ON tutor_posts.tutor_id = users.id
+    WHERE tutor_posts.is_pending = 0
+    ORDER BY users.id DESC LIMIT 3;`;
+    
+    
+    
+    
+    try {
+        const results = await db.query(q);
+        res.send({ success: true, data: results[0] });
+    } catch (err) {
+        console.log("error retrieving top three tutors: " + err);
+    }
+}
+
+module.exports = { getTutorReviews, getPostById, getPostByTutorId, deletePost, uploadFile, topThreeTutors };

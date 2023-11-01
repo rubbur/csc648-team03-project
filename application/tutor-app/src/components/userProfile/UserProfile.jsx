@@ -1,3 +1,9 @@
+// Author:  Cleveland Plonsey
+// Date: 10/1/2023
+// Purpose: the dashboard for a logged in user. The user can customize their account in this view
+
+
+
 import { cookie } from "../../App";
 import "./userProfile.scss";
 import React, { useEffect, useState } from "react";

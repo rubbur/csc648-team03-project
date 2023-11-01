@@ -1,3 +1,7 @@
+// Author: team lead
+// Date: 9/3/2023
+// Purpose: component that is deprecated
+
 import React, { useEffect, useState } from 'react';
 import '../index.scss';
 import {cookie} from "../App"

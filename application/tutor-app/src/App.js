@@ -1,3 +1,9 @@
+// Author: whole team
+// Date: 8/30/2023
+// Purpose: component that houses the whole application. Uses react router dom to make every view swap out
+//as this is predominantly a Single Page Application 
+
+
 import React from 'react';
 import './App.scss';
 import Navbar from './components/NavbarElements';
@@ -46,7 +52,7 @@ function App() {
         <Route path='/AboutUs' element={<AboutUs />} />
         {!cookie.get("isLoggedIn") && <Route path='/SignIn' element={<SignIn />} />}
         {!cookie.get("isLoggedIn") && <Route path='/SignUp' element={<SignUp />} />}
-        {cookie.get("isLoggedIn") && <Route path='/Logout' element={<Logout />} />}
+        <Route path='/Logout' element={<Logout />} />
         <Route path='/CreatePost' element={<CreatePost />} />
         <Route path='/TutorPostsView' element={<TutorPostsView />} />
         <Route path="/Profile" element={<UserProfile />} />

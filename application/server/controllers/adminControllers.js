@@ -1,4 +1,8 @@
 //Author: Cleveland Plonsey
+//date: 9/3/2023
+//controllers for user routes. These controllers are invoked when the client sends http requests
+//and the endpoint starts with "/admin/"
+//these controllers are for priviledged users only
 
 const db = require("../config/database/dbConnection");
 const bcrypt = require("bcrypt");

@@ -1,3 +1,9 @@
+// Author:  Michael Mathews, Cleveland Plonsey
+// Date: 10/1/2023
+// Purpose: The header for the whole site that has a nav bar and a search bar and control buttons
+//appears on every veiw of the site.
+
+
 import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
@@ -30,6 +36,7 @@ export const NavLink = styled(Link)`
   &:hover {
     border: 1px solid white; 
     border-radius: 5px; 
+    background-color: rgb(181, 118, 0); 
   }
 
   &.active {

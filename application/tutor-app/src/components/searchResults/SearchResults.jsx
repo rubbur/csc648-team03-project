@@ -1,9 +1,17 @@
+// Author:  Cleveland Plonsey
+// Date: 10/2/2023
+// Purpose: Is the view that shows the results of a user using search bar
+// all tutor_posts that match the search criteria are displayed as post cards.
+
+
 import { useState, useEffect } from "react"
 import axios from "axios";
 //import "../admin/admin.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cookie } from "./../../App";
 import "./searchResults.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
 const SearchResults = () => {
     const [resultsList, setResultsList] = useState([]);
@@ -16,7 +24,14 @@ const SearchResults = () => {
         const getSearchResults = async () => {
             //get the subject and the search term from the queryparams
             const url = new URL(window.location.href);
+
             const params = new URLSearchParams(url.search);
+            // error if search is more than 40 characters
+            if (params.get('searchterm').length > 40) {
+                alert("Search term must be at most 40 characters");
+                return;
+            }
+
             const subject = params.get('subject');
             //if the subject is not specified, set it to overview so that the user can see the tutor's overview post
 
@@ -39,7 +54,21 @@ const SearchResults = () => {
 
     return (
         <div className="search-results">
-            <h3 className="search-total">Showing {resultsList.length} search results</h3>
+            <div className="sort-by-box">
+                <h3 className="search-total">Showing {resultsList.length} search results</h3>
+                <div className="sort-box">
+                    <div className="sort-by-title"><h3>Sort by:</h3></div>
+                    <select className="sort-by">
+                        <option value="date">Date</option>
+                        <option value="rate">Price</option>
+                        <option value="stars">Average review</option>
+                    </select>
+                    <div className="sort-arrows">
+                        <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
+                        <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
+                    </div>
+                </div>
+            </div>
             <div className="search-results-box">
                 {
                     resultsList.map((tutor, index) => {
@@ -50,7 +79,7 @@ const SearchResults = () => {
                             key={index}
                             index={index}
                             subject={tutor.subject}
-                            rate={tutor.hourly_rate}
+                            rate={"$" + tutor.hourly_rate}
                             postId={tutor.post_id}
                             tutorId={tutor.tutor_id}
                         />
@@ -63,17 +92,18 @@ const SearchResults = () => {
 }
 
 
-const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name }) => {
+export const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, name }) => {
     const [isTyping, setIsTyping] = useState(false);
     const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
     const navigate = useNavigate(); //used to navigate to the tutor's profile page
 
     const handleProfile = () => {
         //navigate to the tutor's profile page
-        navigate(`/tutorProfile?postId=${postId}`);
+        window.open(`/tutorProfile?postId=${postId}`, '_blank');
     }
 
     const handleSend = async () => {
+        if (messageInProgress === "" || messageInProgress === undefined) return;
         console.log("sending message")
         console.log(cookie.get("isLoggedIn"));
         if (cookie.get("isLoggedIn") === "false" || cookie.get("isLoggedIn") === undefined) {
