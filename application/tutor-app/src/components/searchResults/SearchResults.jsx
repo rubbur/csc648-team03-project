@@ -128,6 +128,7 @@ export const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, n
             },
             { withCredentials: true }
         );
+        setMessageInProgress(""); // clear the message box after sending the message
     }
 
 
