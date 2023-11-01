@@ -50,7 +50,7 @@ const MessageThread = ({ msgs, person}) => {
         }
     }
 
-    return (
+    return messageList.length !== 0 ? (
         <div className="message-thread">
             <header>
                 <h1>{person.name}</h1>
@@ -75,7 +75,7 @@ const MessageThread = ({ msgs, person}) => {
            
             </div>
         </div>
-    )
+        ) : null
 }
 
 export const Message = ({text, author, timeStamp}) =>{
