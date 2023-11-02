@@ -1,4 +1,101 @@
-.MessageThread {
+//Author: Ava Albert
+//date: 10/2023
+//style the MessageThread component
+
+@import "../../../colorScheme.scss";
+
+.message-thread {
+    color: black;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.message-box{
+    overflow-x: hidden;
+    padding: 0px 5px 0px 5px;
+}
+
+header{
+    
+    padding: 5px;
+    width: 80.5%;
+    margin-left: 18px;
     color: white;
-    width: 60%;
+    height: 20%;
+    text-align: center;
+    background-color: black;
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+
+header .header-img{
+    padding: 3px;
+    height: 200px;
+    width: 200px;
+    border-radius: 40%;
+    box-shadow: 2px 1px 1px 1px inset rgb(255, 255, 82);
+}
+
+.message{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    flex-wrap: wrap;
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 10px;
+    margin: 10px;
+    justify-content: space-between;
+}
+
+.message .msg-text{
+    color: white;
+    text-wrap: wrap;
+}
+.message .msg-time{
+    color: white;
+}
+
+.message.self{
+    background-color: green;
+}
+.message.other{
+    background-color: blue;
+    margin-left: 45%;
+}
+
+.chat-box{
+    display: flex;
+    margin-top: 10px;
+    width: 97.5%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgb(243, 233, 233);
+   
+}
+
+
+.chat-box input.chat-input{
+   
+    border-radius: none;
+    width: 80%;
+    height: 100%;
+    border: 2px solid black;
+    padding: 10px;
+}
+
+.chat-box button{
+    width: fit-content;
+    height: 100%;
+
+}
+
+.chat-box button:hover{
+    width: fit-content;
+    height: 100%;
+    background-color: $accent-color-hover;
 }

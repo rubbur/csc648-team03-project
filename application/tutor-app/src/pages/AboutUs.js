@@ -1,3 +1,8 @@
+// Author:  Michael Mathews, Cleveland Plonsey
+// Date: 8/27/2023
+// Purpose: View of all developers who worked on this site. 
+
+
 import React, { useEffect } from 'react';
 import '../index.scss';
 import ImageList from '../components/ImageList'; 

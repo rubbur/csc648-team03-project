@@ -1,3 +1,8 @@
+// Author: Cleveland Plonsey
+// Date: 9/28/2023
+// Purpose: deprecated feature. Displays a Tutor's Profile page.
+
+
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import "./tutorProfile.scss";
@@ -130,10 +135,8 @@ const TutorProfile = () => {
     }
 
     const handleSend = async () => {
-        console.log("post data is: " + JSON.stringify(postData))
+        
         if (messageInProgress === "" || messageInProgress === undefined) return;
-        console.log("sending message")
-        console.log(cookie.get("isLoggedIn"));
         if (cookie.get("isLoggedIn") === "false" || cookie.get("isLoggedIn") === undefined) {
             // Save the unsent message to local storage
             localStorage.setItem("unsentMessage", messageInProgress);
@@ -175,7 +178,21 @@ const TutorProfile = () => {
     }
 
     const submitReview = async () => {
-        //send the review to the backend
+        //send the review to the backend if not empty
+        if (reviewText === "" || reviewText === undefined) {
+            alert("Review cannot be empty.");
+            return;
+        }   
+        // star rating cannot be empty
+        if (starArray.reduce((total, current, index) => {
+            if (current) {
+                return total + 1;
+            }
+            return total;
+        }, 0) === 0) {
+            alert("Please select a star rating.");
+            return;
+        }
         const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/submitReview`, {
             tutorId: postData.tutor_id,
             reviewText: reviewText,

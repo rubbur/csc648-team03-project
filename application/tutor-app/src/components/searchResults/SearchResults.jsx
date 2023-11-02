@@ -1,3 +1,9 @@
+// Author:  Cleveland Plonsey
+// Date: 10/2/2023
+// Purpose: Is the view that shows the results of a user using search bar
+// all tutor_posts that match the search criteria are displayed as post cards.
+
+
 import { useState, useEffect } from "react"
 import axios from "axios";
 //import "../admin/admin.css";
@@ -95,7 +101,7 @@ const SearchResults = () => {
                             key={index}
                             index={index}
                             subject={tutor.subject}
-                            rate={"$" + tutor.hourly_rate}
+                            rate={"$" + tutor.hourly_rate + "/hr"}
                             postId={tutor.post_id}
                             tutorId={tutor.tutor_id}
                         />
@@ -174,6 +180,7 @@ export const UserResult = ({ username, postId, imgUrl, subject, rate, tutorId, n
             },
             { withCredentials: true }
         );
+        setMessageInProgress(""); // clear the message box after sending the message
     }
 
 

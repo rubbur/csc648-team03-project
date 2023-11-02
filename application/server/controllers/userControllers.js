@@ -1,4 +1,5 @@
 //Author: Cleveland Plonsey
+//date: 9/3/2023
 //controllers for user routes. These controllers are invoked when the client sends http requests
 //and the endpoint starts with "/user/"
 
@@ -235,8 +236,45 @@ const getConversations = async (req, res) => {
   const { userId } = req.body;
   const q = "SELECT * FROM messages WHERE sender_id = ? OR recipient_id = ? ORDER BY date_stamp DESC";
   try {
-    const messages = await db.query(q, [userId, userId]);
-    res.send({ success: true, messages: messages[0] });
+    let messages = await db.query(q, [userId, userId]);
+    messages = messages[0];
+    let conversations = new Map();
+    for (let i = 0; i < messages.length; i++) {
+      if (!conversations.has(messages[i].thread_id)) {
+        conversations.set(messages[i].thread_id, new Array());
+      }
+      conversations.get(messages[i].thread_id).push(messages[i]);
+    }
+
+    let senderData = [];
+    for (let [_key, value] of conversations) {
+      if (userId == value[0].sender_id) {
+        senderId = value[0].recipient_id;
+      }
+      else {
+        senderId = value[0].sender_id;
+      }
+      let dataObj = {};
+      const q = "SELECT users.img_url, users.username FROM users WHERE id = ?";
+      let data = await db.query(q, [senderId]);
+      dataObj.img_url = data[0][0].img_url;
+      dataObj.username = data[0][0].username;
+      let q2 = "SELECT subject FROM tutor_posts WHERE tutor_id = ?";
+      data = await db.query(q2, value[0].sender_id);
+      dataObj.subject = data[0][0].subject;
+      dataObj.thread_id = value[0].thread_id;
+      dataObj.date_stamp = value[0].date_stamp;
+
+      senderData.push(dataObj);
+    };
+
+    let mapObj = {};
+    for (let [key, value] of conversations) {
+      mapObj[key] = value;
+    }
+
+    res.send({ success: true, messages: messages, conversations: mapObj, senderData: senderData });
+
   } catch (err) {
     console.log("error getting messages: " + err);
     res.send({ success: false, errorMessage: err });

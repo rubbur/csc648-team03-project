@@ -1,3 +1,9 @@
+// Author: whole team
+// Date: 8/30/2023
+// Purpose: component that houses the whole application. Uses react router dom to make every view swap out
+//as this is predominantly a Single Page Application 
+
+
 import React from 'react';
 import './App.scss';
 import Navbar from './components/NavbarElements';

@@ -1,3 +1,9 @@
+// Author: Ava Albert, Michael Mathews, Cleveland Plonsey
+// Date: 10/18/2023
+// Purpose: renders all conversations that a user has. Controls the Conversation components
+
+
+
 import "./conversationList.scss";
 import { useState, useEffect } from "react";
 import Conversation from "../conversation/Conversation";
@@ -8,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
 //TODO: pass Conversation component time_stamp prop which is when the conversation was last active.
-const ConversationList = () => {
+const ConversationList = ({ setThread, setPerson }) => {
     const [convoList, setConvoList] = useState([]);
     const [sortType, setSortType] = useState("Alpha");
     const userId = cookie.get('userId');
@@ -23,17 +29,7 @@ const ConversationList = () => {
                     { withCredentials: true }
                 );
                 if (response.data.success) {
-                    // Set otherPersonId for each conversation in the list
-                    const updatedConvoList = response.data.messages.map((convo) => {
-                        if (convo.sender_id === userId) {
-                            convo.otherPersonId = convo.recipient_id;
-                        } else {
-                            convo.otherPersonId = convo.sender_id;
-                        }
-                        return convo;
-                    });
-
-                    setConvoList([...updatedConvoList]);
+                    setConvoList(response.data.senderData);
                 } else {
                     console.log("Error fetching conversations: " + response.data.errorMessage);
                 }
@@ -41,8 +37,6 @@ const ConversationList = () => {
                 console.error("Error fetching conversations:", error);
             }
         };
-
-
 
         const fetchDataForConvo = async (convo) => {
             try {
@@ -102,32 +96,21 @@ const ConversationList = () => {
         });
     }, [userId, convoList.length, convoList.postSubject]);
 
-    const sortConvos = () => {
-        console.log("sorting results");
-        setConvoList([...convoList.sort(comparators[sortType])]);
-    }
-
     return (
-        <div className="ConversationList">
+        <div className="ConversationList" >
             <h1>{cookie.get("userName")}'s Conversations</h1>
-            <div className="sort-box">
-                    <div className="sort-by-title"><h3>Sort by:</h3></div>
-                    <select value={sortType} className="sort-by" onChange={ (e) => setSortType(e.target.value) }>
-                       {criteria.map(crit => <option value={crit}>{crit}</option>)}
-                    </select>
-                    <button onClick={() => { sortConvos(); console.log(JSON.stringify(convoList))}}>Apply sort</button>
-                    <div className="sort-arrows">
-                        <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
-                        <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
-                    </div>
-                </div>
             {convoList.map((convo) => (
                 <Conversation
+                    postId={convo.post_id}
+                    threadId={convo.thread_id}
+                    setThread={setThread}
+                    setPerson={setPerson}
                     key={convo.message_id}
                     message_id={convo.message_id}
                     img_url={convo.img_url}
-                    name={convo.otherPersonUsername}
-                    postSubject={convo.postSubject}
+                    name={convo.username}
+                    postSubject={convo.subject}
+                    date={convo.date_stamp}
                 />
             ))}
         </div>

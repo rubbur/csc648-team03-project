@@ -1,3 +1,8 @@
+// Author:  Michael Mathews
+// Date: 8/29/2023
+// Purpose: component that displays a developer of the project with their image and a short bio about them
+
+
 import React from 'react';
 import '../index.scss';
 

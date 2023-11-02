@@ -1,3 +1,7 @@
+// Author: Michael Mathews, Cleveland Plonsey
+// Date: 10/5/2023
+// Purpose: Displays a review that a Tutor got from another user
+
 import { useState, useEffect } from "react";
 import "./reviewCard.scss";
 import axios from "axios";

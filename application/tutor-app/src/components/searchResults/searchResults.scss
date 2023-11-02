@@ -1,3 +1,7 @@
+// Author:Michael Mathews, Cleveland Plonsey
+// Date: 10/10/2023
+// Purpose: Style the search results view
+
 @import "../../colorScheme.scss";
 
 .user-result {
@@ -6,7 +10,8 @@
     min-width: 17rem;
     border: solid 3px rgb(0, 0, 0);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .user-result:hover {
@@ -97,7 +102,10 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 80%
 }
 
 // sort
