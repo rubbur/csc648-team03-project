@@ -80,26 +80,27 @@ const SearchResults = () => {
         <h3 className="search-total">
           Showing {resultsList.length} search results
         </h3>
-        {resultsList.length !== 0 && (<div className="sort-box">
-          <div className="sort-by-title">
-            <h3>Sort by:</h3>
+        {resultsList.length !== 0 && (
+          <div className="sort-box">
+            <div className="sort-by-title">
+              <h3>Sort by:</h3>
+            </div>
+            <select
+              value={sortType}
+              className="sort-by"
+              onChange={(e) => setSortType(e.target.value)}
+            >
+              <option value="Date">Date</option>
+              <option value="Price">Price</option>
+              <option value="Review">Review</option>
+              <option value="Alpha">Alpha</option>
+            </select>
+            <button onClick={sortResults}>Apply sort</button>
+            <div className="sort-arrows">
+              <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
+              <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
+            </div>
           </div>
-          <select
-            value={sortType}
-            className="sort-by"
-            onChange={(e) => setSortType(e.target.value)}
-          >
-            <option value="Date">Date</option>
-            <option value="Price">Price</option>
-            <option value="Review">Review</option>
-            <option value="Alpha">Alpha</option>
-          </select>
-          <button onClick={sortResults}>Apply sort</button>
-          <div className="sort-arrows">
-            <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
-            <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
-          </div>
-        </div>
         )}
       </div>
       <div className="search-results-box">
