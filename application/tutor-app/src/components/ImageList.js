@@ -2,7 +2,6 @@
 // Date: unknown
 // Purpose: Displays the developer team images
 
-
 import React from "react";
 import "../index.scss";
 import "./imageList.css";

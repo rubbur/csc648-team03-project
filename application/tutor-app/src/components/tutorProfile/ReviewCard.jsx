@@ -8,42 +8,34 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const renderStars = (rating) => {
-    const fullStars = Array.from({ length: rating }, (_, index) => (
-      <FontAwesomeIcon
-        key={index}
-        icon={["fas", "star"]} 
-        className="star"
-      />
-    ));
-    const emptyStars = Array.from({ length: 5 - rating }, (_, index) => (
-      <FontAwesomeIcon
-        key={index}
-        icon={["far", "star"]} 
-        className="star"
-      />
-    ));
-    return [...fullStars, ...emptyStars];
-  };
+  const fullStars = Array.from({ length: rating }, (_, index) => (
+    <FontAwesomeIcon key={index} icon={["fas", "star"]} className="star" />
+  ));
+  const emptyStars = Array.from({ length: 5 - rating }, (_, index) => (
+    <FontAwesomeIcon key={index} icon={["far", "star"]} className="star" />
+  ));
+  return [...fullStars, ...emptyStars];
+};
 
-  const ReviewCard = ({ review }) => {
-    const [reviewerPhoto, setReviewerPhoto] = useState("");
-  
-    useEffect(() => {
-      const getReviewerPhoto = async () => {
-        const result = await axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/user/getUserData`,
-          { username: review.reviewer_name },
-          { withCredentials: true }
-        );
-        if (!result.data.success) {
-          console.log(result.data.errorMessage);
-          console.log("Could not get reviewer photo");
-          return;
-        }
-        setReviewerPhoto(result.data.userData[0].img_url);
-      };
-      getReviewerPhoto();
-    }, [review.reviewer_name]);
+const ReviewCard = ({ review }) => {
+  const [reviewerPhoto, setReviewerPhoto] = useState("");
+
+  useEffect(() => {
+    const getReviewerPhoto = async () => {
+      const result = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/user/getUserData`,
+        { username: review.reviewer_name },
+        { withCredentials: true },
+      );
+      if (!result.data.success) {
+        console.log(result.data.errorMessage);
+        console.log("Could not get reviewer photo");
+        return;
+      }
+      setReviewerPhoto(result.data.userData[0].img_url);
+    };
+    getReviewerPhoto();
+  }, [review.reviewer_name]);
   return (
     <div className="review-card">
       <div className="reviewer-container">

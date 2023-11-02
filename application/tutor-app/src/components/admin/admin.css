@@ -2,10 +2,9 @@
 Date: 9/13/2023
 Purpose: file styles the admin control panel */
 
-
 .admin-box {
-    font-family: "Roboto";
-    font-size: 20px;
+  font-family: "Roboto";
+  font-size: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -13,51 +12,48 @@ Purpose: file styles the admin control panel */
   align-items: center;
 }
 
-.admin-controls{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 100%;
+.admin-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
-.search-box{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 50%;
-    margin: 15px;
+.search-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 50%;
+  margin: 15px;
 }
 
 .search-box input {
-    width: 50%;
-    border: none;
-    padding: 15px;
-    font-family: "Roboto";
-    font-weight: bold;
-    font-size: 15px;
-
-
+  width: 50%;
+  border: none;
+  padding: 15px;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 15px;
 }
 
-#admin-search-button{
-    margin-right: 15px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border: none;
-    background-color: rgb(160, 212, 250);
-
+#admin-search-button {
+  margin-right: 15px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: none;
+  background-color: rgb(160, 212, 250);
 }
 
-#admin-search-button:hover, #admin-all-button:hover {
-    background-color: rgb(81, 95, 228);
+#admin-search-button:hover,
+#admin-all-button:hover {
+  background-color: rgb(81, 95, 228);
 }
 
-#admin-all-button{
-    width: fit-content;
-    padding: 10px;
-    border: none;
-    background-color: rgb(160, 212, 250);
-
+#admin-all-button {
+  width: fit-content;
+  padding: 10px;
+  border: none;
+  background-color: rgb(160, 212, 250);
 }
 
 .user-list {
@@ -75,19 +71,17 @@ Purpose: file styles the admin control panel */
   background-color: bisque;
 }
 
-.filter-box{
-    position:relative;
-    margin-right: 70%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    height: 50px;
-    width: 30%;
-    align-items: center;
-    background-color: bisque;
+.filter-box {
+  position: relative;
+  margin-right: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 50px;
+  width: 30%;
+  align-items: center;
+  background-color: bisque;
 }
-
-
 
 /*******************************************/
 .user-result {
@@ -105,91 +99,90 @@ Purpose: file styles the admin control panel */
   padding-bottom: 10px;
 }
 
-.user-img{
-    margin-top: 20px;
-    height: 65px;
-    width: 65px;
-    border-radius: 20%;
-
+.user-img {
+  margin-top: 20px;
+  height: 65px;
+  width: 65px;
+  border-radius: 20%;
 }
 
-.hidden{
-    display: none;
+.hidden {
+  display: none;
 }
 
 .user-result:hover {
   /*border: solid 3px rgb(0, 0, 0);*/
 }
 
-.user-delete-button{
-    background-color: rgb(234, 64, 64);
-    width: fit-content;
-    height: fit-content;
-    color: white;
+.user-delete-button {
+  background-color: rgb(234, 64, 64);
+  width: fit-content;
+  height: fit-content;
+  color: white;
 }
 
-.user-delete-button:hover{
-    background-color: rgb(143, 6, 6);
+.user-delete-button:hover {
+  background-color: rgb(143, 6, 6);
 }
 
-.user-edit-button{
-    background-color: rgb(205, 241, 24);
-    height: fit-content;
-    color: rgb(0, 0, 0);
+.user-edit-button {
+  background-color: rgb(205, 241, 24);
+  height: fit-content;
+  color: rgb(0, 0, 0);
 }
 
 .user-edit-button:hover {
-    background-color: rgb(215, 215, 29);
+  background-color: rgb(215, 215, 29);
 }
 
-.custom-modal{
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    border: 2px solid #ccc;
-    outline: none;
-    max-width: 80%;
-    height: 50%;
-    width: 30%;
+.custom-modal {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  outline: none;
+  max-width: 80%;
+  height: 50%;
+  width: 30%;
 }
 
-.custom-modal .close-modal-button{
-    height: fit-content;
-    width: fit-content;
-    background-color: red;
-    color: white;
-    position: fixed;
-    top: 0;
-    right: 0;
+.custom-modal .close-modal-button {
+  height: fit-content;
+  width: fit-content;
+  background-color: red;
+  color: white;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 
-.custom-modal .close-modal-button:hover{
-    background-color: rgb(153, 33, 33);
+.custom-modal .close-modal-button:hover {
+  background-color: rgb(153, 33, 33);
 }
-.custom-modal .apply-changes-button{
-    color: black;
-    height: fit-content;
-    width: fit-content;
-    background-color: yellow;
+.custom-modal .apply-changes-button {
+  color: black;
+  height: fit-content;
+  width: fit-content;
+  background-color: yellow;
 }
-.custom-modal .apply-changes-button:hover{
-    background-color: rgb(169, 169, 39);
+.custom-modal .apply-changes-button:hover {
+  background-color: rgb(169, 169, 39);
 }
 
-.edit-options{
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: fit-content;
-    width: fit-content;
-    padding: 10px;
+.edit-options {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
+  padding: 10px;
 }
-.edit-options input{
-    border: solid 3px black;
+.edit-options input {
+  border: solid 3px black;
 }
