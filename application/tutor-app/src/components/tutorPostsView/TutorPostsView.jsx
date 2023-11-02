@@ -68,7 +68,7 @@ const TutorPostsView = () => {
             key={index}
             rate={post.hourly_rate}
             subject={post.subject}
-            handleDelete={() => handleDelete(post.post_id, post.subject)}
+            handleDelete={handleDelete}
             postId={post.post_id}
           />
         ))}

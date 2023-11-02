@@ -5,19 +5,18 @@
 //tutor can edit or delete posts through this component.
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./postCard.scss";
 
 const PostCard = ({ rate, subject, handleDelete, postId }) => {
+    const navigate = useNavigate();
   return (
     <div className="post-card">
-      <div className="post-card-link">
-        <Link to={`/tutorProfile?postId=${postId}`} className="post-card-link">
+      <div className="post-card-link" onClick={() => {navigate(`/tutorProfile?postId=${postId}`)}}>
           <h2 className="post-card-link">{subject}</h2>
           <h3 className="post-card-link">${rate}/hr</h3>
-        </Link>
       </div>
-      <button className="delete-button" onClick={() => handleDelete(postId)}>
+      <button className="delete-button" onClick={() => handleDelete(postId, subject)}>
         X
       </button>
     </div>
