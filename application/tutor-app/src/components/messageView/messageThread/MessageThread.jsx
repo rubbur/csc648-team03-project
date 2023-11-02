@@ -98,9 +98,10 @@ const MessageThread = ({ msgs, person }) => {
 };
 
 export const Message = ({ text, author, timeStamp }) => {
+  const isImage = text.substring(0,8) == "https://";
   return (
     <div className={`message ${author}`}>
-      <p className="msg-text">{text}</p>
+      { isImage ? <img className="msg-img" src={text} alt="" /> : <p className="msg-text">{text}</p> }
       <p className="msg-time">{timeStamp}</p>
     </div>
   );
