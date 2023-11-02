@@ -6,6 +6,7 @@
 
 .profile {
     display: flex;
+    flex-direction: row;
     height: 100%;
     width: 100%;
 }
@@ -84,8 +85,10 @@
 
 .edit-container {
     display: flex;
-    flex-direction: row;
-    min-width: 50%;
+    flex-direction: column;
+    min-width: 90%;
+    align-items: start;
+    justify-content: start;
 }
 
 .edit-box {
@@ -100,20 +103,21 @@
 
 .editting-box {
     margin: 10px;
-    background-color: beige;
+    background-color: rgb(135, 202, 240);
     border: 3px solid black;
     padding-right: 1%;
     height: inherit;
-    width: 100%;
+
+    width: 70%;
 }
 
 .button-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 20px;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
+    width: 80%;
+    //gap: 20px;
 }
 
 /* .button-container{
@@ -127,7 +131,7 @@
     margin-left: 20px;
 } */
 .profile-edit-button {
-    min-width: 5rem;
+    min-width: 6rem;
     width: 90%;
     height: 3rem;
     font-size: 15px;
