@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import comparators from "./algorithms";
 import "../../index.scss";
-import Fade from 'react-reveal/Fade';
+import { Fade } from "react-awesome-reveal";
 
 const SearchResults = () => {
   const location = useLocation(); //tracks the query params in the url
@@ -108,7 +108,7 @@ const SearchResults = () => {
       <div className="search-results-box">
         {resultsList.map((tutor, index) => {
           return (
-            <Fade bottom>
+            <Fade>
             <UserResult
               username={tutor.username}
               name={tutor.name}

@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../index.scss";
 import { UserResult } from "../components/searchResults/SearchResults";
 import axios from "axios";
-import Fade from "react-reveal/Fade";
+import { Fade } from "react-awesome-reveal";
 const Home = () => {
   const backgroundContainerRef = useRef(); // Create a ref object
   const [topThreeTutors, setTopThreeTutors] = useState([]);
@@ -60,7 +60,7 @@ const Home = () => {
         <div>
           {topThreeTutors.length > 0 &&
             topThreeTutors.map((tutor) => (
-              <Fade bottom>
+              <Fade>
                 <UserResult
                   name={tutor.name}
                   postId={tutor.post_id}
