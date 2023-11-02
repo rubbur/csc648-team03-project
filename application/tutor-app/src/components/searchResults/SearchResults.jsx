@@ -80,7 +80,7 @@ const SearchResults = () => {
         <h3 className="search-total">
           Showing {resultsList.length} search results
         </h3>
-        <div className="sort-box">
+        {resultsList.length !== 0 && (<div className="sort-box">
           <div className="sort-by-title">
             <h3>Sort by:</h3>
           </div>
@@ -100,6 +100,7 @@ const SearchResults = () => {
             <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
           </div>
         </div>
+        )}
       </div>
       <div className="search-results-box">
         {resultsList.map((tutor, index) => {
