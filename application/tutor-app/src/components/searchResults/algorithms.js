@@ -1,7 +1,7 @@
 const comparators = {
   Date: (a, b) => {
-    if (a.date_created && b.date_created)
-      return a.date_created - b.date_created;
+    if (a.creation_date && b.creation_date)
+      return a.creation_date - b.creation_date;
     else return 0;
   },
   Price: (a, b) => {
@@ -9,7 +9,7 @@ const comparators = {
     else return 0;
   },
   Review: (a, b) => {
-    if (a.avg_review && b.avg_review) return +a.avg_review - +b.avg_review;
+    if (a.avg_rating && b.avg_rating) return +a.avg_rating - +b.avg_rating;
     else return 0;
   },
   Alpha: (a, b) => {
