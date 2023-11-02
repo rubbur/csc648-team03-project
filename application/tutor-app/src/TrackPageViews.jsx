@@ -10,6 +10,10 @@ const TrackPageViews = () => {
 
     // Track initial pageview
     ReactGA.pageview(location.pathname + location.search);
+    //custom component test
+    ReactGA.pageview('/Messages');
+    ReactGA.pageview('/tutorProfile');
+
 
     // Set up listener for route changes
     const unlisten = () => {
