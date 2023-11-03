@@ -67,19 +67,9 @@ function App() {
         <Route path="/searchResults" element={<SearchResults />} />
         <Route path="/tutorProfile" element={<TutorProfile />} />
         <Route path="/AdminPanel" element={<Admin />} />
-        {cookie.get("isLoggedIn") && cookie.get("isTutor") && (
-          <Route path="/TutorView" element={<TutorView />} />
-        )}
-        {cookie.get("isLoggedIn") && !cookie.get("isTutor") && (
-          <Route path="/StudentView" element={<StudentView />} />
-        )}
         <Route path="/AboutUs" element={<AboutUs />} />
-        {!cookie.get("isLoggedIn") && (
-          <Route path="/SignIn" element={<SignIn />} />
-        )}
-        {!cookie.get("isLoggedIn") && (
-          <Route path="/SignUp" element={<SignUp />} />
-        )}
+        <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Logout" element={<Logout />} />
         <Route path="/CreatePost" element={<CreatePost />} />
         <Route path="/TutorPostsView" element={<TutorPostsView />} />
