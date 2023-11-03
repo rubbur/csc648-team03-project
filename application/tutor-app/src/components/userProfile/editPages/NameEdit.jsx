@@ -11,6 +11,10 @@ const NameEdit = () => {
   const [username, setUsername] = useState("");
 
   const handleNameChange = async () => {
+    if (!username.endsWith("@sfsu.edu") || username.length < 10) {
+      alert("Please use a SFSU email address. Example email: example@sfsu.edu");
+      return;
+    }
     const result = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/user/editUsername`,
       {
