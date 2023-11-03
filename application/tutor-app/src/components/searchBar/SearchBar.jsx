@@ -8,17 +8,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./searchBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import subjectList from "../../subjectlist";
 
-const subjectList = [
-  "All",
-  "CS",
-  "Math",
-  "Physics",
-  "Sociology",
-  "Spanish",
-  "Music",
-  "Theater",
-];
 
 const SearchBar = () => {
   const [subject, setSubject] = useState("All");

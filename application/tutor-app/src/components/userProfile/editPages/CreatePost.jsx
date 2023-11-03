@@ -12,6 +12,7 @@ import "./editPage.scss";
 import axios from "axios";
 import { cookie } from "../../../App";
 import { useNavigate } from "react-router-dom";
+import subjectList from "../../../subjectlist";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -25,16 +26,7 @@ const CreatePost = () => {
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
-  const subjectList = [
-    "NOT SELECTED",
-    "CS",
-    "Math",
-    "Physics",
-    "Sociology",
-    "Spanish",
-    "Music",
-    "Theater",
-  ];
+  
 
   const handleClear = () => {
     // clear all the fields
