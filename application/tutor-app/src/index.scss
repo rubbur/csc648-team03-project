@@ -16,18 +16,15 @@ body {
 }
 
 .long-page h1 {
-
-  font-size: x-large;
-  transition: font-size 1s ease-out;
-  transition: color 1s linear;
-
+  transition: all .5s ease-in;
+  font-size: 20px;
 }
 
 .long-page h1:hover {
-font-size:xx-large;
 color: rgb(231, 158, 0);
-
+font-size: 30px;
 }
+
 .required {
   color: red;
   font-weight: bold;

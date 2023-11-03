@@ -91,7 +91,7 @@ Purpose: file styles the admin control panel */
   align-items: center;
   flex-direction: row;
   background-color: white;
-  border: 3px solid bisque;
+  border: solid 5px transparent;
   margin: 10px;
   border-radius: 10px;
   text-align: center;
