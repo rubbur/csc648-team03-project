@@ -35,8 +35,8 @@ const Conversation = ({
             src={process.env.PUBLIC_URL + img_url}
             alt={name + "'s profile picture"}
           />
-          <p>{name}</p>
         </div>
+        <p><b>{name}</b></p>
         <p>{"Subject: " + postSubject}</p>
         <p>{"Last message: " + formattedDate}</p>
       </div>
