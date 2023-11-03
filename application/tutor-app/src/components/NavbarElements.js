@@ -41,7 +41,7 @@ export const NavLink = styled(Link)`
   &.active {
     color: #ffffff;
   }
-`;
+`; 
 
 export const Bars = styled(FaBars)`
   display: none;

@@ -25,7 +25,7 @@ const MessageView = () => {
       if (!res.data.success) {
         console.log("Error fetching conversations: " + res.data.errorMessage);
       }
-
+      console.log(res.data)
       setConvoMap(res.data.conversations);
     };
     getConvoMap();
