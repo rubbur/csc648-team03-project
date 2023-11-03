@@ -12,11 +12,13 @@ import TutorEdit from "./editPages/TutorEdit";
 import PasswordEdit from "./editPages/PasswordEdit";
 import NameEdit from "./editPages/NameEdit";
 import SeeReviews from "./editPages/seeReviews";
+import TutorPostsView from "../tutorPostsView/TutorPostsView"
+import MessageView from "../messageView/MessageView"
 
 const UserProfile = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
-  const [editPage, setEditPage] = useState("name");
+  const [editPage, setEditPage] = useState("messages");
   const [userName, setUserName] = useState(cookie.get("userName"));
   useEffect(() => {
     cookie.addChangeListener(() => {
@@ -100,6 +102,37 @@ const UserProfile = () => {
             <div className="button-container">
               <button
                 className={`profile-edit-button ${
+                  editPage === "messages" ? "pressed" : ""
+                }`}
+                onClick={() => {
+                  setEditPage("messages");
+                }}
+              >
+                See Messages
+              </button> 
+              <button
+                className={`profile-edit-button ${
+                  editPage === "tutorposts" ? "pressed" : ""
+                }`}
+                onClick={() => {
+                  setEditPage("tutorposts");
+                }}
+              >
+                See Tutor Posts
+              </button>  
+              {(cookie.get("isTutor") === 1) &&<button
+                className={`profile-edit-button ${
+                  editPage === "reviews" ? "pressed" : ""
+                }`}
+                onClick={() => {
+                  setEditPage("reviews");
+                }}
+              >
+                See Reviews
+              </button>
+              }            
+              <button
+                className={`profile-edit-button ${
                   editPage === "upload" ? "pressed" : ""
                 }`}
                 onClick={() => {
@@ -128,34 +161,15 @@ const UserProfile = () => {
               >
                 Update Password
               </button>
-              <button
-                className={`profile-edit-button ${
-                  editPage === "reviews" ? "pressed" : ""
-                }`}
-                onClick={() => {
-                  setEditPage("reviews");
-                }}
-              >
-                See Reviews
-              </button>
-              <button
-                className={`profile-edit-button post-button`}
-                onClick={handleCreatePost}
-              >
-                Create Post
-              </button>
-              {cookie.get("isTutor") === 1 && (
-                <button
-                  className={`profile-edit-button post-button`}
-                  onClick={handleSeeMessages}
-                >
-                  See Messages
-                </button>
-              )}
+
+
+              
               {/*(cookie.get("isTutor") === 1) && <button className={`profile-edit-button post-button`} onClick={handleSeeReviews}>See Reviews</button>*/}
             </div>
           </div>
           <div className="editting-box">
+            {editPage === "messages" && <MessageView />}
+            {editPage === "tutorposts" && <TutorPostsView isTutor={true} />}
             {editPage === "tutor" && <TutorEdit isTutor={false} />}
             {editPage === "name" && <NameEdit />}
             {editPage === "password" && <PasswordEdit />}

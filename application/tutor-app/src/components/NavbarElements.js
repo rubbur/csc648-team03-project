@@ -184,21 +184,9 @@ const Navbar = () => {
             </NavLink>
           )}
           {cookie.get("isLoggedIn") && (
-            <NavLink to={`/tutorPostsView`}>
-              <h1>View Posts</h1>
-            </NavLink>
-          )}
-          {cookie.get("isLoggedIn") && (
             <NavLink to="/Logout">
               <h1>
                 <FontAwesomeIcon icon="right-from-bracket" />
-              </h1>
-            </NavLink>
-          )}
-          {cookie.get("isLoggedIn") && (
-            <NavLink to="/Messages">
-              <h1>
-                <FontAwesomeIcon icon="fa-solid fa-envelope" />
               </h1>
             </NavLink>
           )}

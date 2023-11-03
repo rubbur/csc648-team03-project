@@ -37,7 +37,7 @@ const PasswordEdit = () => {
 
   return (
     <div className="password-edit edit-form">
-      <h2>Editting Password...</h2>
+      <h2>Editing Password...</h2>
       Enter Current Password:{" "}
       <input
         type="password"
