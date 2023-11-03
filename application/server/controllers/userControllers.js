@@ -287,9 +287,17 @@ const getConversations = async (req, res) => {
       let data = await db.query(q, [senderId]);
       dataObj.img_url = data[0][0].img_url;
       dataObj.username = data[0][0].username;
+<<<<<<< Updated upstream
       let q2 = "SELECT subject FROM tutor_posts WHERE tutor_id = ?";
       data = await db.query(q2, value[0].sender_id);
       dataObj.subject = data[0].subject;
+=======
+      let q2 = "SELECT subject FROM tutor_posts WHERE post_id = ?";
+      data = await db.query(q2, value[0].post_id);
+      dataObj.subject = data[0][0].subject;
+      console.log(data[0]);
+      console.log(dataObj.subject);
+>>>>>>> Stashed changes
       dataObj.thread_id = value[0].thread_id;
       dataObj.date_stamp = value[0].date_stamp;
 
