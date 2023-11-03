@@ -97,10 +97,10 @@ const SearchResults = () => {
               <option value="Alpha">Alpha</option>
             </select>
             <button onClick={sortResults}>Apply sort</button>
-            <div className="sort-arrows">
+            {/*<div className="sort-arrows">
               <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
               <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
-            </div>
+            </div>*/}
           </div>
         )}
       </div>
