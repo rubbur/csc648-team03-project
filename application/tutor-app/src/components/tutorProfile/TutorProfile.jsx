@@ -27,7 +27,7 @@ const TutorProfile = () => {
     false,
     false,
   ]);
-  const [firstRefresh,setRefresh] = useState(false); // css?
+  const [firstRefresh, setRefresh] = useState(false); // css?
   const [avgReview, setAvgReview] = useState(0);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [courses, setCourses] = useState([]);
@@ -72,7 +72,7 @@ const TutorProfile = () => {
       }
     };
 
-  
+
 
     const getUserData = async () => {
       if (postData.username) {
@@ -141,9 +141,9 @@ const TutorProfile = () => {
         setAvgReview("unrated");
       }
     };
-  getReviews();
+    getReviews();
 
-  }, [firstRefresh, postData] )
+  }, [firstRefresh, postData])
 
   const handleContact = () => {
     setIsTyping(true);
@@ -300,7 +300,7 @@ const TutorProfile = () => {
             {reviewList.length === 0
               ? "unrated"
               : // the average rating is:
-                avgReview + "   "}
+              avgReview + "   "}
             <FontAwesomeIcon icon={["fas", "star"]} className="star" />
           </p>
 

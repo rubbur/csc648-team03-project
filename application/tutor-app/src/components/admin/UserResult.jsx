@@ -78,7 +78,7 @@ const UserResult = ({ username, userId, isTutor, imgUrl, isPending }) => {
       {/*--------------------------------------Modal---------------------------------------------------------------------------------- */}
       <Modal
         className="custom-modal"
-        isOpen={modalIsOpen}
+        $isOpen={modalIsOpen}
         onRequestClose={() => setIsOpen(false)}
       >
         <h2>Edit Mode</h2>

@@ -18,10 +18,8 @@ const Home = () => {
         {},
         { withCredentails: true },
       );
-      console.log("this is the response: " + response.data);
       if (response.data.success) {
         setTopThreeTutors([...response.data.data]);
-        console.log(JSON.stringify(response.data.data));
       }
     };
     getTopTutors();
@@ -59,8 +57,8 @@ const Home = () => {
       <div className="top-tutors-container">
         <div>
           {topThreeTutors.length > 0 &&
-            topThreeTutors.map((tutor) => (
-              <Fade>
+            topThreeTutors.map((tutor, index) => (
+              <Fade key={index}>
                 <UserResult
                   name={tutor.name}
                   postId={tutor.post_id}

@@ -38,13 +38,13 @@ const ConversationList = ({ setThread, setPerson }) => {
   return (
     <div className="ConversationList" >
       <h1>{cookie.get("userName")}'s Conversations</h1>
-      {convoList.map((convo) => (
+      {convoList.map((convo, index) => (
         <Conversation
+          key={index}
           postId={convo.post_id}
           threadId={convo.thread_id}
           setThread={setThread}
           setPerson={setPerson}
-          key={convo.message_id}
           message_id={convo.message_id}
           img_url={convo.img_url}
           name={convo.username}

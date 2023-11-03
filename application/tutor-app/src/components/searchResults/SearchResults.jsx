@@ -29,10 +29,8 @@ const SearchResults = () => {
         {},
         { withCredentails: true },
       );
-      console.log("this is the response: " + response.data);
       if (response.data.success) {
         setTopThreeTutors([...response.data.data]);
-        console.log(JSON.stringify(response.data.data));
       }
     };
     getTopTutors();
@@ -65,10 +63,8 @@ const SearchResults = () => {
       );
 
       setResultsList([...searchResults.data.searchResults]);
-      console.log(searchResults.data.searchResults[0]);
     };
     getSearchResults();
-    console.log(JSON.stringify(resultsList));
   }, [location.search]); //when the query params change (because the user searched something else) trigger loading the new search results
 
   const sortResults = () => {
@@ -107,7 +103,7 @@ const SearchResults = () => {
       <div className="search-results-box">
         {resultsList.map((tutor, index) => {
           return (
-            <Fade>
+            <Fade key={index}>
               <UserResult
                 username={tutor.username}
                 name={tutor.name}
@@ -138,8 +134,9 @@ const SearchResults = () => {
           <hr />
           <div className="top-tutors-container">
             {topThreeTutors.length > 0 &&
-              topThreeTutors.map((tutor) => (
+              topThreeTutors.map((tutor, index) => (
                 <UserResult
+                  key={index}
                   name={tutor.name}
                   postId={tutor.post_id}
                   imgUrl={tutor.img_url}
@@ -175,8 +172,6 @@ export const UserResult = ({
 
   const handleSend = async () => {
     if (messageInProgress === "" || messageInProgress === undefined) return;
-    console.log("sending message");
-    console.log(cookie.get("isLoggedIn"));
     if (
       cookie.get("isLoggedIn") === "false" ||
       cookie.get("isLoggedIn") === undefined
