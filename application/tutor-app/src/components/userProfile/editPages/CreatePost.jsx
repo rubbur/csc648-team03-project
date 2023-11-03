@@ -26,7 +26,7 @@ const CreatePost = () => {
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
-  
+
 
   const handleClear = () => {
     // clear all the fields
@@ -87,6 +87,13 @@ const CreatePost = () => {
     }
     if (name.length === 0) {
       alert("Please enter your name");
+      return;
+    } else if (name.length > 100) {
+      alert("Name must be less than 100 characters");
+      return;
+    } // make sure name is only letters or hyphens
+    else if (!/^[a-zA-Z-]+$/.test(name)) {
+      alert("Name must only contain letters or hyphens");
       return;
     }
     if (selectedSubject === "NOT SELECTED") {
