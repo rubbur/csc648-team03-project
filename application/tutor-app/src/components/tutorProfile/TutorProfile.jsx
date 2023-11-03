@@ -27,6 +27,7 @@ const TutorProfile = () => {
     false,
     false,
   ]);
+  const [firstRefresh,setRefresh] = useState(false); // css?
   const [avgReview, setAvgReview] = useState(0);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [courses, setCourses] = useState([]);
@@ -71,30 +72,7 @@ const TutorProfile = () => {
       }
     };
 
-    const getReviews = async () => {
-      //get the tutor's reviews
-      const reviewResults = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`,
-        { id: postData.tutor_id },
-        { withCredentials: true },
-      );
-      if (!reviewResults.data.success) {
-        console.log(reviewResults.data.errorMessage);
-        return;
-      }
-      setReviewList([...reviewResults.data.reviews]);
-      //get the tutor's average review
-      let total = 0;
-      for (let i = 0; i < reviewResults.data.reviews.length; i++) {
-        total += Number(reviewResults.data.reviews[i].rating);
-      }
-      if (reviewResults.data.reviews.length > 0) {
-        total /= reviewResults.data.reviews.length;
-        setAvgReview(total.toFixed(1));
-      } else {
-        setAvgReview("unrated");
-      }
-    };
+  
 
     const getUserData = async () => {
       if (postData.username) {
@@ -125,9 +103,9 @@ const TutorProfile = () => {
     if (postData.username) {
       getUserData();
     }
-    if (postData.tutor_id) {
+    /*if (postData.tutor_id) {
       getReviews();
-    }
+    } */
   }, [postData.username, hasFlier, hasCv, hasVideo]);
 
   useEffect(() => {
@@ -137,6 +115,35 @@ const TutorProfile = () => {
       }, 2000);
     }
   }, [showSentMessage]);
+  useEffect(() => {
+    console.log("useEffect");
+    const getReviews = async () => {
+      //get the tutor's reviews
+      const reviewResults = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/tutor/getTutorReviews`,
+        { id: postData.tutor_id },
+        { withCredentials: true },
+      );
+      if (!reviewResults.data.success) {
+        console.log(reviewResults.data.errorMessage);
+        return;
+      }
+      setReviewList([...reviewResults.data.reviews]);
+      //get the tutor's average review
+      let total = 0;
+      for (let i = 0; i < reviewResults.data.reviews.length; i++) {
+        total += Number(reviewResults.data.reviews[i].rating);
+      }
+      if (reviewResults.data.reviews.length > 0) {
+        total /= reviewResults.data.reviews.length;
+        setAvgReview(total.toFixed(1));
+      } else {
+        setAvgReview("unrated");
+      }
+    };
+  getReviews();
+
+  }, [firstRefresh, postData] )
 
   const handleContact = () => {
     setIsTyping(true);
@@ -226,6 +233,7 @@ const TutorProfile = () => {
       console.log(result.data.errorMessage);
       return;
     }
+    setRefresh(!firstRefresh);
     setIsOpen(false);
   };
 
