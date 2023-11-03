@@ -108,18 +108,18 @@ const SearchResults = () => {
         {resultsList.map((tutor, index) => {
           return (
             <Fade>
-            <UserResult
-              username={tutor.username}
-              name={tutor.name}
-              userId={tutor.tutor_id}
-              imgUrl={tutor.img_url}
-              key={index}
-              index={index}
-              subject={tutor.subject}
-              rate={"$" + tutor.hourly_rate + "/hr"}
-              postId={tutor.post_id}
-              tutorId={tutor.tutor_id}
-            />
+              <UserResult
+                username={tutor.username}
+                name={tutor.name}
+                userId={tutor.tutor_id}
+                imgUrl={tutor.img_url}
+                key={index}
+                index={index}
+                subject={tutor.subject}
+                rate={"$" + tutor.hourly_rate + "/hr"}
+                postId={tutor.post_id}
+                tutorId={tutor.tutor_id}
+              />
             </Fade>
           );
         })}
@@ -210,7 +210,15 @@ export const UserResult = ({
   return (
     <div className="user-result">
       <div className="results-container">
-        <img className="user-img" src={imgUrl} alt="pic" />
+        <img
+          className="user-img"
+          src={imgUrl}
+          alt="pic"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = '/userImages/stockImage.png';
+          }}
+        />
         <p>{name}</p>
         <p>{subject}</p>
         <p>{rate}</p>
