@@ -5,7 +5,6 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-//import "../admin/admin.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { cookie } from "./../../App";
 import "./searchResults.scss";
