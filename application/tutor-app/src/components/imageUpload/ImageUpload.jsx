@@ -18,7 +18,7 @@ const ImageUpload = () => {
   };
 
   const handlePostImage = async () => {
-    console.log(cookie.get("username"));
+   
     if (!cookie.get("isLoggedIn")) {
       alert("must be logged in to upload a file");
       return;
@@ -37,7 +37,7 @@ const ImageUpload = () => {
 
     const formData = new FormData();
     formData.append("file", imageFile);
-    formData.append("username", cookie.get("userName"));
+    formData.append("id", cookie.get("userId"));
     const result = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/user/uploadImage`,
 
@@ -47,7 +47,7 @@ const ImageUpload = () => {
           "Content-Type": "multipart/form-data",
         },
         params: {
-          username: cookie.get("username"),
+          userId: cookie.get("userId"),
         },
         withCredentials: true,
       },

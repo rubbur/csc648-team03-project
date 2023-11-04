@@ -385,7 +385,7 @@ const editUsername = async (req, res) => {
 
 const uploadImage = async (req, res) => {
   const { file } = req.files;
-  const username = req.body.username;
+  const userId = req.body.id;
   if (file.mimetype.substring(0, 5) !== "image") {
     //should be ex: image/jpg or image/png
     res.send({
@@ -394,7 +394,7 @@ const uploadImage = async (req, res) => {
     });
   }
   // const newFileName = username + "." + file.mimetype.substring(6);
-  const newFileName = username + ".png";
+  const newFileName = userId + ".png";
   //move the file into the userImages folder
   file.mv(`../tutor-app/public/userImages/${newFileName}`, async (err) => {
     console.log(err);
@@ -403,11 +403,11 @@ const uploadImage = async (req, res) => {
     }
 
     //update the user table so that the relative path of the image is stored in the database
-    const q = "UPDATE users SET img_url = ?, ispending = 1 WHERE username = ?";
+    const q = "UPDATE users SET img_url = ?, ispending = 1 WHERE id = ?";
     try {
       const updateRes = await db.query(q, [
         `/userImages/${newFileName}`,
-        username,
+        userId,
       ]);
       res.send({ success: true });
     } catch (err) {
