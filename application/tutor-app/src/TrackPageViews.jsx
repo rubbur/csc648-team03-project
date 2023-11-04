@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import ReactGA from 'react-ga';
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import ReactGA from "react-ga";
 
 const TrackPageViews = () => {
   const location = useLocation();
@@ -11,9 +11,8 @@ const TrackPageViews = () => {
     // Track initial pageview
     ReactGA.pageview(location.pathname + location.search);
     //custom component test
-    ReactGA.pageview('/Messages');
-    ReactGA.pageview('/tutorProfile');
-
+    ReactGA.pageview("/Messages");
+    ReactGA.pageview("/tutorProfile");
 
     // Set up listener for route changes
     const unlisten = () => {
@@ -27,5 +26,3 @@ const TrackPageViews = () => {
 };
 
 export default TrackPageViews;
-
-  

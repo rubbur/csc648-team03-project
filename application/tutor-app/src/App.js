@@ -38,12 +38,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar as Star, faMessage } from "@fortawesome/free-regular-svg-icons";
 // import CreatePost from './components/userProfile/editPages/CreatePost';
-import CreatePost from './components/userProfile/editPages/CreatePost';
-import MessageView from './components/messageView/MessageView';
-import TrackPageViews from './TrackPageViews';
-
-
-
+import CreatePost from "./components/userProfile/editPages/CreatePost";
+import MessageView from "./components/messageView/MessageView";
+import TrackPageViews from "./TrackPageViews";
 
 library.add(
   fab,
@@ -62,12 +59,10 @@ library.add(
 export const cookie = new Cookie();
 
 function App() {
-
   return (
-   
     <Router>
       {/* this component is used to track page views */}
-      <TrackPageViews/> 
+      <TrackPageViews />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
