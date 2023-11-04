@@ -69,6 +69,7 @@ const SearchResults = () => {
 
   const sortResults = () => {
     setResultsList([...resultsList.sort(comparators[sortType])]);
+    console.log([...resultsList.sort(comparators[sortType])].map( card => card.avg_rating).join(" "));
   };
 
   return (
