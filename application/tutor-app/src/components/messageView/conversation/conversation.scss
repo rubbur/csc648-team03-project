@@ -1,3 +1,8 @@
+// Author: Ava Albert, Michael Mathews, Cleveland Plonsey
+// Date: 10/20/2023
+// Purpose: Style the conversation component
+
+
 @import "../../../colorScheme.scss";
 
 .ConversationContainer {
@@ -18,6 +23,16 @@
     cursor: pointer;
 }
 
+.Conversation:hover{
+    border: solid white 3px;
+    background-color: $accent-color-hover;
+    transition: 0.1s;
+}
+
+.Conversation.active{
+    background-color: red;
+}
+
 .user-container>img {
     width: 100px;
     height: 100px;
@@ -35,5 +50,6 @@
     height: fit-content;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     font-weight: bold;
 }

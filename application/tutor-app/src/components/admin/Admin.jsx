@@ -3,7 +3,6 @@
 //delete a user
 //modify a user
 //search up a specific user
-//message a user by email possibly---- could be a third priority feature using nodemailer: send an email to the user
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,15 +10,14 @@ import axios from "axios";
 import UserResult from "./UserResult";
 import "./admin.css";
 
-
 const Admin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [userList, setUserList] = useState([]);
   const [filters, setFilters] = useState([
-    {name: "Only tutors", isChecked:false, test: user => user.istutor},
-    {name: "Only students", isChecked:false, test: user => !user.istutor},
-    {name: "Pending", isChecked:false, test: user => user.ispending}
-   ]);
+    { name: "Only tutors", isChecked: false, test: (user) => user.istutor },
+    { name: "Only students", isChecked: false, test: (user) => !user.istutor },
+    { name: "Pending", isChecked: false, test: (user) => user.ispending },
+  ]);
   const navigate = useNavigate();
 
   //if the user is not an admin then reroute them to the home page
@@ -28,7 +26,7 @@ const Admin = () => {
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/admin/verify`,
         {},
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (res.data.success) {
         //TODO: make it if(!res.success) once testing is done.
@@ -39,17 +37,16 @@ const Admin = () => {
     verifyAdmin();
   }, [navigate]);
 
-
-  const applyFilters = (userList) =>{
-    return userList.filter((user) =>{
-      for(let i =0; i< filters.length; i++){
-        if( filters[i].isChecked && !filters[i].test(user)){
+  const applyFilters = (userList) => {
+    return userList.filter((user) => {
+      for (let i = 0; i < filters.length; i++) {
+        if (filters[i].isChecked && !filters[i].test(user)) {
           return false;
         }
       }
       return true;
     });
-  }
+  };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -59,7 +56,7 @@ const Admin = () => {
     const res = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/user/searchByName`,
       { name: searchTerm },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     if (res.data.success) {
       setUserList([...applyFilters(res.data.searchResults)]);
@@ -71,45 +68,45 @@ const Admin = () => {
     const res = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/admin/getAllUsers`,
       {},
-      { withCredentials: true }
+      { withCredentials: true },
     );
     if (res.data.success) {
       setUserList([...applyFilters(res.data.allUsers)]);
     }
   };
 
-  const handleFilterChange = (index) =>{
+  const handleFilterChange = (index) => {
     filters[index].isChecked = !filters[index].isChecked;
     setFilters([...filters]);
     setUserList([...applyFilters(userList)]);
-  }
+  };
 
   return (
     <div className="admin-box">
-       <div className="filter-box">
-       <p><strong>Filter by:</strong></p>
-          {
-            filters.map((filter, index) =>{
-              return (
-              <div>
-                 <label htmlFor={filter.name}>{filter.name}</label>
-                 <input 
-                  type="checkbox" 
-                  name={filter.name}
-                  checked={filter.isChecked}
-                  index={index}
-                  key={index}
-                  onChange={() => {handleFilterChange(index)}}
-                  />
-              </div>
-              );
-            })
-          }
-        </div>
+      <div className="filter-box">
+        <p>
+          <strong>Filter by:</strong>
+        </p>
+        {filters.map((filter, index) => {
+          return (
+            <div>
+              <label htmlFor={filter.name}>{filter.name}</label>
+              <input
+                type="checkbox"
+                name={filter.name}
+                checked={filter.isChecked}
+                index={index}
+                key={index}
+                onChange={() => {
+                  handleFilterChange(index);
+                }}
+              />
+            </div>
+          );
+        })}
+      </div>
       <h1>Welcome, Admin.</h1>
-     
-      
-     
+
       <div className="admin-controls">
         <div className="search-box">
           <button id="admin-all-button" onClick={handleGetAllUsers}>

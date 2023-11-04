@@ -1,3 +1,7 @@
+// Author: Ava Albert, Michael Mathews, Cleveland Plonsey
+// Date: 10/18/2023
+// Purpose: style the conversation components
+
 .ConversationList {
     color: white;
     width: 40%;
@@ -5,4 +9,8 @@
     flex-direction: column;
     align-items: center;
     user-select: none;
+}
+
+.ConversationList h1 {
+    margin-left: 15px;
 }

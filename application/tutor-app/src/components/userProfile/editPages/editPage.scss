@@ -1,3 +1,8 @@
+// Author:  Cleveland Plonsey
+// Date: 10/14/2023
+// Purpose: Style the EditPage component
+
+
 @import "../../../colorScheme.scss";
 
 .required {
@@ -24,8 +29,8 @@
     padding-left: 10px;
     height: 100%;
     width: inherit;
-    background-color: white;
-    overflow-y: scroll;
+    background-color: rgb(135, 202, 240);
+    overflow-y: hidden;
 }
 
 .edit-form button {
@@ -151,7 +156,7 @@
     align-items: center;
     height: 10%;
     width: 100%;
-    color: white;
+    color: rgb(122, 208, 232);
 }
 
 .post-area {
@@ -171,7 +176,7 @@
 }
 
 .post-textarea-container>p {
-    color: white;
+    color: rgb(147, 219, 245);
     font-size: 20px;
     margin-bottom: 10px;
     margin-left: 70%;

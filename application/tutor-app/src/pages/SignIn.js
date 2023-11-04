@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import '../index.scss';
+// Author:  Cleveland Plonsey, team lead
+// Date: 9/3/2023
+// Purpose: component that presents login form to user.
+
+import React, { useEffect, useState } from "react";
+import "../index.scss";
 import axios from "axios";
-import { cookie } from "../App"
-import { Link, useNavigate } from 'react-router-dom'
+import { cookie } from "../App";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignIn() {
   useEffect(() => {
@@ -13,8 +17,8 @@ function SignIn() {
     }
   }, []);
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
@@ -39,7 +43,11 @@ function SignIn() {
     console.log("Remember Me:", rememberMe);
 
     // send email and password to backend
-    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, { username: username, password: password }, { withCredentials: true });
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/user/login`,
+      { username: username, password: password },
+      { withCredentials: true },
+    );
     console.log(response.data);
     setUsername("");
     setPassword("");
@@ -52,12 +60,16 @@ function SignIn() {
 
       // Check if there is an unsent message in local storage
       const unsentMessage = localStorage.getItem("unsentMessage");
-      const unsentMessageRecipientId = localStorage.getItem("unsentMessageRecipientId");
+      const unsentMessageRecipientId = localStorage.getItem(
+        "unsentMessageRecipientId",
+      );
       const unsentMessagePostId = localStorage.getItem("unsentMessagePostId");
 
       if (unsentMessage && unsentMessageRecipientId && unsentMessagePostId) {
         // Ask the user if they want to send the unsent message
-        const confirmSend = window.confirm("You have an unsent message. Do you want to send it now?");
+        const confirmSend = window.confirm(
+          "You have an unsent message. Do you want to send it now?",
+        );
         if (confirmSend) {
           const response = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}/user/sendMessage`,
@@ -65,9 +77,9 @@ function SignIn() {
               recipientId: unsentMessageRecipientId,
               message: unsentMessage,
               senderId: cookie.get("userId"),
-              postId: unsentMessagePostId
+              postId: unsentMessagePostId,
             },
-            { withCredentials: true }
+            { withCredentials: true },
           );
 
           console.log("Sent unsent message: " + response.data);
@@ -84,18 +96,22 @@ function SignIn() {
         window.close();
       }
       navigate("/Profile");
-
-
     }
   };
 
   return (
     <div>
-      <h1 className='pageHeader'>Sign In</h1>
-      {(loginDialogOpen) ? <p className="not-logged-in" id="not-logged-in">You must be logged in to create a post</p> : null}
+      <h1 className="pageHeader">Sign In</h1>
+      {loginDialogOpen ? (
+        <p className="not-logged-in" id="not-logged-in">
+          You must be logged in to create a post
+        </p>
+      ) : null}
       <div className="form-set">
         <div className="form-group">
-          <label htmlFor="username" className='no-select'>SFSU Email: </label>
+          <label htmlFor="username" className="no-select">
+            SFSU Email:{" "}
+          </label>
           <input
             type="username"
             id="username"
@@ -106,7 +122,9 @@ function SignIn() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password" className='no-select'>Password: </label>
+          <label htmlFor="password" className="no-select">
+            Password:{" "}
+          </label>
           <input
             type="password"
             id="password"
@@ -117,7 +135,7 @@ function SignIn() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="rememberMe" className='no-select'>
+          <label htmlFor="rememberMe" className="no-select">
             Remember me:
             <input
               type="checkbox"
@@ -129,14 +147,18 @@ function SignIn() {
           </label>
         </div>
         <div className="center-button">
-          <button type="submit" onClick={handleLogin}>Sign In</button>
+          <button type="submit" onClick={handleLogin}>
+            Sign In
+          </button>
         </div>
         <div className="center-button">
           <button type="submit">Forgot Password?</button>
         </div>
-        <Link to="/SignUp" className='suggest-signup'>Don't have an account?<br></br>Click here to create one</Link>
+        <Link to="/SignUp" className="suggest-signup">
+          Don't have an account?<br></br>Click here to create one
+        </Link>
       </div>
-    </div >
+    </div>
   );
 }
 

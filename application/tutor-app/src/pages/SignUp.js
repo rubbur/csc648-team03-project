@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import '../index.scss';
+// Author:  Cleveland Plonsey, team lead
+// Date: 9/3/2023
+// Purpose: component that presents register form to user.
+
+import React, { useEffect, useState } from "react";
+import "../index.scss";
 import axios from "axios";
-import { cookie } from "../App"
+import { cookie } from "../App";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
@@ -10,8 +14,8 @@ function SignUp() {
   }, []);
 
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
 
@@ -43,12 +47,12 @@ function SignUp() {
       return;
     }
 
-    if (!username.endsWith('@sfsu.edu') || username.length < 10) {
+    if (!username.endsWith("@sfsu.edu") || username.length < 10) {
       alert("Please use a SFSU email address. Example email: example@sfsu.edu");
       return;
     }
 
-    if (password.trim() === '') {
+    if (password.trim() === "") {
       alert("Password cannot be empty.");
       return;
     }
@@ -57,7 +61,7 @@ function SignUp() {
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/user/register`,
       { username: username, password: password },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     console.log(response.data);
     setUsername("");
@@ -76,7 +80,9 @@ function SignUp() {
       console.log(cookie.get("isLoggedIn"));
 
       const unsentMessage = localStorage.getItem("unsentMessage");
-      const unsentMessageRecipientId = localStorage.getItem("unsentMessageRecipientId");
+      const unsentMessageRecipientId = localStorage.getItem(
+        "unsentMessageRecipientId",
+      );
       const unsentMessagePostId = localStorage.getItem("unsentMessagePostId");
 
       if (unsentMessage && unsentMessageRecipientId && unsentMessagePostId) {
@@ -88,9 +94,9 @@ function SignUp() {
             recipientId: unsentMessageRecipientId,
             message: unsentMessage,
             senderId: userId, // Use the retrieved userId
-            postId: unsentMessagePostId
+            postId: unsentMessagePostId,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
         console.log("Sent unsent message: " + result.data);
         localStorage.removeItem("unsentMessage");
@@ -109,10 +115,12 @@ function SignUp() {
 
   return (
     <div>
-      <h1 className='pageHeader'>Sign Up</h1>
+      <h1 className="pageHeader">Sign Up</h1>
       <div className="form-set">
         <div className="form-group">
-          <label htmlFor="username" className='no-select'>SFSU Email: </label>
+          <label htmlFor="username" className="no-select">
+            SFSU Email:{" "}
+          </label>
           <input
             type="username"
             id="username"
@@ -121,10 +129,12 @@ function SignUp() {
             onChange={handleUsernameChange}
             required
           />
-          <span className='required'> *</span>
+          <span className="required"> *</span>
         </div>
         <div className="form-group">
-          <label htmlFor="password" className='no-select'>Password: </label>
+          <label htmlFor="password" className="no-select">
+            Password:{" "}
+          </label>
           <input
             type="password"
             id="password"
@@ -133,10 +143,10 @@ function SignUp() {
             onChange={handlePasswordChange}
             required
           />
-          <span className='required'> *</span>
+          <span className="required"> *</span>
         </div>
         <div className="form-group">
-          <label htmlFor="rememberMe" className='no-select'>
+          <label htmlFor="rememberMe" className="no-select">
             Remember me:
             <input
               type="checkbox"
@@ -148,10 +158,10 @@ function SignUp() {
           </label>
         </div>
         <div className="form-group no-select">
-          <label htmlFor="acceptTerms" >
+          <label htmlFor="acceptTerms">
             <div>
-              <span className='accept-text'>Accept </span>
-              <Link className='terms-link'>Terms of Service</Link>:
+              <span className="accept-text">Accept </span>
+              <Link className="terms-link">Terms of Service</Link>:
               <input
                 type="checkbox"
                 id="acceptTerms"
@@ -159,7 +169,7 @@ function SignUp() {
                 checked={acceptTerms}
                 onChange={handleacceptTermsChange}
               />
-              <span className='required'> *</span>
+              <span className="required"> *</span>
             </div>
           </label>
         </div>
@@ -167,7 +177,7 @@ function SignUp() {
           <button onClick={HandleRegistration}>Sign Up</button>
         </div>
 
-        <p className='required'>* Required</p>
+        <p className="required">* Required</p>
       </div>
     </div>
   );

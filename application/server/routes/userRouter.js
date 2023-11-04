@@ -1,26 +1,30 @@
 //Author: Cleveland Plonsey
+//date: 9/27/2023
+//purpose: This file contains the routes for the user controller.
+//This router is used to route the requests to the correct controller function.
+//where the routes and controllers have to do with a user.
 
 const express = require("express");
 const {
-    login,
-    register,
-    logout,
-    searchByName,
-    uploadImage,
-    getUserData,
-    getUserDataById,
-    editUsername,
-    editPassword,
-    editTutorAbilities,
-    getTutorSubjects,
-    searchTutors,
-    deleteAccount,
-    submitReview,
-    createPost,
-    searchPosts,
-    sendMessage,
-    setIsTutor,
-    getConversations
+  login,
+  register,
+  logout,
+  searchByName,
+  uploadImage,
+  getUserData,
+  getUserDataById,
+  editUsername,
+  editPassword,
+  editTutorAbilities,
+  getTutorSubjects,
+  searchTutors,
+  deleteAccount,
+  submitReview,
+  createPost,
+  searchPosts,
+  sendMessage,
+  setIsTutor,
+  getConversations,
 } = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 
