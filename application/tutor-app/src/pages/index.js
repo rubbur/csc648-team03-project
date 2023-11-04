@@ -16,7 +16,7 @@ const Home = () => {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/tutor/topThreeTutors`,
         {},
-        { withCredentails: true },
+        { withCredentials: true },
       );
       if (response.data.success) {
         setTopThreeTutors([...response.data.data]);
