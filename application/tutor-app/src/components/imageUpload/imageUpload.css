@@ -1,16 +1,16 @@
 /* Author: Cleveland Plonsey
 Date: 9/12/2023
 Purpose: file styles the image upload component
-*/ 
+*/
 
-.image-upload-box{
-    padding-left: 10px;
-    height: 100%;
-    width: inherit;
-    background-color: white;
-    overflow-y: scroll;
+.image-upload-box {
+  padding-left: 10px;
+  height: 100%;
+  width: inherit;
+  background-color: white;
+  overflow-y: scroll;
 }
 
-.upload-disclaimer{
-    font-size: 12px;
+.upload-disclaimer {
+  font-size: 12px;
 }

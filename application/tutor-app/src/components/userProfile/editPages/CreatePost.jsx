@@ -1,6 +1,3 @@
-
-
-
 /*  
   Author: Michael Mathews
   Date: 10/14/2023
@@ -10,12 +7,12 @@
     If the user is not logged in when creating a post, they will be sent to the login page.
 */
 
-
 import React, { useEffect, useState } from "react";
 import "./editPage.scss";
 import axios from "axios";
 import { cookie } from "../../../App";
 import { useNavigate } from "react-router-dom";
+import subjectList from "../../../subjectlist";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -29,9 +26,9 @@ const CreatePost = () => {
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
-  const subjectList = ["NOT SELECTED", "CS", "Math", "Physics", "Sociology", "Spanish", "Music", "Theater"];
 
-  const handleClear = () => { // clear all the fields
+  const handleClear = () => {
+    // clear all the fields
     setPostContent("");
     setPdfFile(null);
     setFlierFile(null);
@@ -59,15 +56,18 @@ const CreatePost = () => {
       formData.append("update_column", updateColumn);
 
       try {
-        const result = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`, formData, {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
+        const result = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/tutor/uploadFile`,
+          formData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           },
-        });
+        );
         if (!result.data.success)
           console.error(`Error uploading ${updateColumn}:`, result.data.error);
-
       } catch (error) {
         console.error(`Error uploading ${updateColumn}:`, error);
       }
@@ -86,6 +86,13 @@ const CreatePost = () => {
     }
     if (name.length === 0) {
       alert("Please enter your name");
+      return;
+    } else if (name.length > 100) {
+      alert("Name must be less than 100 characters");
+      return;
+    } // make sure name is only letters or hyphens
+    else if (!/^[a-zA-Z-]+$/.test(name)) {
+      alert("Name must only contain letters or hyphens");
       return;
     }
     if (selectedSubject === "NOT SELECTED") {
@@ -117,7 +124,7 @@ const CreatePost = () => {
         },
         {
           withCredentials: true,
-        }
+        },
       );
 
       if (response.data.success) {
@@ -133,14 +140,17 @@ const CreatePost = () => {
 
         // Set isTutor to 1 in users table
         console.log("istutor: " + cookie.get("isTutor"));
-        if (cookie.get("isTutor") === 0 || typeof cookie.get("isTutor") === "undefined") {
+        if (
+          cookie.get("isTutor") === 0 ||
+          typeof cookie.get("isTutor") === "undefined"
+        ) {
           console.log("Trying to update user to tutor");
           const tutorResponse = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}/user/setIsTutor`,
             {
               userId: cookie.get("userId"),
             },
-            { withCredentials: true }
+            { withCredentials: true },
           );
 
           if (tutorResponse.data.success) {
@@ -163,7 +173,9 @@ const CreatePost = () => {
     <div>
       <h1 className="post-header">Create Post</h1>
       <div className="post-textarea-container">
-        <p className={(postContent.length > characterLimit) ? "error" : ""}>{` ${postContent.length}/${characterLimit} characters `}</p>
+        <p
+          className={postContent.length > characterLimit ? "error" : ""}
+        >{` ${postContent.length}/${characterLimit} characters `}</p>
         <div className="textarea-container">
           <textarea
             className="post-textarea"
@@ -171,7 +183,7 @@ const CreatePost = () => {
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
           />
-          <span className='required'>  *</span>
+          <span className="required"> *</span>
         </div>
       </div>
       <div className="upload-container">
@@ -184,11 +196,10 @@ const CreatePost = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <span className='required'> *</span>
+              <span className="required"> *</span>
             </div>
           </div>
         </div>
-
       </div>
       <div className="upload-container">
         <div className="upload-button-container">
@@ -205,7 +216,7 @@ const CreatePost = () => {
                   </option>
                 ))}
               </select>
-              <span className='required'> *</span>
+              <span className="required"> *</span>
             </div>
           </div>
           <div className="upload-input">
@@ -218,7 +229,7 @@ const CreatePost = () => {
                 max={100}
                 onChange={(e) => setHourlyRate(e.target.value)}
               />
-              <span className='required'> *</span>
+              <span className="required"> *</span>
             </div>
           </div>
           <div className="upload-input">
@@ -246,7 +257,7 @@ const CreatePost = () => {
             />
           </div>
         </div>
-      </div >
+      </div>
       <div className="post-button-container">
         <button className="create-button" onClick={handlePost}>
           Create Post
@@ -255,9 +266,11 @@ const CreatePost = () => {
           Reset
         </button>
       </div>
-      <p className='required required-center'>* Required</p>
-      <p className="post-disclaimer">Note: New posts may take up to 24 hours to be approved.</p>
-    </div >
+      <p className="required required-center">* Required</p>
+      <p className="post-disclaimer">
+        Note: New posts may take up to 24 hours to be approved.
+      </p>
+    </div>
   );
 };
 

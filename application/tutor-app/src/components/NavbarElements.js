@@ -3,14 +3,13 @@
 // Purpose: The header for the whole site that has a nav bar and a search bar and control buttons
 //appears on every veiw of the site.
 
-
-import React, { useEffect, useState } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { NavLink as Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { cookie } from '../App';
-import SearchBar from './searchBar/SearchBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useState } from "react";
+import { FaBars } from "react-icons/fa";
+import { NavLink as Link } from "react-router-dom";
+import styled from "styled-components";
+import { cookie } from "../App";
+import SearchBar from "./searchBar/SearchBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./navbar.scss";
 
 export const Nav = styled.nav`
@@ -34,9 +33,9 @@ export const NavLink = styled(Link)`
   box-sizing: border-box;
 
   &:hover {
-    border: 1px solid white; 
-    border-radius: 5px; 
-    background-color: rgb(181, 118, 0); 
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: rgb(181, 118, 0);
   }
 
   &.active {
@@ -67,8 +66,8 @@ const MobileLogo = styled.img`
     width: 100px;
     height: auto;
     top: 5px;
-    left: 50%; 
-    transform: translateX(-50%); 
+    left: 50%;
+    transform: translateX(-50%);
   }
 `;
 
@@ -98,9 +97,10 @@ const MobileMenu = styled.div`
     flex-direction: column;
     font-size: 10px;
     position: absolute;
-    top: ${({ isOpen }) => (isOpen ? '85px' : '-100%')}; /* Adjust top property */
+    top: ${({ isOpen }) =>
+      isOpen ? "85px" : "-100%"}; /* Adjust top property */
     left: 0;
-    background-color: #0C0032;
+    background-color: #0c0032;
     width: 100%;
     transition: 0.25s ease-in-out;
   }
@@ -129,78 +129,135 @@ const Navbar = () => {
 
   const hideMobileMenu = () => {
     setIsOpen(false);
-  }
+  };
 
   return (
-    <div className='site-header'>
-      <Nav className='navbar'>
-        <Bars color='#ffffff' onClick={toggleMobileMenu} />
-        <Link to="/"><MobileLogo src='../../images/logo.png' alt='Mobile Logo' onClick={hideMobileMenu} /></Link>
-        <p className="disclaimer-p"><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration Only.</em></p>
+    <div className="site-header">
+      <Nav className="navbar">
+        <Bars color="#ffffff" onClick={toggleMobileMenu} />
+        <Link to="/">
+          <MobileLogo
+            src="../../images/logo.png"
+            alt="Mobile Logo"
+            onClick={hideMobileMenu}
+          />
+        </Link>
+        <p className="disclaimer-p">
+          <em>
+            SFSU Software Engineering Project 648-848, Fall 2023. For
+            Demonstration Only.
+          </em>
+        </p>
         <hr className="disclaimer-p"></hr>
         <NavMenu>
-          <NavLink to="/"><Logo src='/images/logo.png' alt='Logo' /></NavLink>
+          <NavLink to="/">
+            <Logo src="/images/logo.png" alt="Logo" />
+          </NavLink>
           <SearchBar />
-          <NavLink to="/CreatePost"><h1><FontAwesomeIcon className='plus-icon' icon="fa-plus" /></h1></NavLink>
-          {<NavLink to="/AboutUs"><h1><FontAwesomeIcon icon="fa-circle-info" /></h1></NavLink>}
-          {cookie.get('isAdmin') && <NavLink to="/AdminPanel"><h1><FontAwesomeIcon icon="gear" /></h1></NavLink>}
-          {!cookie.get("isLoggedIn") && <NavLink to="/SignIn"><h1>Sign In</h1></NavLink>}
-          {!cookie.get("isLoggedIn") && <NavLink to="/SignUp"><h1>Sign Up</h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to={`/tutorPostsView`}><h1>View Posts</h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to="/Logout"><h1><FontAwesomeIcon icon="right-from-bracket" /></h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to="/Messages"><h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1></NavLink>}
-          {cookie.get("isLoggedIn") && <NavLink to="/Profile"><h1>{"Hi, " + userName}</h1></NavLink>}
+          <NavLink to="/CreatePost">
+            <h1>
+              <FontAwesomeIcon className="plus-icon" icon="fa-plus" />
+            </h1>
+          </NavLink>
+          {
+            <NavLink to="/AboutUs">
+              <h1>
+                <FontAwesomeIcon icon="fa-circle-info" />
+              </h1>
+            </NavLink>
+          }
+          {cookie.get("isAdmin") && (
+            <NavLink to="/AdminPanel">
+              <h1>
+                <FontAwesomeIcon icon="gear" />
+              </h1>
+            </NavLink>
+          )}
+          {!cookie.get("isLoggedIn") && (
+            <NavLink to="/SignIn">
+              <h1>Sign In</h1>
+            </NavLink>
+          )}
+          {!cookie.get("isLoggedIn") && (
+            <NavLink to="/SignUp">
+              <h1>Sign Up</h1>
+            </NavLink>
+          )}
+          {cookie.get("isLoggedIn") && (
+            <NavLink to="/Logout">
+              <h1>
+                <FontAwesomeIcon icon="right-from-bracket" />
+              </h1>
+            </NavLink>
+          )}
+          {cookie.get("isLoggedIn") && (
+            <NavLink to="/Profile">
+              <h1>{"Hi, " + userName}</h1>
+            </NavLink>
+          )}
         </NavMenu>
       </Nav>
 
-
       <MobileMenu isOpen={isOpen}>
         <SearchBar />
-        <p className='mobile-disclaimer'><em>SFSU Software Engineering Project 648-848, Fall 2023. For Demonstration </em></p>
-        {cookie.get('isLoggedIn') && !cookie.get('isTutor') && (
+        <p className="mobile-disclaimer">
+          <em>
+            SFSU Software Engineering Project 648-848, Fall 2023. For
+            Demonstration{" "}
+          </em>
+        </p>
+        {cookie.get("isLoggedIn") && !cookie.get("isTutor") && (
           <MobileMenuItem to="/StudentView" onClick={toggleMobileMenu}>
             <h1>Students</h1>
           </MobileMenuItem>
         )}
-        {cookie.get('isLoggedIn') && (
+        {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/CreatePost" onClick={toggleMobileMenu}>
-            <FontAwesomeIcon className='plus-icon' icon="fa-plus" />
+            <FontAwesomeIcon className="plus-icon" icon="fa-plus" />
           </MobileMenuItem>
         )}
         <MobileMenuItem to="/AboutUs" onClick={toggleMobileMenu}>
-          <h1><FontAwesomeIcon icon="fa-circle-info" /></h1>
+          <h1>
+            <FontAwesomeIcon icon="fa-circle-info" />
+          </h1>
         </MobileMenuItem>
-        {cookie.get('isAdmin') && (
+        {cookie.get("isAdmin") && (
           <MobileMenuItem to="/AdminPanel" onClick={toggleMobileMenu}>
-            <h1><FontAwesomeIcon icon="gear" /></h1>
+            <h1>
+              <FontAwesomeIcon icon="gear" />
+            </h1>
           </MobileMenuItem>
         )}
-        {!cookie.get('isLoggedIn') && (
+        {!cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/SignIn" onClick={toggleMobileMenu}>
             <h1>Sign In</h1>
           </MobileMenuItem>
         )}
-        {!cookie.get('isLoggedIn') && (
+        {!cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/SignUp" onClick={toggleMobileMenu}>
             <h1>Sign Up</h1>
           </MobileMenuItem>
         )}
-        {cookie.get('isLoggedIn') && (
+        {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/Logout" onClick={toggleMobileMenu}>
-            <h1><FontAwesomeIcon icon="right-from-bracket" /></h1>
+            <h1>
+              <FontAwesomeIcon icon="right-from-bracket" />
+            </h1>
           </MobileMenuItem>
         )}
-        {cookie.get('isLoggedIn') && (
+        {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/tutorPostsView" onClick={toggleMobileMenu}>
             <h1>View Posts</h1>
           </MobileMenuItem>
         )}
-        {cookie.get('isLoggedIn') && (
+        {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/Messages" onClick={toggleMobileMenu}>
-            <h1><FontAwesomeIcon icon="fa-solid fa-envelope" /></h1>
+            <h1>
+              <FontAwesomeIcon icon="fa-solid fa-envelope" />
+            </h1>
           </MobileMenuItem>
         )}
-        {cookie.get('isLoggedIn') && (
+        {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/Profile" onClick={toggleMobileMenu}>
             <h1>{"Hi, " + userName}</h1>
           </MobileMenuItem>

@@ -4,14 +4,15 @@
 
 @import "../../colorScheme.scss";
 
-.user-result {
+.search-results-box .user-result {
     height: fit-content;
     width: 40%;
     min-width: 17rem;
-    border: solid 3px rgb(0, 0, 0);
+    border: solid 5px transparent;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
 }
 
 .user-result:hover {
@@ -156,4 +157,8 @@
 
 .sort-icon.selected {
     color: $accent-color;
+}
+
+.top-tutors-container.results-container {
+    height: 25%;
 }

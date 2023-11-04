@@ -99,3 +99,11 @@ header .header-img{
     height: 100%;
     background-color: $accent-color-hover;
 }
+
+.message img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin: 5px;
+    box-shadow: 3px 3px 3px 3px inset rgb(255, 255, 82);
+}

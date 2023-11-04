@@ -2,9 +2,9 @@
 // Date: 9/3/2023
 // Purpose: component that is deprecated
 
-import React, { useEffect, useState } from 'react';
-import '../index.scss';
-import {cookie} from "../App"
+import React, { useEffect, useState } from "react";
+import "../index.scss";
+import { cookie } from "../App";
 
 function TutorView() {
   useEffect(() => {
@@ -20,8 +20,7 @@ function TutorView() {
   }, []);
   return (
     <div>
-      <h1 className='pageHeader'>Welcome Tutor {userName}</h1>
-      
+      <h1 className="pageHeader">Welcome Tutor {userName}</h1>
     </div>
   );
 }
