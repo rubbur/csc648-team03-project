@@ -50,7 +50,7 @@ const SearchResults = () => {
         return;
       }
 
-      const subject = params.get("subject");
+      const subject = params.get("subject") || "All";
       //if the subject is not specified, set it to overview so that the user can see the tutor's overview post
 
       setSearchSubject(subject === "all" ? "overview" : subject);
