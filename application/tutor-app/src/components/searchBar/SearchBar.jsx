@@ -10,7 +10,6 @@ import "./searchBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import subjectList from "../../subjectlist";
 
-
 const SearchBar = () => {
   const [subject, setSubject] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");

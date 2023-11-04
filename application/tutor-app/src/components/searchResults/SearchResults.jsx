@@ -9,7 +9,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { cookie } from "./../../App";
 import "./searchResults.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { faStar as Star, faMessage } from "@fortawesome/free-regular-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import comparators from "./algorithms";
 import "../../index.scss";
 import { Fade } from "react-awesome-reveal";
@@ -69,7 +70,11 @@ const SearchResults = () => {
 
   const sortResults = () => {
     setResultsList([...resultsList.sort(comparators[sortType])]);
-    console.log([...resultsList.sort(comparators[sortType])].map( card => card.avg_rating).join(" "));
+    console.log(
+      [...resultsList.sort(comparators[sortType])]
+        .map((card) => card.avg_rating)
+        .join(" "),
+    );
   };
 
   return (
@@ -110,6 +115,11 @@ const SearchResults = () => {
                 name={tutor.name}
                 userId={tutor.tutor_id}
                 imgUrl={tutor.img_url}
+                avgRating={
+                  tutor.avg_rating !== undefined
+                    ? tutor.avg_rating.toFixed(1)
+                    : "0.0"
+                }
                 key={index}
                 index={index}
                 subject={tutor.subject}
@@ -144,6 +154,11 @@ const SearchResults = () => {
                   subject={tutor.subject}
                   rate={tutor.hourly_rate}
                   tutorId={tutor.tutor_id}
+                  avgRating={
+                    tutor.avg_rating !== undefined
+                      ? tutor.avg_rating.toFixed(1)
+                      : "0.0"
+                  }
                 />
               ))}
           </div>
@@ -161,6 +176,7 @@ export const UserResult = ({
   rate,
   tutorId,
   name,
+  avgRating,
 }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [messageInProgress, setMessageInProgress] = useState(""); //the message that the user is typing to send to the tutor
@@ -212,10 +228,14 @@ export const UserResult = ({
           alt="pic"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = '/userImages/stockImage.png';
+            e.target.src = "/userImages/stockImage.png";
           }}
         />
         <p>{name}</p>
+        <p>
+          {avgRating}
+          <FontAwesomeIcon icon={["fas", "star"]} className="star" />
+        </p>
         <p>{subject}</p>
         <p>{rate}</p>
         <div className="search-button-container">

@@ -12,8 +12,8 @@ import TutorEdit from "./editPages/TutorEdit";
 import PasswordEdit from "./editPages/PasswordEdit";
 import NameEdit from "./editPages/NameEdit";
 import SeeReviews from "./editPages/seeReviews";
-import TutorPostsView from "../tutorPostsView/TutorPostsView"
-import MessageView from "../messageView/MessageView"
+import TutorPostsView from "../tutorPostsView/TutorPostsView";
+import MessageView from "../messageView/MessageView";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -109,7 +109,7 @@ const UserProfile = () => {
                 }}
               >
                 See Messages
-              </button> 
+              </button>
               <button
                 className={`profile-edit-button ${
                   editPage === "tutorposts" ? "pressed" : ""
@@ -119,18 +119,19 @@ const UserProfile = () => {
                 }}
               >
                 See Tutor Posts
-              </button>  
-              {(cookie.get("isTutor") === 1) &&<button
-                className={`profile-edit-button ${
-                  editPage === "reviews" ? "pressed" : ""
-                }`}
-                onClick={() => {
-                  setEditPage("reviews");
-                }}
-              >
-                See Reviews
               </button>
-              }            
+              {cookie.get("isTutor") === 1 && (
+                <button
+                  className={`profile-edit-button ${
+                    editPage === "reviews" ? "pressed" : ""
+                  }`}
+                  onClick={() => {
+                    setEditPage("reviews");
+                  }}
+                >
+                  See Reviews
+                </button>
+              )}
               <button
                 className={`profile-edit-button ${
                   editPage === "upload" ? "pressed" : ""
@@ -162,8 +163,6 @@ const UserProfile = () => {
                 Update Password
               </button>
 
-
-              
               {/*(cookie.get("isTutor") === 1) && <button className={`profile-edit-button post-button`} onClick={handleSeeReviews}>See Reviews</button>*/}
             </div>
           </div>

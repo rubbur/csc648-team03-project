@@ -27,7 +27,6 @@ const CreatePost = () => {
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
 
-
   const handleClear = () => {
     // clear all the fields
     setPostContent("");

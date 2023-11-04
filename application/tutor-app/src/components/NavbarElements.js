@@ -97,7 +97,8 @@ const MobileMenu = styled.div`
     flex-direction: column;
     font-size: 10px;
     position: absolute;
-    top: ${({ isOpen }) => isOpen ? "85px" : "-100%"}; /* Adjust top property */
+    top: ${({ isOpen }) =>
+      isOpen ? "85px" : "-100%"}; /* Adjust top property */
     left: 0;
     background-color: #0c0032;
     width: 100%;

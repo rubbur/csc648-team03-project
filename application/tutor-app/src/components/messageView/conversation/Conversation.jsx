@@ -36,7 +36,9 @@ const Conversation = ({
             alt={name + "'s profile picture"}
           />
         </div>
-        <p><b>{name}</b></p>
+        <p>
+          <b>{name}</b>
+        </p>
         <p>{"Subject: " + postSubject}</p>
         <p>{"Last message: " + formattedDate}</p>
       </div>

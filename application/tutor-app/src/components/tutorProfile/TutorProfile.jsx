@@ -72,8 +72,6 @@ const TutorProfile = () => {
       }
     };
 
-
-
     const getUserData = async () => {
       if (postData.username) {
         try {
@@ -142,8 +140,7 @@ const TutorProfile = () => {
       }
     };
     getReviews();
-
-  }, [firstRefresh, postData])
+  }, [firstRefresh, postData]);
 
   const handleContact = () => {
     setIsTyping(true);
@@ -300,7 +297,7 @@ const TutorProfile = () => {
             {reviewList.length === 0
               ? "unrated"
               : // the average rating is:
-              avgReview + "   "}
+                avgReview + "   "}
             <FontAwesomeIcon icon={["fas", "star"]} className="star" />
           </p>
 

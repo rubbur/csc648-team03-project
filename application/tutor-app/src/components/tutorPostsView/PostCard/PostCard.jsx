@@ -9,14 +9,22 @@ import { useNavigate } from "react-router-dom";
 import "./postCard.scss";
 
 const PostCard = ({ rate, subject, handleDelete, postId }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="post-card">
-      <div className="post-card-link" onClick={() => {navigate(`/tutorProfile?postId=${postId}`)}}>
-          <h2 className="post-card-link">{subject}</h2>
-          <h3 className="post-card-link">${rate}/hr</h3>
+      <div
+        className="post-card-link"
+        onClick={() => {
+          navigate(`/tutorProfile?postId=${postId}`);
+        }}
+      >
+        <h2 className="post-card-link">{subject}</h2>
+        <h3 className="post-card-link">${rate}/hr</h3>
       </div>
-      <button className="delete-button" onClick={() => handleDelete(postId, subject)}>
+      <button
+        className="delete-button"
+        onClick={() => handleDelete(postId, subject)}
+      >
         X
       </button>
     </div>

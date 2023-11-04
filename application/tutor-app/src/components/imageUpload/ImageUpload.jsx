@@ -18,7 +18,6 @@ const ImageUpload = () => {
   };
 
   const handlePostImage = async () => {
-   
     if (!cookie.get("isLoggedIn")) {
       alert("must be logged in to upload a file");
       return;

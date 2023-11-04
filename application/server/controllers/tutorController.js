@@ -142,7 +142,7 @@ const uploadFile = async (req, res) => {
 
 //most recently added tutors NOT top three rated tutors
 const topThreeTutors = async (req, res) => {
-  const q = `SELECT tutor_posts.*, users.img_url
+  const q = `SELECT tutor_posts.*, users.img_url, users.avg_rating
     FROM tutor_posts
     JOIN users ON tutor_posts.tutor_id = users.id
     WHERE tutor_posts.is_pending = 0

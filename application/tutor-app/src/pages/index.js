@@ -63,6 +63,11 @@ const Home = () => {
                   name={tutor.name}
                   postId={tutor.post_id}
                   imgUrl={tutor.img_url}
+                  avgRating={
+                    tutor.avg_rating !== undefined
+                      ? tutor.avg_rating.toFixed(1)
+                      : "0.0"
+                  }
                   subject={tutor.subject}
                   rate={"$" + tutor.hourly_rate + "/hr"}
                   tutorId={tutor.tutor_id}

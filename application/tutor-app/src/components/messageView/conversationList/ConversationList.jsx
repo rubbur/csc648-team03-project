@@ -2,8 +2,6 @@
 // Date: 10/18/2023
 // Purpose: renders all conversations that a user has. Controls the Conversation components
 
-
-
 import "./conversationList.scss";
 import { useState, useEffect } from "react";
 import Conversation from "../conversation/Conversation";
@@ -12,7 +10,7 @@ import { cookie } from "../../../App";
 
 const ConversationList = ({ setThread, setPerson }) => {
   const [convoList, setConvoList] = useState([]);
-  const userId = cookie.get('userId');
+  const userId = cookie.get("userId");
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -20,12 +18,14 @@ const ConversationList = ({ setThread, setPerson }) => {
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/user/getConversations`,
           { userId },
-          { withCredentials: true }
+          { withCredentials: true },
         );
         if (response.data.success) {
           setConvoList(response.data.senderData);
         } else {
-          console.log("Error fetching conversations: " + response.data.errorMessage);
+          console.log(
+            "Error fetching conversations: " + response.data.errorMessage,
+          );
         }
       } catch (error) {
         console.error("Error fetching conversations:", error);
@@ -36,7 +36,7 @@ const ConversationList = ({ setThread, setPerson }) => {
   }, []);
 
   return (
-    <div className="ConversationList" >
+    <div className="ConversationList">
       <h1>{cookie.get("userName")}'s Conversations</h1>
       {convoList.map((convo, index) => (
         <Conversation
