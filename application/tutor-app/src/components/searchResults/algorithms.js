@@ -1,7 +1,12 @@
 const comparators = {
   Date: (a, b) => {
-    if (a.creation_date && b.creation_date)
-      return a.creation_date - b.creation_date;
+    if (a.creation_date && b.creation_date){
+      let dateA = a.creation_date.replaceAll("-", "").replaceAll(":", '').replaceAll(" ", "");
+      dateA = dateA.substring(0, dateA.length - 5).replace("T", '');
+      let dateB = b.creation_date.replaceAll("-", "").replaceAll(":", '').replaceAll(" ", "");
+      dateB = dateB.substring(0, dateB.length - 5).replace("T", '');
+      return (+dateA) - (+dateB);
+    }
     else return 0;
   },
   Price: (a, b) => {
