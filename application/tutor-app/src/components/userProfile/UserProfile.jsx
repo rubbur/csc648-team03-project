@@ -31,8 +31,8 @@ const UserProfile = () => {
       //get the user data from the database
 
       const data = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/user/getUserData`,
-        { username: cookie.get("userName") },
+        `${process.env.REACT_APP_BACKEND_URL}/user/getUserDataById`,
+        { userId: cookie.get("userId") },
         { withCredentials: true },
       );
       if (!data.data.success) {
@@ -101,9 +101,8 @@ const UserProfile = () => {
           <div className="edit-box">
             <div className="button-container">
               <button
-                className={`profile-edit-button ${
-                  editPage === "messages" ? "pressed" : ""
-                }`}
+                className={`profile-edit-button ${editPage === "messages" ? "pressed" : ""
+                  }`}
                 onClick={() => {
                   setEditPage("messages");
                 }}
@@ -111,9 +110,8 @@ const UserProfile = () => {
                 See Messages
               </button>
               <button
-                className={`profile-edit-button ${
-                  editPage === "tutorposts" ? "pressed" : ""
-                }`}
+                className={`profile-edit-button ${editPage === "tutorposts" ? "pressed" : ""
+                  }`}
                 onClick={() => {
                   setEditPage("tutorposts");
                 }}
@@ -122,9 +120,8 @@ const UserProfile = () => {
               </button>
               {cookie.get("isTutor") === 1 && (
                 <button
-                  className={`profile-edit-button ${
-                    editPage === "reviews" ? "pressed" : ""
-                  }`}
+                  className={`profile-edit-button ${editPage === "reviews" ? "pressed" : ""
+                    }`}
                   onClick={() => {
                     setEditPage("reviews");
                   }}
@@ -133,9 +130,8 @@ const UserProfile = () => {
                 </button>
               )}
               <button
-                className={`profile-edit-button ${
-                  editPage === "upload" ? "pressed" : ""
-                }`}
+                className={`profile-edit-button ${editPage === "upload" ? "pressed" : ""
+                  }`}
                 onClick={() => {
                   setEditPage("upload");
                 }}
@@ -143,9 +139,8 @@ const UserProfile = () => {
                 Upload Image
               </button>
               <button
-                className={`profile-edit-button ${
-                  editPage === "name" ? "pressed" : ""
-                }`}
+                className={`profile-edit-button ${editPage === "name" ? "pressed" : ""
+                  }`}
                 onClick={() => {
                   setEditPage("name");
                 }}
@@ -153,9 +148,8 @@ const UserProfile = () => {
                 Update Username
               </button>
               <button
-                className={`profile-edit-button ${
-                  editPage === "password" ? "pressed" : ""
-                }`}
+                className={`profile-edit-button ${editPage === "password" ? "pressed" : ""
+                  }`}
                 onClick={() => {
                   setEditPage("password");
                 }}
