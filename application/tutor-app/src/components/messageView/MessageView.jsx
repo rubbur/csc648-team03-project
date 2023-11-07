@@ -33,7 +33,7 @@ const MessageView = () => {
   return (
     <div className="MessageView">
       <ConversationList setThread={setThread} setPerson={setPerson} />
-      <MessageThread person={person} msgs={convoMap[thread]} />
+      <MessageThread person={person} msgs={convoMap[thread] || []} />
     </div>
   );
 };
