@@ -249,7 +249,6 @@ const TutorProfile = () => {
             <p id="subject-banner">
               {postData.subject} Tutor - Rate: ${postData.hourly_rate}
             </p>
-            <p>Courses offered: {courses || "None"}</p>
           </div>
           <div className="contact-review-controls">
             <button
@@ -457,7 +456,6 @@ const TutorProfile = () => {
           <p id="subject-banner">
             {postData.subject} Tutor - Rate: ${postData.hourly_rate}
           </p>
-          <p>Courses offered: {courses || "None"}</p>
         </div>
 
         <div className="about-me-box">
