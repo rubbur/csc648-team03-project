@@ -162,3 +162,12 @@
 .top-tutors-container.results-container {
     height: 25%;
 }
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+}
+
+.rating > svg {
+  height: 1em;
+}
