@@ -9,11 +9,25 @@ import MessageThread from "./messageThread/MessageThread";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { cookie } from "../../App";
+import styled from "styled-components";
+
+const ConvoList = styled.div`
+  display: ${({ showConvos }) =>
+  showConvos ? "flex" : "none"};
+  }
+`;
+const MsgThread = styled.div`
+  display: ${({ showConvos }) =>
+  showConvos ? "none" : "flex"};
+  }
+  flex-direction: column;
+`;
 
 const MessageView = () => {
   const [thread, setThread] = useState("");
   const [person, setPerson] = useState({}); //[name, img_url
   const [convoMap, setConvoMap] = useState({});
+  const [showConvos, setShowConvos] = useState(true);
   useEffect(() => {
     //get all the conversations
     const getConvoMap = async () => {
@@ -30,10 +44,25 @@ const MessageView = () => {
     getConvoMap();
   }, []);
 
+  const displayConvos = () => {
+    setShowConvos(true);
+  };
+
   return (
     <div className="MessageView">
-      <ConversationList setThread={setThread} setPerson={setPerson} />
-      <MessageThread person={person} msgs={convoMap[thread] || []} />
+      <div className="MessageViewDesktop">
+        <ConversationList setThread={setThread} setPerson={setPerson} setShowConvos={setShowConvos} />
+        <MessageThread person={person} msgs={convoMap[thread] || []} />
+      </div>
+      <div className="MessageViewMobile">
+        <ConvoList showConvos={showConvos}>
+          <ConversationList setThread={setThread} setPerson={setPerson} setShowConvos={setShowConvos} />
+        </ConvoList>
+        <MsgThread showConvos={showConvos}>
+          <MessageThread person={person} msgs={convoMap[thread] || []} />
+          <button onClick={displayConvos}>View Conversations</button>
+        </MsgThread>
+      </div>
     </div>
   );
 };
