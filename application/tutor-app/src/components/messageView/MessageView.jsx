@@ -21,6 +21,7 @@ const MsgThread = styled.div`
   showConvos ? "none" : "flex"};
   }
   flex-direction: column;
+  align-items: center;
 `;
 
 const MessageView = () => {

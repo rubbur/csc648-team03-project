@@ -2,7 +2,11 @@
 // Date: 10/18/2023
 // Purpose: style the MessageView component
 
-
+.MessageView{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .MessageViewDesktop {
     display: flex;
@@ -17,6 +21,7 @@
     @media screen and (max-width: 855px) {
         display: flex;
         flex-direction: column;
+        align-items: center;
       }
 }
 
