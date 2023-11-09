@@ -11,26 +11,11 @@
 $image-dimension: 300px;
 
 
-.tutor-profile-desktop {
+.tutor-profile {
     display: flex;
     flex-direction: row;
     width: 100%;
     color: white;
-    @media screen and (max-width: 855px) {
-        display: none;
-      }
-
-}
-
-.tutor-profile-mobile {
-    display: none;
-    color: white;
-    @media screen and (max-width: 855px) {
-        display: flex;
-        flex-direction: column;
-
-      }
-
 }
 
 .main-content {
