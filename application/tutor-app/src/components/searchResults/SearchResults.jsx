@@ -232,7 +232,7 @@ export const UserResult = ({
           }}
         />
         <p>{name}</p>
-        <p className = "rating">
+        <p className="rating">
           {avgRating}
           <FontAwesomeIcon icon={["fas", "star"]} className="star" />
         </p>

@@ -12,13 +12,11 @@ import { cookie } from "../../App";
 import styled from "styled-components";
 
 const ConvoList = styled.div`
-  display: ${({ showConvos }) =>
-  showConvos ? "flex" : "none"};
+  display: ${({ showConvos }) => (showConvos ? "flex" : "none")};
   }
 `;
 const MsgThread = styled.div`
-  display: ${({ showConvos }) =>
-  showConvos ? "none" : "flex"};
+  display: ${({ showConvos }) => (showConvos ? "none" : "flex")};
   }
   flex-direction: column;
   align-items: center;
@@ -52,12 +50,20 @@ const MessageView = () => {
   return (
     <div className="MessageView">
       <div className="MessageViewDesktop">
-        <ConversationList setThread={setThread} setPerson={setPerson} setShowConvos={setShowConvos} />
+        <ConversationList
+          setThread={setThread}
+          setPerson={setPerson}
+          setShowConvos={setShowConvos}
+        />
         <MessageThread person={person} msgs={convoMap[thread] || []} />
       </div>
       <div className="MessageViewMobile">
         <ConvoList showConvos={showConvos}>
-          <ConversationList setThread={setThread} setPerson={setPerson} setShowConvos={setShowConvos} />
+          <ConversationList
+            setThread={setThread}
+            setPerson={setPerson}
+            setShowConvos={setShowConvos}
+          />
         </ConvoList>
         <MsgThread showConvos={showConvos}>
           <MessageThread person={person} msgs={convoMap[thread] || []} />

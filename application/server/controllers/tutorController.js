@@ -109,11 +109,11 @@ const uploadFile = async (req, res) => {
 
   console.log(
     "The tutorId is: " +
-    tutorId +
-    ", the postId is: " +
-    postId +
-    " and the new file name is: " +
-    newFileName,
+      tutorId +
+      ", the postId is: " +
+      postId +
+      " and the new file name is: " +
+      newFileName,
   );
 
   // Move the file into the appropriate folder
