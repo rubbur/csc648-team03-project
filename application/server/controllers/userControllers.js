@@ -395,12 +395,24 @@ const uploadImage = async (req, res) => {
   }
   // const newFileName = username + "." + file.mimetype.substring(6);
   const newFileName = userId + ".png";
-  //move the file into the userImages folder
+
+  //move the file into the userImages folder and copy to build folder
+
   file.mv(`../tutor-app/public/userImages/${newFileName}`, async (err) => {
     console.log(err);
     if (err) {
       res.send({ success: false, errorMessage: err });
     }
+
+    const sourceFilePath = `../tutor-app/public/userImages/${newFileName}`;
+    const destinationFilePath = `../tutor-app/build/userImages/${newFileName}`;
+    fs.copyFile(sourceFilePath, destinationFilePath, async (err) => {
+      if (err) {
+        console.error(err);
+        res.send({ success: false, errorMessage: err });
+        return;
+      }
+    });
 
     //update the user table so that the relative path of the image is stored in the database
     const q = "UPDATE users SET img_url = ?, ispending = 1 WHERE id = ?";
@@ -587,15 +599,15 @@ const submitReview = async (req, res) => {
   const { reviewerId, tutorId, reviewText, rating, reviewerName } = req.body;
   console.log(
     "reviewerId: " +
-      reviewerId +
-      " revieweeId: " +
-      tutorId +
-      " reviewText: " +
-      reviewText +
-      " rating: " +
-      rating +
-      " currentTime: " +
-      currentTime,
+    reviewerId +
+    " revieweeId: " +
+    tutorId +
+    " reviewText: " +
+    reviewText +
+    " rating: " +
+    rating +
+    " currentTime: " +
+    currentTime,
   );
   //insert the review into the reviews table
   const q =
