@@ -7,21 +7,23 @@
 .MessageViewDesktop {
     display: flex;
     flex-direction: row;
+
     @media screen and (max-width: 855px) {
         display: none;
-      }
+    }
 }
 
 .MessageViewMobile {
     display: none;
+
     @media screen and (max-width: 855px) {
         display: flex;
         flex-direction: column;
         align-items: center;
-      }
+    }
 }
 
-button {
+.MessageViewMobile button {
     width: 150px;
     margin-left: 20px;
 }
