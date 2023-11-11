@@ -89,6 +89,7 @@
     min-width: 90%;
     align-items: start;
     justify-content: start;
+
 }
 
 .edit-box {
@@ -99,10 +100,14 @@
     max-width: 35%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    @media screen and (max-width: 855px){
+        max-width: 100%;
+    }
 }
 
 .editting-box {
-    margin: 10px;
+    margin: 5px;
     background-color: rgb(135, 202, 240);
     border: 3px solid black;
     padding-right: 1%;
@@ -118,6 +123,10 @@
     align-items: start;
     justify-content: start;
     width: 80%;
+    @media screen and (max-width: 855px){
+        flex-wrap: wrap;
+        justify-content: center;
+    }
     //gap: 20px;
 }
 
@@ -138,6 +147,9 @@
     font-size: 15px;
     font-weight: bold;
     margin-left: 5px;
+    @media screen and (max-width: 855px){
+        width: 30%;
+    }
 }
 
 .profile-edit-button.pressed {
