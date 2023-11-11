@@ -149,7 +149,7 @@ const SearchResults = () => {
           <br />
           <br />
           <br />
-          <h2>Our three most recent posts</h2>
+          <h2 className="recent-posts-text">Our three most recent posts</h2>
           <br />
           <hr />
           <div className="top-tutors-container">
