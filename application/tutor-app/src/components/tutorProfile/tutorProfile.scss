@@ -71,11 +71,8 @@ $image-dimension: 300px;
     color: $text-color;
     font-size: 50px;
     text-align: center;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    position: relative;
-    top: -30%;
+  
+  
 }
 
 .username-rating-box h2 {
@@ -119,6 +116,7 @@ $image-dimension: 300px;
 
 .tutor-header {
     text-align: center;
+    margin-top: -60px;
     margin-bottom: 20px;
     overflow-wrap: break-word;
 }
@@ -179,3 +177,27 @@ h1.sent-alert {
     opacity: 1;
     transition: opacity 2s;
   }
+
+  .contact-review-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  
+
+  @media screen and (max-width: 855px) {
+    .review-box {
+        display: none;
+    }
+
+    .tutor-profile {
+        flex-direction: column;
+    }
+
+    .contact-review-controls {
+        height: 50px;
+    }
+
+  }
+
