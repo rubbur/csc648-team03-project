@@ -91,8 +91,8 @@ const CreatePost = () => {
       alert("Name must be less than 100 characters");
       return;
     } // make sure name is only letters or hyphens
-    else if (!/^[a-zA-Z-]+$/.test(name)) {
-      alert("Name must only contain letters or hyphens");
+    else if (!/^[a-zA-Z -]+$/.test(name)) {
+      alert("Name must only contain letters, spaces, or hyphens");
       return;
     }
     if (selectedSubject === "NOT SELECTED") {
