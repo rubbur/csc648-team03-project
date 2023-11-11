@@ -50,7 +50,7 @@ const Home = () => {
       {/*<div className='background-container' ref={backgroundContainerRef}></div>*/}
 
       <h1 className="pageHeader">Welcome to Tutors.tech at SFSU</h1>
-      <h2>Our three most recent posts</h2>
+      <h2 className="recent-posts-text">Our three most recent posts</h2>
       <hr></hr>
       <br></br>
       <br></br>
