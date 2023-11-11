@@ -55,7 +55,10 @@ const editUser = async (req, res) => {
       const usernameQuery = await db.query(q, [newUsername]);
       //if there already exists a user in the table then this username is not available
       if (usernameQuery[0].length != 0) {
-        res.send({ success: false, errorMessage: "username is taken already" });
+        res.send({
+          success: false,
+          errorMessage: "This email address is already in use",
+        });
         return;
       }
     } catch (err) {

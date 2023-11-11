@@ -13,8 +13,22 @@ const login = async (req, res) => {
   const password = req.body.password;
   const q = "SELECT * FROM users WHERE username = ?";
   //find the user in the user table by email.
+  if (!(username && password)) {
+    res.send({
+      success: false,
+      error: "Username and/or password were not provided",
+    });
+    return;
+  }
   try {
     const results = await db.query(q, [username]);
+    if (results[0].length == 0) {
+      res.send({
+        success: false,
+        error: "Your username or password are incorrect",
+      });
+      return;
+    }
     //check if the hashed password matches the passwordhash in the row from the first query.
     bcrypt.compare(
       password,
@@ -26,10 +40,9 @@ const login = async (req, res) => {
         }
         if (!result) {
           //password does not match
-          console.log("the password does not match our records");
           res.send({
             success: false,
-            error: "The password for this user is incorrect!",
+            error: "Your username or password are incorrect",
           });
         } else {
           if (results[0]) {
@@ -61,6 +74,12 @@ const register = async (req, res) => {
   // Get the username and password out of the request
   const username = req.body.username;
   const password = req.body.password;
+  if (!(username && password)) {
+    res.send({
+      success: false,
+      error: "username and/or password were not provided",
+    });
+  }
   const isTutor = 0;
   const saltRounds = 10; // for password hashing
 
@@ -73,7 +92,10 @@ const register = async (req, res) => {
 
     // If there already exists a user in the table, then this username is not available
     if (usernameQuery[0].length !== 0) {
-      res.send({ success: false, error: "username is taken already" });
+      res.send({
+        success: false,
+        error: "This email address is already in use",
+      });
       return;
     }
 
@@ -81,7 +103,7 @@ const register = async (req, res) => {
     bcrypt.hash(password, saltRounds, async function (err, hash) {
       if (err) {
         console.log("error when trying to hash the password: " + password);
-        res.send({ success: false, error: err });
+        res.send({ success: false, error: "internal server error" });
       }
 
       try {
@@ -109,12 +131,12 @@ const register = async (req, res) => {
         });
       } catch (err) {
         console.log("error inserting user");
-        res.send({ success: false, error: err });
+        res.send({ success: false, error: "internal server error" });
       }
     });
   } catch (error) {
     console.log(error);
-    res.send({ success: false, error: error });
+    res.send({ success: false, error: "internal server error" });
   }
 };
 
@@ -363,7 +385,10 @@ const editUsername = async (req, res) => {
     const usernameQuery = await db.query(q, [newName]);
     //if there already exists a user in the table then this username is not available
     if (usernameQuery[0].length !== 0) {
-      res.send({ success: false, error: "username is taken already" });
+      res.send({
+        success: false,
+        error: "This email address is already in use",
+      });
       console.log("got here");
       return;
     }
