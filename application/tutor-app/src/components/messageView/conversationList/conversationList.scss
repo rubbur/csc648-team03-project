@@ -17,3 +17,8 @@
 .ConversationList h1 {
     margin-left: 15px;
 }
+
+.ConversationList header{
+    display: flex;
+    justify-content: space-between;
+}

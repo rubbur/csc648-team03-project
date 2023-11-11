@@ -520,7 +520,7 @@ const searchTutors = async (req, res) => {
   let values;
   if (subject == "All") {
     q =
-      "SELECT * FROM users WHERE (username LIKE ? OR courses LIKE ?) AND ispending = 0 AND istutor = 1";
+      "SELECT * FROM users WHERE (username LIKE ? OR courses LIKE ? ) AND ispending = 0 AND istutor = 1";
     values = [searchTerm, searchTerm];
   } else {
     if (searchTerm == "") {
@@ -638,17 +638,28 @@ const submitReview = async (req, res) => {
 };
 
 const searchPosts = async (req, res) => {
-  //return all tutor posts where (the search term matches the description OR the name of the tutor) AND the post subject matches the subject
   let { searchTerm, subject } = req.body;
 
   searchTerm = `%${searchTerm}%`;
-  const q =
-    subject === "All"
-      ? "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.is_pending = 0"
-      : "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.subject = ? AND tutor_posts.is_pending = 0";
+
+  const params = [searchTerm, searchTerm, searchTerm]; // Common parameters
+
+  let query =
+    "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating " +
+    "FROM tutor_posts " +
+    "JOIN users ON tutor_posts.tutor_id = users.id " +
+    "WHERE (tutor_posts.description LIKE ? OR users.username LIKE ? OR tutor_posts.name LIKE ?) " +
+    "AND tutor_posts.is_pending = 0";
+
+  if (subject !== "All") {
+    query += " AND tutor_posts.subject = ?";
+    params.push(subject); // Add the subject parameter if it's not "All"
+  }
+
   try {
-    const result = await db.query(q, [searchTerm, searchTerm, subject]);
+    const result = await db.query(query, params);
     res.send({ success: true, searchResults: result[0] });
+    console.log("search results: " + JSON.stringify(result[0]));
   } catch (e) {
     console.log("error in search query! : " + e);
   }

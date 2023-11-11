@@ -136,6 +136,15 @@
     flex-direction: column;
     justify-content: center;
     margin-left: 15px;
+    
+}
+
+#sort-direction-btn{
+    background-color: transparent;
+    border: none;
+    color: $accent-color;
+    width: fit-content;
+    height: fit-content;
 }
 
 .sort-icon {

@@ -35,6 +35,8 @@ import {
   faPlus,
   faEnvelope,
   faCircleInfo,
+  faSortUp,
+  faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar as Star, faMessage } from "@fortawesome/free-regular-svg-icons";
 // import CreatePost from './components/userProfile/editPages/CreatePost';

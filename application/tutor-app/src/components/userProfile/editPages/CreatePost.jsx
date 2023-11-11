@@ -191,9 +191,7 @@ const CreatePost = () => {
                 className={postContent.length > characterLimit ? "error" : ""}
               >{` ${postContent.length}/${characterLimit} characters `}</p>
             </div>
-            
           </div>
-
 
           <div className="upload-input">
             <label>Your Name:</label>
