@@ -25,12 +25,10 @@ function SignIn() {
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
-   
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    
   };
 
   const handleRememberMeChange = (e) => {
@@ -41,7 +39,6 @@ function SignIn() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    
 
     // send email and password to backend
     const response = await axios.post(
@@ -98,8 +95,7 @@ function SignIn() {
         window.close();
       }
       navigate("/Profile");
-    }
-    else{
+    } else {
       setErrorList(response.data.error);
     }
   };
@@ -164,7 +160,7 @@ function SignIn() {
         </Link>
       </div>
       <div className="error-box">
-           <p className="error-p">{errorList}</p>
+        <p className="error-p">{errorList}</p>
       </div>
     </div>
   );

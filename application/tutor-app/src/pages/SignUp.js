@@ -38,7 +38,7 @@ function SignUp() {
   };
 
   const HandleRegistration = async () => {
-   setErrorMessage("");
+    setErrorMessage("");
 
     if (!acceptTerms) {
       alert("Please accept the terms of service");
@@ -109,8 +109,7 @@ function SignUp() {
       }
 
       navigate("/Profile");
-    }
-    else{
+    } else {
       setErrorMessage(response.data.error);
     }
   };
