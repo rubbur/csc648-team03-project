@@ -53,6 +53,9 @@ const ImageUpload = () => {
     );
     if (!result.data.success) {
       console.log("error uploading image: " + result.data.errorMessage);
+    } else {
+      setImageFile("");
+      window.refreshPage();
     }
   };
 

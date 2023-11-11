@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as Star, faMessage } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import comparators from "./algorithms";
-import "../../index.scss";
+import "./searchResults.scss";
 import { Fade } from "react-awesome-reveal";
 
 const SearchResults = () => {
@@ -232,7 +232,7 @@ export const UserResult = ({
           }}
         />
         <p>{name}</p>
-        <p>
+        <p className="rating">
           {avgRating}
           <FontAwesomeIcon icon={["fas", "star"]} className="star" />
         </p>

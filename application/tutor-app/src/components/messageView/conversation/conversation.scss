@@ -21,6 +21,9 @@
     margin-bottom: 20px;
     color: black;
     cursor: pointer;
+    @media screen and (max-width: 855px) {
+        width: 80%;
+      }
 }
 
 .Conversation:hover{

@@ -45,7 +45,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="long-page">
+    <div>
       {/* here lies my moving image */}
       {/*<div className='background-container' ref={backgroundContainerRef}></div>*/}
 
