@@ -158,7 +158,7 @@ const topThreeTutors = async (req, res) => {
     FROM tutor_posts
     JOIN users ON tutor_posts.tutor_id = users.id
     WHERE tutor_posts.is_pending = 0
-    ORDER BY tutor_posts.post_id DESC LIMIT 3;`;
+    ORDER BY users.id DESC LIMIT 3;`;
 
   try {
     const results = await db.query(q);
