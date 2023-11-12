@@ -49,7 +49,8 @@ const Home = () => {
       {/* here lies my moving image */}
       {/*<div className='background-container' ref={backgroundContainerRef}></div>*/}
 
-      <h1 className="pageHeader">Welcome to Tutors.tech at SFSU</h1>
+      <h1 className="pageHeader">Welcome to SF State Tutors.Tech!</h1>
+      <p className="headerFollowup">The number-one place for SFSU students to find or become a tutor!</p>
       <h2 className="recent-posts-text">Our three most recent posts</h2>
       <hr></hr>
       <br></br>
