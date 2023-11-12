@@ -39,6 +39,7 @@ $image-dimension: 300px;
 .image-subjects-box img {
     width: $image-dimension;
     height: $image-dimension;
+    box-shadow: 0 0 15px 5px rgb(250, 205, 73);
 }
 
 .image-subjects-box>.subject-list {
