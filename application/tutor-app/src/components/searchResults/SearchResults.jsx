@@ -97,7 +97,7 @@ const SearchResults = () => {
               <option value="Review">Review</option>
               <option value="Alpha">Alpha</option>
             </select>
-            <button onClick={sortResults}>Apply sort</button>
+            <button id="apply-sort-btn" onClick={sortResults}>Apply sort</button>
             <button
               id="sort-direction-btn"
               onClick={() => setSortDirection(!sortDirection)}
