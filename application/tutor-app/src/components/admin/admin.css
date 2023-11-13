@@ -90,7 +90,7 @@ Purpose: file styles the admin control panel */
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   background-color: white;
   border: solid 5px transparent;
   margin: 10px;
