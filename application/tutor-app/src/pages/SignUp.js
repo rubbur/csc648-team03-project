@@ -7,6 +7,7 @@ import "../index.scss";
 import axios from "axios";
 import { cookie } from "../App";
 import { Link, useNavigate } from "react-router-dom";
+import { set } from "react-ga";
 
 function SignUp() {
   useEffect(() => {
@@ -18,6 +19,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -36,10 +38,7 @@ function SignUp() {
   };
 
   const HandleRegistration = async () => {
-    console.log("Username:", username);
-    console.log("Password:", password);
-    console.log("Remember Me:", rememberMe);
-    console.log("Accept Terms:", acceptTerms);
+    setErrorMessage("");
 
     if (!acceptTerms) {
       alert("Please accept the terms of service");
@@ -110,6 +109,8 @@ function SignUp() {
       }
 
       navigate("/Profile");
+    } else {
+      setErrorMessage(response.data.error);
     }
   };
 
@@ -178,6 +179,9 @@ function SignUp() {
         </div>
 
         <p className="required">* Required</p>
+      </div>
+      <div className="error-box">
+        <p className="error-p">{errorMessage}</p>
       </div>
     </div>
   );

@@ -89,7 +89,7 @@ Purpose: file styles the admin control panel */
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   background-color: white;
   border: solid 5px transparent;
   margin: 10px;
@@ -104,6 +104,7 @@ Purpose: file styles the admin control panel */
   height: 65px;
   width: 65px;
   border-radius: 20%;
+  box-shadow: 0 0 20px 10px rgb(250, 205, 73);
 }
 
 .hidden {

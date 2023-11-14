@@ -13,8 +13,22 @@ const login = async (req, res) => {
   const password = req.body.password;
   const q = "SELECT * FROM users WHERE username = ?";
   //find the user in the user table by email.
+  if (!(username && password)) {
+    res.send({
+      success: false,
+      error: "Username and/or password were not provided",
+    });
+    return;
+  }
   try {
     const results = await db.query(q, [username]);
+    if (results[0].length == 0) {
+      res.send({
+        success: false,
+        error: "Your username or password are incorrect",
+      });
+      return;
+    }
     //check if the hashed password matches the passwordhash in the row from the first query.
     bcrypt.compare(
       password,
@@ -26,10 +40,9 @@ const login = async (req, res) => {
         }
         if (!result) {
           //password does not match
-          console.log("the password does not match our records");
           res.send({
             success: false,
-            error: "The password for this user is incorrect!",
+            error: "Your username or password are incorrect",
           });
         } else {
           if (results[0]) {
@@ -61,6 +74,12 @@ const register = async (req, res) => {
   // Get the username and password out of the request
   const username = req.body.username;
   const password = req.body.password;
+  if (!(username && password)) {
+    res.send({
+      success: false,
+      error: "username and/or password were not provided",
+    });
+  }
   const isTutor = 0;
   const saltRounds = 10; // for password hashing
 
@@ -73,7 +92,10 @@ const register = async (req, res) => {
 
     // If there already exists a user in the table, then this username is not available
     if (usernameQuery[0].length !== 0) {
-      res.send({ success: false, error: "username is taken already" });
+      res.send({
+        success: false,
+        error: "This email address is already in use",
+      });
       return;
     }
 
@@ -81,7 +103,7 @@ const register = async (req, res) => {
     bcrypt.hash(password, saltRounds, async function (err, hash) {
       if (err) {
         console.log("error when trying to hash the password: " + password);
-        res.send({ success: false, error: err });
+        res.send({ success: false, error: "internal server error" });
       }
 
       try {
@@ -109,12 +131,12 @@ const register = async (req, res) => {
         });
       } catch (err) {
         console.log("error inserting user");
-        res.send({ success: false, error: err });
+        res.send({ success: false, error: "internal server error" });
       }
     });
   } catch (error) {
     console.log(error);
-    res.send({ success: false, error: error });
+    res.send({ success: false, error: "internal server error" });
   }
 };
 
@@ -363,7 +385,10 @@ const editUsername = async (req, res) => {
     const usernameQuery = await db.query(q, [newName]);
     //if there already exists a user in the table then this username is not available
     if (usernameQuery[0].length !== 0) {
-      res.send({ success: false, error: "username is taken already" });
+      res.send({
+        success: false,
+        error: "This email address is already in use",
+      });
       console.log("got here");
       return;
     }
@@ -395,12 +420,24 @@ const uploadImage = async (req, res) => {
   }
   // const newFileName = username + "." + file.mimetype.substring(6);
   const newFileName = userId + ".png";
-  //move the file into the userImages folder
+
+  //move the file into the userImages folder and copy to build folder
+
   file.mv(`../tutor-app/public/userImages/${newFileName}`, async (err) => {
     console.log(err);
     if (err) {
       res.send({ success: false, errorMessage: err });
     }
+
+    const sourceFilePath = `../tutor-app/public/userImages/${newFileName}`;
+    const destinationFilePath = `../tutor-app/build/userImages/${newFileName}`;
+    fs.copyFile(sourceFilePath, destinationFilePath, async (err) => {
+      if (err) {
+        console.error(err);
+        res.send({ success: false, errorMessage: err });
+        return;
+      }
+    });
 
     //update the user table so that the relative path of the image is stored in the database
     const q = "UPDATE users SET img_url = ?, ispending = 1 WHERE id = ?";
@@ -508,7 +545,7 @@ const searchTutors = async (req, res) => {
   let values;
   if (subject == "All") {
     q =
-      "SELECT * FROM users WHERE (username LIKE ? OR courses LIKE ?) AND ispending = 0 AND istutor = 1";
+      "SELECT * FROM users WHERE (username LIKE ? OR courses LIKE ? ) AND ispending = 0 AND istutor = 1";
     values = [searchTerm, searchTerm];
   } else {
     if (searchTerm == "") {
@@ -626,17 +663,28 @@ const submitReview = async (req, res) => {
 };
 
 const searchPosts = async (req, res) => {
-  //return all tutor posts where (the search term matches the description OR the name of the tutor) AND the post subject matches the subject
   let { searchTerm, subject } = req.body;
 
   searchTerm = `%${searchTerm}%`;
-  const q =
-    subject === "All"
-      ? "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.is_pending = 0"
-      : "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating  FROM tutor_posts JOIN users ON tutor_posts.tutor_id = users.id WHERE (tutor_posts.description LIKE ? OR users.username LIKE ?) AND tutor_posts.subject = ? AND tutor_posts.is_pending = 0";
+
+  const params = [searchTerm, searchTerm, searchTerm]; // Common parameters
+
+  let query =
+    "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating " +
+    "FROM tutor_posts " +
+    "JOIN users ON tutor_posts.tutor_id = users.id " +
+    "WHERE (tutor_posts.description LIKE ? OR users.username LIKE ? OR tutor_posts.name LIKE ?) " +
+    "AND tutor_posts.is_pending = 0";
+
+  if (subject !== "All") {
+    query += " AND tutor_posts.subject = ?";
+    params.push(subject); // Add the subject parameter if it's not "All"
+  }
+
   try {
-    const result = await db.query(q, [searchTerm, searchTerm, subject]);
+    const result = await db.query(query, params);
     res.send({ success: true, searchResults: result[0] });
+    console.log("search results: " + JSON.stringify(result[0]));
   } catch (e) {
     console.log("error in search query! : " + e);
   }

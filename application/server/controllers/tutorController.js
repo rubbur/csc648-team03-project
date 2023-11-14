@@ -4,6 +4,7 @@
 //and the endpoint starts with "/tutor/"
 
 const db = require("../config/database/dbConnection");
+const fs = require("fs");
 
 const getTutorReviews = async (req, res) => {
   const { id } = req.body;
@@ -124,6 +125,17 @@ const uploadFile = async (req, res) => {
         res.send({ success: false, errorMessage: err });
         return;
       }
+
+      // copy to build folder
+      const sourceFilePath = `../tutor-app/public/${destinationFolder}/${newFileName}`;
+      const destinationFilePath = `../tutor-app/build/${destinationFolder}/${newFileName}`;
+      fs.copyFile(sourceFilePath, destinationFilePath, async (err) => {
+        if (err) {
+          console.error(err);
+          res.send({ success: false, errorMessage: err });
+          return;
+        }
+      });
 
       const q = `UPDATE tutor_posts SET ${updateColumn} = '/${destinationFolder}/${newFileName}' WHERE post_id = ${postId} AND tutor_id = ${tutorId}`;
 

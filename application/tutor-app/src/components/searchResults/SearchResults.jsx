@@ -9,18 +9,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { cookie } from "./../../App";
 import "./searchResults.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar as Star, faMessage } from "@fortawesome/free-regular-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
 import comparators from "./algorithms";
-import "../../index.scss";
+import "./searchResults.scss";
 import { Fade } from "react-awesome-reveal";
+import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
 const SearchResults = () => {
   const location = useLocation(); //tracks the query params in the url
   const [resultsList, setResultsList] = useState([]);
   const [searchSubject, setSearchSubject] = useState("");
   const [sortType, setSortType] = useState("Price");
-
+  const [sortDirection, setSortDirection] = useState(true); //true is ascending, false is descending
   const [topThreeTutors, setTopThreeTutors] = useState([]);
   //get the top three tutors of the site
   useEffect(() => {
@@ -98,7 +97,19 @@ const SearchResults = () => {
               <option value="Review">Review</option>
               <option value="Alpha">Alpha</option>
             </select>
-            <button onClick={sortResults}>Apply sort</button>
+            <button id="apply-sort-btn" onClick={sortResults}>
+              Apply sort
+            </button>
+            <button
+              id="sort-direction-btn"
+              onClick={() => setSortDirection(!sortDirection)}
+            >
+              {sortDirection ? (
+                <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
+              ) : (
+                <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
+              )}
+            </button>
             {/*<div className="sort-arrows">
               <FontAwesomeIcon className="sort-icon" icon={faSortUp} />
               <FontAwesomeIcon className="sort-icon" icon={faSortDown} />
@@ -140,7 +151,7 @@ const SearchResults = () => {
           <br />
           <br />
           <br />
-          <h2>Our three most recent posts</h2>
+          <h2 className="recent-posts-text">Our three newest tutors</h2>
           <br />
           <hr />
           <div className="top-tutors-container">
@@ -232,7 +243,7 @@ export const UserResult = ({
           }}
         />
         <p>{name}</p>
-        <p>
+        <p className="rating">
           {avgRating}
           <FontAwesomeIcon icon={["fas", "star"]} className="star" />
         </p>

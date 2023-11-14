@@ -13,6 +13,7 @@ const Conversation = ({
   date,
   setPerson,
   postId,
+  setShowConvos,
 }) => {
   let formattedDate = date.split(/[- :]/);
   formattedDate =
@@ -27,6 +28,7 @@ const Conversation = ({
       onClick={() => {
         setThread(threadId);
         setPerson({ name: name, imgUrl: img_url, postId: postId });
+        setShowConvos(false);
       }}
     >
       <div className="Conversation">

@@ -9,8 +9,16 @@
     flex-direction: column;
     align-items: center;
     user-select: none;
+    @media screen and (max-width: 855px) {
+        width: 80%;
+      }
 }
 
 .ConversationList h1 {
     margin-left: 15px;
+}
+
+.ConversationList header{
+    display: flex;
+    justify-content: space-between;
 }

@@ -91,8 +91,8 @@ const CreatePost = () => {
       alert("Name must be less than 100 characters");
       return;
     } // make sure name is only letters or hyphens
-    else if (!/^[a-zA-Z-]+$/.test(name)) {
-      alert("Name must only contain letters or hyphens");
+    else if (!/^[a-zA-Z -]+$/.test(name)) {
+      alert("Name must only contain letters, spaces, or hyphens");
       return;
     }
     if (selectedSubject === "NOT SELECTED") {
@@ -170,24 +170,29 @@ const CreatePost = () => {
   };
 
   return (
-    <div>
-      <h1 className="post-header">Create Post</h1>
-      <div className="post-textarea-container">
-        <p
-          className={postContent.length > characterLimit ? "error" : ""}
-        >{` ${postContent.length}/${characterLimit} characters `}</p>
-        <div className="textarea-container">
-          <textarea
-            className="post-textarea"
-            placeholder="Write your post here"
-            value={postContent}
-            onChange={(e) => setPostContent(e.target.value)}
-          />
-          <span className="required"> *</span>
-        </div>
-      </div>
+    <div className="create-post-form">
+      <h1 className="post-header">Create Tutoring Post</h1>
+
       <div className="upload-container">
         <div className="upload-button-container">
+          <div className="upload-input">
+            <div className="post-textarea-container">
+              <label>Description:</label>
+              <div className="textarea-container">
+                <textarea
+                  className="post-textarea"
+                  placeholder="Describe yourself here. Include course numbers of the classes you tutor."
+                  value={postContent}
+                  onChange={(e) => setPostContent(e.target.value)}
+                />
+                <span className="required"> *</span>
+              </div>
+              <p
+                className={postContent.length > characterLimit ? "error" : ""}
+              >{` ${postContent.length}/${characterLimit} characters `}</p>
+            </div>
+          </div>
+
           <div className="upload-input">
             <label>Your Name:</label>
             <div>
@@ -199,10 +204,6 @@ const CreatePost = () => {
               <span className="required"> *</span>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="upload-container">
-        <div className="upload-button-container">
           <div className="upload-input">
             <label>Subject: </label>
             <div>

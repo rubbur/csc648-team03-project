@@ -21,6 +21,7 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const [errorList, setErrorList] = useState("");
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -38,9 +39,6 @@ function SignIn() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
-    console.log("Remember Me:", rememberMe);
 
     // send email and password to backend
     const response = await axios.post(
@@ -51,6 +49,7 @@ function SignIn() {
     console.log(response.data);
     setUsername("");
     setPassword("");
+
     if (response.data.success) {
       //user successfully registered
       cookie.set("isLoggedIn", true);
@@ -96,6 +95,8 @@ function SignIn() {
         window.close();
       }
       navigate("/Profile");
+    } else {
+      setErrorList(response.data.error);
     }
   };
 
@@ -157,6 +158,9 @@ function SignIn() {
         <Link to="/SignUp" className="suggest-signup">
           Don't have an account?<br></br>Click here to create one
         </Link>
+      </div>
+      <div className="error-box">
+        <p className="error-p">{errorList}</p>
       </div>
     </div>
   );

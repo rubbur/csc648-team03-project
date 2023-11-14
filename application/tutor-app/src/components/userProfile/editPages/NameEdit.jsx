@@ -28,7 +28,7 @@ const NameEdit = () => {
       setUsername("");
     } else {
       console.log(result.data.errorMessage);
-      alert("Could not update username. Try again later.");
+      alert("This email address is already in use");
     }
   };
   return (
