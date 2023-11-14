@@ -55,7 +55,6 @@ const ImageUpload = () => {
       console.log("error uploading image: " + result.data.errorMessage);
     } else {
       setImageFile("");
-      
     }
   };
 
