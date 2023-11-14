@@ -10,16 +10,16 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    
+
 }
 
-.message-box{
+.message-box {
     overflow-x: hidden;
     padding: 0px 5px 0px 5px;
 }
 
-header{
-    
+header {
+
     padding: 5px;
     width: 80.5%;
     margin: auto;
@@ -31,7 +31,7 @@ header{
     margin-top: 10px;
 }
 
-header .header-img{
+header .header-img {
     padding: 3px;
     height: 200px;
     width: 200px;
@@ -39,7 +39,7 @@ header .header-img{
     box-shadow: 2px 1px 1px 1px inset rgb(255, 255, 82);
 }
 
-.message{
+.message {
     display: flex;
     flex-direction: row;
     width: 50%;
@@ -51,23 +51,25 @@ header .header-img{
     justify-content: space-between;
 }
 
-.message .msg-text{
+.message .msg-text {
     color: white;
     text-wrap: wrap;
 }
-.message .msg-time{
+
+.message .msg-time {
     color: white;
 }
 
-.message.self{
+.message.self {
     background-color: green;
-}
-.message.other{
-    background-color: blue;
     margin-left: 45%;
 }
 
-.chat-box{
+.message.other {
+    background-color: blue;
+}
+
+.chat-box {
     display: flex;
     margin-top: 10px;
     width: 97.5%;
@@ -75,12 +77,12 @@ header .header-img{
     justify-content: space-between;
     padding: 10px;
     background-color: rgb(243, 233, 233);
-   
+
 }
 
 
-.chat-box input.chat-input{
-   
+.chat-box input.chat-input {
+
     border-radius: none;
     width: 80%;
     height: 100%;
@@ -88,19 +90,19 @@ header .header-img{
     padding: 10px;
 }
 
-.chat-box button{
+.chat-box button {
     width: fit-content;
     height: 100%;
 
 }
 
-.chat-box button:hover{
+.chat-box button:hover {
     width: fit-content;
     height: 100%;
     background-color: $accent-color-hover;
 }
 
-.message img{
+.message img {
     height: 100px;
     width: 100px;
     border-radius: 50%;
