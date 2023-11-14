@@ -193,6 +193,11 @@ const TutorProfile = () => {
   };
 
   const submitReview = async () => {
+    // make sure the user is not reviewing themselves
+    if (cookie.get("userId") === postData.tutor_id) {
+      alert("You cannot review yourself.");
+      return;
+    }
     //send the review to the backend if not empty
     if (reviewText === "" || reviewText === undefined) {
       alert("Review cannot be empty.");
