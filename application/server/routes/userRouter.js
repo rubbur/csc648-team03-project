@@ -25,6 +25,8 @@ const {
   sendMessage,
   setIsTutor,
   getConversations,
+  getLiked,
+  likeMessage
 } = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 
@@ -68,5 +70,9 @@ userRouter.post("/setIsTutor", isLoggedIn, setIsTutor);
 userRouter.post("/getConversations", isLoggedIn, getConversations);
 
 userRouter.post("/getUserDataById", isLoggedIn, getUserDataById);
+
+userRouter.post("/getLiked", getLiked);
+
+userRouter.post("/likeMessage", likeMessage);
 
 module.exports = userRouter;
