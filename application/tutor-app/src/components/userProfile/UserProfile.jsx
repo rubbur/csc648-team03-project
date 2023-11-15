@@ -5,7 +5,7 @@
 import { cookie } from "../../App";
 import "./userProfile.scss";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import ImageUpload from "../imageUpload/ImageUpload";
 import TutorEdit from "./editPages/TutorEdit";
@@ -20,11 +20,17 @@ const UserProfile = () => {
   const [userData, setUserData] = useState({});
   const [editPage, setEditPage] = useState("messages");
   const [userName, setUserName] = useState(cookie.get("userName"));
+  const location = useLocation();
+
   useEffect(() => {
     cookie.addChangeListener(() => {
       setUserName(cookie.get("userName"));
     });
     setUserName(cookie.get("userName"));
+    
+    const type = location.state?.type; 
+    console.log(type);
+    setEditPage(type || "messages");
   }, []);
   useEffect(() => {
     const loadUserData = async () => {

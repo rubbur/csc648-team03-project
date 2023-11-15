@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./notifications.scss";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { cookie } from "../../App";
 
@@ -8,7 +9,7 @@ const Notifications = () =>{
 
     const [notifications, setNotifications] = useState([]);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
-
+    const navigate = useNavigate();
     useEffect(() =>{
         const getNotifications = async () =>{
             try {
@@ -33,7 +34,9 @@ const Notifications = () =>{
       // Handle the click on a notification, e.g., mark it as read
       let notificationName = notification.name;
       let notificationId = notification.id;
-     
+      const type = notification.type; //messages or reviews
+      const route = "/Profile";
+
       //update the database
       const deleteResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/deleteNotification`, {notificationId: notificationId}, {withCredentials: true});
         if (!deleteResult.data.success) {
@@ -41,6 +44,7 @@ const Notifications = () =>{
         }
         const newNotifications = notifications.filter( (noti) => noti.name !== notificationName);
         setNotifications([...newNotifications]);
+        navigate(route, {state: {type: type}})
     };
   
     return (
