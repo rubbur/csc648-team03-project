@@ -25,6 +25,9 @@ const {
   sendMessage,
   setIsTutor,
   getConversations,
+  createNotification,
+  getNotifications,
+  deleteNotification
 } = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 
@@ -68,5 +71,11 @@ userRouter.post("/setIsTutor", isLoggedIn, setIsTutor);
 userRouter.post("/getConversations", isLoggedIn, getConversations);
 
 userRouter.post("/getUserDataById", isLoggedIn, getUserDataById);
+
+userRouter.post("/createNotification", createNotification);
+
+userRouter.post("/getNotifications", getNotifications);
+
+userRouter.post("/deleteNotification", deleteNotification);
 
 module.exports = userRouter;

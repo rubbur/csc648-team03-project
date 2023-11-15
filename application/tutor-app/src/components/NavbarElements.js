@@ -11,7 +11,7 @@ import { cookie } from "../App";
 import SearchBar from "./searchBar/SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./navbar.scss";
-
+import Notifications from "./notifications/Notifications";
 export const Nav = styled.nav`
   background: #666677;
   height: 85px;
@@ -194,6 +194,9 @@ const Navbar = () => {
             <NavLink to="/Profile">
               <h1>{"Hi, " + userName}</h1>
             </NavLink>
+          )}
+          {cookie.get("isLoggedIn") && (
+            <Notifications />
           )}
         </NavMenu>
       </Nav>

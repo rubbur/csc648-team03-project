@@ -48,7 +48,19 @@ const MessageThread = ({ msgs, person }) => {
           date_stamp: new Date().toISOString().slice(0, 19).replace("T", " "),
         },
       ]);
-    } else {
+        //send a notification to the reciever
+    const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
+      userId: cookie.get("userId"),
+       notificationName: `${cookie.get("userName")} sent you a message!`,
+        recipientId: recipientId, 
+        type: "message"
+    }, 
+    {withCredentials: true});
+    if (!notificationRes.data.success) {
+      console.log("Error sending notification: " + notificationRes.data.errorMessage);
+    }
+  }
+    else {
       console.log("Error sending message: " + res.data.errorMessage);
     }
   };
