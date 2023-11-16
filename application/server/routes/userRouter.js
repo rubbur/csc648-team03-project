@@ -25,6 +25,8 @@ const {
   sendMessage,
   setIsTutor,
   getConversations,
+  getLiked,
+  likeMessage,
   createNotification,
   getNotifications,
   deleteNotification
@@ -71,6 +73,10 @@ userRouter.post("/setIsTutor", isLoggedIn, setIsTutor);
 userRouter.post("/getConversations", isLoggedIn, getConversations);
 
 userRouter.post("/getUserDataById", isLoggedIn, getUserDataById);
+
+userRouter.post("/getLiked", getLiked);
+
+userRouter.post("/likeMessage", likeMessage);
 
 userRouter.post("/createNotification", createNotification);
 

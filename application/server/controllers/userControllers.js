@@ -731,6 +731,33 @@ const sendMessage = async (req, res) => {
   }
 };
 
+const getLiked = async (req, res) =>{
+  const {messageId} =  req.body;
+  const q = "SELECT * FROM message_likes WHERE message_id = ?";
+  try{
+    const result = await db.query(q, [messageId]);
+    const isLiked = (result[0].length > 0);
+    res.send({success: true, isLiked: isLiked, likerId: result[0][0].liker_id});
+  } catch (err) {
+    console.log("error getting liked messages: " + err);
+    res.send({success: false, errorMessage: err});
+  }
+}
+
+const likeMessage = async (req, res) => {
+  const { messageId, userId, isDislike } = req.body;
+  console.log("messageId ", messageId, " userId ", userId, " isDislike ", isDislike)
+  const q =  (!isDislike) ? "INSERT INTO message_likes (message_id, liker_id) VALUES (?, ?)" :
+  "DELETE FROM message_likes WHERE message_id = ? AND liker_id = ?";
+  try {
+    await db.query(q, [messageId, userId]);
+    res.send({ success: true });
+  } catch (err) {
+    console.log("error liking message: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
 const getNotifications = async (req, res) =>{
   const {userId } = req.body;
   const q = "SELECT * FROM notifications WHERE recipient_id = ?";
@@ -792,6 +819,8 @@ module.exports = {
   sendMessage,
   setIsTutor,
   getConversations,
+  getLiked,
+  likeMessage,
   createNotification, 
   getNotifications,
   deleteNotification
