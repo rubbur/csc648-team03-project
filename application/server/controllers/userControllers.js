@@ -624,15 +624,15 @@ const submitReview = async (req, res) => {
   const { reviewerId, tutorId, reviewText, rating, reviewerName } = req.body;
   console.log(
     "reviewerId: " +
-      reviewerId +
-      " revieweeId: " +
-      tutorId +
-      " reviewText: " +
-      reviewText +
-      " rating: " +
-      rating +
-      " currentTime: " +
-      currentTime,
+    reviewerId +
+    " revieweeId: " +
+    tutorId +
+    " reviewText: " +
+    reviewText +
+    " rating: " +
+    rating +
+    " currentTime: " +
+    currentTime,
   );
   //insert the review into the reviews table
   const q =
@@ -684,7 +684,6 @@ const searchPosts = async (req, res) => {
   try {
     const result = await db.query(query, params);
     res.send({ success: true, searchResults: result[0] });
-    console.log("search results: " + JSON.stringify(result[0]));
   } catch (e) {
     console.log("error in search query! : " + e);
   }

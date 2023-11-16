@@ -150,22 +150,28 @@ const Navbar = () => {
         </p>
         <hr className="disclaimer-p"></hr>
         <NavMenu>
-          <NavLink to="/">
-            <Logo src="/images/logo.png" alt="Logo" />
-          </NavLink>
+          <div className={"margin-left"}>
+            <NavLink to="/">
+              <Logo src="/images/logo.png" alt="Logo" />
+            </NavLink>
+          </div>
+          <div className="logo-buffer">
+          </div>
           <SearchBar />
           <NavLink to="/CreatePost">
             <h1>
-              <FontAwesomeIcon className="plus-icon" icon="fa-plus" />
+              Create Post
             </h1>
           </NavLink>
           {
             <NavLink to="/AboutUs">
               <h1>
-                <FontAwesomeIcon icon="fa-circle-info" />
+                About Us
               </h1>
             </NavLink>
           }
+          <div className="logo-buffer">
+          </div>
           {cookie.get("isAdmin") && (
             <NavLink to="/AdminPanel">
               <h1>
@@ -186,14 +192,16 @@ const Navbar = () => {
           {cookie.get("isLoggedIn") && (
             <NavLink to="/Logout">
               <h1>
-                <FontAwesomeIcon icon="right-from-bracket" />
+                Logout
               </h1>
             </NavLink>
           )}
           {cookie.get("isLoggedIn") && (
-            <NavLink to="/Profile">
-              <h1>{"Hi, " + userName}</h1>
-            </NavLink>
+            <div className="margin-right">
+              <NavLink to="/Profile">
+                <h1>Dashboard</h1>
+              </NavLink>
+            </div>
           )}
         </NavMenu>
       </Nav>
@@ -213,13 +221,11 @@ const Navbar = () => {
         )}
         {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/CreatePost" onClick={toggleMobileMenu}>
-            <FontAwesomeIcon className="plus-icon" icon="fa-plus" />
+            <h1>Create Post</h1>
           </MobileMenuItem>
         )}
         <MobileMenuItem to="/AboutUs" onClick={toggleMobileMenu}>
-          <h1>
-            <FontAwesomeIcon icon="fa-circle-info" />
-          </h1>
+          <h1>About Us</h1>
         </MobileMenuItem>
         {cookie.get("isAdmin") && (
           <MobileMenuItem to="/AdminPanel" onClick={toggleMobileMenu}>
@@ -241,29 +247,17 @@ const Navbar = () => {
         {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/Logout" onClick={toggleMobileMenu}>
             <h1>
-              <FontAwesomeIcon icon="right-from-bracket" />
-            </h1>
-          </MobileMenuItem>
-        )}
-        {cookie.get("isLoggedIn") && (
-          <MobileMenuItem to="/tutorPostsView" onClick={toggleMobileMenu}>
-            <h1>View Posts</h1>
-          </MobileMenuItem>
-        )}
-        {cookie.get("isLoggedIn") && (
-          <MobileMenuItem to="/Messages" onClick={toggleMobileMenu}>
-            <h1>
-              <FontAwesomeIcon icon="fa-solid fa-envelope" />
+              Logout
             </h1>
           </MobileMenuItem>
         )}
         {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/Profile" onClick={toggleMobileMenu}>
-            <h1>{"Hi, " + userName}</h1>
+            <h1>Dashboard</h1>
           </MobileMenuItem>
         )}
       </MobileMenu>
-    </div>
+    </div >
   );
 };
 

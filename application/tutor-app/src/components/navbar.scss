@@ -5,11 +5,23 @@
 
 @import "../colorScheme.scss";
 
+.logo-buffer {
+    width: 11%;
+}
 
+.margin-left {
+    margin-left: 10px;
+    margin-bottom: 3px;
+}
+
+.margin-right {
+    margin-right: 10px;
+}
 
 h1 {
     font-size: 18px;
     padding: none;
+    text-align: center;
 }
 
 .site-header {
