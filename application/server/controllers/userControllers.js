@@ -684,7 +684,6 @@ const searchPosts = async (req, res) => {
   try {
     const result = await db.query(query, params);
     res.send({ success: true, searchResults: result[0] });
-    console.log("search results: " + JSON.stringify(result[0]));
   } catch (e) {
     console.log("error in search query! : " + e);
   }
@@ -759,7 +758,46 @@ const likeMessage = async (req, res) => {
   }
 }
 
+const getNotifications = async (req, res) =>{
+  const {userId } = req.body;
+  const q = "SELECT * FROM notifications WHERE recipient_id = ?";
+  try{
+    const result = await db.query(q, [userId]);
+    res.send({success: true, notifications: result[0]});
+  } catch (err) {
+    console.log("error getting notifications: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
 
+const createNotification = async (req, res) =>{
+  const {userId, notificationName, recipientId, type, postId} = req.body;
+  if(notificationName.length > 100){
+    res.send({success: false, errorMessage: "Notification name is too long"});
+    return;
+  }
+  const q = "INSERT INTO notifications (sender_id, name, recipient_id, type, post_id) VALUES (?, ?, ?, ?, ?)";
+  try{
+    await db.query(q, [userId, notificationName, recipientId, type, postId]);
+    res.send({success: true});
+  } catch (err) {
+    console.log("error creating notification: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
+
+const deleteNotification = async (req, res) =>{
+  const {notificationId} = req.body;
+  console.log("deleteing wih notificationId: " + notificationId + "");
+  const q = "DELETE FROM notifications WHERE id = ?";
+  try{
+    await db.query(q, [notificationId]);
+    res.send({success: true});
+  } catch (err) {
+    console.log("error deleting notification: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+}
 
 module.exports = {
   login,
@@ -782,5 +820,8 @@ module.exports = {
   setIsTutor,
   getConversations,
   getLiked,
-  likeMessage
+  likeMessage,
+  createNotification, 
+  getNotifications,
+  deleteNotification
 };

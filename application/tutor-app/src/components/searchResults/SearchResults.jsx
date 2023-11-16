@@ -149,8 +149,6 @@ const SearchResults = () => {
           <br />
           <br />
           <br />
-          <br />
-          <br />
           <h2 className="recent-posts-text">Our three newest tutors</h2>
           <br />
           <hr />
@@ -227,8 +225,26 @@ export const UserResult = ({
       },
       { withCredentials: true },
     );
+    if(result.data.success){
+        //send a notification to the reciever
+    const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
+      userId: cookie.get("userId"),
+       notificationName: `${cookie.get("userName")} sent you a message!`,
+        recipientId: tutorId, 
+        type: "messages",
+        postId: postId,
+    }, 
+    {withCredentials: true});
+    if (!notificationRes.data.success) {
+      console.log("Error sending notification: " + notificationRes.data.errorMessage);
+    }
+    else {
+      console.log("Error sending message: " + notificationRes.data.errorMessage);
+    }
+    
     setMessageInProgress(""); // clear the message box after sending the message
-  };
+  }
+}
 
   return (
     <div className="user-result">

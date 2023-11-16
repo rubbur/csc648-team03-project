@@ -38,7 +38,7 @@ import {
   faSortUp,
   faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
-import { faStar as Star, faMessage } from "@fortawesome/free-regular-svg-icons";
+import { faStar as Star, faMessage, faBell } from "@fortawesome/free-regular-svg-icons";
 // import CreatePost from './components/userProfile/editPages/CreatePost';
 import CreatePost from "./components/userProfile/editPages/CreatePost";
 import MessageView from "./components/messageView/MessageView";
@@ -56,6 +56,7 @@ library.add(
   faMessage,
   faEnvelope,
   faCircleInfo,
+  faBell
 );
 
 export const cookie = new Cookie();
