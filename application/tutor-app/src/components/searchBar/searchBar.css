@@ -66,6 +66,7 @@ Purpose: Style the SearchBar component */
 .search-bar-input {
   border: none;
   width: 80%;
+  min-width: 110px;
 }
 
 .search-bar-input:focus {
