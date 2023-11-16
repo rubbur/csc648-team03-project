@@ -155,23 +155,17 @@ const Navbar = () => {
               <Logo src="/images/logo.png" alt="Logo" />
             </NavLink>
           </div>
-          <div className="logo-buffer">
-          </div>
+          <div className="logo-buffer"></div>
           <SearchBar />
           <NavLink to="/CreatePost">
-            <h1>
-              Create Post
-            </h1>
+            <h1>Create Post</h1>
           </NavLink>
           {
             <NavLink to="/AboutUs">
-              <h1>
-                About Us
-              </h1>
+              <h1>About Us</h1>
             </NavLink>
           }
-          <div className="logo-buffer">
-          </div>
+          <div className="logo-buffer"></div>
           {cookie.get("isAdmin") && (
             <NavLink to="/AdminPanel">
               <h1>
@@ -191,9 +185,7 @@ const Navbar = () => {
           )}
           {cookie.get("isLoggedIn") && (
             <NavLink to="/Logout">
-              <h1>
-                Logout
-              </h1>
+              <h1>Logout</h1>
             </NavLink>
           )}
           {cookie.get("isLoggedIn") && (
@@ -246,9 +238,7 @@ const Navbar = () => {
         )}
         {cookie.get("isLoggedIn") && (
           <MobileMenuItem to="/Logout" onClick={toggleMobileMenu}>
-            <h1>
-              Logout
-            </h1>
+            <h1>Logout</h1>
           </MobileMenuItem>
         )}
         {cookie.get("isLoggedIn") && (
@@ -257,7 +247,7 @@ const Navbar = () => {
           </MobileMenuItem>
         )}
       </MobileMenu>
-    </div >
+    </div>
   );
 };
 

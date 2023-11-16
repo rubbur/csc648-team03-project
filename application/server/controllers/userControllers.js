@@ -624,15 +624,15 @@ const submitReview = async (req, res) => {
   const { reviewerId, tutorId, reviewText, rating, reviewerName } = req.body;
   console.log(
     "reviewerId: " +
-    reviewerId +
-    " revieweeId: " +
-    tutorId +
-    " reviewText: " +
-    reviewText +
-    " rating: " +
-    rating +
-    " currentTime: " +
-    currentTime,
+      reviewerId +
+      " revieweeId: " +
+      tutorId +
+      " reviewText: " +
+      reviewText +
+      " rating: " +
+      rating +
+      " currentTime: " +
+      currentTime,
   );
   //insert the review into the reviews table
   const q =
