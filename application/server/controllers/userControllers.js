@@ -745,14 +745,14 @@ const getNotifications = async (req, res) =>{
 }
 
 const createNotification = async (req, res) =>{
-  const {userId, notificationName, recipientId, type} = req.body;
+  const {userId, notificationName, recipientId, type, postId} = req.body;
   if(notificationName.length > 100){
     res.send({success: false, errorMessage: "Notification name is too long"});
     return;
   }
-  const q = "INSERT INTO notifications (sender_id, name, recipient_id, type) VALUES (?, ?, ?, ?)";
+  const q = "INSERT INTO notifications (sender_id, name, recipient_id, type, post_id) VALUES (?, ?, ?, ?, ?)";
   try{
-    await db.query(q, [userId, notificationName, recipientId, type]);
+    await db.query(q, [userId, notificationName, recipientId, type, postId]);
     res.send({success: true});
   } catch (err) {
     console.log("error creating notification: " + err);
