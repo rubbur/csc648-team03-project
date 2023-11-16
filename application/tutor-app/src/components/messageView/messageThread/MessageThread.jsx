@@ -53,7 +53,8 @@ const MessageThread = ({ msgs, person }) => {
       userId: cookie.get("userId"),
        notificationName: `${cookie.get("userName")} sent you a message!`,
         recipientId: recipientId, 
-        type: "messages"
+        type: "messages",
+        postId: msgs[0].thread_id.split("_")[2],
     }, 
     {withCredentials: true});
     if (!notificationRes.data.success) {

@@ -35,8 +35,11 @@ const Notifications = () =>{
       let notificationName = notification.name;
       let notificationId = notification.id;
       const type = notification.type; //messages or reviews
+      console.log("notification type: " + type);
       const route = "/Profile";
-
+      const conversationId = notification.recipient_id + "_" + notification.sender_id + "_" + notification.post_id;
+      
+ 
       //update the database
       const deleteResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/deleteNotification`, {notificationId: notificationId}, {withCredentials: true});
         if (!deleteResult.data.success) {
@@ -44,7 +47,7 @@ const Notifications = () =>{
         }
         const newNotifications = notifications.filter( (noti) => noti.name !== notificationName);
         setNotifications([...newNotifications]);
-        navigate(route, {state: {type: type}})
+        navigate(route, {state: {type: type, conversationId: conversationId}})
     };
   
     return (

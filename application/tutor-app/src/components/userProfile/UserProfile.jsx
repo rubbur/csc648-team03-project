@@ -20,6 +20,7 @@ const UserProfile = () => {
   const [userData, setUserData] = useState({});
   const [editPage, setEditPage] = useState("messages");
   const [userName, setUserName] = useState(cookie.get("userName"));
+  const [conversationId, setConversationId] = useState(""); //the id of the conversation that the user wants to see
   const location = useLocation();
 
   useEffect(() => {
@@ -29,9 +30,10 @@ const UserProfile = () => {
     setUserName(cookie.get("userName"));
     
     const type = location.state?.type; 
-    console.log(type);
+    console.log("the type is" , type);
     setEditPage(type || "messages");
-  }, []);
+    setConversationId(location.state?.conversationId || "");
+  }, [location]);
   useEffect(() => {
     const loadUserData = async () => {
       //get the user data from the database
@@ -173,7 +175,7 @@ const UserProfile = () => {
             </div>
           </div>
           <div className="editting-box">
-            {editPage === "messages" && <MessageView />}
+            {editPage === "messages" && <MessageView conversationId={conversationId}/>}
             {editPage === "tutorposts" && <TutorPostsView isTutor={true} />}
             {editPage === "tutor" && <TutorEdit isTutor={false} />}
             {editPage === "name" && <NameEdit />}
