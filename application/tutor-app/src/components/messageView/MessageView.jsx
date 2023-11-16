@@ -7,6 +7,7 @@ import "./messageView.scss";
 import ConversationList from "./conversationList/ConversationList";
 import MessageThread from "./messageThread/MessageThread";
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { cookie } from "../../App";
 import styled from "styled-components";
@@ -22,13 +23,15 @@ const MsgThread = styled.div`
   align-items: center;
 `;
 
-const MessageView = () => {
-  const [thread, setThread] = useState("");
+const MessageView = ({conversationId}) => {
+  const [thread, setThread] = useState(conversationId || "");
   const [person, setPerson] = useState({}); //[name, img_url
   const [convoMap, setConvoMap] = useState({});
   const [showConvos, setShowConvos] = useState(true);
+
   useEffect(() => {
     //get all the conversations
+    console.log("conversationId from the message view: " + conversationId);
     const getConvoMap = async () => {
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/getConversations`,
@@ -39,6 +42,7 @@ const MessageView = () => {
         console.log("Error fetching conversations: " + res.data.errorMessage);
       }
       setConvoMap(res.data.conversations);
+      // setThread(conversationId || ""); 
     };
     getConvoMap();
   }, []);
