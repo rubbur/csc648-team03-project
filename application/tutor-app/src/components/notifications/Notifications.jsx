@@ -38,7 +38,7 @@ const Notifications = () =>{
       console.log("notification type: " + type);
       const route = "/Profile";
       const conversationId = notification.recipient_id + "_" + notification.sender_id + "_" + notification.post_id;
-      
+      console.log("conversationId from the notification component: " + conversationId)
  
       //update the database
       const deleteResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/deleteNotification`, {notificationId: notificationId}, {withCredentials: true});

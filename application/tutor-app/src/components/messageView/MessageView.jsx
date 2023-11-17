@@ -59,7 +59,7 @@ const MessageView = ({conversationId}) => {
           setPerson={setPerson}
           setShowConvos={setShowConvos}
         />
-        <MessageThread person={person} msgs={convoMap[thread] || []} />
+        <MessageThread person={person} msgs={convoMap[conversationId] || []} />
       </div>
       <div className="MessageViewMobile">
         <ConvoList showConvos={showConvos}>

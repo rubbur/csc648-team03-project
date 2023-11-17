@@ -33,7 +33,13 @@ const UserProfile = () => {
     console.log("the type is" , type);
     setEditPage(type || "messages");
     setConversationId(location.state?.conversationId || "");
+    console.log("the conversation id is: " + conversationId);
+    console.log("the location state is: " + location.state?.conversationId);
   }, [location]);
+
+
+
+
   useEffect(() => {
     const loadUserData = async () => {
       //get the user data from the database
