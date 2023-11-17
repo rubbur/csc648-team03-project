@@ -673,7 +673,7 @@ const searchPosts = async (req, res) => {
     "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating " +
     "FROM tutor_posts " +
     "JOIN users ON tutor_posts.tutor_id = users.id " +
-    "WHERE (tutor_posts.description LIKE ? OR users.username LIKE ? OR tutor_posts.name LIKE ?) " +
+    "WHERE (tutor_posts.description LIKE ? OR tutor_posts.name LIKE ?) " +
     "AND tutor_posts.is_pending = 0";
 
   if (subject !== "All") {
