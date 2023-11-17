@@ -624,15 +624,15 @@ const submitReview = async (req, res) => {
   const { reviewerId, tutorId, reviewText, rating, reviewerName } = req.body;
   console.log(
     "reviewerId: " +
-      reviewerId +
-      " revieweeId: " +
-      tutorId +
-      " reviewText: " +
-      reviewText +
-      " rating: " +
-      rating +
-      " currentTime: " +
-      currentTime,
+    reviewerId +
+    " revieweeId: " +
+    tutorId +
+    " reviewText: " +
+    reviewText +
+    " rating: " +
+    rating +
+    " currentTime: " +
+    currentTime,
   );
   //insert the review into the reviews table
   const q =
@@ -731,24 +731,24 @@ const sendMessage = async (req, res) => {
   }
 };
 
-const getLiked = async (req, res) =>{
-  const {messageId} =  req.body;
+const getLiked = async (req, res) => {
+  const { messageId } = req.body;
   const q = "SELECT * FROM message_likes WHERE message_id = ?";
-  try{
+  try {
     const result = await db.query(q, [messageId]);
     const isLiked = (result[0].length > 0);
-    res.send({success: true, isLiked: isLiked, likerId: result[0][0].liker_id});
+    res.send({ success: true, isLiked: isLiked, likerId: result[0][0].liker_id });
   } catch (err) {
     console.log("error getting liked messages: " + err);
-    res.send({success: false, errorMessage: err});
+    res.send({ success: false, errorMessage: err });
   }
 }
 
 const likeMessage = async (req, res) => {
   const { messageId, userId, isDislike } = req.body;
   console.log("messageId ", messageId, " userId ", userId, " isDislike ", isDislike)
-  const q =  (!isDislike) ? "INSERT INTO message_likes (message_id, liker_id) VALUES (?, ?)" :
-  "DELETE FROM message_likes WHERE message_id = ? AND liker_id = ?";
+  const q = (!isDislike) ? "INSERT INTO message_likes (message_id, liker_id) VALUES (?, ?)" :
+    "DELETE FROM message_likes WHERE message_id = ? AND liker_id = ?";
   try {
     await db.query(q, [messageId, userId]);
     res.send({ success: true });
@@ -758,46 +758,70 @@ const likeMessage = async (req, res) => {
   }
 }
 
-const getNotifications = async (req, res) =>{
-  const {userId } = req.body;
+const getNotifications = async (req, res) => {
+  const { userId } = req.body;
   const q = "SELECT * FROM notifications WHERE recipient_id = ?";
-  try{
+  try {
     const result = await db.query(q, [userId]);
-    res.send({success: true, notifications: result[0]});
+    res.send({ success: true, notifications: result[0] });
   } catch (err) {
     console.log("error getting notifications: " + err);
     res.send({ success: false, errorMessage: err });
   }
 }
 
-const createNotification = async (req, res) =>{
-  const {userId, notificationName, recipientId, type, postId} = req.body;
-  if(notificationName.length > 100){
-    res.send({success: false, errorMessage: "Notification name is too long"});
+const createNotification = async (req, res) => {
+  const { userId, notificationName, recipientId, type, postId } = req.body;
+  if (notificationName.length > 100) {
+    res.send({ success: false, errorMessage: "Notification name is too long" });
     return;
   }
   const q = "INSERT INTO notifications (sender_id, name, recipient_id, type, post_id) VALUES (?, ?, ?, ?, ?)";
-  try{
+  try {
     await db.query(q, [userId, notificationName, recipientId, type, postId]);
-    res.send({success: true});
+    res.send({ success: true });
   } catch (err) {
     console.log("error creating notification: " + err);
     res.send({ success: false, errorMessage: err });
   }
 }
 
-const deleteNotification = async (req, res) =>{
-  const {notificationId} = req.body;
+const deleteNotification = async (req, res) => {
+  const { notificationId } = req.body;
   console.log("deleteing wih notificationId: " + notificationId + "");
   const q = "DELETE FROM notifications WHERE id = ?";
-  try{
+  try {
     await db.query(q, [notificationId]);
-    res.send({success: true});
+    res.send({ success: true });
   } catch (err) {
     console.log("error deleting notification: " + err);
     res.send({ success: false, errorMessage: err });
   }
 }
+
+//subjectList
+const getSubjects = async (req, res) => {
+  const q = "SELECT * FROM tutors_subjects";
+  try {
+    const result = await db.query(q, []);
+    if (Array.isArray(result[0])) {
+      const subjectList = [];
+      for (let i = 0; i < result[0].length; i++) {
+        const subject = result[0][i];
+        subjectList.push(subject.subject_name);
+      }
+      res.send({ success: true, subjectList: subjectList });
+    } else {
+      console.log("Result is not an array:", result[0]);
+      res.send({ success: false, errorMessage: "Unexpected result format" });
+    }
+  } catch (err) {
+    console.log("Error getting subjects:", err);
+    res.send({ success: false, errorMessage: err });
+  }
+};
+
+
 
 module.exports = {
   login,
@@ -821,7 +845,8 @@ module.exports = {
   getConversations,
   getLiked,
   likeMessage,
-  createNotification, 
+  createNotification,
   getNotifications,
-  deleteNotification
+  deleteNotification,
+  getSubjects
 };

@@ -8,11 +8,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./searchBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import subjectList from "../../subjectlist";
+import axios from "axios";
 
 const SearchBar = () => {
   const [subject, setSubject] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [subjectList, setSubjectList] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +27,26 @@ const SearchBar = () => {
     if (searchTermParam) {
       setSearchTerm(searchTermParam);
     }
+    // load subjectList
+    const getSubjectList = async () => {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/user/getSubjects`,
+          {},
+          {
+            withCredentials: true,
+          },
+        );
+        if (response.data.success) {
+          setSubjectList(response.data.subjectList);
+        } else {
+          console.error("Error getting subject list:", response.data.error);
+        }
+      } catch (error) {
+        console.error("Error getting subject list:", error);
+      }
+    };
+    getSubjectList();
   }, []);
 
   const handleSubjectChange = (e) => {

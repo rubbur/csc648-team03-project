@@ -29,7 +29,8 @@ const {
   likeMessage,
   createNotification,
   getNotifications,
-  deleteNotification
+  deleteNotification,
+  getSubjects
 } = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 
@@ -83,5 +84,7 @@ userRouter.post("/createNotification", createNotification);
 userRouter.post("/getNotifications", getNotifications);
 
 userRouter.post("/deleteNotification", deleteNotification);
+
+userRouter.post("/getSubjects", getSubjects);
 
 module.exports = userRouter;

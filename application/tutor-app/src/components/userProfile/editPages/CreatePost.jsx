@@ -12,7 +12,6 @@ import "./editPage.scss";
 import axios from "axios";
 import { cookie } from "../../../App";
 import { useNavigate } from "react-router-dom";
-import subjectList from "../../../subjectlist";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -26,6 +25,30 @@ const CreatePost = () => {
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
+  const [subjectList, setSubjectList] = useState([]);
+
+  useEffect(() => {
+    // load subjectList
+    const getSubjectList = async () => {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/user/getSubjects`,
+          {},
+          {
+            withCredentials: true,
+          },
+        );
+        if (response.data.success) {
+          setSubjectList(response.data.subjectList);
+        } else {
+          console.error("Error getting subject list:", response.data.error);
+        }
+      } catch (error) {
+        console.error("Error getting subject list:", error);
+      }
+    };
+    getSubjectList();
+  }, []);
 
   const handleCancel = () => {
     navigate("/");
