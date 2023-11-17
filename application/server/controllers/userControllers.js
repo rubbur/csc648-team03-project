@@ -733,11 +733,18 @@ const sendMessage = async (req, res) => {
 
 const getLiked = async (req, res) => {
   const { messageId } = req.body;
-  const q = "SELECT * FROM message_likes WHERE message_id = ?";
+  const q = "SELECT * FROM message_likes WHERE message_id = ?";  666
   try {
-    const result = await db.query(q, [messageId]);
+    let likerId;
+    const result = await db.query(q, [messageId]); 
     const isLiked = (result[0].length > 0);
-    res.send({ success: true, isLiked: isLiked, likerId: result[0][0].liker_id });
+    if(!isLiked){
+      likerId = -1;
+    }
+    else{
+      likerId = result[0][0].liker_id;
+    }
+    res.send({ success: true, isLiked: isLiked, likerId: likerId });
   } catch (err) {
     console.log("error getting liked messages: " + err);
     res.send({ success: false, errorMessage: err });

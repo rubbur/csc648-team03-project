@@ -31,7 +31,6 @@ const MessageView = ({conversationId}) => {
 
   useEffect(() => {
     //get all the conversations
-    console.log("conversationId from the message view: " + conversationId);
     const getConvoMap = async () => {
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/getConversations`,
@@ -59,7 +58,7 @@ const MessageView = ({conversationId}) => {
           setPerson={setPerson}
           setShowConvos={setShowConvos}
         />
-        <MessageThread person={person} msgs={convoMap[conversationId] || []} />
+        <MessageThread person={person} msgs={convoMap[thread] || convoMap[conversationId] || []} />
       </div>
       <div className="MessageViewMobile">
         <ConvoList showConvos={showConvos}>

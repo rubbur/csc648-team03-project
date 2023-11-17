@@ -30,7 +30,6 @@ const UserProfile = () => {
     setUserName(cookie.get("userName"));
     
     const type = location.state?.type; 
-    console.log("the type is" , type);
     setEditPage(type || "messages");
     setConversationId(location.state?.conversationId || "");
     console.log("the conversation id is: " + conversationId);
