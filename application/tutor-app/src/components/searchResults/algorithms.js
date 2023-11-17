@@ -19,9 +19,8 @@ const comparators = {
     else return 0;
   },
   Review: (a, b) => {
-    console.log(a.avg_rating, b.avg_rating);
     if (a.avg_rating !== undefined && b.avg_rating !== undefined) {
-      return +b.avg_rating - +a.avg_rating;
+      return +a.avg_rating - +b.avg_rating;
     } else return 0;
   },
   Alpha: (a, b) => {

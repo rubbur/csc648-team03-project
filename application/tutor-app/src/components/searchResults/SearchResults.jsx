@@ -69,6 +69,9 @@ const SearchResults = () => {
 
   const sortResults = () => {
     setResultsList([...resultsList.sort(comparators[sortType])]);
+    if (!sortDirection) {
+      setResultsList([...resultsList.reverse()]);
+    }
     console.log(
       [...resultsList.sort(comparators[sortType])]
         .map((card) => card.avg_rating)
