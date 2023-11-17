@@ -27,21 +27,8 @@ const CreatePost = () => {
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
 
-  const handleClear = () => {
-    // clear all the fields
-    setPostContent("");
-    setPdfFile(null);
-    setFlierFile(null);
-    setVideoFile(null);
-    setSelectedSubject("NOT SELECTED");
-    setHourlyRate(20);
-    setName("");
-
-    // remove the file names from the file inputs
-    const fileInputs = document.querySelectorAll('input[type="file"]');
-    fileInputs.forEach((input) => {
-      input.value = "";
-    });
+  const handleCancel = () => {
+    navigate("/");
   };
 
   const handleFileUpload = async (file, updateColumn, postId) => {
@@ -129,7 +116,6 @@ const CreatePost = () => {
 
       if (response.data.success) {
         const postId = response.data.postId;
-        handleClear();
 
         // handle file uploads
         await Promise.all([
@@ -258,16 +244,16 @@ const CreatePost = () => {
             />
           </div>
         </div>
+        <div className="post-button-container">
+          <button className="create-button" onClick={handleCancel}>
+            Cancel
+          </button>
+          <button className="create-button" onClick={handlePost}>
+            Create Post
+          </button>
+        </div>
+        <p className="required required-center">* Required</p>
       </div>
-      <div className="post-button-container">
-        <button className="create-button" onClick={handlePost}>
-          Create Post
-        </button>
-        <button className="create-button" onClick={handleClear}>
-          Reset
-        </button>
-      </div>
-      <p className="required required-center">* Required</p>
       <p className="post-disclaimer">
         Note: New posts may take up to 24 hours to be approved.
       </p>
