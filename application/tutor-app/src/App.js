@@ -64,10 +64,10 @@ library.add(
 );
 
 export const cookie = new Cookie();
+export const newSocket = io.connect(process.env.REACT_APP_BACKEND_URL);
 
 function App() {
   useEffect(() => {
-    const newSocket = io.connect(process.env.REACT_APP_BACKEND_URL);
     const userId = cookie.get("userId");
 
     newSocket.on("connect", () => {

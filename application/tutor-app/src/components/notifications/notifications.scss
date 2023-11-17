@@ -1,14 +1,15 @@
-
-.bell-icon{
+.bell-icon {
     color: white;
 }
 
-.dropdown-item{
+.dropdown-item {
     color: white;
 }
 
-.dropdown-item:hover{
+.dropdown-item:hover {
     color: cyan;
+    cursor: pointer;
+    user-select: none;
 }
 
 .dropdown-toggle {
@@ -22,16 +23,16 @@
     font-size: 1.5rem;
 }
 
-.dropdown-menu{
+.dropdown-menu {
     background-color: navy;
-    border: 2px solid ;
+    border: 2px solid;
     z-index: 10;
     position: absolute;
     padding: 10px;
     margin-left: -125px;
 }
 
-#num-notifications{
+#num-notifications {
     font-size: 1rem;
     padding: 1px 3px 1px 3px;
     background-color: red;

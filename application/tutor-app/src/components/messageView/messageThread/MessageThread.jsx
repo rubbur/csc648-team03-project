@@ -48,19 +48,19 @@ const MessageThread = ({ msgs, person }) => {
           date_stamp: new Date().toISOString().slice(0, 19).replace("T", " "),
         },
       ]);
-        //send a notification to the reciever
-    const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
-      userId: cookie.get("userId"),
-       notificationName: `${cookie.get("userName")} sent you a message!`,
-        recipientId: recipientId, 
+      //send a notification to the reciever
+      const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
+        userId: cookie.get("userId"),
+        notificationName: `${cookie.get("userName")} sent you a message!`,
+        recipientId: recipientId,
         type: "messages",
         postId: msgs[0].thread_id.split("_")[2],
-    }, 
-    {withCredentials: true});
-    if (!notificationRes.data.success) {
-      console.log("Error sending notification: " + notificationRes.data.errorMessage);
+      },
+        { withCredentials: true });
+      if (!notificationRes.data.success) {
+        console.log("Error sending notification: " + notificationRes.data.errorMessage);
+      }
     }
-  }
     else {
       console.log("Error sending message: " + res.data.errorMessage);
     }
@@ -116,8 +116,8 @@ export const Message = ({ text, author, timeStamp, messageId }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [liker, setLiker] = useState(null);
   //get whether the message is liked
-  useEffect(() =>{
-    const getLiked = async () =>{
+  useEffect(() => {
+    const getLiked = async () => {
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/getLiked`,
         { messageId: messageId },
@@ -126,31 +126,31 @@ export const Message = ({ text, author, timeStamp, messageId }) => {
       if (!res.data.success) {
         console.log("Error fetching liked status: " + res.data.errorMessage);
       }
-      else if (res.data.isLiked){
+      else if (res.data.isLiked) {
         setIsLiked(true);
         setLiker(res.data.likerId);
       }
-  }
-  getLiked();
-},[]);
+    }
+    getLiked();
+  }, []);
 
-  const handleClick = async () =>{
-    if(isLiked && liker !== cookie.get("userId")){
+  const handleClick = async () => {
+    if (isLiked && liker !== cookie.get("userId")) {
       return;
       //cannot unlike/like a message that someone else liked.
       //and cannot like a message that has already been liked.
     }
-    setLiker( cookie.get("userId"));
+    setLiker(cookie.get("userId"));
     const temp = !isLiked;
-      setIsLiked(temp);
-      const res = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/user/likeMessage`,
-        { messageId: messageId, userId: cookie.get("userId"), isDislike: !temp },
-        { withCredentials: true },
-      );
-      if (!res.data.success) {
-        console.log("Error liking message: " + res.data.errorMessage);
-      }
+    setIsLiked(temp);
+    const res = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/user/likeMessage`,
+      { messageId: messageId, userId: cookie.get("userId"), isDislike: !temp },
+      { withCredentials: true },
+    );
+    if (!res.data.success) {
+      console.log("Error liking message: " + res.data.errorMessage);
+    }
   }
 
   return (
@@ -161,7 +161,7 @@ export const Message = ({ text, author, timeStamp, messageId }) => {
         <p className="msg-text">{text}</p>
       )}
       <p className="msg-time">{timeStamp}</p>
-      {isLiked ? <img className="liked-img" src="/like_symbol.png" alt="this message is liked"/> : null}
+      {isLiked ? <img className="liked-img" src="/like_symbol.png" alt="this message is liked" /> : null}
     </div>
   );
 };
