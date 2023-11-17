@@ -23,7 +23,7 @@ const MsgThread = styled.div`
   align-items: center;
 `;
 
-const MessageView = ({conversationId}) => {
+const MessageView = ({ conversationId }) => {
   const [thread, setThread] = useState(conversationId || "");
   const [person, setPerson] = useState({}); //[name, img_url
   const [convoMap, setConvoMap] = useState({});
@@ -41,7 +41,7 @@ const MessageView = ({conversationId}) => {
         console.log("Error fetching conversations: " + res.data.errorMessage);
       }
       setConvoMap(res.data.conversations);
-      // setThread(conversationId || ""); 
+      // setThread(conversationId || "");
     };
     getConvoMap();
   }, []);
@@ -58,7 +58,10 @@ const MessageView = ({conversationId}) => {
           setPerson={setPerson}
           setShowConvos={setShowConvos}
         />
-        <MessageThread person={person} msgs={convoMap[thread] || convoMap[conversationId] || []} />
+        <MessageThread
+          person={person}
+          msgs={convoMap[thread] || convoMap[conversationId] || []}
+        />
       </div>
       <div className="MessageViewMobile">
         <ConvoList showConvos={showConvos}>

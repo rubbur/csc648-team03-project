@@ -181,17 +181,22 @@ const TutorProfile = () => {
       setMessageInProgress("");
       setShowSentMessage(true);
       //send a notification to the reciever
-    const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
-      userId: cookie.get("userId"),
-       notificationName: `${cookie.get("userName")} sent you a message!`,
-        recipientId: postData.tutor_id, 
-        type: "messages",
-        postId: postData.post_id,
-    }, 
-    {withCredentials: true});
-    if (!notificationRes.data.success) {
-      console.log("Error sending notification: " + notificationRes.data.errorMessage);
-    }
+      const notificationRes = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/user/createNotification`,
+        {
+          userId: cookie.get("userId"),
+          notificationName: `${cookie.get("userName")} sent you a message!`,
+          recipientId: postData.tutor_id,
+          type: "messages",
+          postId: postData.post_id,
+        },
+        { withCredentials: true },
+      );
+      if (!notificationRes.data.success) {
+        console.log(
+          "Error sending notification: " + notificationRes.data.errorMessage,
+        );
+      }
     }
   };
 
@@ -248,17 +253,22 @@ const TutorProfile = () => {
       return;
     }
     //send a notification to the reciever
-           const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
-            userId: cookie.get("userId"),
-             notificationName: `${cookie.get("userName")} reviewed your services!`,
-              recipientId: postData.tutor_id, 
-              type: "reviews",
-              postId: postData.post_id,
-          }, 
-          {withCredentials: true});
-          if (!notificationRes.data.success) {
-            console.log("Error sending notification: " + notificationRes.data.errorMessage);
-          }
+    const notificationRes = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/user/createNotification`,
+      {
+        userId: cookie.get("userId"),
+        notificationName: `${cookie.get("userName")} reviewed your services!`,
+        recipientId: postData.tutor_id,
+        type: "reviews",
+        postId: postData.post_id,
+      },
+      { withCredentials: true },
+    );
+    if (!notificationRes.data.success) {
+      console.log(
+        "Error sending notification: " + notificationRes.data.errorMessage,
+      );
+    }
     setRefresh(!firstRefresh);
     setIsOpen(false);
   };

@@ -624,15 +624,15 @@ const submitReview = async (req, res) => {
   const { reviewerId, tutorId, reviewText, rating, reviewerName } = req.body;
   console.log(
     "reviewerId: " +
-    reviewerId +
-    " revieweeId: " +
-    tutorId +
-    " reviewText: " +
-    reviewText +
-    " rating: " +
-    rating +
-    " currentTime: " +
-    currentTime,
+      reviewerId +
+      " revieweeId: " +
+      tutorId +
+      " reviewText: " +
+      reviewText +
+      " rating: " +
+      rating +
+      " currentTime: " +
+      currentTime,
   );
   //insert the review into the reviews table
   const q =
@@ -733,15 +733,15 @@ const sendMessage = async (req, res) => {
 
 const getLiked = async (req, res) => {
   const { messageId } = req.body;
-  const q = "SELECT * FROM message_likes WHERE message_id = ?";  666
+  const q = "SELECT * FROM message_likes WHERE message_id = ?";
+  666;
   try {
     let likerId;
-    const result = await db.query(q, [messageId]); 
-    const isLiked = (result[0].length > 0);
-    if(!isLiked){
+    const result = await db.query(q, [messageId]);
+    const isLiked = result[0].length > 0;
+    if (!isLiked) {
       likerId = -1;
-    }
-    else{
+    } else {
       likerId = result[0][0].liker_id;
     }
     res.send({ success: true, isLiked: isLiked, likerId: likerId });
@@ -749,13 +749,21 @@ const getLiked = async (req, res) => {
     console.log("error getting liked messages: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 const likeMessage = async (req, res) => {
   const { messageId, userId, isDislike } = req.body;
-  console.log("messageId ", messageId, " userId ", userId, " isDislike ", isDislike)
-  const q = (!isDislike) ? "INSERT INTO message_likes (message_id, liker_id) VALUES (?, ?)" :
-    "DELETE FROM message_likes WHERE message_id = ? AND liker_id = ?";
+  console.log(
+    "messageId ",
+    messageId,
+    " userId ",
+    userId,
+    " isDislike ",
+    isDislike,
+  );
+  const q = !isDislike
+    ? "INSERT INTO message_likes (message_id, liker_id) VALUES (?, ?)"
+    : "DELETE FROM message_likes WHERE message_id = ? AND liker_id = ?";
   try {
     await db.query(q, [messageId, userId]);
     res.send({ success: true });
@@ -763,7 +771,7 @@ const likeMessage = async (req, res) => {
     console.log("error liking message: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 const getNotifications = async (req, res) => {
   const { userId } = req.body;
@@ -775,7 +783,7 @@ const getNotifications = async (req, res) => {
     console.log("error getting notifications: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 const createNotification = async (req, res) => {
   const { userId, notificationName, recipientId, type, postId } = req.body;
@@ -783,7 +791,8 @@ const createNotification = async (req, res) => {
     res.send({ success: false, errorMessage: "Notification name is too long" });
     return;
   }
-  const q = "INSERT INTO notifications (sender_id, name, recipient_id, type, post_id) VALUES (?, ?, ?, ?, ?)";
+  const q =
+    "INSERT INTO notifications (sender_id, name, recipient_id, type, post_id) VALUES (?, ?, ?, ?, ?)";
   try {
     await db.query(q, [userId, notificationName, recipientId, type, postId]);
     res.send({ success: true });
@@ -791,7 +800,7 @@ const createNotification = async (req, res) => {
     console.log("error creating notification: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 const deleteNotification = async (req, res) => {
   const { notificationId } = req.body;
@@ -804,7 +813,7 @@ const deleteNotification = async (req, res) => {
     console.log("error deleting notification: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 //subjectList
 const getSubjects = async (req, res) => {
@@ -827,8 +836,6 @@ const getSubjects = async (req, res) => {
     res.send({ success: false, errorMessage: err });
   }
 };
-
-
 
 module.exports = {
   login,
@@ -855,5 +862,5 @@ module.exports = {
   createNotification,
   getNotifications,
   deleteNotification,
-  getSubjects
+  getSubjects,
 };
