@@ -195,7 +195,11 @@ const Navbar = () => {
               </NavLink>
             </div>
           )}
-          {cookie.get("isLoggedIn") && <Notifications />}
+          {cookie.get("isLoggedIn") && (
+            <div className="nav-styling">
+              <Notifications />
+            </div>
+          )}
         </NavMenu>
       </Nav>
 

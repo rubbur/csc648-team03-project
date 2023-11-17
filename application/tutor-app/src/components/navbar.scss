@@ -9,6 +9,22 @@
     width: 11%;
 }
 
+.nav-styling {
+    color: #ffffff;
+    height: 100%;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    margin-right: 10px;
+
+    &:hover {
+        border: 1px solid white;
+        border-radius: 5px;
+        background-color: rgb(181, 118, 0);
+    }
+}
+
 .margin-left {
     margin-left: 10px;
     margin-bottom: 3px;
