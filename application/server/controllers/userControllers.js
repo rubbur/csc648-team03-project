@@ -664,10 +664,8 @@ const submitReview = async (req, res) => {
 
 const searchPosts = async (req, res) => {
   let { searchTerm, subject } = req.body;
-
   searchTerm = `%${searchTerm}%`;
-
-  const params = [searchTerm, searchTerm, searchTerm]; // Common parameters
+  let params = [searchTerm, searchTerm]; // Common parameters
 
   let query =
     "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating " +
@@ -680,7 +678,6 @@ const searchPosts = async (req, res) => {
     query += " AND tutor_posts.subject = ?";
     params.push(subject); // Add the subject parameter if it's not "All"
   }
-
   try {
     const result = await db.query(query, params);
     res.send({ success: true, searchResults: result[0] });
