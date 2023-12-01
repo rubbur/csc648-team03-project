@@ -292,7 +292,7 @@ export const UserResult = ({
         <div className="message-container">
           <textarea
             className="message-box"
-            rows="30"
+            rows="20"
             placeholder="begin typing.."
             value={messageInProgress}
             onChange={(e) => setMessageInProgress(e.target.value)}
