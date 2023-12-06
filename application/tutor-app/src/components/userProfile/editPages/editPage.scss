@@ -1,4 +1,4 @@
-// Author:  Cleveland Plonsey
+// Author:  Cleveland Plonsey, Ava Albert
 // Date: 10/14/2023
 // Purpose: Style the EditPage component
 
@@ -6,10 +6,12 @@
 @import "../../../colorScheme.scss";
 
 .required {
-    color: red;
+    color: rgb(217, 14, 14);
     font-weight: bold;
     user-select: none;
+    text-shadow: -1px -1px 0 rgb(50, 0, 0), 1px -1px 0 rgb(50, 0, 0), -1px 1px 0 rgb(50, 0, 0), 1px 1px 0 rgb(50, 0, 0);
 }
+
 
 .required-center {
     text-align: center;
@@ -225,11 +227,11 @@
     height: 100%;
     width: 100%;
     color: red;
-    background-color: rgb(145, 142, 116);
+    background-color: rgb(92, 80, 124);
     width: 60%;
     margin: auto;
     border-radius: 20px;
-    box-shadow: 0 0 20px 15px rgb(250, 205, 73);
+    box-shadow: 0 0 20px 15px rgb(250, 215, 73);
     margin-bottom: 30px;
 }
 
