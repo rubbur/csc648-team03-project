@@ -166,6 +166,20 @@ button:hover {
   font-size: 20px;
   margin: auto;
   width: 50%;
+  opacity: 0; 
+  animation: fadeIn 1s ease-in-out forwards; 
+  padding: 20px;
+  background-color: $header-bg-color; 
+  border-radius: 10px; 
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .image-container {
@@ -175,6 +189,13 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px; 
+}
+
+.profile-image-container {
+  border: 2px solid rgba(40, 40, 40, 0.9);
+  border-radius: 50%; /* Keep it rounded */
+  overflow: hidden;
 }
 
 .profile-image {
