@@ -13,6 +13,20 @@
     background-color: $header-bg-color;
     padding: 5px;
     margin: 10px;
+    opacity: 0; 
+    transform: translateY(20px); 
+    animation: slideInFromBottom 1s ease-in-out forwards;
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .review-card > .rating {

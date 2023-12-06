@@ -120,6 +120,20 @@ $image-dimension: 300px;
     margin-top: -60px;
     margin-bottom: 20px;
     overflow-wrap: break-word;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInFromLeft 1s ease-in-out forwards;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .about-me-box {
