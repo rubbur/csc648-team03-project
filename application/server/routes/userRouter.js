@@ -61,7 +61,7 @@ userRouter.post("/searchTutors", searchTutors);
 
 userRouter.post("/deleteAccount", isLoggedIn, deleteAccount);
 
-userRouter.post("/submitReview", isLoggedIn, submitReview);
+userRouter.post("/submitReview", submitReview);
 
 userRouter.post("/CreatePost", isLoggedIn, createPost);
 
