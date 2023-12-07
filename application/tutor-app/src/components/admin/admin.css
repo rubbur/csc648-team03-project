@@ -89,7 +89,7 @@ Purpose: file styles the admin control panel */
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   background-color: white;
   border: solid 5px transparent;
   margin: 10px;
@@ -97,6 +97,10 @@ Purpose: file styles the admin control panel */
   text-align: center;
   /* width: 23%; */
   padding-bottom: 10px;
+
+  @media screen and (max-width: 855px) {
+    flex-direction: column;
+  }
 }
 
 .user-img {

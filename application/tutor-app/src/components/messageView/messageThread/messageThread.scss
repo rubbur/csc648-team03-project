@@ -7,10 +7,25 @@
 .message-thread {
     color: black;
     width: 100%;
+    max-width: 100vw;
     height: 100%;
     display: flex;
     flex-direction: column;
 
+}
+
+.liked-icon {
+    color: $accent-color-hover;
+    font-size: 40px;
+    //move to top right corner
+    position: absolute;
+    top: -17px;
+    right: -5px;
+}
+
+.liked-icon>path {
+    stroke: black;
+    stroke-width: 30px;
 }
 
 .message-box {
@@ -49,11 +64,13 @@ header .header-img {
     padding: 10px;
     margin: 10px;
     justify-content: space-between;
+    word-break: break-all;
+    position: relative;
 }
 
 .message .msg-text {
     color: white;
-    text-wrap: wrap;
+    overflow-wrap: break-word;
 }
 
 .message .msg-time {
@@ -62,7 +79,8 @@ header .header-img {
 
 .message.self {
     background-color: green;
-    margin-left: 45%;
+    margin-left: 42%;
+    position: relative;
 }
 
 .message.other {
@@ -108,4 +126,11 @@ header .header-img {
     border-radius: 50%;
     margin: 5px;
     box-shadow: 3px 3px 3px 3px inset rgb(255, 255, 82);
+}
+
+img.liked-img {
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+    box-shadow: none;
 }

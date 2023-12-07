@@ -12,7 +12,6 @@ import "./editPage.scss";
 import axios from "axios";
 import { cookie } from "../../../App";
 import { useNavigate } from "react-router-dom";
-import subjectList from "../../../subjectlist";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -26,22 +25,33 @@ const CreatePost = () => {
   const [selectedSubject, setSelectedSubject] = useState("NOT SELECTED");
   const [hourlyRate, setHourlyRate] = useState(20);
   const [name, setName] = useState("");
+  const [subjectList, setSubjectList] = useState([]);
 
-  const handleClear = () => {
-    // clear all the fields
-    setPostContent("");
-    setPdfFile(null);
-    setFlierFile(null);
-    setVideoFile(null);
-    setSelectedSubject("NOT SELECTED");
-    setHourlyRate(20);
-    setName("");
+  useEffect(() => {
+    // load subjectList
+    const getSubjectList = async () => {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/user/getSubjects`,
+          {},
+          {
+            withCredentials: true,
+          },
+        );
+        if (response.data.success) {
+          setSubjectList(response.data.subjectList);
+        } else {
+          console.error("Error getting subject list:", response.data.error);
+        }
+      } catch (error) {
+        console.error("Error getting subject list:", error);
+      }
+    };
+    getSubjectList();
+  }, []);
 
-    // remove the file names from the file inputs
-    const fileInputs = document.querySelectorAll('input[type="file"]');
-    fileInputs.forEach((input) => {
-      input.value = "";
-    });
+  const handleCancel = () => {
+    navigate("/");
   };
 
   const handleFileUpload = async (file, updateColumn, postId) => {
@@ -129,7 +139,6 @@ const CreatePost = () => {
 
       if (response.data.success) {
         const postId = response.data.postId;
-        handleClear();
 
         // handle file uploads
         await Promise.all([
@@ -258,16 +267,16 @@ const CreatePost = () => {
             />
           </div>
         </div>
+        <div className="post-button-container">
+          <button className="create-button" onClick={handleCancel}>
+            Cancel
+          </button>
+          <button className="create-button" onClick={handlePost}>
+            Create Post
+          </button>
+        </div>
+        <p className="required required-center">* Required</p>
       </div>
-      <div className="post-button-container">
-        <button className="create-button" onClick={handlePost}>
-          Create Post
-        </button>
-        <button className="create-button" onClick={handleClear}>
-          Reset
-        </button>
-      </div>
-      <p className="required required-center">* Required</p>
       <p className="post-disclaimer">
         Note: New posts may take up to 24 hours to be approved.
       </p>

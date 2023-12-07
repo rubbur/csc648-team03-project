@@ -45,7 +45,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.PRODUCTION === "true" ? true : false,
+      // secure: process.env.PRODUCTION === "true" ? false : true,
+      //TODO: figure out this issue. Right now our work around is that we are not using secure cookies.
+      secure: false,
       maxAge: 1000 * 60 * 60 * 24 * 365,
       name: "sfsuCookies",
     },

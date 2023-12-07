@@ -4,6 +4,8 @@
 
 @import "../../colorScheme.scss";
 
+
+/*
 .search-results-box .user-result {
     height: fit-content;
     width: 40%;
@@ -13,8 +15,9 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-}
 
+}
+*/
 .user-result:hover {
     border: solid 5px $accent-color;
     transition: 0.1s;

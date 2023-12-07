@@ -25,6 +25,12 @@ const {
   sendMessage,
   setIsTutor,
   getConversations,
+  getLiked,
+  likeMessage,
+  createNotification,
+  getNotifications,
+  deleteNotification,
+  getSubjects,
 } = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 
@@ -34,7 +40,7 @@ userRouter.post("/login", login);
 
 userRouter.post("/register", register);
 
-userRouter.get("/Logout", logout);
+userRouter.get("/Logout", isLoggedIn, logout);
 
 userRouter.post("/searchByName", isLoggedIn, searchByName);
 
@@ -55,7 +61,7 @@ userRouter.post("/searchTutors", searchTutors);
 
 userRouter.post("/deleteAccount", isLoggedIn, deleteAccount);
 
-userRouter.post("/submitReview", isLoggedIn, submitReview);
+userRouter.post("/submitReview", submitReview);
 
 userRouter.post("/CreatePost", isLoggedIn, createPost);
 
@@ -68,5 +74,17 @@ userRouter.post("/setIsTutor", isLoggedIn, setIsTutor);
 userRouter.post("/getConversations", isLoggedIn, getConversations);
 
 userRouter.post("/getUserDataById", isLoggedIn, getUserDataById);
+
+userRouter.post("/getLiked", getLiked);
+
+userRouter.post("/likeMessage", likeMessage);
+
+userRouter.post("/createNotification", createNotification);
+
+userRouter.post("/getNotifications", getNotifications);
+
+userRouter.post("/deleteNotification", deleteNotification);
+
+userRouter.post("/getSubjects", getSubjects);
 
 module.exports = userRouter;

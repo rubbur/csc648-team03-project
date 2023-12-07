@@ -4,6 +4,7 @@
 
 //middleware that checks if user is actually logged in.
 const isLoggedIn = (req, res, next) => {
+  console.log(req.session);
   if (req.session.isLoggedIn) {
     next();
   } else {
