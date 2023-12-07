@@ -245,7 +245,7 @@ const TutorProfile = () => {
           return total + 1;
         }
         return total;
-      }, 0)
+      }, 0);
       localStorage.setItem("unsentReviewRating", numStars);
       // Redirect to the signup page
       alert(
@@ -359,7 +359,7 @@ const TutorProfile = () => {
             {reviewList.length === 0
               ? "unrated"
               : // the average rating is:
-              avgReview + "   "}
+                avgReview + "   "}
             <FontAwesomeIcon icon={["fas", "star"]} className="star" />
           </p>
 

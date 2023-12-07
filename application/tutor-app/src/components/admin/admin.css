@@ -101,7 +101,6 @@ Purpose: file styles the admin control panel */
   @media screen and (max-width: 855px) {
     flex-direction: column;
   }
-
 }
 
 .user-img {

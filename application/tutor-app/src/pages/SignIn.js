@@ -92,11 +92,18 @@ function SignIn() {
 
       // check if there is an unsent review
       const unsentReview = localStorage.getItem("unsentReview");
-      const unsentReviewRecipientId = localStorage.getItem("unsentReviewRecipientId");
+      const unsentReviewRecipientId = localStorage.getItem(
+        "unsentReviewRecipientId",
+      );
       const unsentReviewPostId = localStorage.getItem("unsentReviewPostId");
       const unsentReviewRating = localStorage.getItem("unsentReviewRating");
 
-      if (unsentReview && unsentReviewRecipientId && unsentReviewPostId && unsentReviewRating) {
+      if (
+        unsentReview &&
+        unsentReviewRecipientId &&
+        unsentReviewPostId &&
+        unsentReviewRating
+      ) {
         // Ask the user if they want to send the unsent review
         const confirmSend = window.confirm(
           "You have an unsent review. Do you want to send it now?",
