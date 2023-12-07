@@ -181,17 +181,22 @@ const TutorProfile = () => {
       setMessageInProgress("");
       setShowSentMessage(true);
       //send a notification to the reciever
-    const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
-      userId: cookie.get("userId"),
-       notificationName: `${cookie.get("userName")} sent you a message!`,
-        recipientId: postData.tutor_id, 
-        type: "messages",
-        postId: postData.post_id,
-    }, 
-    {withCredentials: true});
-    if (!notificationRes.data.success) {
-      console.log("Error sending notification: " + notificationRes.data.errorMessage);
-    }
+      const notificationRes = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/user/createNotification`,
+        {
+          userId: cookie.get("userId"),
+          notificationName: `${cookie.get("userName")} sent you a message!`,
+          recipientId: postData.tutor_id,
+          type: "messages",
+          postId: postData.post_id,
+        },
+        { withCredentials: true },
+      );
+      if (!notificationRes.data.success) {
+        console.log(
+          "Error sending notification: " + notificationRes.data.errorMessage,
+        );
+      }
     }
   };
 
@@ -227,6 +232,29 @@ const TutorProfile = () => {
       alert("Please select a star rating.");
       return;
     }
+
+    //make sure the user is logged in, if not use local storage to save the review
+    console.log("isloggedin: " + cookie.get("isLoggedIn"));
+    if (cookie.get("isLoggedIn") !== "true") {
+      // Save the unsent review to local storage
+      localStorage.setItem("unsentReview", reviewText);
+      localStorage.setItem("unsentReviewRecipientId", postData.tutor_id);
+      localStorage.setItem("unsentReviewPostId", postData.post_id);
+      const numStars = starArray.reduce((total, current, index) => {
+        if (current) {
+          return total + 1;
+        }
+        return total;
+      }, 0);
+      localStorage.setItem("unsentReviewRating", numStars);
+      // Redirect to the signup page
+      alert(
+        "You need to be logged in to review a tutor. You will now be redirected to sign in.",
+      );
+      window.location.href = "/SignIn";
+      return;
+    }
+
     const result = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/user/submitReview`,
       {
@@ -248,17 +276,22 @@ const TutorProfile = () => {
       return;
     }
     //send a notification to the reciever
-           const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
-            userId: cookie.get("userId"),
-             notificationName: `${cookie.get("userName")} reviewed your services!`,
-              recipientId: postData.tutor_id, 
-              type: "reviews",
-              postId: postData.post_id,
-          }, 
-          {withCredentials: true});
-          if (!notificationRes.data.success) {
-            console.log("Error sending notification: " + notificationRes.data.errorMessage);
-          }
+    const notificationRes = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/user/createNotification`,
+      {
+        userId: cookie.get("userId"),
+        notificationName: `${cookie.get("userName")} reviewed your services!`,
+        recipientId: postData.tutor_id,
+        type: "reviews",
+        postId: postData.post_id,
+      },
+      { withCredentials: true },
+    );
+    if (!notificationRes.data.success) {
+      console.log(
+        "Error sending notification: " + notificationRes.data.errorMessage,
+      );
+    }
     setRefresh(!firstRefresh);
     setIsOpen(false);
   };

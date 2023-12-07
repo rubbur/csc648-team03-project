@@ -1,3 +1,12 @@
+.dropdown>button {
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.dropdown>button:hover {
+    background-color: rgb(181, 118, 0);
+}
+
 .bell-icon {
     color: white;
 }

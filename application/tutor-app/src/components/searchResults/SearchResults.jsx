@@ -69,6 +69,9 @@ const SearchResults = () => {
 
   const sortResults = () => {
     setResultsList([...resultsList.sort(comparators[sortType])]);
+    if (!sortDirection) {
+      setResultsList([...resultsList.reverse()]);
+    }
     console.log(
       [...resultsList.sort(comparators[sortType])]
         .map((card) => card.avg_rating)
@@ -225,26 +228,32 @@ export const UserResult = ({
       },
       { withCredentials: true },
     );
-    if(result.data.success){
-        //send a notification to the reciever
-    const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
-      userId: cookie.get("userId"),
-       notificationName: `${cookie.get("userName")} sent you a message!`,
-        recipientId: tutorId, 
-        type: "messages",
-        postId: postId,
-    }, 
-    {withCredentials: true});
-    if (!notificationRes.data.success) {
-      console.log("Error sending notification: " + notificationRes.data.errorMessage);
+    if (result.data.success) {
+      //send a notification to the reciever
+      const notificationRes = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/user/createNotification`,
+        {
+          userId: cookie.get("userId"),
+          notificationName: `${cookie.get("userName")} sent you a message!`,
+          recipientId: tutorId,
+          type: "messages",
+          postId: postId,
+        },
+        { withCredentials: true },
+      );
+      if (!notificationRes.data.success) {
+        console.log(
+          "Error sending notification: " + notificationRes.data.errorMessage,
+        );
+      } else {
+        console.log(
+          "Error sending message: " + notificationRes.data.errorMessage,
+        );
+      }
+
+      setMessageInProgress(""); // clear the message box after sending the message
     }
-    else {
-      console.log("Error sending message: " + notificationRes.data.errorMessage);
-    }
-    
-    setMessageInProgress(""); // clear the message box after sending the message
-  }
-}
+  };
 
   return (
     <div className="user-result">
@@ -283,7 +292,7 @@ export const UserResult = ({
         <div className="message-container">
           <textarea
             className="message-box"
-            rows="30"
+            rows="20"
             placeholder="begin typing.."
             value={messageInProgress}
             onChange={(e) => setMessageInProgress(e.target.value)}

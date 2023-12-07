@@ -6,6 +6,8 @@ import "./messageThread.scss";
 import { cookie } from "../../../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 const MessageThread = ({ msgs, person }) => {
   const [messageList, setMessageList] = useState(msgs || []);
@@ -161,7 +163,9 @@ export const Message = ({ text, author, timeStamp, messageId }) => {
         <p className="msg-text">{text}</p>
       )}
       <p className="msg-time">{timeStamp}</p>
-      {isLiked ? <img className="liked-img" src="/like_symbol.png" alt="this message is liked" /> : null}
+      {isLiked ? (
+        <FontAwesomeIcon className="liked-icon" icon={faThumbsUp} />
+      ) : null}
     </div>
   );
 };

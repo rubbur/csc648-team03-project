@@ -90,6 +90,47 @@ function SignIn() {
       localStorage.removeItem("unsentMessageRecipientId");
       localStorage.removeItem("unsentMessagePostId");
 
+      // check if there is an unsent review
+      const unsentReview = localStorage.getItem("unsentReview");
+      const unsentReviewRecipientId = localStorage.getItem(
+        "unsentReviewRecipientId",
+      );
+      const unsentReviewPostId = localStorage.getItem("unsentReviewPostId");
+      const unsentReviewRating = localStorage.getItem("unsentReviewRating");
+
+      if (
+        unsentReview &&
+        unsentReviewRecipientId &&
+        unsentReviewPostId &&
+        unsentReviewRating
+      ) {
+        // Ask the user if they want to send the unsent review
+        const confirmSend = window.confirm(
+          "You have an unsent review. Do you want to send it now?",
+        );
+        if (confirmSend) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/user/submitReview`,
+            {
+              tutorId: unsentReviewRecipientId,
+              reviewText: unsentReview,
+              reviewerId: cookie.get("userId"),
+              reviewerName: cookie.get("userName"),
+              postId: unsentReviewPostId,
+              rating: unsentReviewRating,
+            },
+            { withCredentials: true },
+          );
+          console.log("Sent unsent review: " + response.data);
+        }
+      }
+
+      // Remove any unsent review item from local storage
+      localStorage.removeItem("unsentReview");
+      localStorage.removeItem("unsentReviewRecipientId");
+      localStorage.removeItem("unsentReviewPostId");
+      localStorage.removeItem("unsentReviewRating");
+
       if (localStorage.getItem("temporaryWindow")) {
         localStorage.removeItem("temporaryWindow");
         window.close();

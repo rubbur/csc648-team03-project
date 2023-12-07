@@ -626,15 +626,15 @@ const submitReview = async (req, res) => {
   const { reviewerId, tutorId, reviewText, rating, reviewerName } = req.body;
   console.log(
     "reviewerId: " +
-    reviewerId +
-    " revieweeId: " +
-    tutorId +
-    " reviewText: " +
-    reviewText +
-    " rating: " +
-    rating +
-    " currentTime: " +
-    currentTime,
+      reviewerId +
+      " revieweeId: " +
+      tutorId +
+      " reviewText: " +
+      reviewText +
+      " rating: " +
+      rating +
+      " currentTime: " +
+      currentTime,
   );
   //insert the review into the reviews table
   const q =
@@ -666,10 +666,8 @@ const submitReview = async (req, res) => {
 
 const searchPosts = async (req, res) => {
   let { searchTerm, subject } = req.body;
-
   searchTerm = `%${searchTerm}%`;
-
-  const params = [searchTerm, searchTerm, searchTerm]; // Common parameters
+  let params = [searchTerm, searchTerm]; // Common parameters
 
   let query =
     "SELECT tutor_posts.*, users.img_url, users.username, users.avg_rating " +
@@ -682,7 +680,6 @@ const searchPosts = async (req, res) => {
     query += " AND tutor_posts.subject = ?";
     params.push(subject); // Add the subject parameter if it's not "All"
   }
-
   try {
     const result = await db.query(query, params);
     res.send({ success: true, searchResults: result[0] });
@@ -735,7 +732,7 @@ const sendMessage = async (req, res) => {
 
 const getLiked = async (req, res) => {
   const { messageId } = req.body;
-  const q = "SELECT * FROM message_likes WHERE message_id = ?"; 666
+  const q = "SELECT * FROM message_likes WHERE message_id = ?";
   try {
     let likerId;
     const result = await db.query(q, [messageId]);
@@ -751,13 +748,21 @@ const getLiked = async (req, res) => {
     console.log("error getting liked messages: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 const likeMessage = async (req, res) => {
   const { messageId, userId, isDislike } = req.body;
-  console.log("messageId ", messageId, " userId ", userId, " isDislike ", isDislike)
-  const q = (!isDislike) ? "INSERT INTO message_likes (message_id, liker_id) VALUES (?, ?)" :
-    "DELETE FROM message_likes WHERE message_id = ? AND liker_id = ?";
+  console.log(
+    "messageId ",
+    messageId,
+    " userId ",
+    userId,
+    " isDislike ",
+    isDislike,
+  );
+  const q = !isDislike
+    ? "INSERT INTO message_likes (message_id, liker_id) VALUES (?, ?)"
+    : "DELETE FROM message_likes WHERE message_id = ? AND liker_id = ?";
   try {
     await db.query(q, [messageId, userId]);
     res.send({ success: true });
@@ -765,7 +770,7 @@ const likeMessage = async (req, res) => {
     console.log("error liking message: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 const getNotifications = async (req, res) => {
   const { userId } = req.body;
@@ -777,7 +782,7 @@ const getNotifications = async (req, res) => {
     console.log("error getting notifications: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 const createNotification = async (req, res) => {
   const { userId, notificationName, recipientId, type, postId } = req.body;
@@ -798,7 +803,7 @@ const createNotification = async (req, res) => {
     console.log("error creating notification: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 const deleteNotification = async (req, res) => {
   const { notificationId } = req.body;
@@ -811,7 +816,7 @@ const deleteNotification = async (req, res) => {
     console.log("error deleting notification: " + err);
     res.send({ success: false, errorMessage: err });
   }
-}
+};
 
 //subjectList
 const getSubjects = async (req, res) => {
@@ -847,7 +852,6 @@ const getMessages = async (req, res) => {
   }
 }
 
-
 module.exports = {
   login,
   register,
@@ -874,5 +878,5 @@ module.exports = {
   createNotification,
   getNotifications,
   deleteNotification,
-  getSubjects
+  getSubjects,
 };

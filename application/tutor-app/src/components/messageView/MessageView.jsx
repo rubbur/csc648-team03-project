@@ -68,7 +68,7 @@ const MessageView = ({ conversationId }) => {
         console.log("Error fetching conversations: " + res.data.errorMessage);
       }
       setConvoMap(res.data.conversations);
-      // setThread(conversationId || ""); 
+      // setThread(conversationId || "");
     };
     getConvoMap();
     console.log("convoMap: ", JSON.stringify(convoMap));

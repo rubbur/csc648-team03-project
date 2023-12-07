@@ -41,7 +41,7 @@ userRouter.post("/login", login);
 
 userRouter.post("/register", register);
 
-userRouter.get("/Logout", logout);
+userRouter.get("/Logout", isLoggedIn, logout);
 
 userRouter.post("/searchByName", isLoggedIn, searchByName);
 
@@ -62,7 +62,7 @@ userRouter.post("/searchTutors", searchTutors);
 
 userRouter.post("/deleteAccount", isLoggedIn, deleteAccount);
 
-userRouter.post("/submitReview", isLoggedIn, submitReview);
+userRouter.post("/submitReview", submitReview);
 
 userRouter.post("/CreatePost", isLoggedIn, createPost);
 

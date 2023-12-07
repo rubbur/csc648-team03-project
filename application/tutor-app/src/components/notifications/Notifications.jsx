@@ -7,7 +7,6 @@ import { cookie } from "../../App";
 import { newSocket } from "../../App";
 
 const Notifications = () => {
-
   const [notifications, setNotifications] = useState([]);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -40,7 +39,6 @@ const Notifications = () => {
     getNotifications();
 
   }, [])
-
 
   const handleNotificationClick = async (notification) => {
     // Handle the click on a notification, e.g., mark it as read
@@ -99,10 +97,4 @@ const Notifications = () => {
   );
 };
 
-
-
 export default Notifications;
-
-
-
-

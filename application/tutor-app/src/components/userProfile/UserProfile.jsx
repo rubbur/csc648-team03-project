@@ -28,16 +28,13 @@ const UserProfile = () => {
       setUserName(cookie.get("userName"));
     });
     setUserName(cookie.get("userName"));
-    
-    const type = location.state?.type; 
+
+    const type = location.state?.type;
     setEditPage(type || "messages");
     setConversationId(location.state?.conversationId || "");
     console.log("the conversation id is: " + conversationId);
     console.log("the location state is: " + location.state?.conversationId);
   }, [location]);
-
-
-
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -180,7 +177,9 @@ const UserProfile = () => {
             </div>
           </div>
           <div className="editting-box">
-            {editPage === "messages" && <MessageView conversationId={conversationId}/>}
+            {editPage === "messages" && (
+              <MessageView conversationId={conversationId} />
+            )}
             {editPage === "tutorposts" && <TutorPostsView isTutor={true} />}
             {editPage === "tutor" && <TutorEdit isTutor={false} />}
             {editPage === "name" && <NameEdit />}
