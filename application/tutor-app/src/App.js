@@ -49,6 +49,10 @@ import CreatePost from "./components/userProfile/editPages/CreatePost";
 import MessageView from "./components/messageView/MessageView";
 import TrackPageViews from "./TrackPageViews";
 
+//socket test
+import io from "socket.io-client";
+import { useEffect } from "react";
+
 library.add(
   fab,
   Star,
@@ -66,8 +70,25 @@ library.add(
 );
 
 export const cookie = new Cookie();
+export const newSocket = io.connect(process.env.REACT_APP_BACKEND_URL);
 
 function App() {
+  useEffect(() => {
+    const userId = cookie.get("userId");
+
+    newSocket.on("connect", () => {
+      console.log("connected to socket with id: " + userId);
+      console.log("socket id: " + newSocket.id);
+    });
+
+    newSocket.emit("connected", { id: userId });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [cookie.get("userId")]);
+
+
   return (
     <Router>
       {/* this component is used to track page views */}

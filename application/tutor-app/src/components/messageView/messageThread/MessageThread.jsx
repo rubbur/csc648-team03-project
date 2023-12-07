@@ -51,23 +51,19 @@ const MessageThread = ({ msgs, person }) => {
         },
       ]);
       //send a notification to the reciever
-      const notificationRes = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/user/createNotification`,
-        {
-          userId: cookie.get("userId"),
-          notificationName: `${cookie.get("userName")} sent you a message!`,
-          recipientId: recipientId,
-          type: "messages",
-          postId: msgs[0].thread_id.split("_")[2],
-        },
-        { withCredentials: true },
-      );
+      const notificationRes = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/createNotification`, {
+        userId: cookie.get("userId"),
+        notificationName: `${cookie.get("userName")} sent you a message!`,
+        recipientId: recipientId,
+        type: "messages",
+        postId: msgs[0].thread_id.split("_")[2],
+      },
+        { withCredentials: true });
       if (!notificationRes.data.success) {
-        console.log(
-          "Error sending notification: " + notificationRes.data.errorMessage,
-        );
+        console.log("Error sending notification: " + notificationRes.data.errorMessage);
       }
-    } else {
+    }
+    else {
       console.log("Error sending message: " + res.data.errorMessage);
     }
   };
@@ -131,11 +127,12 @@ export const Message = ({ text, author, timeStamp, messageId }) => {
       );
       if (!res.data.success) {
         console.log("Error fetching liked status: " + res.data.errorMessage);
-      } else if (res.data.isLiked) {
+      }
+      else if (res.data.isLiked) {
         setIsLiked(true);
         setLiker(res.data.likerId);
       }
-    };
+    }
     getLiked();
   }, []);
 
@@ -156,7 +153,7 @@ export const Message = ({ text, author, timeStamp, messageId }) => {
     if (!res.data.success) {
       console.log("Error liking message: " + res.data.errorMessage);
     }
-  };
+  }
 
   return (
     <div className={`message ${author}`} onClick={handleClick}>
@@ -166,7 +163,6 @@ export const Message = ({ text, author, timeStamp, messageId }) => {
         <p className="msg-text">{text}</p>
       )}
       <p className="msg-time">{timeStamp}</p>
-
       {isLiked ? (
         <FontAwesomeIcon className="liked-icon" icon={faThumbsUp} />
       ) : null}
