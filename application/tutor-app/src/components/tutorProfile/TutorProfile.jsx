@@ -234,8 +234,7 @@ const TutorProfile = () => {
     }
 
     //make sure the user is logged in, if not use local storage to save the review
-    console.log("isloggedin: " + cookie.get("isLoggedIn"));
-    if (cookie.get("isLoggedIn") !== "true") {
+    if (cookie.get("isLoggedIn") !== true) {
       // Save the unsent review to local storage
       localStorage.setItem("unsentReview", reviewText);
       localStorage.setItem("unsentReviewRecipientId", postData.tutor_id);
@@ -359,7 +358,7 @@ const TutorProfile = () => {
             {reviewList.length === 0
               ? "unrated"
               : // the average rating is:
-                avgReview + "   "}
+              avgReview + "   "}
             <FontAwesomeIcon icon={["fas", "star"]} className="star" />
           </p>
 
