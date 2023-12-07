@@ -8,6 +8,7 @@ import axios from "axios";
 import { cookie } from "../App";
 import { Link, useNavigate } from "react-router-dom";
 import { set } from "react-ga";
+import AuthError from "../components/authError/authError";
 
 function SignUp() {
   useEffect(() => {
@@ -19,7 +20,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorList, setErrorList] = useState("");
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -38,21 +39,21 @@ function SignUp() {
   };
 
   const HandleRegistration = async () => {
-    setErrorMessage("");
+    setErrorList("");
 
     if (!acceptTerms) {
-      alert("Please accept the terms of service");
+      setErrorList("Please accept the terms and conditions.");
       // Don't send the request to the backend if terms are not accepted
       return;
     }
 
     if (!username.endsWith("@sfsu.edu") || username.length < 10) {
-      alert("Please use a SFSU email address. Example email: example@sfsu.edu");
+      setErrorList("Please use a SFSU email address. Example email: example@sfsu.edu");
       return;
     }
 
     if (password.trim() === "") {
-      alert("Password cannot be empty.");
+      setErrorList("Password cannot be empty.");
       return;
     }
 
@@ -110,7 +111,7 @@ function SignUp() {
 
       navigate("/Profile");
     } else {
-      setErrorMessage(response.data.error);
+      setErrorList(response.data.error);
     }
   };
 
@@ -181,7 +182,7 @@ function SignUp() {
         <p className="required">* Required</p>
       </div>
       <div className="error-box">
-        <p className="error-p">{errorMessage}</p>
+        {errorList.length > 0 && <AuthError error={errorList} setErrorList={setErrorList} />}
       </div>
     </div>
   );

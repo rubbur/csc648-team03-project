@@ -1,0 +1,32 @@
+.authErrorText {
+    color: white;
+}
+
+.authError {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: rgba(252, 97, 36, 0.589);
+    align-items: center;
+    margin: 10px auto;
+    padding: 0px 10px 0px 10px;
+    width: 40%;
+    border-radius: 10px;
+    border: 3px solid #ff4800;
+    user-select: none;
+    opacity: 0.8;
+}
+
+.error-button-close {
+    width: 30px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 24px;
+}
+
+.error-button-close:hover {
+    cursor: pointer;
+    color: yellow;
+    background-color: transparent;
+}

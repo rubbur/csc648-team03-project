@@ -7,6 +7,7 @@ import "../index.scss";
 import axios from "axios";
 import { cookie } from "../App";
 import { Link, useNavigate } from "react-router-dom";
+import AuthError from "../components/authError/authError";
 
 function SignIn() {
   useEffect(() => {
@@ -200,9 +201,7 @@ function SignIn() {
           Don't have an account?<br></br>Click here to create one
         </Link>
       </div>
-      <div className="error-box">
-        <p className="error-p">{errorList}</p>
-      </div>
+      {errorList.length > 0 && <AuthError error={errorList} setErrorList={setErrorList} />}
     </div>
   );
 }
