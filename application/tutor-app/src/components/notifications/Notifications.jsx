@@ -4,29 +4,41 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { cookie } from "../../App";
+import { newSocket } from "../../App";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    const getNotifications = async () => {
-      try {
-        const res = await axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/user/getNotifications`,
-          { userId: cookie.get("userId") },
-          { withCredentials: true },
-        );
-        if (!res.data.success) {
-          console.log("Error fetching notifications: " + res.data.errorMessage);
-        } else {
-          setNotifications(res.data.notifications);
-        }
-      } catch (err) {
-        console.log("Error fetching notifications: " + err);
-      }
-    };
 
+  const getNotifications = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/user/getNotifications`,
+        { userId: cookie.get("userId") },
+        { withCredentials: true },
+      );
+      if (!res.data.success) {
+        console.log("Error fetching notifications: " + res.data.errorMessage);
+      } else {
+        setNotifications(res.data.notifications);
+      }
+    } catch (err) {
+      console.log("Error fetching notifications: " + err);
+    }
+  };
+
+  useEffect(() => {
+    newSocket.on("notification", (notification) => {
+      console.log("notification received: " + notification);
+      getNotifications();
+    });
+    return () => {
+      newSocket.off("notification");
+    };
+  }, []);
+
+  useEffect(() => {
     getNotifications();
   }, []);
 
@@ -38,11 +50,17 @@ const Notifications = () => {
     console.log("notification type: " + type);
     const route = "/Profile";
     const conversationId =
-      notification.recipient_id +
-      "_" +
-      notification.sender_id +
-      "_" +
-      notification.post_id;
+      notification.sender_id < notification.recipient_id
+        ? notification.sender_id +
+          "_" +
+          notification.recipient_id +
+          "_" +
+          notification.post_id
+        : notification.recipient_id +
+          "_" +
+          notification.sender_id +
+          "_" +
+          notification.post_id;
     console.log(
       "conversationId from the notification component: " + conversationId,
     );
@@ -59,7 +77,7 @@ const Notifications = () => {
       );
     }
     const newNotifications = notifications.filter(
-      (noti) => noti.name !== notificationName,
+      (noti) => noti.id !== notificationId,
     );
     setNotifications([...newNotifications]);
     navigate(route, { state: { type: type, conversationId: conversationId } });

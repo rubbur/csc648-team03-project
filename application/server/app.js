@@ -4,6 +4,10 @@
 
 let express = require("express");
 let app = express();
+const http = require("http");
+const server = http.createServer(app);
+const io = require("socket.io")(server);
+app.set("io", io);
 
 //file stuff
 const fileUpload = require("express-fileupload");
@@ -22,6 +26,26 @@ const path = require("path"); //used for generating static frontend file paths s
 const userRouter = require("./routes/userRouter");
 const adminRouter = require("./routes/adminRouter");
 const tutorRouter = require("./routes/tutorRouter");
+
+io.on("connection", (socket) => {
+  console.log("User connected");
+
+  socket.on("message", ({ content, to }) => {
+    socket.to(to).emit("message", {
+      content,
+      from: socket.id,
+    });
+  });
+
+  socket.on("connected", ({ id }) => {
+    socket.join(id);
+    console.log("user connected with id: " + id);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
+});
 
 app.use(fileUpload()); //middleware that allows all routes access to file upload functions.
 app.use(bodyParser.json({ limit: "1mb" })); //more data than we ever need to send over http
@@ -78,7 +102,7 @@ app.get("*", (req, res) => {
 
 //application listens on port 8080 which means to visit the server, go to http://localhost:8080
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, function () {
+server.listen(PORT, function () {
   console.log(`Server started on port: ${PORT}`);
 });
 

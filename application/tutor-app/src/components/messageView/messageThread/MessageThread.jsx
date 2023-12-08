@@ -166,7 +166,6 @@ export const Message = ({ text, author, timeStamp, messageId }) => {
         <p className="msg-text">{text}</p>
       )}
       <p className="msg-time">{timeStamp}</p>
-
       {isLiked ? (
         <FontAwesomeIcon className="liked-icon" icon={faThumbsUp} />
       ) : null}

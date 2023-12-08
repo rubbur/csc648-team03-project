@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { cookie } from "../../App";
 import styled from "styled-components";
+import { newSocket } from "../../App";
 
 const ConvoList = styled.div`
   display: ${({ showConvos }) => (showConvos ? "flex" : "none")};
@@ -29,6 +30,31 @@ const MessageView = ({ conversationId }) => {
   const [convoMap, setConvoMap] = useState({});
   const [showConvos, setShowConvos] = useState(true);
 
+  const updateConvo = async (thread_id) => {
+    const res = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/user/getMessages`,
+      { threadId: thread_id },
+      { withCredentials: true },
+    );
+    if (!res.data.success) {
+      console.log("Error fetching messages: " + res.data.errorMessage);
+    }
+    let newMap = convoMap;
+    console.log("MESSAGES: " + res.data.messages);
+    newMap[thread_id] = res.data.messages;
+    convoMap[thread_id] = res.data.messages;
+
+    console.log("convoMap: ", JSON.stringify(convoMap));
+  };
+
+  useEffect(() => {
+    newSocket.on("notification", (data) => {
+      if (data.type === "messages") {
+        updateConvo(data.threadId);
+      }
+    });
+  }, [convoMap]);
+
   useEffect(() => {
     //get all the conversations
     const getConvoMap = async () => {
@@ -44,6 +70,7 @@ const MessageView = ({ conversationId }) => {
       // setThread(conversationId || "");
     };
     getConvoMap();
+    console.log("convoMap: ", JSON.stringify(convoMap));
   }, []);
 
   const displayConvos = () => {
@@ -61,6 +88,7 @@ const MessageView = ({ conversationId }) => {
         <MessageThread
           person={person}
           msgs={convoMap[thread] || convoMap[conversationId] || []}
+          convoMap={convoMap[conversationId] || []}
         />
       </div>
       <div className="MessageViewMobile">

@@ -17,6 +17,8 @@
 
 .dropdown-item:hover {
     color: cyan;
+    cursor: pointer;
+    user-select: none;
 }
 
 .dropdown-toggle {

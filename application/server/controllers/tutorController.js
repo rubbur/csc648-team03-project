@@ -153,16 +153,26 @@ const uploadFile = async (req, res) => {
 };
 
 //most recently added tutors NOT top three rated tutors
-const topThreeTutors = async (req, res) => {
-  const q = `SELECT tutor_posts.*, users.img_url, users.avg_rating
+const topThreeTutors = async (_req, res) => {
+  const q = `SELECT users.id, tutor_posts.*, users.img_url, users.avg_rating
     FROM tutor_posts
     JOIN users ON tutor_posts.tutor_id = users.id
     WHERE tutor_posts.is_pending = 0
-    ORDER BY users.id DESC LIMIT 3;`;
+    ORDER BY users.id DESC;`;
 
   try {
     const results = await db.query(q);
-    res.send({ success: true, data: results[0] });
+    // make sure the 3 results are unique
+    const uniqueResults = [];
+    const uniqueIds = [];
+    for (let i = 0; i < results[0].length && uniqueResults.length < 3; i++) {
+      if (!uniqueIds.includes(results[0][i].id)) {
+        uniqueIds.push(results[0][i].id);
+        uniqueResults.push(results[0][i]);
+      }
+    }
+    res.send({ success: true, data: uniqueResults });
+    //res.send({ success: true, data: results[0] });
   } catch (err) {
     console.log("error retrieving top three tutors: " + err);
   }

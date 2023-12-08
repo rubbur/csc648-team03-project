@@ -6,6 +6,8 @@
 const db = require("../config/database/dbConnection");
 const bcrypt = require("bcrypt"); //npm password hashing module
 const fs = require("fs"); //for moving image and video files around.
+const { request } = require("http");
+const { threadId } = require("../config/database/dbConnection");
 
 const login = async (req, res) => {
   //get the email address and the password out of the request
@@ -731,7 +733,6 @@ const sendMessage = async (req, res) => {
 const getLiked = async (req, res) => {
   const { messageId } = req.body;
   const q = "SELECT * FROM message_likes WHERE message_id = ?";
-  666;
   try {
     let likerId;
     const result = await db.query(q, [messageId]);
@@ -788,10 +789,18 @@ const createNotification = async (req, res) => {
     res.send({ success: false, errorMessage: "Notification name is too long" });
     return;
   }
+  const threadId =
+    userId < recipientId
+      ? userId + "_" + recipientId + "_" + postId
+      : recipientId + "_" + userId + "_" + postId;
   const q =
     "INSERT INTO notifications (sender_id, name, recipient_id, type, post_id) VALUES (?, ?, ?, ?, ?)";
   try {
     await db.query(q, [userId, notificationName, recipientId, type, postId]);
+    req.app
+      .get("io")
+      .to(recipientId)
+      .emit("notification", { type: type, threadId: threadId });
     res.send({ success: true });
   } catch (err) {
     console.log("error creating notification: " + err);
@@ -834,6 +843,19 @@ const getSubjects = async (req, res) => {
   }
 };
 
+const getMessages = async (req, res) => {
+  const { threadId } = req.body;
+  const q =
+    "SELECT * FROM messages WHERE thread_id = ? ORDER BY date_stamp DESC";
+  try {
+    const result = await db.query(q, [threadId]);
+    res.send({ success: true, messages: result[0] });
+  } catch (err) {
+    console.log("error getting messages: " + err);
+    res.send({ success: false, errorMessage: err });
+  }
+};
+
 module.exports = {
   login,
   register,
@@ -854,6 +876,7 @@ module.exports = {
   sendMessage,
   setIsTutor,
   getConversations,
+  getMessages,
   getLiked,
   likeMessage,
   createNotification,
