@@ -48,7 +48,9 @@ function SignUp() {
     }
 
     if (!username.endsWith("@sfsu.edu") || username.length < 10) {
-      setErrorList("Please use a SFSU email address. Example email: example@sfsu.edu");
+      setErrorList(
+        "Please use a SFSU email address. Example email: example@sfsu.edu",
+      );
       return;
     }
 
@@ -182,7 +184,9 @@ function SignUp() {
         <p className="required">* Required</p>
       </div>
       <div className="error-box">
-        {errorList.length > 0 && <AuthError error={errorList} setErrorList={setErrorList} />}
+        {errorList.length > 0 && (
+          <AuthError error={errorList} setErrorList={setErrorList} />
+        )}
       </div>
     </div>
   );

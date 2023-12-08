@@ -358,7 +358,7 @@ const TutorProfile = () => {
             {reviewList.length === 0
               ? "unrated"
               : // the average rating is:
-              avgReview + "   "}
+                avgReview + "   "}
             <FontAwesomeIcon icon={["fas", "star"]} className="star" />
           </p>
 

@@ -31,7 +31,7 @@ const {
   getNotifications,
   deleteNotification,
   getSubjects,
-  getMessages
+  getMessages,
 } = require("../controllers/userControllers");
 const { isLoggedIn } = require("../middleware/authMiddleware");
 

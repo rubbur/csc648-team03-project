@@ -88,7 +88,6 @@ function App() {
     };
   }, [cookie.get("userId")]);
 
-
   return (
     <Router>
       {/* this component is used to track page views */}

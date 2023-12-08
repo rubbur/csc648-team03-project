@@ -201,7 +201,9 @@ function SignIn() {
           Don't have an account?<br></br>Click here to create one
         </Link>
       </div>
-      {errorList.length > 0 && <AuthError error={errorList} setErrorList={setErrorList} />}
+      {errorList.length > 0 && (
+        <AuthError error={errorList} setErrorList={setErrorList} />
+      )}
     </div>
   );
 }

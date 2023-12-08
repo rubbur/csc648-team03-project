@@ -30,7 +30,6 @@ const MessageView = ({ conversationId }) => {
   const [convoMap, setConvoMap] = useState({});
   const [showConvos, setShowConvos] = useState(true);
 
-
   const updateConvo = async (thread_id) => {
     const res = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/user/getMessages`,
@@ -86,7 +85,11 @@ const MessageView = ({ conversationId }) => {
           setPerson={setPerson}
           setShowConvos={setShowConvos}
         />
-        <MessageThread person={person} msgs={convoMap[thread] || convoMap[conversationId] || []} convoMap={convoMap[conversationId] || []} />
+        <MessageThread
+          person={person}
+          msgs={convoMap[thread] || convoMap[conversationId] || []}
+          convoMap={convoMap[conversationId] || []}
+        />
       </div>
       <div className="MessageViewMobile">
         <ConvoList showConvos={showConvos}>

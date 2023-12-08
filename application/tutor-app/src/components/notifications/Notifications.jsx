@@ -13,17 +13,20 @@ const Notifications = () => {
 
   const getNotifications = async () => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/getNotifications`, { userId: cookie.get("userId") }, { withCredentials: true });
+      const res = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/user/getNotifications`,
+        { userId: cookie.get("userId") },
+        { withCredentials: true },
+      );
       if (!res.data.success) {
         console.log("Error fetching notifications: " + res.data.errorMessage);
-      }
-      else {
+      } else {
         setNotifications(res.data.notifications);
       }
     } catch (err) {
       console.log("Error fetching notifications: " + err);
     }
-  }
+  };
 
   useEffect(() => {
     newSocket.on("notification", (notification) => {
@@ -37,8 +40,7 @@ const Notifications = () => {
 
   useEffect(() => {
     getNotifications();
-
-  }, [])
+  }, []);
 
   const handleNotificationClick = async (notification) => {
     // Handle the click on a notification, e.g., mark it as read
@@ -49,18 +51,36 @@ const Notifications = () => {
     const route = "/Profile";
     const conversationId =
       notification.sender_id < notification.recipient_id
-        ? notification.sender_id + "_" + notification.recipient_id + "_" + notification.post_id
-        : notification.recipient_id + "_" + notification.sender_id + "_" + notification.post_id;
-    console.log("conversationId from the notification component: " + conversationId)
+        ? notification.sender_id +
+          "_" +
+          notification.recipient_id +
+          "_" +
+          notification.post_id
+        : notification.recipient_id +
+          "_" +
+          notification.sender_id +
+          "_" +
+          notification.post_id;
+    console.log(
+      "conversationId from the notification component: " + conversationId,
+    );
 
     //update the database
-    const deleteResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/deleteNotification`, { notificationId: notificationId }, { withCredentials: true });
+    const deleteResult = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/user/deleteNotification`,
+      { notificationId: notificationId },
+      { withCredentials: true },
+    );
     if (!deleteResult.data.success) {
-      console.log("Error deleting notification: " + deleteResult.data.errorMessage);
+      console.log(
+        "Error deleting notification: " + deleteResult.data.errorMessage,
+      );
     }
-    const newNotifications = notifications.filter((noti) => noti.id !== notificationId);
+    const newNotifications = notifications.filter(
+      (noti) => noti.id !== notificationId,
+    );
     setNotifications([...newNotifications]);
-    navigate(route, { state: { type: type, conversationId: conversationId } })
+    navigate(route, { state: { type: type, conversationId: conversationId } });
   };
 
   return (
@@ -71,12 +91,14 @@ const Notifications = () => {
           onClick={() => setDropdownOpen(!isDropdownOpen)}
         >
           <FontAwesomeIcon icon={"fa-regular fa-bell"} />
-          {(notifications.length > 0) && <p id="num-notifications">{notifications.length}</p>}
+          {notifications.length > 0 && (
+            <p id="num-notifications">{notifications.length}</p>
+          )}
         </button>
         {isDropdownOpen && (
           <div className="dropdown-menu">
             {notifications.length === 0 ? (
-              <div className="dropdown-item" onClick={() => { }} disabled>
+              <div className="dropdown-item" onClick={() => {}} disabled>
                 No notifications
               </div>
             ) : (
